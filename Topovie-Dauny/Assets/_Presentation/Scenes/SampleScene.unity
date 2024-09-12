@@ -1343,7 +1343,7 @@ Tilemap:
     second:
       serializedVersion: 2
       m_TileIndex: 39
-      m_TileSpriteIndex: 28
+      m_TileSpriteIndex: 29
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -1593,7 +1593,7 @@ Tilemap:
     second:
       serializedVersion: 2
       m_TileIndex: 37
-      m_TileSpriteIndex: 25
+      m_TileSpriteIndex: 28
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -2293,7 +2293,7 @@ Tilemap:
     second:
       serializedVersion: 2
       m_TileIndex: 16
-      m_TileSpriteIndex: 24
+      m_TileSpriteIndex: 25
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -3020,18 +3020,18 @@ Tilemap:
     m_Data: {fileID: -1880030721, guid: 26f1082126610c644bfaa082cee24576, type: 3}
   - m_RefCount: 0
     m_Data: {fileID: 0}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
   - m_RefCount: 1
     m_Data: {fileID: 728443665, guid: 26f1082126610c644bfaa082cee24576, type: 3}
-  - m_RefCount: 1
-    m_Data: {fileID: -192735237, guid: 26f1082126610c644bfaa082cee24576, type: 3}
   - m_RefCount: 1
     m_Data: {fileID: 650563157, guid: 26f1082126610c644bfaa082cee24576, type: 3}
   - m_RefCount: 24
     m_Data: {fileID: 1288371296, guid: 26f1082126610c644bfaa082cee24576, type: 3}
   - m_RefCount: 1
+    m_Data: {fileID: -192735237, guid: 26f1082126610c644bfaa082cee24576, type: 3}
+  - m_RefCount: 1
     m_Data: {fileID: 404231969, guid: 26f1082126610c644bfaa082cee24576, type: 3}
-  - m_RefCount: 0
-    m_Data: {fileID: 0}
   - m_RefCount: 1
     m_Data: {fileID: -1699062125, guid: 26f1082126610c644bfaa082cee24576, type: 3}
   - m_RefCount: 6
@@ -3110,6 +3110,7 @@ GameObject:
   - component: {fileID: 1612465536}
   - component: {fileID: 1612465538}
   - component: {fileID: 1612465539}
+  - component: {fileID: 1612465540}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -3256,6 +3257,19 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!114 &1612465540
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1612465535}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2adaf14356466bd40be43d7e6b408a7b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSpeed: 0
 --- !u!1 &1747622191
 GameObject:
   m_ObjectHideFlags: 0
