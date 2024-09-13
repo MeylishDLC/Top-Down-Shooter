@@ -71,7 +71,7 @@ namespace UnityEngine
                 if (type == null)
                 {
 #if UNITY_EDITOR
-                    Debug.LogWarning($"'{typeReference}' was referenced but class type was not found.");
+//                    Debug.LogWarning($"'{typeReference}' was referenced but class type was not found.");
 #endif
                 }
             }

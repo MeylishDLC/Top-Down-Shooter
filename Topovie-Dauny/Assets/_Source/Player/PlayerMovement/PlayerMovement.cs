@@ -9,7 +9,8 @@ namespace Player.PlayerMovement
     [RequireComponent(typeof(Rigidbody2D))]
     public class PlayerMovement : MonoBehaviour
     {
-        [SerializeField] private Animator[] sides; 
+        [SerializeField] private Animator[] sides;
+        [SerializeField] private float movementSpeed = 1f; 
         [SerializeField] private float dodgeSpeed = 15f; 
         [SerializeField] private int dodgeTimeMilliseconds = 500;
         
@@ -39,23 +40,32 @@ namespace Player.PlayerMovement
             {
                 foreach (var side in sides)
                 {
-                    side.SetBool(isWalking, true);
+                    if (side.gameObject.activeSelf)
+                    {
+                        side.SetBool(isWalking, true);
+                    }
                 }
             }
             else
             {
                 foreach (var side in sides)
                 {
-                    side.SetBool(isWalking, false);
+                    if (side.gameObject.activeSelf)
+                    {
+                        side.SetBool(isWalking, false);
+                    }
                 }
             }
             
             _direction = new Vector2(_horizontal, _vertical);
-            if (Input.GetMouseButtonDown(1) && !CheckRolling.IsRolling)
+            if (Input.GetKeyDown(KeyCode.LeftShift) && !CheckRolling.IsRolling)
             {
                 foreach (var side in sides)
                 {
-                    side.SetTrigger(isRolling);
+                    if (side.gameObject.activeSelf)
+                    {
+                        side.SetTrigger(isRolling);
+                    }
                     
                     RollAsync(CancellationToken.None).Forget();
                 }
@@ -64,7 +74,7 @@ namespace Player.PlayerMovement
         }
         private void FixedUpdate()
         {
-            _rb.velocity = new Vector2(_horizontal, _vertical);
+            _rb.velocity = new Vector2(_horizontal, _vertical).normalized * movementSpeed;
         }
 
         private async UniTask RollAsync(CancellationToken token)
