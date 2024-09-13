@@ -1,4 +1,5 @@
 using System;
+using Player.Combat;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -8,11 +9,16 @@ namespace Player
     [RequireComponent(typeof(Animator))]
     public class PlayerController : MonoBehaviour
     {
+        [field:SerializeField] public Transform AimTransform { get; private set; }
+        [field:SerializeField] public Bullet BulletPrefab { get; private set; }
+        
         [SerializeField] private float movementSpeed = 5f;
+        
         private Rigidbody2D _rb;
         private Vector2 _movement;
         private Animator _animator;
         private bool _gunEnabled;
+        private PlayerCombat _playerCombat;
         
         private static readonly int horizontal = Animator.StringToHash("horizontal");
         private static readonly int vertical = Animator.StringToHash("vertical");
@@ -23,9 +29,24 @@ namespace Player
         {
             _rb = GetComponent<Rigidbody2D>();
             _animator = GetComponent<Animator>();
+            _playerCombat = new PlayerCombat(this);
         }
 
         private void Update()
+        {
+            HandleMovement();
+            _playerCombat.HandleAiming();
+        }
+        private void FixedUpdate()
+        {
+            if (_movement.magnitude > 1)
+            {
+                _movement.Normalize();
+            }
+            _rb.MovePosition(_rb.position + _movement * movementSpeed * Time.fixedDeltaTime);
+        }
+
+        private void HandleMovement()
         {
             _movement.x = Input.GetAxisRaw("Horizontal");
             _movement.y = Input.GetAxisRaw("Vertical");
@@ -37,20 +58,13 @@ namespace Player
             }
             _animator.SetFloat(speed, _movement.sqrMagnitude);
         }
-        private void FixedUpdate()
-        {
-            if (_movement.magnitude > 1)
-            {
-                _movement.Normalize();
-            }
-            _rb.MovePosition(_rb.position + _movement * movementSpeed * Time.fixedDeltaTime);
-        }
 
         public void Shoot(InputAction.CallbackContext context)
         {
             if (context.performed)
             {
                 _animator.SetTrigger(shoot);
+                _playerCombat.HandleShooting();
             }
         }
     }
