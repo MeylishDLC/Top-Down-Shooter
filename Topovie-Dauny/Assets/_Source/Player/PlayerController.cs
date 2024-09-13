@@ -12,10 +12,12 @@ namespace Player
         private Rigidbody2D _rb;
         private Vector2 _movement;
         private Animator _animator;
+        private bool _gunEnabled;
         
         private static readonly int horizontal = Animator.StringToHash("horizontal");
         private static readonly int vertical = Animator.StringToHash("vertical");
         private static readonly int speed = Animator.StringToHash("speed");
+        private static readonly int shoot = Animator.StringToHash("shoot");
 
         private void Awake()
         {
@@ -42,6 +44,14 @@ namespace Player
                 _movement.Normalize();
             }
             _rb.MovePosition(_rb.position + _movement * movementSpeed * Time.fixedDeltaTime);
+        }
+
+        public void Shoot(InputAction.CallbackContext context)
+        {
+            if (context.performed)
+            {
+                _animator.SetTrigger(shoot);
+            }
         }
     }
 }
