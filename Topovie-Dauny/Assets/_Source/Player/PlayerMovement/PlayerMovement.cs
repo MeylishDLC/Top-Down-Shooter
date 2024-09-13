@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Threading;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -18,11 +19,14 @@ namespace Player.PlayerMovement
         private Vector2 _direction;
         private bool _dodgeRoll;
         
-        void Start()
+        private static readonly int isWalking = Animator.StringToHash("isWalking");
+        private static readonly int isRolling = Animator.StringToHash("isRolling");
+
+        private void Start()
         {
             _rb = gameObject.GetComponent<Rigidbody2D>();
         }
-        void Update()
+        private void Update()
         {
             if (_dodgeRoll)
             {
@@ -33,29 +37,27 @@ namespace Player.PlayerMovement
 
             if (_horizontal > 0 || _horizontal < 0 || _vertical < 0 || _vertical > 0)
             {
-                for (int i = 0; i < sides.Length; i++)
+                foreach (var side in sides)
                 {
-                    sides[i].SetBool("Walking", true);
+                    side.SetBool(isWalking, true);
                 }
             }
             else
             {
-                for (int i = 0; i < sides.Length; i++)
+                foreach (var side in sides)
                 {
-                    sides[i].SetBool("Walking", false);
+                    side.SetBool(isWalking, false);
                 }
-      
             }
+            
             _direction = new Vector2(_horizontal, _vertical);
             if (Input.GetMouseButtonDown(1) && !CheckRolling.IsRolling)
             {
-                for (int i = 0; i < sides.Length; i++)
+                foreach (var side in sides)
                 {
-                    sides[i].SetTrigger("Rollin");
-
-                    //StartCoroutine(Roll());
+                    side.SetTrigger(isRolling);
                     
-                    RollAsync().Forget();
+                    RollAsync(CancellationToken.None).Forget();
                 }
             }
 
@@ -65,18 +67,12 @@ namespace Player.PlayerMovement
             _rb.velocity = new Vector2(_horizontal, _vertical);
         }
 
-        private async UniTask RollAsync()
+        private async UniTask RollAsync(CancellationToken token)
         {
             _dodgeRoll = true;
-            await UniTask.Delay(dodgeTimeMilliseconds);
+            await UniTask.Delay(dodgeTimeMilliseconds, cancellationToken: token);
             _dodgeRoll = false;
         }
         
-        // IEnumerator Roll()
-        // {
-        //     DodgeRoll = true;
-        //     yield return new WaitForSeconds(DodgeTime);
-        //     DodgeRoll = false;
-        // }
     }
 }
