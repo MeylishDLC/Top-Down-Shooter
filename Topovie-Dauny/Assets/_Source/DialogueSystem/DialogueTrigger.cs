@@ -1,4 +1,5 @@
 using UnityEngine;
+using Zenject;
 
 namespace DialogueSystem
 {
@@ -11,6 +12,13 @@ namespace DialogueSystem
         [SerializeField] private TextAsset inkJSON;
         
         private bool playerInRange;
+        private DialogueManager _dialogueManager;
+
+        [Inject]
+        private void Construct(DialogueManager dialogueManager)
+        {
+            _dialogueManager = dialogueManager;
+        }
         private void Awake()
         {
             visualCue.gameObject.SetActive(false);
@@ -23,7 +31,7 @@ namespace DialogueSystem
                 visualCue.gameObject.SetActive(true);
                 if (Input.GetKeyDown(KeyCode.F))
                 {
-                    //todo play dialogue
+                    _dialogueManager.EnterDialogueMode(inkJSON);
                 }
             }
             else
