@@ -1,6 +1,8 @@
 using System.Threading;
 using Cysharp.Threading.Tasks;
+using DialogueSystem;
 using UnityEngine;
+using Zenject;
 
 namespace Player.PlayerMovement
 {
@@ -17,20 +19,42 @@ namespace Player.PlayerMovement
         private float _horizontal;
         private Vector2 _direction;
         private bool _dodgeRoll;
+        private DialogueManager _dialogueManager;
         
         private static readonly int isWalking = Animator.StringToHash("isWalking");
         private static readonly int isRolling = Animator.StringToHash("isRolling");
 
+        [Inject]
+        public void Construct(DialogueManager dialogueManager)
+        {
+            _dialogueManager = dialogueManager;
+        }
         private void Start()
         {
             _rb = gameObject.GetComponent<Rigidbody2D>();
         }
         private void Update()
         {
-            if (_dodgeRoll)
+            if (!_dialogueManager.DialogueIsPlaying)
             {
-                _rb.AddForce(_direction * dodgeSpeed);
+                if (_dodgeRoll)
+                {
+                    _rb.AddForce(_direction * dodgeSpeed);
+                }
+                HandleMovement(); 
+                HandleRolling();
             }
+        }
+        private void FixedUpdate()
+        {
+            if (!_dialogueManager.DialogueIsPlaying)
+            {
+                _rb.velocity = new Vector2(_horizontal, _vertical).normalized * movementSpeed;
+            }
+        }
+
+        private void HandleMovement()
+        {
             _horizontal = Input.GetAxisRaw("Horizontal");
             _vertical = Input.GetAxisRaw("Vertical");
 
@@ -56,6 +80,10 @@ namespace Player.PlayerMovement
             }
             
             _direction = new Vector2(_horizontal, _vertical);
+        }
+
+        private void HandleRolling()
+        {
             if (Input.GetKeyDown(KeyCode.LeftShift) && !CheckRolling.IsRolling)
             {
                 foreach (var side in sides)
@@ -68,11 +96,6 @@ namespace Player.PlayerMovement
                     RollAsync(CancellationToken.None).Forget();
                 }
             }
-
-        }
-        private void FixedUpdate()
-        {
-            _rb.velocity = new Vector2(_horizontal, _vertical).normalized * movementSpeed;
         }
 
         private async UniTask RollAsync(CancellationToken token)

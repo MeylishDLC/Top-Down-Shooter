@@ -11,8 +11,9 @@ namespace DialogueSystem
         [Header("Ink JSON")] 
         [SerializeField] private TextAsset inkJSON;
         
-        private bool playerInRange;
+        private bool _playerInRange;
         private DialogueManager _dialogueManager;
+
 
         [Inject]
         private void Construct(DialogueManager dialogueManager)
@@ -26,12 +27,15 @@ namespace DialogueSystem
 
         private void Update()
         {
-            if (playerInRange)
+            if (_playerInRange)
             {
                 visualCue.gameObject.SetActive(true);
                 if (Input.GetKeyDown(KeyCode.F))
                 {
-                    _dialogueManager.EnterDialogueMode(inkJSON);
+                    if (_dialogueManager.CanEnterDialogueMode)
+                    {
+                        _dialogueManager.EnterDialogueMode(inkJSON);
+                    }
                 }
             }
             else
@@ -44,7 +48,7 @@ namespace DialogueSystem
         {
             if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
             {
-                playerInRange = true;
+                _playerInRange = true;
             }
         }
 
@@ -52,7 +56,7 @@ namespace DialogueSystem
         {
             if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
             {
-                playerInRange = false;
+                _playerInRange = false;
             }
         }
     }

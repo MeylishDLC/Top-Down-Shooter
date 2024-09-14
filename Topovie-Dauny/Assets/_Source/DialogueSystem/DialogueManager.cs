@@ -1,4 +1,6 @@
 using System;
+using System.Threading;
+using Cysharp.Threading.Tasks;
 using Ink.Runtime;
 using TMPro;
 using UnityEngine;
@@ -8,13 +10,17 @@ namespace DialogueSystem
 {
     public class DialogueManager : MonoBehaviour
     {
+        public bool DialogueIsPlaying { get; private set; }
+        public bool CanEnterDialogueMode { get; private set; } = true;
+        
         [Header("Dialogue UI")] 
         [SerializeField] private Image dialoguePanel;
         [SerializeField] private TMP_Text dialogueText;
 
-        private Story currentStory;
-        private bool dialogueIsPlaying;
-
+        [Header("Other Settings")] 
+        [SerializeField] private int dialogueRestartDelayMilliseconds;
+        
+        private Story _currentStory;
         private void Start()
         {
             dialoguePanel.gameObject.SetActive(false);
@@ -22,7 +28,7 @@ namespace DialogueSystem
 
         private void Update()
         {
-            if (!dialogueIsPlaying)
+            if (!DialogueIsPlaying)
             {
                 return;
             }
@@ -35,29 +41,33 @@ namespace DialogueSystem
 
         public void EnterDialogueMode(TextAsset inkJSON)
         {
-            currentStory = new Story(inkJSON.text);
-            dialogueIsPlaying = true;
+            _currentStory = new Story(inkJSON.text);
+            DialogueIsPlaying = true;
+            CanEnterDialogueMode = false;
             dialoguePanel.gameObject.SetActive(true);
 
             ContinueStory();
         }
 
-        private void ExitDialogueMode()
+        private async UniTask ExitDialogueModeAsync(CancellationToken token)
         {
-            dialogueIsPlaying = false;
+            DialogueIsPlaying = false;
             dialoguePanel.gameObject.SetActive(false);
             dialogueText.text = "";
+
+            await UniTask.Delay(dialogueRestartDelayMilliseconds, cancellationToken: token);
+            CanEnterDialogueMode = true;
         }
 
         private void ContinueStory()
         {
-            if (currentStory.canContinue)
+            if (_currentStory.canContinue)
             {
-                dialogueText.text = currentStory.Continue();
+                dialogueText.text = _currentStory.Continue();
             }
             else
             {
-                ExitDialogueMode();
+                ExitDialogueModeAsync(CancellationToken.None).Forget();
             }
         }
     }
