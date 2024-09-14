@@ -5181,6 +5181,7 @@ GameObject:
   m_Component:
   - component: {fileID: 901769341}
   - component: {fileID: 901769342}
+  - component: {fileID: 901769343}
   m_Layer: 3
   m_Name: TestGun
   m_TagString: Untagged
@@ -5256,6 +5257,23 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &901769343
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 901769340}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0884d62387a464c8e2ef1b583d6d33f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <FireRate>k__BackingField: 0.1
+  bulletPrefab: {fileID: 553695123358261265, guid: 7cd42f4056a103942b84e2d6e5021c49, type: 3}
+  firingPointAnimator: {fileID: 1022301070}
+  maxBullets: 100
+  reloadTimeMilliseconds: 1000
 --- !u!1 &929789251
 GameObject:
   m_ObjectHideFlags: 0
@@ -5397,7 +5415,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!212 &971945108
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -10913,9 +10931,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72b5f567c26248e3aa21b4f197518f00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletPrefab: {fileID: 553695123358261265, guid: 7cd42f4056a103942b84e2d6e5021c49, type: 3}
-  firingPointAnimator: {fileID: 1022301070}
-  fireRate: 0.1
+  weaponsObjects:
+    pairs:
+    - key: 101
+      value: {fileID: 901769340}
+    error: 0
 --- !u!1 &1624807346
 GameObject:
   m_ObjectHideFlags: 0
