@@ -2600,6 +2600,7 @@ GameObject:
   m_Component:
   - component: {fileID: 676789291}
   - component: {fileID: 676789292}
+  - component: {fileID: 676789293}
   m_Layer: 0
   m_Name: UIManager
   m_TagString: Untagged
@@ -2637,6 +2638,20 @@ MonoBehaviour:
   playerHealthText: {fileID: 514879641}
   damageTextPrefab: {fileID: 4236086146360339903, guid: 2e28589b31d72bc4697c5a56ad2dc2ca, type: 3}
   gameCanvas: {fileID: 1333315077}
+--- !u!114 &676789293
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 676789290}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c44c64d29fa44f2b1a07e66667632ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameOverScreen: {fileID: 328847761}
+  restartButton: {fileID: 177397500}
 --- !u!1 &699326927
 GameObject:
   m_ObjectHideFlags: 0

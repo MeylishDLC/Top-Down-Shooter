@@ -13,6 +13,7 @@ namespace Player.PlayerCombat
         public KnockBack KnockBack { get; private set; }
 
         public event Action<int> OnDamageTaken;
+        public event Action OnDeath;
 
         [SerializeField] private int maxHealth;
         
@@ -51,6 +52,7 @@ namespace Player.PlayerCombat
             
             Debug.Log($"{CurrentHealth}");
             RecoverFromDamageAsync(CancellationToken.None).Forget();
+            CheckIfDead();
         }
         private async UniTask RecoverFromDamageAsync(CancellationToken token)
         {
@@ -63,7 +65,8 @@ namespace Player.PlayerCombat
             //todo: play death animation and show game over screen 
             if (CurrentHealth <= 0)
             {
-                
+                //todo: pause whole game
+                OnDeath?.Invoke();
             }
         }
     }
