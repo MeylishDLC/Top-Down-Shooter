@@ -1,9 +1,13 @@
 ﻿using System;
+using System.Threading;
+using Cysharp.Threading.Tasks;
+using DG.Tweening;
 using Player.PlayerCombat;
 using Player.PlayerMovement;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 using Zenject;
 
 namespace UI
@@ -12,12 +16,18 @@ namespace UI
     {
         [SerializeField] private TMP_Text playerHealthText;
         
+        [Header("Heart Pounding")]
+        [SerializeField] private Image heartImage;
+        [SerializeField] private float minScale;
+        [SerializeField] private float scaleDuration;
+        
         [Header("Health floating")]
         [SerializeField] private GameObject damageTextPrefab;
         [SerializeField] private Canvas gameCanvas;
 
         private PlayerHealth _playerHealth;
-
+        private bool _heartIsAnimated;
+        
         [Inject]
         public void Construct(PlayerMovement playerMovement)
         {
@@ -26,10 +36,12 @@ namespace UI
         private void Awake()
         {
             _playerHealth.OnDamageTaken += InstantiateDamageText;
+            _playerHealth.OnDamageTaken += AnimateHeart;
         }
         private void OnDestroy()
         {
             _playerHealth.OnDamageTaken -= InstantiateDamageText;
+            _playerHealth.OnDamageTaken -= AnimateHeart;
         }
 
         private void Update()
@@ -47,6 +59,20 @@ namespace UI
 
             tmpText.text = $"-{damage.ToString()}";
         }
-      
+
+        private void AnimateHeart(int _)
+        {
+            if (!_heartIsAnimated)
+            {
+                AnimateHeartAsync(CancellationToken.None).Forget();
+            }
+        }
+        //todo: refactor (cts too)
+        private async UniTask AnimateHeartAsync(CancellationToken token)
+        {
+            _heartIsAnimated = true;
+            await heartImage.transform.DOScale(minScale, scaleDuration).SetLoops(2, LoopType.Yoyo).ToUniTask(cancellationToken: token);
+            _heartIsAnimated = false;
+        }
     }
 }
