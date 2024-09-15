@@ -2,8 +2,11 @@
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
+using Enemies.Combat;
 using Pathfinding;
+using Player.PlayerMovement;
 using UnityEngine;
+using Zenject;
 
 namespace Enemies
 {
@@ -15,16 +18,35 @@ namespace Enemies
         [Header("Color Changing")]
         [SerializeField] private Color colorOnDamageTaken;
         [SerializeField] private int stayTimeMilliseconds;
+        
+        [Header("Knockback Settings")]
+        [SerializeField] private int knockBackTimeMilliseconds = 200;
+        [SerializeField] private float knockbackThrust = 15f;
 
         private AIPath _aiPathComponent;
         private SpriteRenderer _spriteRenderer;
+        private KnockBack _knockBack;
+        private PlayerMovement _playerMovement;
         private int _currentHealth;
         private bool _isDead;
+
+        [Inject]
+        private void Construct(PlayerMovement playerMovement)
+        {
+            _playerMovement = playerMovement;
+        }
         private void Start()
         {
             _currentHealth = maxHealth;
             _aiPathComponent = GetComponent<AIPath>();
             _spriteRenderer = GetComponent<SpriteRenderer>();
+            
+            _knockBack = new(GetComponent<Rigidbody2D>(), knockBackTimeMilliseconds, knockbackThrust);
+        }
+
+        private void Update()
+        {
+            DisableMovementOnKnockback();
         }
 
         public void TakeDamage(int damage)
@@ -35,11 +57,24 @@ namespace Enemies
                 
                 //todo: check this one?
                 ChangeColor(CancellationToken.None).Forget();
+                _knockBack.GetKnockedBack(_playerMovement.transform);
                 
                 CheckIfDeadAsync(CancellationToken.None).Forget();
             }
         }
 
+        private void DisableMovementOnKnockback()
+        {
+            if (_knockBack.GettingKnockedBack && !_isDead)
+            {
+                _aiPathComponent.enabled = false;
+            }
+
+            if (!_knockBack.GettingKnockedBack && !_isDead && !_aiPathComponent.enabled)
+            {
+                _aiPathComponent.enabled = true;
+            }
+        }
         private async UniTask ChangeColor(CancellationToken token)
         {
             _spriteRenderer.color = colorOnDamageTaken;

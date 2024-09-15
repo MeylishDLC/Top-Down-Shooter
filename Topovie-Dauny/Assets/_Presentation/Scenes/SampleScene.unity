@@ -372,7 +372,7 @@ GameObject:
   - component: {fileID: 50695708}
   - component: {fileID: 50695709}
   - component: {fileID: 50695710}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Trigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3314,6 +3314,8 @@ MonoBehaviour:
   maxMoneyDrop: 10
   colorOnDamageTaken: {r: 0.9725491, g: 0.38823533, b: 0.38823533, a: 1}
   stayTimeMilliseconds: 100
+  knockBackTimeMilliseconds: 50
+  knockbackThrust: 0.5
 --- !u!1 &983635893
 GameObject:
   m_ObjectHideFlags: 0
@@ -4881,6 +4883,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dialogueManager: {fileID: 1831766792}
+  player: {fileID: 1612465535}
 --- !u!1 &1501959787
 GameObject:
   m_ObjectHideFlags: 0
