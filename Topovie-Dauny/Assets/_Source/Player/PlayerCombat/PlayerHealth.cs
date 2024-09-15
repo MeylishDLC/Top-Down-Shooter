@@ -3,12 +3,16 @@ using System.Threading;
 using Cysharp.Threading.Tasks;
 using Enemies.Combat;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Player.PlayerCombat
 {
     public class PlayerHealth : MonoBehaviour
     {
+        public int CurrentHealth { get; private set; }
         public KnockBack KnockBack { get; private set; }
+
+        public event Action<int> OnDamageTaken;
 
         [SerializeField] private int maxHealth;
         
@@ -17,10 +21,8 @@ namespace Player.PlayerCombat
         [SerializeField] private int knockbackTimeMilliseconds;
         [SerializeField] private int invincibilityTime;
         
-        private int _currentHealth;
         private bool _canTakeDamage = true;
         private SpriteRenderer _spriteRenderer;
-
         private void Awake()
         {
             KnockBack = new KnockBack
@@ -28,7 +30,7 @@ namespace Player.PlayerCombat
         }
         private void Start()
         {
-            _currentHealth = maxHealth;
+            CurrentHealth = maxHealth;
         }
 
         private void OnTriggerStay2D(Collider2D other)
@@ -44,8 +46,10 @@ namespace Player.PlayerCombat
         public void TakeDamage(int damageAmount)
         {
             _canTakeDamage = false;
-            _currentHealth -= damageAmount;
-            Debug.Log($"{_currentHealth}");
+            CurrentHealth -= damageAmount;
+            OnDamageTaken?.Invoke(damageAmount);
+            
+            Debug.Log($"{CurrentHealth}");
             RecoverFromDamageAsync(CancellationToken.None).Forget();
         }
         private async UniTask RecoverFromDamageAsync(CancellationToken token)
@@ -57,7 +61,7 @@ namespace Player.PlayerCombat
         private void CheckIfDead()
         {
             //todo: play death animation and show game over screen 
-            if (_currentHealth <= 0)
+            if (CurrentHealth <= 0)
             {
                 
             }
