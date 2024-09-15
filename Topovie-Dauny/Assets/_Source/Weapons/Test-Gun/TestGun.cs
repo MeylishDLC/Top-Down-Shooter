@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using Cysharp.Threading.Tasks;
+using TMPro;
 using UnityEngine;
 
 namespace Weapons.Test_Gun
@@ -14,6 +15,7 @@ namespace Weapons.Test_Gun
         [SerializeField] private Animator firingPointAnimator;
         [SerializeField] private int maxBullets = 100;
         [SerializeField] private int reloadTimeMilliseconds = 1000;
+        [SerializeField] private TMP_Text reloadingText;
    
         private static readonly int shoot = Animator.StringToHash("shoot");
 
@@ -50,7 +52,9 @@ namespace Weapons.Test_Gun
 
         private async UniTask ReloadAsync(CancellationToken token)
         {
+            reloadingText.gameObject.SetActive(true);
             await UniTask.Delay(reloadTimeMilliseconds, cancellationToken: token);
+            reloadingText.gameObject.SetActive(false);
             currentBulletsAmount = maxBullets;
             canShoot = true;
         }

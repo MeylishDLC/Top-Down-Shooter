@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using Pathfinding;
@@ -10,14 +11,20 @@ namespace Enemies
     {
         [SerializeField] private int maxHealth;
         [SerializeField] private int maxMoneyDrop;
-
-        [SerializeField] private AIPath aiPathComponent;
         
+        [Header("Color Changing")]
+        [SerializeField] private Color colorOnDamageTaken;
+        [SerializeField] private int stayTimeMilliseconds;
+
+        private AIPath _aiPathComponent;
+        private SpriteRenderer _spriteRenderer;
         private int _currentHealth;
         private bool _isDead;
         private void Start()
         {
             _currentHealth = maxHealth;
+            _aiPathComponent = GetComponent<AIPath>();
+            _spriteRenderer = GetComponent<SpriteRenderer>();
         }
 
         public void TakeDamage(int damage)
@@ -25,17 +32,26 @@ namespace Enemies
             if (!_isDead)
             {
                 _currentHealth -= damage;
-                Debug.Log(_currentHealth);
-                CheckIfDeadAsync().Forget();
+                
+                //todo: check this one?
+                ChangeColor(CancellationToken.None).Forget();
+                
+                CheckIfDeadAsync(CancellationToken.None).Forget();
             }
         }
 
-        private async UniTask CheckIfDeadAsync()
+        private async UniTask ChangeColor(CancellationToken token)
+        {
+            _spriteRenderer.color = colorOnDamageTaken;
+            await UniTask.Delay(stayTimeMilliseconds, cancellationToken: token);
+            _spriteRenderer.color = Color.white;
+        }
+        private async UniTask CheckIfDeadAsync(CancellationToken token)
         {
             if (_currentHealth <= 0)
             {
                 _isDead = true;
-                aiPathComponent.enabled = false;
+                _aiPathComponent.enabled = false;
                 await gameObject.transform.DOScaleX(0f, 0.5f).ToUniTask();
                 
                 DropMoney();

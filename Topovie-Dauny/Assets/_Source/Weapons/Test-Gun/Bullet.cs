@@ -30,7 +30,7 @@ public class Bullet : MonoBehaviour
 
         if (other.gameObject.layer == LayerMask.NameToLayer("Enemy"))
         {
-            var enemyHealth = other.gameObject.GetComponent<EnemyHealth>();
+            var enemyHealth = other.gameObject.GetComponentInParent<EnemyHealth>();
             enemyHealth.TakeDamage(damageAmount);
         }
     }
