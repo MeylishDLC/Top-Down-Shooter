@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using Ink.Runtime;
+using ModestTree;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -50,7 +51,15 @@ namespace DialogueSystem
 
             if (Input.GetKeyDown(KeyCode.F))
             {
-                ContinueStory();
+                if (_currentStory.canContinue && _currentStory.currentChoices.IsEmpty())
+                {
+                    ContinueStory();
+                }
+
+                if (!_currentStory.canContinue && _currentStory.currentChoices.IsEmpty())
+                {
+                    ExitDialogueModeAsync(CancellationToken.None).Forget();
+                }
             }
         }
 
@@ -72,6 +81,19 @@ namespace DialogueSystem
             ContinueStory();
         }
         
+        private void ContinueStory()
+        {
+            if (_currentStory.canContinue)
+            {
+                dialogueText.text = _currentStory.Continue();
+                DisplayChoices();
+                HandleTags(_currentStory.currentTags);
+            }
+            else
+            {
+                ExitDialogueModeAsync(CancellationToken.None).Forget();
+            }
+        }
         private async UniTask ExitDialogueModeAsync(CancellationToken token)
         {
             DialogueIsPlaying = false;
@@ -90,19 +112,7 @@ namespace DialogueSystem
             layoutAnimator.Play("left");
         }
 
-        private void ContinueStory()
-        {
-            if (_currentStory.canContinue)
-            {
-                dialogueText.text = _currentStory.Continue();
-                DisplayChoices();
-                HandleTags(_currentStory.currentTags);
-            }
-            else
-            {
-                ExitDialogueModeAsync(CancellationToken.None).Forget();
-            }
-        }
+       
 
         private void HandleTags(List<string> currentTags)
         {
