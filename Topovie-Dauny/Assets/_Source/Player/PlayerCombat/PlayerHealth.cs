@@ -40,10 +40,12 @@ namespace Player.PlayerCombat
                 KnockBack.GetKnockedBack(other.gameObject.transform);
             }
         }
-        private void TakeDamage(int damageAmount)
+
+        public void TakeDamage(int damageAmount)
         {
             _canTakeDamage = false;
             _currentHealth -= damageAmount;
+            Debug.Log($"{_currentHealth}");
             RecoverFromDamageAsync(CancellationToken.None).Forget();
         }
         private async UniTask RecoverFromDamageAsync(CancellationToken token)
