@@ -1,6 +1,7 @@
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using DialogueSystem;
+using Player.PlayerCombat;
 using UnityEngine;
 using Zenject;
 
@@ -13,6 +14,7 @@ namespace Player.PlayerMovement
         [SerializeField] private float movementSpeed = 1f; 
         [SerializeField] private float dodgeSpeed = 15f; 
         [SerializeField] private int dodgeTimeMilliseconds = 500;
+        [SerializeField] private PlayerHealth playerHealth;
         
         private Rigidbody2D _rb;
         private float _vertical;
@@ -35,7 +37,7 @@ namespace Player.PlayerMovement
         }
         private void Update()
         {
-            if (!_dialogueManager.DialogueIsPlaying)
+            if (!_dialogueManager.DialogueIsPlaying && !playerHealth.KnockBack.GettingKnockedBack)
             {
                 if (_dodgeRoll)
                 {
@@ -47,7 +49,7 @@ namespace Player.PlayerMovement
         }
         private void FixedUpdate()
         {
-            if (!_dialogueManager.DialogueIsPlaying)
+            if (!_dialogueManager.DialogueIsPlaying && !playerHealth.KnockBack.GettingKnockedBack)
             {
                 _rb.velocity = new Vector2(_horizontal, _vertical).normalized * movementSpeed;
             }
