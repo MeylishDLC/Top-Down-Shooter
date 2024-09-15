@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
@@ -19,6 +20,7 @@ namespace Weapons.Test_Gun
         private int currentBulletsAmount;
         private bool canShoot = true;
 
+        public event Action<int> OnBulletsAmountChange;
         private void Start()
         {
             currentBulletsAmount = maxBullets;
@@ -30,6 +32,7 @@ namespace Weapons.Test_Gun
             {
                 HandleShooting();
                 currentBulletsAmount--;
+                OnBulletsAmountChange?.Invoke(currentBulletsAmount);
             }
             
             if (canShoot && currentBulletsAmount == 0)
@@ -51,6 +54,7 @@ namespace Weapons.Test_Gun
         {
             await UniTask.Delay(reloadTimeMilliseconds, cancellationToken: token);
             currentBulletsAmount = maxBullets;
+            OnBulletsAmountChange?.Invoke(currentBulletsAmount);
             canShoot = true;
         }
         

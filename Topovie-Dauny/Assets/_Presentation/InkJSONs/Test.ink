@@ -7,7 +7,6 @@ I love masturbist
     Yaaaaaayyy me too lets be frineds
 + [I like Vlad A6]
     Ewww wtf bye gurl
-    
 - ok #speaker: Player #sprite:default #layout:right
 -> END
 

@@ -55,7 +55,7 @@ namespace DialogueSystem
                 {
                     ContinueStory();
                 }
-
+                //todo: fix
                 if (!_currentStory.canContinue && _currentStory.currentChoices.IsEmpty())
                 {
                     ExitDialogueModeAsync(CancellationToken.None).Forget();
