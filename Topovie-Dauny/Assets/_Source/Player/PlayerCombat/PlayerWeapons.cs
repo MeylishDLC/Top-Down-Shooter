@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using DialogueSystem;
 using UnityEngine;
 using Weapons;
+using Zenject;
 
 namespace Player.PlayerCombat
 {
@@ -13,7 +15,13 @@ namespace Player.PlayerCombat
         private List<IShooting> weapons;
         private int currentActiveWeaponIndex;
         private float fireTimer;
+        private DialogueManager _dialogueManager;
 
+        [Inject]
+        public void Construct(DialogueManager dialogueManager)
+        {
+            _dialogueManager = dialogueManager;
+        }
         private void Start()
         {
             weapons = new();
@@ -22,6 +30,14 @@ namespace Player.PlayerCombat
         }
 
         private void Update()
+        {
+            if (!_dialogueManager.DialogueIsPlaying)
+            {
+                HandleShooting();
+            }
+        }
+
+        private void HandleShooting()
         {
             if (Input.GetMouseButton(0) && fireTimer <= 0)
             {

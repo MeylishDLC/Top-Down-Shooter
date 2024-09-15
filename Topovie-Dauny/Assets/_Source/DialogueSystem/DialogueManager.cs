@@ -18,6 +18,9 @@ namespace DialogueSystem
         [Header("Dialogue UI")] 
         [SerializeField] private Image dialoguePanel;
         [SerializeField] private TMP_Text dialogueText;
+        [SerializeField] private TMP_Text nameText;
+        [SerializeField] private Animator spriteAnimator;
+        [SerializeField] private Animator layoutAnimator;
 
         [Header("Choices UI")]
         [SerializeField] private GameObject[] choices; 
@@ -27,6 +30,11 @@ namespace DialogueSystem
         [SerializeField] private int dialogueRestartDelayMilliseconds;
         
         private Story _currentStory;
+        private bool _hasChosen;
+
+        private const string SPEAKER_TAG = "speaker";
+        private const string SPRITE_TAG = "sprite";
+        private const string LAYOUT_TAG = "layout";
         private void Start()
         {
             dialoguePanel.gameObject.SetActive(false);
@@ -53,6 +61,8 @@ namespace DialogueSystem
             CanEnterDialogueMode = false;
             dialoguePanel.gameObject.SetActive(true);
 
+            ResetVisuals();
+
             ContinueStory();
         }
 
@@ -70,6 +80,14 @@ namespace DialogueSystem
 
             await UniTask.Delay(dialogueRestartDelayMilliseconds, cancellationToken: token);
             CanEnterDialogueMode = true;
+            
+        }
+
+        private void ResetVisuals()
+        {
+            nameText.text = "???";
+            spriteAnimator.Play("default");
+            layoutAnimator.Play("left");
         }
 
         private void ContinueStory()
@@ -78,6 +96,7 @@ namespace DialogueSystem
             {
                 dialogueText.text = _currentStory.Continue();
                 DisplayChoices();
+                HandleTags(_currentStory.currentTags);
             }
             else
             {
@@ -85,6 +104,35 @@ namespace DialogueSystem
             }
         }
 
+        private void HandleTags(List<string> currentTags)
+        {
+            foreach (var tag in currentTags)
+            {
+                var splitTag = tag.Split(':');
+                if (splitTag.Length != 2)
+                {
+                    throw new Exception($"Tag couldn't be parsed: {tag}");
+                }
+
+                var tagKey = splitTag[0].Trim();
+                var tagValue = splitTag[1].Trim();
+
+                switch (tagKey)
+                {
+                    case SPEAKER_TAG:
+                        nameText.text = tagValue;
+                        break;
+                    case SPRITE_TAG:
+                        spriteAnimator.Play(tagValue);
+                        break;
+                    case LAYOUT_TAG:
+                        layoutAnimator.Play(tagValue);
+                        break;
+                    default:
+                        throw new Exception($"Tag isn't being handled: {tag}");
+                }
+            }
+        }
         private void DisplayChoices()
         {
             var currentChoices = _currentStory.currentChoices;
