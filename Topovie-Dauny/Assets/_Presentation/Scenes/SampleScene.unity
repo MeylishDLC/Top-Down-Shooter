@@ -372,7 +372,7 @@ GameObject:
   - component: {fileID: 50695708}
   - component: {fileID: 50695709}
   - component: {fileID: 50695710}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Trigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -897,7 +897,7 @@ GameObject:
   - component: {fileID: 276842692}
   - component: {fileID: 276842693}
   - component: {fileID: 276842694}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Shop
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2901,12 +2901,11 @@ GameObject:
   - component: {fileID: 971945108}
   - component: {fileID: 971945110}
   - component: {fileID: 971945111}
-  - component: {fileID: 971945112}
   - component: {fileID: 971945117}
   - component: {fileID: 971945116}
   - component: {fileID: 971945118}
   m_Layer: 0
-  m_Name: Zombie
+  m_Name: Leo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2953,7 +2952,7 @@ SpriteRenderer:
   m_SortingLayerID: 386728817
   m_SortingLayer: 6
   m_SortingOrder: 0
-  m_Sprite: {fileID: -552024263, guid: b4b6f854e6f3fec47a693d3ff11225a2, type: 3}
+  m_Sprite: {fileID: 21300000, guid: bbf84836bd7e8c643b282a6eef3d29d2, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -2974,7 +2973,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.53, y: -0.169, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.19215943, y: 0.19215943, z: 0.19215943}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -3011,9 +3010,9 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.0026322603, y: -0.09354575}
-  m_Size: {x: 0.06541979, y: 0.09719798}
-  m_Direction: 0
+  m_Offset: {x: 0.23955758, y: -0.34574342}
+  m_Size: {x: 1.2168195, y: 0.9033303}
+  m_Direction: 1
 --- !u!50 &971945111
 Rigidbody2D:
   serializedVersion: 4
@@ -3041,27 +3040,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!95 &971945112
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 971945107}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: e9819b622a64f9847aa4768e0591b5e1, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &971945116
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3075,10 +3053,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   version: 5
-  radius: 0.22
+  radius: 1.17
   height: 0.01
   canMove: 1
-  maxSpeed: 0.5
+  maxSpeed: 1
   gravity: {x: NaN, y: NaN, z: NaN}
   groundMask:
     serializedVersion: 2
@@ -3097,9 +3075,9 @@ MonoBehaviour:
   targetCompatibility: {fileID: 0}
   maxAcceleration: -2.5
   rotationSpeed: 360
-  slowdownDistance: 0.24
-  pickNextWaypointDist: 0.25
-  endReachedDistance: 0.18
+  slowdownDistance: 0.5
+  pickNextWaypointDist: 0.05
+  endReachedDistance: 0.1
   alwaysDrawGizmos: 0
   slowWhenNotFacingTarget: 1
   whenCloseToDestination: 0
@@ -6571,7 +6549,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1867858146}
   - component: {fileID: 1867858147}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: VisualQue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6734,7 +6712,7 @@ GameObject:
   - component: {fileID: 1899183329}
   - component: {fileID: 1899183328}
   - component: {fileID: 1899183327}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Walls
   m_TagString: Untagged
   m_Icon: {fileID: 0}
