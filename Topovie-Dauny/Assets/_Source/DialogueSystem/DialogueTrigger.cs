@@ -27,7 +27,7 @@ namespace DialogueSystem
 
         private void Update()
         {
-            if (_playerInRange)
+            if (_playerInRange && !_dialogueManager.DialogueIsPlaying)
             {
                 visualCue.gameObject.SetActive(true);
                 if (Input.GetKeyDown(KeyCode.F))

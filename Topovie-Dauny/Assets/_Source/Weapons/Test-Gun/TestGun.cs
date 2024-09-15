@@ -30,12 +30,12 @@ namespace Weapons.Test_Gun
             {
                 HandleShooting();
                 currentBulletsAmount--;
-                Debug.Log($"Bullets: {currentBulletsAmount}");
             }
             
             if (canShoot && currentBulletsAmount == 0)
             {
                 canShoot = false;
+                Debug.Log("Reload");
                 ReloadAsync(CancellationToken.None).Forget();
             }
         }
