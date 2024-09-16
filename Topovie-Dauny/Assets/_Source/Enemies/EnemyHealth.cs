@@ -35,7 +35,7 @@ namespace Enemies
         private void Construct(PlayerMovement playerMovement)
         {
             _playerMovement = playerMovement;
-            _playerTransform = playerMovement.transform;
+            _playerTransform = playerMovement.gameObject.transform;
         }
         private void Start()
         {
@@ -94,14 +94,9 @@ namespace Enemies
                 _aiPathComponent.enabled = false;
                 await gameObject.transform.DOScaleX(0f, 0.5f).ToUniTask();
                 
-                DropMoney();
                 Destroy(gameObject);
             }
         }
-
-        private void DropMoney()
-        {
-            //todo: implement dropping money
-        }
+        
     }
 }
