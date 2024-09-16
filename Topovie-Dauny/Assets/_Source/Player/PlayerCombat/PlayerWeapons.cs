@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using DialogueSystem;
+using UI;
 using UnityEngine;
 using Weapons;
 using Zenject;
@@ -18,11 +19,13 @@ namespace Player.PlayerCombat
         private List<IShooting> _weapons;
         private float _fireTimer;
         private DialogueManager _dialogueManager;
+        private PauseMenu _pauseMenu;
 
         [Inject]
-        public void Construct(DialogueManager dialogueManager)
+        public void Construct(DialogueManager dialogueManager, PauseMenu pauseMenu)
         {
             _dialogueManager = dialogueManager;
+            _pauseMenu = pauseMenu;
         }
 
         private void Awake()
@@ -46,17 +49,20 @@ namespace Player.PlayerCombat
 
         private void HandleShooting()
         {
-            if (Input.GetMouseButton(0) && _fireTimer <= 0)
+            if (!_pauseMenu.IsPaused)
             {
-                Shoot();
-                _fireTimer = _weapons[CurrentActiveWeaponIndex].FireRate;
-            }
-            else
-            {
-                _fireTimer -= Time.deltaTime;
-            }
+                if (Input.GetMouseButton(0) && _fireTimer <= 0)
+                {
+                    Shoot();
+                    _fireTimer = _weapons[CurrentActiveWeaponIndex].FireRate;
+                }
+                else
+                {
+                    _fireTimer -= Time.deltaTime;
+                }
             
-            CheckSwitchWeapon();
+                CheckSwitchWeapon();
+            }
         }
         private void Shoot()
         {

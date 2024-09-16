@@ -7,11 +7,10 @@ namespace UI
 {
     public class PauseMenu: MonoBehaviour
     {
-        [SerializeField] private GameObject pauseMenu;
-        [FormerlySerializedAs("resumeButton")] [SerializeField] private Button optionsButton;
+        [SerializeField] private GameObject pauseMenu; 
+        [SerializeField] private Button optionsButton;
         [SerializeField] private Button exitButton;
-
-        private bool _pauseMenuActive;
+        public bool IsPaused { get; private set; }
         private void Start()
         {
             exitButton.onClick.AddListener(ExitGame);
@@ -21,7 +20,7 @@ namespace UI
         {
             if (Input.GetKeyDown(KeyCode.Escape))
             {
-                if (_pauseMenuActive)
+                if (IsPaused)
                 {
                     ResumeGame();
                 }
@@ -31,15 +30,15 @@ namespace UI
                 }
             }
         }
-        private void PauseGame()
+        public void PauseGame()
         {
-            _pauseMenuActive = true;
+            IsPaused = true;
             pauseMenu.SetActive(true);
             Time.timeScale = 0f;
         }
-        private void ResumeGame()
+        public void ResumeGame()
         {
-            _pauseMenuActive = false;
+            IsPaused = false;
             pauseMenu.SetActive(false);
             Time.timeScale = 1f;
         }
