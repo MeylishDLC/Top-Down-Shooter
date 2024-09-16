@@ -27,13 +27,12 @@ namespace Player.PlayerCombat
 
         private void Awake()
         {
-            _weapons = new();
+            _weapons = new List<IShooting>();
             GetIShootingComponent();
         }
 
         private void Start()
         {
-            
             CurrentActiveWeaponIndex = GetActiveWeaponIndex();
         }
 

@@ -40,7 +40,6 @@ namespace Weapons.Test_Gun
             if (canShoot && currentBulletsAmount == 0)
             {
                 canShoot = false;
-                Debug.Log("Reload");
                 ReloadAsync(CancellationToken.None).Forget();
             }
         }
