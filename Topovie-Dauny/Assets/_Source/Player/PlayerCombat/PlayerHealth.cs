@@ -36,8 +36,8 @@ namespace Player.PlayerCombat
         {
             if (other.gameObject.layer == LayerMask.NameToLayer("Enemy") && _canTakeDamage)
             {
-                //todo: replace this one with actual atk
-                TakeDamage(3);
+                var enemyAttack = other.gameObject.GetComponentInParent<EnemyAttack>();
+                TakeDamage(enemyAttack.Attack);
                 KnockBack.GetKnockedBack(other.gameObject.transform);
             }
         }
