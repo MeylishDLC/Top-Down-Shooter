@@ -24,10 +24,16 @@ namespace Player.PlayerCombat
         {
             _dialogueManager = dialogueManager;
         }
-        private void Start()
+
+        private void Awake()
         {
             _weapons = new();
             GetIShootingComponent();
+        }
+
+        private void Start()
+        {
+            
             CurrentActiveWeaponIndex = GetActiveWeaponIndex();
         }
 
