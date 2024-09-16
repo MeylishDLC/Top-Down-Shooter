@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
@@ -14,7 +15,7 @@ namespace UI
 {
     public class UIHealthDisplay: MonoBehaviour
     {
-        [SerializeField] private TMP_Text playerHealthText;
+        [SerializeField] private Slider healthSlider;
         
         [Header("Heart Pounding")]
         [SerializeField] private Image heartImage;
@@ -38,18 +39,21 @@ namespace UI
             _playerHealth.OnDamageTaken += InstantiateDamageText;
             _playerHealth.OnDamageTaken += AnimateHeart;
         }
+        private void Start()
+        {
+            UpdateSliderValue();
+        }
         private void OnDestroy()
         {
             _playerHealth.OnDamageTaken -= InstantiateDamageText;
             _playerHealth.OnDamageTaken -= AnimateHeart;
         }
-
         private void Update()
         {
-            playerHealthText.text = _playerHealth.CurrentHealth.ToString();
+            UpdateSliderValue();
         }
 
-        private void InstantiateDamageText(int damage)
+        private void InstantiateDamageText(float damage)
         {
             var playerPos = _playerHealth.transform.position;
             
@@ -57,10 +61,16 @@ namespace UI
 
             var tmpText = Instantiate(damageTextPrefab, spawnPosition, Quaternion.identity, gameCanvas.transform).GetComponent<TMP_Text>();
 
-            tmpText.text = $"-{damage.ToString()}";
+            tmpText.text = $"-{damage.ToString(CultureInfo.InvariantCulture)}";
         }
 
-        private void AnimateHeart(int _)
+        private void UpdateSliderValue()
+        {
+            var currentHealth = _playerHealth.CurrentHealth;
+            var maxHealth = _playerHealth.MaxHealth;
+            healthSlider.value = currentHealth / maxHealth;
+        }
+        private void AnimateHeart(float _)
         {
             if (!_heartIsAnimated)
             {

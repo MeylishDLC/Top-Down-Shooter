@@ -23,6 +23,7 @@ namespace Enemies
         [SerializeField] private int knockBackTimeMilliseconds = 200;
         [SerializeField] private float knockbackThrust = 15f;
 
+        private Transform _playerTransform;
         private AIPath _aiPathComponent;
         private SpriteRenderer _spriteRenderer;
         private KnockBack _knockBack;
@@ -34,12 +35,16 @@ namespace Enemies
         private void Construct(PlayerMovement playerMovement)
         {
             _playerMovement = playerMovement;
+            _playerTransform = playerMovement.transform;
         }
         private void Start()
         {
             _currentHealth = maxHealth;
             _aiPathComponent = GetComponent<AIPath>();
             _spriteRenderer = GetComponent<SpriteRenderer>();
+
+            var destinationSetter = GetComponent<AIDestinationSetter>();
+            destinationSetter.target = _playerTransform;
             
             _knockBack = new(GetComponent<Rigidbody2D>(), knockBackTimeMilliseconds, knockbackThrust);
         }
