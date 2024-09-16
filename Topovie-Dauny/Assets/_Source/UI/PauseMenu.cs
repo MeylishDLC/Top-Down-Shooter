@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace UI
@@ -7,14 +8,14 @@ namespace UI
     public class PauseMenu: MonoBehaviour
     {
         [SerializeField] private GameObject pauseMenu;
-        [SerializeField] private Button resumeButton;
+        [FormerlySerializedAs("resumeButton")] [SerializeField] private Button optionsButton;
         [SerializeField] private Button exitButton;
 
         private bool _pauseMenuActive;
         private void Start()
         {
             exitButton.onClick.AddListener(ExitGame);
-            resumeButton.onClick.AddListener(ExitGame);
+            optionsButton.onClick.AddListener(OpenOptionsPanel);
         }
         private void Update()
         {
@@ -42,8 +43,14 @@ namespace UI
             pauseMenu.SetActive(false);
             Time.timeScale = 1f;
         }
+
+        private void OpenOptionsPanel()
+        {
+            
+        }
         private void ExitGame()
         {
+            Debug.Log("Quitting game");
             Application.Quit();
         }
     }

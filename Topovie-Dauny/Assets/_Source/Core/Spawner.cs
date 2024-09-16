@@ -1,58 +1,64 @@
 ﻿using System.Threading;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.Serialization;
 using Zenject;
 
 namespace Core
 {
-     public class Spawner: MonoBehaviour
-            {
-                [SerializeField] private SceneContext sceneContext;
-            
-                [Header("Spawning")]
-                [SerializeField] private Transform[] spawnPoints;
-                [SerializeField] private float spawnRange;
-                [SerializeField] private GameObject[] enemiesPrefabs; 
-                [SerializeField] private GameObject[] bulletPatternsPrefabs;
-            
-                [Header("Timings")] 
-                [SerializeField] private int timeBetweenSpawnMilliseconds;
-                [SerializeField] private int spawningTimeMilliseconds;
-            
-    
-                private void Start()
-                {
-                    StartSpawningAsync(CancellationToken.None).Forget();
-                }
-    
-                private void SpawnRandomly()
-                {
-                    var randomSpawn = spawnPoints[Random.Range(0, spawnPoints.Length - 1)];
-                    var randomEnemy = enemiesPrefabs[Random.Range(0, enemiesPrefabs.Length - 1)];
+    //todo: meylish what the fuck refactor this later
+    public static class Spawner
+    {
+        public static void SpawnRandomlyWithInjection(Transform[] spawnPoints, GameObject[] enemyPrefabs, SceneContext currentSceneContext)
+        {
+            var randomSpawn = spawnPoints[Random.Range(0, spawnPoints.Length - 1)];
+            var randomEnemy = enemyPrefabs[Random.Range(0, enemyPrefabs.Length - 1)];
                 
-                    sceneContext.Container.InstantiatePrefab(randomEnemy, GetRandomPositionWithinSpawnRange(randomSpawn),
-                        Quaternion.identity, randomSpawn);
-                }
-    
-                private async UniTask StartSpawningAsync(CancellationToken token)
+            currentSceneContext.Container.InstantiatePrefab(randomEnemy, GetRandomPositionWithinSpawnRange(randomSpawn, Random.Range(0.1f, 0.5f)),
+                Quaternion.identity, randomSpawn);
+        }
+        
+        public static void SpawnEnemiesDuringTime(Transform[] spawnPoints, GameObject[] enemyPrefabs, SceneContext currentSceneContext,
+            float spawnDuration, int delayBetweenSpawn, int maxEnemiesAtOnce, bool randomiseEnemiesAmount)
+        {
+            SpawnDuringTime(spawnPoints, enemyPrefabs, currentSceneContext, spawnDuration, delayBetweenSpawn, 
+                maxEnemiesAtOnce, randomiseEnemiesAmount, CancellationToken.None).Forget();
+        }
+
+        private static async UniTask SpawnDuringTime(Transform[] spawnPoints, GameObject[] enemyPrefabs, SceneContext currentSceneContext,
+            float spawnDuration, int delayBetweenSpawn, int maxEnemiesAtOnce, bool randomiseEnemiesAmount, CancellationToken token)
+        {
+            var startTime = Time.time;
+            
+            while (Time.time - startTime < spawnDuration)
+            {
+                await UniTask.Delay(delayBetweenSpawn, cancellationToken: token);
+
+                if (randomiseEnemiesAmount)
                 {
-                    while (true)
+                    var randomAmount = Random.Range(1, maxEnemiesAtOnce+1);
+                    for (var i = 0; i < randomAmount; i++)
                     {
-                        await UniTask.Delay(timeBetweenSpawnMilliseconds, cancellationToken: token);
-                        SpawnRandomly();
+                        SpawnRandomlyWithInjection(spawnPoints, enemyPrefabs, currentSceneContext);
                     }
                 }
-    
-                private Vector3 GetRandomPositionWithinSpawnRange(Transform spawn)
+                else
                 {
-                    var randomOffset = new Vector3(
-                        Random.Range(-spawnRange, spawnRange),
-                        Random.Range(-spawnRange, spawnRange),
-                        Random.Range(-spawnRange, spawnRange)
-                    );
-                    var spawnPosition = spawn.position + randomOffset;
-                    return spawnPosition;
+                    for (var i = 0; i < maxEnemiesAtOnce; i++)
+                    {
+                        SpawnRandomlyWithInjection(spawnPoints, enemyPrefabs, currentSceneContext);
+                    }
                 }
             }
+        } 
+        private static Vector3 GetRandomPositionWithinSpawnRange(Transform spawn, float spawnRange)
+        {
+            var randomOffset = new Vector3(
+                Random.Range(-spawnRange, spawnRange),
+                Random.Range(-spawnRange, spawnRange),
+                Random.Range(-spawnRange, spawnRange)
+            );
+            var spawnPosition = spawn.position + randomOffset;
+            return spawnPosition;
+        }
+    }
 }
