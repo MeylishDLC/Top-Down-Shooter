@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 745394447864189545}
   - component: {fileID: 6619848632396508895}
   - component: {fileID: 3686213671687945947}
+  - component: {fileID: -8308885871178023761}
   m_Layer: 0
   m_Name: Leo
   m_TagString: Untagged
@@ -197,7 +198,7 @@ MonoBehaviour:
   radius: 1.17
   height: 0.01
   canMove: 1
-  maxSpeed: 1
+  maxSpeed: 2
   gravity: {x: NaN, y: NaN, z: NaN}
   groundMask:
     serializedVersion: 2
@@ -249,12 +250,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6f14e666d8a48a88fb19fab3b624f8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 30
+  maxHealth: 20
   maxMoneyDrop: 10
   colorOnDamageTaken: {r: 0.9725491, g: 0.38823533, b: 0.38823533, a: 1}
   stayTimeMilliseconds: 100
   knockBackTimeMilliseconds: 0
   knockbackThrust: 0
+--- !u!114 &-8308885871178023761
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3739623183934700978}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5262b00d5dc942d4b08e51eaf51c2abe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Attack>k__BackingField: 5
 --- !u!1 &8879187081392620469
 GameObject:
   m_ObjectHideFlags: 0

@@ -39,8 +39,8 @@ namespace Core
                 {
                     while (true)
                     {
-                        SpawnRandomly();
                         await UniTask.Delay(timeBetweenSpawnMilliseconds, cancellationToken: token);
+                        SpawnRandomly();
                     }
                 }
     
