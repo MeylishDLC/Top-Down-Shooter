@@ -9,13 +9,11 @@ namespace Player.PlayerCombat
 {
     public class PlayerHealth : MonoBehaviour
     {
-        public int CurrentHealth { get; private set; }
-        public KnockBack KnockBack { get; private set; }
-
-        public event Action<int> OnDamageTaken;
+        public event Action<float> OnDamageTaken;
         public event Action OnDeath;
-
-        [SerializeField] private int maxHealth;
+        public float CurrentHealth { get; private set; }
+        [field:SerializeField] public float MaxHealth { get; private set; }
+        public KnockBack KnockBack { get; private set; }
         
         [Header("Knockback Settings")] 
         [SerializeField] private float knockbackThrust;
@@ -31,7 +29,7 @@ namespace Player.PlayerCombat
         }
         private void Start()
         {
-            CurrentHealth = maxHealth;
+            CurrentHealth = MaxHealth;
         }
 
         private void OnTriggerStay2D(Collider2D other)

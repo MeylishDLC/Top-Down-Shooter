@@ -8,12 +8,13 @@ namespace Weapons.Test_Gun
 {
     public class TestGun: MonoBehaviour, IShooting
     {
+        public event Action<int> OnBulletsAmountChange;
         public bool IsUnlocked { get; set; }
+        [field:SerializeField] public int BulletsAmount { get; set; }
         [field: Range(0.01f, 1f)] [field:SerializeField] public float FireRate { get; set; }
         
         [SerializeField] private GameObject bulletPrefab;
         [SerializeField] private Animator firingPointAnimator;
-        [SerializeField] private int maxBullets = 100;
         [SerializeField] private int reloadTimeMilliseconds = 1000;
         [SerializeField] private TMP_Text reloadingText;
    
@@ -24,7 +25,7 @@ namespace Weapons.Test_Gun
 
         private void Start()
         {
-            currentBulletsAmount = maxBullets;
+            currentBulletsAmount = BulletsAmount;
         }
 
         public void Shoot()
@@ -33,12 +34,12 @@ namespace Weapons.Test_Gun
             {
                 HandleShooting();
                 currentBulletsAmount--;
+                OnBulletsAmountChange?.Invoke(currentBulletsAmount);
             }
             
             if (canShoot && currentBulletsAmount == 0)
             {
                 canShoot = false;
-                Debug.Log("Reload");
                 ReloadAsync(CancellationToken.None).Forget();
             }
         }
@@ -55,7 +56,7 @@ namespace Weapons.Test_Gun
             reloadingText.gameObject.SetActive(true);
             await UniTask.Delay(reloadTimeMilliseconds, cancellationToken: token);
             reloadingText.gameObject.SetActive(false);
-            currentBulletsAmount = maxBullets;
+            currentBulletsAmount = BulletsAmount;
             canShoot = true;
         }
         

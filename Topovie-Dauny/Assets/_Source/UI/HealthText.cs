@@ -4,6 +4,7 @@ using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace UI
 {
@@ -23,15 +24,14 @@ namespace UI
         {
             Disappear(CancellationToken.None).Forget();
         }
-
+        private void Update()
+        {
+            _textTransform.position += moveSpeed * Time.deltaTime;
+        }
         private async UniTask Disappear(CancellationToken token)
         {
             await _tmpText.DOFade(0f, timeToFade).ToUniTask(cancellationToken: token);
             Destroy(gameObject);
-        }
-        private void Update()
-        {
-            _textTransform.position += moveSpeed * Time.deltaTime;
         }
     }
 }
