@@ -2,6 +2,7 @@
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using Player.PlayerMovement;
+using Player.PlayerMovement.GunMovement;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -24,26 +25,23 @@ namespace Weapons.Test_Gun
         [Header("Components")]
         [SerializeField] private Animator firingPointAnimator;
         [SerializeField] private TMP_Text reloadingText;
-        
-        [Header("Kickback")]
-   
+
+        [Header("Kickback")] 
+        [SerializeField] private Transform kickbackTransform;
+        [SerializeField] private float kickbackDistance;
+        [SerializeField] private float kickbackDuration;
    
         private static readonly int shoot = Animator.StringToHash("shoot");
 
         private int _currentBulletsAmount;
         private bool _canShoot = true;
-        private PlayerMovement _playerMovement;
 
-        [Inject]
-        public void Construct(PlayerMovement playerMovement)
+        private PlayerKickback _playerKickback;
+        private void Awake()
         {
-            _playerMovement = playerMovement;
-        }
-        private void Start()
-        {
+            _playerKickback = new PlayerKickback(kickbackDistance, kickbackDuration,transform, kickbackTransform);
             _currentBulletsAmount = BulletsAmount;
         }
-
         public void Shoot()
         {
             if (_canShoot && _currentBulletsAmount > 0)
@@ -65,6 +63,7 @@ namespace Weapons.Test_Gun
             firingPointAnimator.SetTrigger(shoot);
             var firingPointTransform = firingPointAnimator.transform;
             Instantiate(bulletPrefab, firingPointTransform.position, firingPointTransform.rotation);
+            _playerKickback.ApplyKickback(CancellationToken.None).Forget();
         }
 
         private async UniTask ReloadAsync(CancellationToken token)
