@@ -39,7 +39,7 @@ namespace UI
         {
             _levelSetter.OnStateChanged += ChangeStateText;
             _levelSetter.OnStateChanged += EnableSliderOnChangeState;
-            Spawner.OnFightStateStartTime += StartTimeTracking;
+            _levelSetter.OnTimeRemainingChanged += UpdateSliderValue;
         }
         private void Start()
         {
@@ -50,9 +50,9 @@ namespace UI
         }
         void OnDestroy()
         {
-            Spawner.OnFightStateStartTime -= StartTimeTracking;
             _levelSetter.OnStateChanged -= ChangeStateText;
             _levelSetter.OnStateChanged -= EnableSliderOnChangeState;
+            _levelSetter.OnTimeRemainingChanged -= UpdateSliderValue;
         }
         
         private void UpdateSliderValue(float remainingTime, float duration)
@@ -61,24 +61,6 @@ namespace UI
             {
                 timeRemainingSlider.value = remainingTime / duration;
             }
-        }
-        private void StartTimeTracking(float startTime, float duration)
-        {
-            UpdateTimeRemainingAsync(startTime, duration, CancellationToken.None).Forget();
-        }
-
-        private async UniTask UpdateTimeRemainingAsync(float startTime, float duration, CancellationToken token)
-        {
-            timeRemainingSlider.value = 1f;
-
-            while (Time.time - startTime < duration)
-            {
-                var remainingTime = duration - (Time.time - startTime);
-                UpdateSliderValue(remainingTime, duration);
-                await UniTask.Yield();
-            }
-
-            UpdateSliderValue(0, duration);
         }
         private void ChangeStateText(States state)
         {

@@ -1963,6 +1963,22 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1017169983}
     - target: {fileID: 9151122059598083736, guid: 506894731c8d5e44ca2900f8595de1f5, type: 3}
+      propertyPath: portalCharges.Array.data[0].<MaxEnemySpawnAtOnce>k__BackingField
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9151122059598083736, guid: 506894731c8d5e44ca2900f8595de1f5, type: 3}
+      propertyPath: portalCharges.Array.data[0].<TimeToActivatePencil>k__BackingField
+      value: 120
+      objectReference: {fileID: 0}
+    - target: {fileID: 9151122059598083736, guid: 506894731c8d5e44ca2900f8595de1f5, type: 3}
+      propertyPath: portalCharges.Array.data[1].<TimeToActivatePencil>k__BackingField
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 9151122059598083736, guid: 506894731c8d5e44ca2900f8595de1f5, type: 3}
+      propertyPath: portalCharges.Array.data[2].<TimeToActivatePencil>k__BackingField
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 9151122059598083736, guid: 506894731c8d5e44ca2900f8595de1f5, type: 3}
       propertyPath: portalCharges.Array.data[1].<SpawnPoints>k__BackingField.Array.size
       value: 4
       objectReference: {fileID: 0}

@@ -13,6 +13,6 @@ namespace Core
         [field:Header("Time Settings")]
         [field:SerializeField] public int MaxTimeBetweenSpawnMilliseconds { get; private set; }
         [field:SerializeField] public int MinTimeBetweenSpawnMilliseconds { get; private set; }
-        [field:SerializeField] public float WaveDurationSeconds { get; private set; }
+        [field:SerializeField] public float TimeToActivatePencil { get; private set; }
     }
 }

@@ -47,7 +47,6 @@ namespace Player.PlayerCombat
             CurrentHealth -= damageAmount;
             OnDamageTaken?.Invoke(damageAmount);
             
-            Debug.Log($"{CurrentHealth}");
             RecoverFromDamageAsync(CancellationToken.None).Forget();
             CheckIfDead();
         }
