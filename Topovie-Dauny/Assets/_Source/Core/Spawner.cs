@@ -17,13 +17,6 @@ namespace Core
                 Quaternion.identity, randomSpawn);
         }
         
-        public static void SpawnEnemiesDuringTime(Transform[] spawnPoints, GameObject[] enemyPrefabs, SceneContext currentSceneContext,
-            float spawnDuration, int maxDelayBetweenSpawn, int minDelayBetweenSpawn,int maxEnemiesAtOnce, bool randomiseEnemiesAmount)
-        {
-            SpawnEnemiesDuringTimeAsync(spawnPoints, enemyPrefabs, currentSceneContext, spawnDuration, maxDelayBetweenSpawn, minDelayBetweenSpawn,  
-                maxEnemiesAtOnce, randomiseEnemiesAmount, CancellationToken.None).Forget();
-        }
-
         public static async UniTask SpawnEnemiesDuringTimeAsync(Transform[] spawnPoints, GameObject[] enemyPrefabs, SceneContext currentSceneContext,
             float spawnDuration, int maxDelayBetweenSpawn, int minDelayBetweenSpawn, int maxEnemiesAtOnce, bool randomiseEnemiesAmount, CancellationToken token)
         {

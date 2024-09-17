@@ -10,47 +10,46 @@ using Zenject;
 namespace Core
 {
      public class LevelSetter: MonoBehaviour
-            {
-                [SerializeField] private SceneContext sceneContext;
-                [SerializeField] private ShopTrigger shopTrigger;
-                [SerializeField] private EnemyWave[] portalCharges;
+     {
+         public event Action<States> OnStateChanged;
 
-                [Header("Time Settings")] 
-                [SerializeField] private int changeStateDelayMilliseconds;
-                
-                private States _currentState = States.Chill;
-                private int _currentPortalChargeIndex;
-                private void Start()
-                {
-                    shopTrigger.OnChargePortalPressed += StartChargingPortal;
-                }
+         [SerializeField] private SceneContext sceneContext;
+         [SerializeField] private ShopTrigger shopTrigger;
+         [SerializeField] private EnemyWave[] portalCharges;
 
-                private void Update()
-                {
-                    shopTrigger.gameObject.SetActive(_currentState == States.Chill);
-                }
+         [Header("Time Settings")] [SerializeField]
+         private int changeStateDelayMilliseconds;
 
-                private void StartChargingPortal()
-                {
-                    _currentState = States.Fight;
-                    HandleSpawningEnemies(CancellationToken.None).Forget();
-                }
+         private States _currentState = States.Chill;
+         private int _currentPortalChargeIndex;
 
-                private async UniTask HandleSpawningEnemies(CancellationToken token)
-                {
-                    var enemyWave = portalCharges[_currentPortalChargeIndex]; 
-                    
-                    await Spawner.SpawnEnemiesDuringTimeAsync(enemyWave.SpawnPoints, enemyWave.EnemyPrefabs, sceneContext, 
-                        enemyWave.WaveDurationSeconds, enemyWave.MaxTimeBetweenSpawnMilliseconds, 
-                        enemyWave.MinTimeBetweenSpawnMilliseconds, enemyWave.MaxEnemySpawnAtOnce, true, token);
+         private void Start()
+         {
+             shopTrigger.OnChargePortalPressed += StartChargingPortal;
+         }
 
-                    await UniTask.Delay(changeStateDelayMilliseconds, cancellationToken: token);
-                    _currentState = States.Chill;
-                }
-                private enum States
-                {
-                    Fight,
-                    Chill
-                }
-            }
+         private void Update()
+         {
+             shopTrigger.gameObject.SetActive(_currentState == States.Chill);
+         }
+
+         private void StartChargingPortal()
+         {
+             _currentState = States.Fight;
+             HandleSpawningEnemies(CancellationToken.None).Forget();
+         }
+
+         private async UniTask HandleSpawningEnemies(CancellationToken token)
+         {
+             var enemyWave = portalCharges[_currentPortalChargeIndex];
+
+             await Spawner.SpawnEnemiesDuringTimeAsync(enemyWave.SpawnPoints, enemyWave.EnemyPrefabs, sceneContext,
+                 enemyWave.WaveDurationSeconds, enemyWave.MaxTimeBetweenSpawnMilliseconds,
+                 enemyWave.MinTimeBetweenSpawnMilliseconds, enemyWave.MaxEnemySpawnAtOnce, true, token);
+
+             await UniTask.Delay(changeStateDelayMilliseconds, cancellationToken: token);
+             _currentState = States.Chill;
+         }
+         
+     }
 }

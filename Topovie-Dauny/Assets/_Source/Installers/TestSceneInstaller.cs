@@ -1,3 +1,4 @@
+using Core;
 using DialogueSystem;
 using Player.PlayerMovement;
 using UI;
@@ -8,16 +9,15 @@ namespace Installers
 {
     public class TestSceneInstaller : MonoInstaller
     {
+        [SerializeField] private LevelSetter levelSetter;
         [SerializeField] private DialogueManager dialogueManager;
         [SerializeField] private GameObject player;
-        [SerializeField] private PauseMenu pauseMenu;
         public override void InstallBindings()
         {
             BindDialogueManager();
             BindPlayer();
-            BindPauseMenu();
+            BindLevelSetter();
         }
-
         private void BindDialogueManager()
         {
             Container.Bind<DialogueManager>().FromInstance(dialogueManager).AsSingle();
@@ -26,9 +26,10 @@ namespace Installers
         {
             Container.Bind<PlayerMovement>().FromComponentOn(player).AsSingle();
         }
-        private void BindPauseMenu()
+
+        private void BindLevelSetter()
         {
-            Container.Bind<PauseMenu>().FromInstance(pauseMenu).AsSingle();
+            Container.Bind<LevelSetter>().FromInstance(levelSetter).AsSingle();
         }
     }
 }

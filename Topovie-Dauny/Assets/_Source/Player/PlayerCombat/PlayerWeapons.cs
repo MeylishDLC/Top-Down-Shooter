@@ -19,13 +19,11 @@ namespace Player.PlayerCombat
         private List<IShooting> _weapons;
         private float _fireTimer;
         private DialogueManager _dialogueManager;
-        private PauseMenu _pauseMenu;
 
         [Inject]
-        public void Construct(DialogueManager dialogueManager, PauseMenu pauseMenu)
+        public void Construct(DialogueManager dialogueManager)
         {
             _dialogueManager = dialogueManager;
-            _pauseMenu = pauseMenu;
         }
 
         private void Awake()
@@ -49,20 +47,17 @@ namespace Player.PlayerCombat
 
         private void HandleShooting()
         {
-            if (!_pauseMenu.IsPaused)
+            if (Input.GetMouseButton(0) && _fireTimer <= 0)
             {
-                if (Input.GetMouseButton(0) && _fireTimer <= 0)
-                {
-                    Shoot();
-                    _fireTimer = _weapons[CurrentActiveWeaponIndex].FireRate;
-                }
-                else
-                {
-                    _fireTimer -= Time.deltaTime;
-                }
-            
-                CheckSwitchWeapon();
+                Shoot();
+                _fireTimer = _weapons[CurrentActiveWeaponIndex].FireRate;
             }
+            else
+            {
+                _fireTimer -= Time.deltaTime;
+            }
+            
+            CheckSwitchWeapon();
         }
         private void Shoot()
         {
