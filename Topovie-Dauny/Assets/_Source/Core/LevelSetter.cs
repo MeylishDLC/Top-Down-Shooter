@@ -71,7 +71,6 @@ namespace Core
 
              if (!token.IsCancellationRequested)
              {
-                 //stops enemy spawning
                  _chargingFinishCts.Cancel();
                  _chargingFinishCts.Dispose();
                  _chargingFinishCts = new();

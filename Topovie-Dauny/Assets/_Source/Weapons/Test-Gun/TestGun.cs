@@ -7,6 +7,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Serialization;
 using Zenject;
+using Random = UnityEngine.Random;
 
 namespace Weapons.Test_Gun
 {
@@ -26,10 +27,11 @@ namespace Weapons.Test_Gun
         [SerializeField] private Animator firingPointAnimator;
         [SerializeField] private TMP_Text reloadingText;
 
-        [Header("Kickback")] 
+        [Header("Kickback And Dispersion")] 
         [SerializeField] private Transform kickbackTransform;
         [SerializeField] private float kickbackDistance;
         [SerializeField] private float kickbackDuration;
+        [SerializeField] private float dispersionAngle;
    
         private static readonly int shoot = Animator.StringToHash("shoot");
 
@@ -62,10 +64,20 @@ namespace Weapons.Test_Gun
         {
             firingPointAnimator.SetTrigger(shoot);
             var firingPointTransform = firingPointAnimator.transform;
-            Instantiate(bulletPrefab, firingPointTransform.position, firingPointTransform.rotation);
+            var bullet = Instantiate(bulletPrefab, firingPointTransform.position, firingPointTransform.rotation);
+            bullet.transform.right = GetBulletDirectionWithDispersion();
+            
             _playerKickback.ApplyKickback(CancellationToken.None).Forget();
         }
 
+        private Vector3 GetBulletDirectionWithDispersion()
+        {
+            var randomAngle = Random.Range(-dispersionAngle, dispersionAngle);
+
+            var dispersionRotation = Quaternion.Euler(0, 0, randomAngle);
+            var bulletDirection = dispersionRotation * transform.right;
+            return bulletDirection;
+        }
         private async UniTask ReloadAsync(CancellationToken token)
         {
             reloadingText.gameObject.SetActive(true);

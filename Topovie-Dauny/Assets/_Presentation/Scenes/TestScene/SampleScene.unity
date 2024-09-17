@@ -1732,6 +1732,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 8125008176849786234, guid: af35db23b32508c4ab8e46f098395935, type: 3}
+      propertyPath: dispersionAngle
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 8125008176849786234, guid: af35db23b32508c4ab8e46f098395935, type: 3}
+      propertyPath: kickbackDistance
+      value: 0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 8125008176849786234, guid: af35db23b32508c4ab8e46f098395935, type: 3}
+      propertyPath: <FireRate>k__BackingField
+      value: 0.03
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
