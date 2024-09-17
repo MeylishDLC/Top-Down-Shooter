@@ -12,7 +12,6 @@ namespace Enemies
     public class EnemyHealth: MonoBehaviour
     {
         [SerializeField] private int maxHealth;
-        [SerializeField] private int maxMoneyDrop;
         
         [Header("Color Changing")]
         [SerializeField] private Color colorOnDamageTaken;
@@ -91,7 +90,7 @@ namespace Enemies
             {
                 _isDead = true;
                 _aiPathComponent.enabled = false;
-                await gameObject.transform.DOScaleX(0f, 0.5f).ToUniTask();
+                await gameObject.transform.DOScaleX(0f, 0.5f).ToUniTask(cancellationToken: token);
                 
                 Destroy(gameObject);
             }
