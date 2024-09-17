@@ -3,6 +3,7 @@ using DialogueSystem;
 using Player.PlayerMovement;
 using UI;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Zenject;
 
 namespace Installers
@@ -11,7 +12,7 @@ namespace Installers
     {
         [SerializeField] private LevelSetter levelSetter;
         [SerializeField] private DialogueManager dialogueManager;
-        [SerializeField] private GameObject player;
+        [SerializeField] private GameObject playerObject;
         [SerializeField] private UIShopDisplay uiShopDisplay;
         public override void InstallBindings()
         {
@@ -26,7 +27,7 @@ namespace Installers
         }
         private void BindPlayer()
         {
-            Container.Bind<PlayerMovement>().FromComponentOn(player).AsSingle();
+            Container.Bind<PlayerMovement>().FromComponentOn(playerObject).AsSingle();
         }
         private void BindLevelSetter()
         {
