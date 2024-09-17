@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Threading;
 using Cysharp.Threading.Tasks;
+using Player.PlayerMovement;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
+using Zenject;
 
 namespace Weapons.Test_Gun
 {
@@ -10,36 +13,49 @@ namespace Weapons.Test_Gun
     {
         public event Action<int> OnBulletsAmountChange;
         public bool IsUnlocked { get; set; }
+        
+        [field:Header("Main Settings")]
+        [field:SerializeField] public bool ShootOnHold { get; set; }
         [field:SerializeField] public int BulletsAmount { get; set; }
         [field: Range(0.01f, 1f)] [field:SerializeField] public float FireRate { get; set; }
-        
-        [SerializeField] private GameObject bulletPrefab;
-        [SerializeField] private Animator firingPointAnimator;
         [SerializeField] private int reloadTimeMilliseconds = 1000;
+        [SerializeField] private GameObject bulletPrefab;
+        
+        [Header("Components")]
+        [SerializeField] private Animator firingPointAnimator;
         [SerializeField] private TMP_Text reloadingText;
+        
+        [Header("Kickback")]
+   
    
         private static readonly int shoot = Animator.StringToHash("shoot");
 
-        private int currentBulletsAmount;
-        private bool canShoot = true;
+        private int _currentBulletsAmount;
+        private bool _canShoot = true;
+        private PlayerMovement _playerMovement;
 
+        [Inject]
+        public void Construct(PlayerMovement playerMovement)
+        {
+            _playerMovement = playerMovement;
+        }
         private void Start()
         {
-            currentBulletsAmount = BulletsAmount;
+            _currentBulletsAmount = BulletsAmount;
         }
 
         public void Shoot()
         {
-            if (canShoot && currentBulletsAmount > 0)
+            if (_canShoot && _currentBulletsAmount > 0)
             {
                 HandleShooting();
-                currentBulletsAmount--;
-                OnBulletsAmountChange?.Invoke(currentBulletsAmount);
+                _currentBulletsAmount--;
+                OnBulletsAmountChange?.Invoke(_currentBulletsAmount);
             }
             
-            if (canShoot && currentBulletsAmount == 0)
+            if (_canShoot && _currentBulletsAmount == 0)
             {
-                canShoot = false;
+                _canShoot = false;
                 ReloadAsync(CancellationToken.None).Forget();
             }
         }
@@ -56,8 +72,8 @@ namespace Weapons.Test_Gun
             reloadingText.gameObject.SetActive(true);
             await UniTask.Delay(reloadTimeMilliseconds, cancellationToken: token);
             reloadingText.gameObject.SetActive(false);
-            currentBulletsAmount = BulletsAmount;
-            canShoot = true;
+            _currentBulletsAmount = BulletsAmount;
+            _canShoot = true;
         }
         
     }

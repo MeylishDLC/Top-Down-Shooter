@@ -34,9 +34,16 @@ namespace Core
 
          private void StartChargingPortal()
          {
-             _currentState = States.Fight;
-             OnStateChanged?.Invoke(_currentState);
-             HandleSpawningEnemies(CancellationToken.None).Forget();
+             if (_currentPortalChargeIndex < portalCharges.Length)
+             {
+                 _currentState = States.Fight;
+                 OnStateChanged?.Invoke(_currentState);
+                 HandleSpawningEnemies(CancellationToken.None).Forget();
+             }
+             else
+             {
+                 Debug.Log("Level passed");
+             }
          }
 
          private async UniTask HandleSpawningEnemies(CancellationToken token)
@@ -49,6 +56,7 @@ namespace Core
              
              ClearAllSpawnsImmediate();
              await UniTask.Delay(changeStateDelayMilliseconds, cancellationToken: token);
+             _currentPortalChargeIndex++;
              _currentState = States.Chill;
              OnStateChanged?.Invoke(_currentState);
          }

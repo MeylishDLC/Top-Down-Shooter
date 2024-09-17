@@ -1,5 +1,7 @@
 ﻿using System;
+using UI;
 using UnityEngine;
+using Zenject;
 
 namespace Shop
 {
@@ -8,20 +10,22 @@ namespace Shop
         public event Action OnChargePortalPressed;
         
         [SerializeField] private SpriteRenderer visualQue;
-        [SerializeField] private GameObject shop;
-        [SerializeField] private GameObject playerGUI;
         [SerializeField] private float holdChargePortalButtonDuration;
         
         private bool _isHoldingButton;
         private float _holdStartTime;
         private bool _playerInRange;
-        
-        //todo finish
+        private UIShopDisplay _uiShopDisplay;
+
+        [Inject]
+        public void Construct(UIShopDisplay uiShopDisplay)
+        {
+            _uiShopDisplay = uiShopDisplay;
+        }
         private void Start()
         {
             visualQue.gameObject.SetActive(false);
-            shop.SetActive(false);
-            playerGUI.SetActive(true);
+            _uiShopDisplay.CloseShop();
         }
         private void Update()
         {
@@ -30,8 +34,7 @@ namespace Shop
                 visualQue.gameObject.SetActive(true);
                 if (Input.GetKeyDown(KeyCode.F))
                 {
-                    shop.SetActive(true);
-                    playerGUI.SetActive(false);
+                    _uiShopDisplay.OpenShop();
                 }
                 HandleChargePortalButtonHold();
             }

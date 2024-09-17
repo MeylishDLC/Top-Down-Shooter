@@ -349,8 +349,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   visualQue: {fileID: 1089014755}
-  shop: {fileID: 220310015}
-  playerGUI: {fileID: 608719560}
   holdChargePortalButtonDuration: 2
 --- !u!1 &65898078
 GameObject:
@@ -1875,7 +1873,6 @@ GameObject:
   - component: {fileID: 328847762}
   - component: {fileID: 328847764}
   - component: {fileID: 328847763}
-  - component: {fileID: 328847765}
   m_Layer: 5
   m_Name: DeathScreen
   m_TagString: Untagged
@@ -1942,20 +1939,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 328847761}
   m_CullTransparentMesh: 1
---- !u!114 &328847765
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 328847761}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5c44c64d29fa44f2b1a07e66667632ef, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gameOverScreen: {fileID: 328847761}
-  restartButton: {fileID: 177397500}
 --- !u!1 &385111421
 GameObject:
   m_ObjectHideFlags: 0
@@ -3404,6 +3387,8 @@ GameObject:
   - component: {fileID: 676789292}
   - component: {fileID: 676789294}
   - component: {fileID: 676789296}
+  - component: {fileID: 676789298}
+  - component: {fileID: 676789297}
   m_Layer: 0
   m_Name: UIManager
   m_TagString: Untagged
@@ -3478,6 +3463,35 @@ MonoBehaviour:
   chillStateTextColor: {r: 0.2392157, g: 0.37254903, b: 0.2509804, a: 1}
   attackStateText: ATTACK TIME
   attackStateTextColor: {r: 0.79215693, g: 0.23137257, b: 0.19607845, a: 1}
+--- !u!114 &676789297
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 676789290}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c44c64d29fa44f2b1a07e66667632ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameOverScreen: {fileID: 328847761}
+  restartButton: {fileID: 177397500}
+--- !u!114 &676789298
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 676789290}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2fa505c01cc74761b66fa2ec60d87c47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shopUI: {fileID: 220310015}
+  playerGUI: {fileID: 608719560}
+  closeButton: {fileID: 304840711}
 --- !u!1 &699326927
 GameObject:
   m_ObjectHideFlags: 0
@@ -4043,7 +4057,7 @@ MonoBehaviour:
     - {fileID: 1017169983}
     <EnemyPrefabs>k__BackingField:
     - {fileID: 3739623183934700978, guid: 23b9ff02b0de4e24e9ab088bacd9e9c6, type: 3}
-    <MaxEnemySpawnAtOnce>k__BackingField: 4
+    <MaxEnemySpawnAtOnce>k__BackingField: 3
     <RandomizeEnemySpawnAmount>k__BackingField: 1
     <MaxTimeBetweenSpawnMilliseconds>k__BackingField: 4000
     <MinTimeBetweenSpawnMilliseconds>k__BackingField: 2000
@@ -4791,12 +4805,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0884d62387a464c8e2ef1b583d6d33f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <ShootOnHold>k__BackingField: 0
   <BulletsAmount>k__BackingField: 50
   <FireRate>k__BackingField: 0.1
+  reloadTimeMilliseconds: 1500
   bulletPrefab: {fileID: 553695123358261265, guid: 7cd42f4056a103942b84e2d6e5021c49, type: 3}
   firingPointAnimator: {fileID: 1022301070}
-  reloadTimeMilliseconds: 1500
   reloadingText: {fileID: 582048432}
+  kickbackForce: 300
+  kickbackDurationMilliseconds: 100
 --- !u!1 &904938327
 GameObject:
   m_ObjectHideFlags: 0
@@ -7282,9 +7299,9 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1726765350}
+  - {fileID: 1372408446}
   - {fileID: 220310016}
   - {fileID: 608719561}
-  - {fileID: 1372408446}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -7751,6 +7768,7 @@ MonoBehaviour:
   levelSetter: {fileID: 768390501}
   dialogueManager: {fileID: 1831766792}
   player: {fileID: 1612465535}
+  uiShopDisplay: {fileID: 676789298}
 --- !u!1 &1489872838
 GameObject:
   m_ObjectHideFlags: 0

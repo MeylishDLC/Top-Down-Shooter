@@ -1,5 +1,8 @@
 ﻿using System;
+using DialogueSystem;
+using UI;
 using UnityEngine;
+using Zenject;
 
 namespace Player.PlayerMovement.GunMovement
 {
@@ -9,8 +12,23 @@ namespace Player.PlayerMovement.GunMovement
         [SerializeField] private GameObject left; 
         [SerializeField] private GameObject right;
         [SerializeField] private GameObject back;
+
+        private UIShopDisplay _uiShopDisplay;
+        private DialogueManager _dialogueManager;
+        
+        [Inject]
+        public void Construct(DialogueManager dialogueManager, UIShopDisplay uiShopDisplay)
+        {
+            _dialogueManager = dialogueManager;
+            _uiShopDisplay = uiShopDisplay;
+        }
         private void FixedUpdate()
         {
+            if (_uiShopDisplay.ShopIsOpen || _dialogueManager.DialogueIsPlaying)
+            {
+                return;
+            }
+            
             var difference = CountDifference();
             var rotationZ = Mathf.Atan2(difference.y, difference.x) * Mathf.Rad2Deg;
             transform.rotation = Quaternion.Euler(0f, 0f, rotationZ);
