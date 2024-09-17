@@ -3746,7 +3746,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &768390500
 Transform:
   m_ObjectHideFlags: 0
@@ -3775,10 +3775,45 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneContext: {fileID: 1489755105}
-  shopTrigger: {fileID: 0}
-  portalChargingsEnemyWavesPair:
-    pairs: []
-    error: 0
+  shopTrigger: {fileID: 50695710}
+  portalCharges:
+  - <SpawnPoints>k__BackingField:
+    - {fileID: 1746533675}
+    - {fileID: 1489872839}
+    - {fileID: 448693428}
+    - {fileID: 1017169983}
+    <EnemyPrefabs>k__BackingField:
+    - {fileID: 3739623183934700978, guid: 23b9ff02b0de4e24e9ab088bacd9e9c6, type: 3}
+    <MaxEnemySpawnAtOnce>k__BackingField: 3
+    <RandomizeEnemySpawnAmount>k__BackingField: 1
+    <MaxTimeBetweenSpawnMilliseconds>k__BackingField: 5000
+    <MinTimeBetweenSpawnMilliseconds>k__BackingField: 3000
+    <WaveDurationSeconds>k__BackingField: 60
+  - <SpawnPoints>k__BackingField:
+    - {fileID: 1746533675}
+    - {fileID: 1489872839}
+    - {fileID: 448693428}
+    - {fileID: 1017169983}
+    <EnemyPrefabs>k__BackingField:
+    - {fileID: 3739623183934700978, guid: 23b9ff02b0de4e24e9ab088bacd9e9c6, type: 3}
+    <MaxEnemySpawnAtOnce>k__BackingField: 5
+    <RandomizeEnemySpawnAmount>k__BackingField: 1
+    <MaxTimeBetweenSpawnMilliseconds>k__BackingField: 5000
+    <MinTimeBetweenSpawnMilliseconds>k__BackingField: 3000
+    <WaveDurationSeconds>k__BackingField: 60
+  - <SpawnPoints>k__BackingField:
+    - {fileID: 1746533675}
+    - {fileID: 1489872839}
+    - {fileID: 448693428}
+    - {fileID: 1017169983}
+    <EnemyPrefabs>k__BackingField:
+    - {fileID: 3739623183934700978, guid: 23b9ff02b0de4e24e9ab088bacd9e9c6, type: 3}
+    <MaxEnemySpawnAtOnce>k__BackingField: 5
+    <RandomizeEnemySpawnAmount>k__BackingField: 1
+    <MaxTimeBetweenSpawnMilliseconds>k__BackingField: 4000
+    <MinTimeBetweenSpawnMilliseconds>k__BackingField: 2000
+    <WaveDurationSeconds>k__BackingField: 60
+  changeStateDelayMilliseconds: 300
 --- !u!1 &796232052
 GameObject:
   m_ObjectHideFlags: 0

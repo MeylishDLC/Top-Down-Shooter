@@ -18,20 +18,21 @@ namespace Core
         }
         
         public static void SpawnEnemiesDuringTime(Transform[] spawnPoints, GameObject[] enemyPrefabs, SceneContext currentSceneContext,
-            float spawnDuration, int delayBetweenSpawn, int maxEnemiesAtOnce, bool randomiseEnemiesAmount)
+            float spawnDuration, int maxDelayBetweenSpawn, int minDelayBetweenSpawn,int maxEnemiesAtOnce, bool randomiseEnemiesAmount)
         {
-            SpawnDuringTime(spawnPoints, enemyPrefabs, currentSceneContext, spawnDuration, delayBetweenSpawn, 
+            SpawnEnemiesDuringTimeAsync(spawnPoints, enemyPrefabs, currentSceneContext, spawnDuration, maxDelayBetweenSpawn, minDelayBetweenSpawn,  
                 maxEnemiesAtOnce, randomiseEnemiesAmount, CancellationToken.None).Forget();
         }
 
-        private static async UniTask SpawnDuringTime(Transform[] spawnPoints, GameObject[] enemyPrefabs, SceneContext currentSceneContext,
-            float spawnDuration, int delayBetweenSpawn, int maxEnemiesAtOnce, bool randomiseEnemiesAmount, CancellationToken token)
+        public static async UniTask SpawnEnemiesDuringTimeAsync(Transform[] spawnPoints, GameObject[] enemyPrefabs, SceneContext currentSceneContext,
+            float spawnDuration, int maxDelayBetweenSpawn, int minDelayBetweenSpawn, int maxEnemiesAtOnce, bool randomiseEnemiesAmount, CancellationToken token)
         {
             var startTime = Time.time;
             
             while (Time.time - startTime < spawnDuration)
             {
-                await UniTask.Delay(delayBetweenSpawn, cancellationToken: token);
+                var randomDelay = Random.Range(minDelayBetweenSpawn, maxDelayBetweenSpawn + 1);
+                await UniTask.Delay(randomDelay, cancellationToken: token);
 
                 if (randomiseEnemiesAmount)
                 {
