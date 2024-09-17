@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using Player.PlayerCombat;
 using Player.PlayerMovement;
 using TMPro;
 using UnityEngine;
-using Weapons;
 using Zenject;
 
 namespace UI

@@ -3,7 +3,6 @@ using System.Threading;
 using Cysharp.Threading.Tasks;
 using Enemies.Combat;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Player.PlayerCombat
 {

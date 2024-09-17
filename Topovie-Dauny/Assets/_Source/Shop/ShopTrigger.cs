@@ -1,7 +1,5 @@
 ﻿using System;
 using UnityEngine;
-using UnityEngine.Serialization;
-using UnityEngine.UI;
 
 namespace Shop
 {
@@ -45,12 +43,18 @@ namespace Shop
 
         private void OnTriggerEnter2D(Collider2D other)
         {
-            _playerInRange = true;
+            if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
+            {
+                _playerInRange = true;
+            }
         }
 
         private void OnTriggerExit2D(Collider2D other)
         {
-            _playerInRange = false;
+            if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
+            {
+                _playerInRange = false;
+            }
         }
 
         private void HandleChargePortalButtonHold()
