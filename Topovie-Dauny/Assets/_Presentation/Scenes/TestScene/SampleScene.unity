@@ -4587,6 +4587,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 466d4ae8254946a5a88fb31d3731d04f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  initialAbility: {fileID: 2430712843952453798}
   keyToUse: 113
   cellIndex: 0
   playerCellsInShop: {fileID: 1144514578600239299}
@@ -5757,6 +5758,10 @@ PrefabInstance:
       propertyPath: equipScreen
       value: 
       objectReference: {fileID: 986543260799062001}
+    - target: {fileID: 3258387843817227132, guid: 1ee0cc302fc4acf44869fba793392279, type: 3}
+      propertyPath: <ability>k__BackingField
+      value: 
+      objectReference: {fileID: 1427466319621930091}
     - target: {fileID: 4839954947966395285, guid: 1ee0cc302fc4acf44869fba793392279, type: 3}
       propertyPath: m_SizeDelta.x
       value: 113.26
@@ -6438,6 +6443,10 @@ PrefabInstance:
     - target: {fileID: 9151122059598083736, guid: 506894731c8d5e44ca2900f8595de1f5, type: 3}
       propertyPath: portalCharges.Array.data[0].<MaxEnemySpawnAtOnce>k__BackingField
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 9151122059598083736, guid: 506894731c8d5e44ca2900f8595de1f5, type: 3}
+      propertyPath: portalCharges.Array.data[1].<MaxEnemySpawnAtOnce>k__BackingField
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9151122059598083736, guid: 506894731c8d5e44ca2900f8595de1f5, type: 3}
       propertyPath: portalCharges.Array.data[0].<TimeToActivatePencil>k__BackingField
@@ -7273,6 +7282,10 @@ PrefabInstance:
       propertyPath: equipScreen
       value: 
       objectReference: {fileID: 986543260799062001}
+    - target: {fileID: 3258387843817227132, guid: 1ee0cc302fc4acf44869fba793392279, type: 3}
+      propertyPath: <ability>k__BackingField
+      value: 
+      objectReference: {fileID: 7482780860813394185}
     - target: {fileID: 4839954947966395285, guid: 1ee0cc302fc4acf44869fba793392279, type: 3}
       propertyPath: m_SizeDelta.x
       value: 113.26
@@ -7549,6 +7562,10 @@ PrefabInstance:
       propertyPath: equipScreen
       value: 
       objectReference: {fileID: 986543260799062001}
+    - target: {fileID: 3258387843817227132, guid: 1ee0cc302fc4acf44869fba793392279, type: 3}
+      propertyPath: <ability>k__BackingField
+      value: 
+      objectReference: {fileID: 53774744326820926}
     - target: {fileID: 4839954947966395285, guid: 1ee0cc302fc4acf44869fba793392279, type: 3}
       propertyPath: m_SizeDelta.x
       value: 113.26
@@ -7800,6 +7817,10 @@ PrefabInstance:
       propertyPath: equipScreen
       value: 
       objectReference: {fileID: 986543260799062001}
+    - target: {fileID: 3258387843817227132, guid: 1ee0cc302fc4acf44869fba793392279, type: 3}
+      propertyPath: <ability>k__BackingField
+      value: 
+      objectReference: {fileID: 2430712843952453798}
     - target: {fileID: 4839954947966395285, guid: 1ee0cc302fc4acf44869fba793392279, type: 3}
       propertyPath: m_SizeDelta.x
       value: 113.26
@@ -8260,6 +8281,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 466d4ae8254946a5a88fb31d3731d04f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  initialAbility: {fileID: 1427466319621930091}
   keyToUse: 101
   cellIndex: 1
   playerCellsInShop: {fileID: 1144514578600239299}
@@ -10093,6 +10115,10 @@ PrefabInstance:
       propertyPath: equipScreen
       value: 
       objectReference: {fileID: 986543260799062001}
+    - target: {fileID: 3258387843817227132, guid: 1ee0cc302fc4acf44869fba793392279, type: 3}
+      propertyPath: <ability>k__BackingField
+      value: 
+      objectReference: {fileID: 8864887494570024766}
     - target: {fileID: 4839954947966395285, guid: 1ee0cc302fc4acf44869fba793392279, type: 3}
       propertyPath: m_SizeDelta.x
       value: 113.26
@@ -11136,6 +11162,10 @@ PrefabInstance:
       propertyPath: equipScreen
       value: 
       objectReference: {fileID: 7625576286085625533, guid: d86383a55cc84914b95d2c6885134db6, type: 3}
+    - target: {fileID: 3258387843817227132, guid: 1ee0cc302fc4acf44869fba793392279, type: 3}
+      propertyPath: <ability>k__BackingField
+      value: 
+      objectReference: {fileID: 9110407332813349466}
     - target: {fileID: 8379114073330060132, guid: 1ee0cc302fc4acf44869fba793392279, type: 3}
       propertyPath: <VetReactionText>k__BackingField
       value: "\u0422\u043E\u043B\u044C\u043A\u043E \u043D\u0435 \u043F\u0435\u0440\u0435\u0435\u0434\u0430\u0439!
@@ -11161,6 +11191,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 58c911bea1514b7fbfb5b18462648015, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &9110407332813349466 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8379114073330060132, guid: 1ee0cc302fc4acf44869fba793392279, type: 3}
+  m_PrefabInstance: {fileID: 9110407332813349462}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af3fa72f69424d7494fad897a11fc3ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &9124033825083803375

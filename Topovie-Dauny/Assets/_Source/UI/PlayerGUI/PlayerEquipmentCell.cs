@@ -14,6 +14,9 @@ namespace UI.PlayerGUI
     {
         public Ability CurrentAbility { get; private set; }
 
+        //todo refactor
+        [SerializeField] private Ability initialAbility;
+        
         [SerializeField] private KeyCode keyToUse;
         [SerializeField] private int cellIndex; 
         [SerializeField] private PlayerCellsInShop playerCellsInShop;
@@ -30,8 +33,9 @@ namespace UI.PlayerGUI
             playerCellsInShop.OnAbilityChanged += SwitchAbility;
             _initialColor = abilityImage.color;
             cooldownText.gameObject.SetActive(false);
+            CurrentAbility = initialAbility;
         }
-
+        
         private void OnDestroy()
         {
             playerCellsInShop.OnAbilityChanged -= SwitchAbility;

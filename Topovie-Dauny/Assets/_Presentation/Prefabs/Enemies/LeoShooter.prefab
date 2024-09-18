@@ -250,7 +250,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6f14e666d8a48a88fb19fab3b624f8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 50
+  maxHealth: 15
   colorOnDamageTaken: {r: 0.9725491, g: 0.38823533, b: 0.38823533, a: 1}
   stayTimeMilliseconds: 100
   knockBackTimeMilliseconds: 0
@@ -268,7 +268,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   projectilePrefab: {fileID: 4854327939033642716, guid: 2518c1703936253469dad07f815c2dd3, type: 3}
-  shootRate: 1
+  shootRate: 2
   projectileMaxMoveSpeed: 2
   projectileMaxHeight: 3
   trajectoryAnimationCurve:

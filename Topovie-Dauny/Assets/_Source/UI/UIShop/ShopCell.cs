@@ -11,7 +11,7 @@ namespace UI.UIShop
     {
         public event Action<Ability> OnEquipAbilityModeEntered; 
         
-        [SerializeField] private Ability ability;
+        [field:SerializeField] public Ability ability { get; private set; }
         [SerializeField] private Shop shop;
 
         [Header("UI")] 

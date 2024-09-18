@@ -27,10 +27,11 @@ namespace UI.UIShop
                 var image = equipmentCell.gameObject.transform.GetChild(0);
                 _equipmentCellImages.Add(image.GetComponent<Image>());
             }
-            SetEquipmentCellsOnStart();
             ChangeButtonsInteractable(false);
             SubscribeOnEvents(true);
+            SetEquipmentCellsOnStart();
         }
+
         private void OnDestroy()
         {
             SubscribeOnEvents(false);
