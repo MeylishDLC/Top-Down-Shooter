@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using DialogueSystem;
 using UI;
+using UI.PlayerGUI;
 using UnityEngine;
 using Weapons;
 using Zenject;
@@ -15,20 +16,23 @@ namespace Player.PlayerCombat
         
         [Header("Weapons")]
         [SerializeField] private SerializedDictionary<KeyCode, GameObject> weaponsObjects;
+
+        [Header("Abilities")] 
+        [SerializeField] private PlayerEquipmentCell[] equipmentCells;
         
         private DialogueManager _dialogueManager;
-        private UIShopDisplay _uiShopDisplay;
+        private UI.UIShop.Shop _shop;
 
         [Inject]
-        public void Construct(DialogueManager dialogueManager, UIShopDisplay uiShopDisplay)
+        public void Construct(DialogueManager dialogueManager, UI.UIShop.Shop shop)
         {
             _dialogueManager = dialogueManager;
-            _uiShopDisplay = uiShopDisplay;
+            _shop = shop;
             PlayerWeapons = new PlayerWeapons(weaponsObjects);
         }
         private void Update()
         {
-            if (!_dialogueManager.DialogueIsPlaying && !_uiShopDisplay.ShopIsOpen)
+            if (!_dialogueManager.DialogueIsPlaying && !_shop.ShopIsOpen)
             {
                 PlayerWeapons.HandleShooting();
             }

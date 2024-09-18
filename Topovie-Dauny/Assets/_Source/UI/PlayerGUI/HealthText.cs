@@ -1,10 +1,10 @@
 ﻿using System.Threading;
+using _Support.Demigiant.DOTween.Modules;
 using Cysharp.Threading.Tasks;
-using DG.Tweening;
 using TMPro;
 using UnityEngine;
 
-namespace UI
+namespace UI.PlayerGUI
 {
     public class HealthText: MonoBehaviour
     {

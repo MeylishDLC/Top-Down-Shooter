@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Zenject;
 
-namespace UI
+namespace UI.Menus
 {
     public class GameOverScreen: MonoBehaviour
     {

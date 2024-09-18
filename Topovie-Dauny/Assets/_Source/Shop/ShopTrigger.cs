@@ -15,17 +15,17 @@ namespace Shop
         private bool _isHoldingButton;
         private float _holdStartTime;
         private bool _playerInRange;
-        private UIShopDisplay _uiShopDisplay;
+        private UI.UIShop.Shop _shop;
 
         [Inject]
-        public void Construct(UIShopDisplay uiShopDisplay)
+        public void Construct(UI.UIShop.Shop shop)
         {
-            _uiShopDisplay = uiShopDisplay;
+            _shop = shop;
         }
         private void Start()
         {
             visualQue.gameObject.SetActive(false);
-            _uiShopDisplay.CloseShop();
+            _shop.CloseShop();
         }
         private void Update()
         {
@@ -34,7 +34,7 @@ namespace Shop
                 visualQue.gameObject.SetActive(true);
                 if (Input.GetKeyDown(KeyCode.F))
                 {
-                    _uiShopDisplay.OpenShop();
+                    _shop.OpenShop();
                 }
                 HandleChargePortalButtonHold();
             }

@@ -1,18 +1,19 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
-namespace UI
+namespace UI.UIShop
 {
-    public class UIShopDisplay: MonoBehaviour
+    public class Shop: MonoBehaviour
     {
         public bool ShopIsOpen { get; private set; }
+        [field: SerializeField] public ShopCell[] ShopCells { get; private set; } 
         
         [SerializeField] private GameObject shopUI;
         [SerializeField] private GameObject playerGUI;
         [SerializeField] private Button closeButton;
         private void Start()
         {
+            gameObject.SetActive(false);
             closeButton.onClick.AddListener(CloseShop);
         }
         public void OpenShop()

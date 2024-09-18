@@ -7,17 +7,13 @@ using Zenject;
 
 namespace Player.PlayerAbilities
 {
-    public class Aid: MonoBehaviour, IAbility
+    public class Aid: Ability
     {
-        [field:SerializeField] public int CooldownMilliseconds { get; set; }
+        [Header("Specific Settings")]
         [SerializeField] private int healAmount;
 
-        [Header("UI")] 
-        [SerializeField] private TMP_Text cooldownText;
-        [SerializeField] private Button abilityButton;
-
         private PlayerHealth _playerHealth;
-        private bool _canUse;
+        private bool _canUse = true;
 
         [Inject]
         public void Construct(PlayerMovement.PlayerMovement playerMovement)
@@ -25,7 +21,7 @@ namespace Player.PlayerAbilities
             _playerHealth = playerMovement.gameObject.GetComponent<PlayerHealth>();
         }
         
-        public void UseAbility()
+        public override void UseAbility()
         {
             if (!_canUse)
             {
@@ -37,6 +33,7 @@ namespace Player.PlayerAbilities
 
         private async UniTask UseAbilityAsync()
         {
+            Debug.Log("Ability used");
             _canUse = false;
             _playerHealth.Heal(healAmount);
             await UniTask.Delay(CooldownMilliseconds);

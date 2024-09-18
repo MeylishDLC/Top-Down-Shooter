@@ -1,15 +1,13 @@
-﻿using System;
-using System.Threading;
+﻿using System.Threading;
 using Core;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 using Zenject;
 
-namespace UI
+namespace UI.PlayerGUI
 {
     public class UIStateDisplay: MonoBehaviour
     {

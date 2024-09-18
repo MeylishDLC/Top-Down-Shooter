@@ -13,18 +13,18 @@ namespace Player.PlayerMovement.GunMovement
         [SerializeField] private GameObject right;
         [SerializeField] private GameObject back;
 
-        private UIShopDisplay _uiShopDisplay;
+        private UI.UIShop.Shop _shop;
         private DialogueManager _dialogueManager;
         
         [Inject]
-        public void Construct(DialogueManager dialogueManager, UIShopDisplay uiShopDisplay)
+        public void Construct(DialogueManager dialogueManager, UI.UIShop.Shop shop)
         {
             _dialogueManager = dialogueManager;
-            _uiShopDisplay = uiShopDisplay;
+            _shop = shop;
         }
         private void FixedUpdate()
         {
-            if (_uiShopDisplay.ShopIsOpen || _dialogueManager.DialogueIsPlaying)
+            if (_shop.ShopIsOpen || _dialogueManager.DialogueIsPlaying)
             {
                 return;
             }

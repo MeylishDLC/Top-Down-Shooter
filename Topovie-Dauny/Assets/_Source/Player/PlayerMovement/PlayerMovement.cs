@@ -23,16 +23,16 @@ namespace Player.PlayerMovement
         private Vector2 _direction;
         private bool _dodgeRoll;
         private DialogueManager _dialogueManager;
-        private UIShopDisplay _uiShopDisplay;
+        private UI.UIShop.Shop _shop;
         
         private static readonly int isWalking = Animator.StringToHash("isWalking");
         private static readonly int isRolling = Animator.StringToHash("isRolling");
 
         [Inject]
-        public void Construct(DialogueManager dialogueManager, UIShopDisplay uiShopDisplay)
+        public void Construct(DialogueManager dialogueManager, UI.UIShop.Shop shop)
         {
             _dialogueManager = dialogueManager;
-            _uiShopDisplay = uiShopDisplay;
+            _shop = shop;
         }
         private void Start()
         {
@@ -40,7 +40,7 @@ namespace Player.PlayerMovement
         }
         private void Update()
         {
-            if (!_dialogueManager.DialogueIsPlaying && !playerHealth.KnockBack.GettingKnockedBack && !_uiShopDisplay.ShopIsOpen)
+            if (!_dialogueManager.DialogueIsPlaying && !playerHealth.KnockBack.GettingKnockedBack && !_shop.ShopIsOpen)
             {
                 if (_dodgeRoll)
                 {
@@ -52,7 +52,7 @@ namespace Player.PlayerMovement
         }
         private void FixedUpdate()
         {
-            if (!_dialogueManager.DialogueIsPlaying && !playerHealth.KnockBack.GettingKnockedBack && !_uiShopDisplay.ShopIsOpen)
+            if (!_dialogueManager.DialogueIsPlaying && !playerHealth.KnockBack.GettingKnockedBack && !_shop.ShopIsOpen)
             {
                 _rb.velocity = new Vector2(_horizontal, _vertical).normalized * movementSpeed;
             }

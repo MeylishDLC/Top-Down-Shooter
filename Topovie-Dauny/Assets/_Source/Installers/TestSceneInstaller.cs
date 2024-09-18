@@ -13,7 +13,7 @@ namespace Installers
         [SerializeField] private LevelSetter levelSetter;
         [SerializeField] private DialogueManager dialogueManager;
         [SerializeField] private GameObject playerObject;
-        [SerializeField] private UIShopDisplay uiShopDisplay;
+        [SerializeField] private UI.UIShop.Shop shop;
         public override void InstallBindings()
         {
             BindDialogueManager();
@@ -35,7 +35,7 @@ namespace Installers
         }
         private void BindUIShopDisplay()
         {
-            Container.Bind<UIShopDisplay>().FromInstance(uiShopDisplay).AsSingle();
+            Container.Bind<UI.UIShop.Shop>().FromInstance(shop).AsSingle();
         }
     }
 }

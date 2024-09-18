@@ -9,7 +9,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
 
-namespace UI
+namespace UI.PlayerGUI
 {
     public class UIHealthDisplay: MonoBehaviour
     {

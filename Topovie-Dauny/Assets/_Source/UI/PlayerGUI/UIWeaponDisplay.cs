@@ -5,7 +5,7 @@ using TMPro;
 using UnityEngine;
 using Zenject;
 
-namespace UI
+namespace UI.PlayerGUI
 {
     public class UIWeaponDisplay: MonoBehaviour
     {
