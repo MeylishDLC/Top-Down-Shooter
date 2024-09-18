@@ -86,6 +86,7 @@ namespace Core
                  
                  _chargingPauseCts?.Cancel();
                  _chargingPauseCts?.Dispose();
+                 _chargingPauseCts = new CancellationTokenSource();
                  Debug.Log($"Charge paused. Time Remaining: {_timeRemaining}");
              }
          }
@@ -95,7 +96,6 @@ namespace Core
              if (IsChargingPaused)
              {
                  IsChargingPaused = false;
-                 _chargingPauseCts = new CancellationTokenSource();
                  
                  ChargePortalAsync(_timeRemaining, _chargingPauseCts.Token).Forget();
                  StartTimeTrackingAsync(_timeRemaining, 

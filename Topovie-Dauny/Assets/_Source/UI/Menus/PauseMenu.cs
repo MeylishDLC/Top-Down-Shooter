@@ -8,7 +8,9 @@ namespace UI.Menus
         [SerializeField] private GameObject pauseMenu; 
         [SerializeField] private Button optionsButton;
         [SerializeField] private Button exitButton;
+        [SerializeField] private GameObject optionsScreen;
         public bool IsPaused { get; private set; }
+        private bool _optionsMenuActive;
         private void Start()
         {
             exitButton.onClick.AddListener(ExitGame);
@@ -20,7 +22,14 @@ namespace UI.Menus
             {
                 if (IsPaused)
                 {
-                    ResumeGame();
+                    if (_optionsMenuActive)
+                    {
+                        ReturnToPause();
+                    }
+                    else
+                    {
+                        ResumeGame();
+                    }
                 }
                 else
                 {
@@ -40,10 +49,17 @@ namespace UI.Menus
             pauseMenu.SetActive(false);
             Time.timeScale = 1f;
         }
-
         private void OpenOptionsPanel()
         {
-            
+            _optionsMenuActive = true;
+            optionsScreen.SetActive(true);
+            pauseMenu.SetActive(false);
+        }
+        private void ReturnToPause()
+        {
+            _optionsMenuActive = false;
+            optionsScreen.SetActive(false);
+            pauseMenu.SetActive(true);
         }
         private void ExitGame()
         {
