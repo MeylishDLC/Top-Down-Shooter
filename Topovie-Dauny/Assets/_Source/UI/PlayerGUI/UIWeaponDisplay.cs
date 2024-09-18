@@ -11,17 +11,18 @@ namespace UI
     {
         [SerializeField] private TMP_Text bulletAmountText;
 
-        private PlayerWeapons _playerWeapons;
+        private PlayerEquipment _playerEquipment;
         
         [Inject]
         public void Construct(PlayerMovement playerMovement)
         {
-            _playerWeapons = playerMovement.gameObject.GetComponent<PlayerWeapons>();
+            _playerEquipment = playerMovement.gameObject.GetComponent<PlayerEquipment>();
         }
         private void Start()
         {
             SubscribeOnEvents();
-            var currentWeapon = _playerWeapons.Weapons.ElementAt(_playerWeapons.CurrentActiveWeaponIndex);
+            var currentWeapon = _playerEquipment.PlayerWeapons.Weapons.
+                ElementAt(_playerEquipment.PlayerWeapons.CurrentActiveWeaponIndex);
             RefreshBulletsText(currentWeapon.BulletsAmount);
         }
 
@@ -36,14 +37,14 @@ namespace UI
         }
         private void SubscribeOnEvents()
         {
-            foreach (var weapon in _playerWeapons.Weapons)
+            foreach (var weapon in _playerEquipment.PlayerWeapons.Weapons)
             {
                 weapon.OnBulletsAmountChange += RefreshBulletsText;
             }
         }
         private void UnsubscribeOnEvents()
         {
-            foreach (var weapon in _playerWeapons.Weapons)
+            foreach (var weapon in _playerEquipment.PlayerWeapons.Weapons)
             {
                 weapon.OnBulletsAmountChange -= RefreshBulletsText;
             }

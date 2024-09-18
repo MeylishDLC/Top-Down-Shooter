@@ -1,53 +1,29 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using DialogueSystem;
-using UI;
 using UnityEngine;
 using Weapons;
-using Zenject;
 
 namespace Player.PlayerCombat
 {
-    public class PlayerWeapons: MonoBehaviour
+    public class PlayerWeapons
     {
-        public IEnumerable<IShooting> Weapons => _weapons; 
         public int CurrentActiveWeaponIndex { get; private set; }
-        
-        [SerializeField] private SerializedDictionary<KeyCode, GameObject> weaponsObjects;
-        
+        public IEnumerable<IShooting> Weapons => _weapons;
+
+        private SerializedDictionary<KeyCode, GameObject> _weaponObjects;
         private List<IShooting> _weapons;
         private float _fireTimer;
-        private DialogueManager _dialogueManager;
-        private UIShopDisplay _uiShopDisplay;
-
-        [Inject]
-        public void Construct(DialogueManager dialogueManager, UIShopDisplay uiShopDisplay)
+        
+        public PlayerWeapons(SerializedDictionary<KeyCode, GameObject> weaponObjects)
         {
-            _dialogueManager = dialogueManager;
-            _uiShopDisplay = uiShopDisplay;
-        }
-
-        private void Awake()
-        {
+            _weaponObjects = weaponObjects;
             _weapons = new List<IShooting>();
             GetIShootingComponent();
-        }
-
-        private void Start()
-        {
             CurrentActiveWeaponIndex = GetActiveWeaponIndex();
         }
 
-        private void Update()
-        {
-            if (!_dialogueManager.DialogueIsPlaying && !_uiShopDisplay.ShopIsOpen)
-            {
-                HandleShooting();
-            }
-        }
-
-        private void HandleShooting()
+        public void HandleShooting()
         {
             if (_weapons[CurrentActiveWeaponIndex].ShootOnHold)
             {
@@ -73,17 +49,19 @@ namespace Player.PlayerCombat
                     _fireTimer -= Time.deltaTime;
                 }
             }
-            
+
             CheckSwitchWeapon();
         }
+
         private void Shoot()
         {
             _weapons[CurrentActiveWeaponIndex].Shoot();
         }
+
         private void CheckSwitchWeapon()
         {
-            var keysArray = weaponsObjects.Keys.ToArray();
-            
+            var keysArray = _weaponObjects.Keys.ToArray();
+
             for (int i = 0; i < _weapons.Count; i++)
             {
                 if (Input.GetKeyDown(keysArray[i]) && _weapons[i].IsUnlocked)
@@ -95,17 +73,18 @@ namespace Player.PlayerCombat
 
         private void SwitchWeapon(int weaponIndex)
         {
-            var weaponsObjectsArray = weaponsObjects.Values.ToArray();
+            var weaponsObjectsArray = _weaponObjects.Values.ToArray();
             weaponsObjectsArray[CurrentActiveWeaponIndex].SetActive(false);
-            
+
             CurrentActiveWeaponIndex = weaponIndex;
             weaponsObjectsArray[CurrentActiveWeaponIndex].SetActive(true);
         }
+
         private void GetIShootingComponent()
         {
-            var weaponObjectsValuesArray = weaponsObjects.Values.ToArray();
-            
-            for (int i = 0; i < weaponsObjects.Count; i++)
+            var weaponObjectsValuesArray = _weaponObjects.Values.ToArray();
+
+            for (int i = 0; i < _weaponObjects.Count; i++)
             {
                 if (weaponObjectsValuesArray[i].TryGetComponent(out IShooting weapon))
                 {
@@ -120,8 +99,8 @@ namespace Player.PlayerCombat
 
         private int GetActiveWeaponIndex()
         {
-            var weaponObjectsValuesArray = weaponsObjects.Values.ToArray();
-            
+            var weaponObjectsValuesArray = _weaponObjects.Values.ToArray();
+
             for (int i = 0; i < weaponObjectsValuesArray.Length; i++)
             {
                 if (weaponObjectsValuesArray[i].activeSelf)

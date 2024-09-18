@@ -22,6 +22,7 @@ namespace UI
         
         [Header("Health floating")]
         [SerializeField] private GameObject damageTextPrefab;
+        [SerializeField] private GameObject healTextPrefab;
         [SerializeField] private Canvas gameCanvas;
 
         private PlayerHealth _playerHealth;
@@ -35,6 +36,7 @@ namespace UI
         private void Awake()
         {
             _playerHealth.OnDamageTaken += InstantiateDamageText;
+            _playerHealth.OnHeal += InstantiateHealText;
             _playerHealth.OnDamageTaken += AnimateHeart;
         }
         private void Start()
@@ -44,6 +46,7 @@ namespace UI
         private void OnDestroy()
         {
             _playerHealth.OnDamageTaken -= InstantiateDamageText;
+            _playerHealth.OnHeal -= InstantiateHealText;
             _playerHealth.OnDamageTaken -= AnimateHeart;
         }
         private void Update()
@@ -60,6 +63,18 @@ namespace UI
             var tmpText = Instantiate(damageTextPrefab, spawnPosition, Quaternion.identity, gameCanvas.transform).GetComponent<TMP_Text>();
 
             tmpText.text = $"-{damage.ToString(CultureInfo.InvariantCulture)}";
+        }
+
+        private void InstantiateHealText(float heal)
+        {
+            var playerPos = _playerHealth.transform.position;
+
+            var spawnPosition = new Vector3(playerPos.x, playerPos.y, 0);
+
+            var tmpText = Instantiate(healTextPrefab, spawnPosition, Quaternion.identity, gameCanvas.transform)
+                .GetComponent<TMP_Text>();
+
+            tmpText.text = $"-{heal.ToString(CultureInfo.InvariantCulture)}";
         }
 
         private void UpdateSliderValue()

@@ -9,6 +9,7 @@ namespace Player.PlayerCombat
     public class PlayerHealth : MonoBehaviour
     {
         public event Action<float> OnDamageTaken;
+        public event Action<float> OnHeal;
         public event Action OnDeath;
         public float CurrentHealth { get; private set; }
         [field:SerializeField] public float MaxHealth { get; private set; }
@@ -49,6 +50,22 @@ namespace Player.PlayerCombat
             
             RecoverFromDamageAsync(CancellationToken.None).Forget();
             CheckIfDead();
+        }
+
+        public void Heal(int healAmount)
+        {
+            if (CurrentHealth > 0 && CurrentHealth < MaxHealth)
+            {
+                if (CurrentHealth + healAmount > MaxHealth)
+                {
+                    CurrentHealth = MaxHealth;
+                }
+                else
+                {
+                    CurrentHealth += healAmount;
+                }
+                OnHeal?.Invoke(healAmount);
+            }
         }
         private async UniTask RecoverFromDamageAsync(CancellationToken token)
         {
