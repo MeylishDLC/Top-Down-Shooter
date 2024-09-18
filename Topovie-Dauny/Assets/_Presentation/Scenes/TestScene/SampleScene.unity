@@ -1347,8 +1347,90 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   projectilePrefab: {fileID: 1763968073785075208, guid: ff0688dea1ae06a4b93f0b2847d94673, type: 3}
-  shootRate: 5
-  projectileMoveSpeed: 2
+  shootRate: 1
+  projectileMaxMoveSpeed: 3
+  projectileMaxHeight: 3
+  trajectoryAnimationCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0.29027578
+      outSlope: 0.29027578
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.15789348
+    - serializedVersion: 3
+      time: 1.0291748
+      value: 0.0070762634
+      inSlope: -0.13767245
+      outSlope: -0.13767245
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.1498043
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  axisCorrectionAnimationCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  projectileSpeedAnimationCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0.0083351135
+      value: 1.0047302
+      inSlope: -0.13847858
+      outSlope: -0.13847858
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.579173
+    - serializedVersion: 3
+      time: 0.51061314
+      value: 0.8699966
+      inSlope: -0.028689312
+      outSlope: -0.028689312
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1.008321
+      value: 0.995282
+      inSlope: 0.20192194
+      outSlope: 0.20192194
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.7124977
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &1587113782 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1966964380622565022, guid: 506894731c8d5e44ca2900f8595de1f5, type: 3}

@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Serialization;
 using Zenject;
 
 namespace Player.PlayerCombat.Projectile
@@ -7,8 +8,13 @@ namespace Player.PlayerCombat.Projectile
     {
         [SerializeField] private GameObject projectilePrefab;
         [SerializeField] private float shootRate;
-        [SerializeField] private float projectileMoveSpeed;
+        [SerializeField] private float projectileMaxMoveSpeed;
+        [SerializeField] private float projectileMaxHeight;
+        
+        [Header("Animation Curves")]
         [SerializeField] private AnimationCurve trajectoryAnimationCurve;
+        [SerializeField] private AnimationCurve axisCorrectionAnimationCurve;
+        [SerializeField] private AnimationCurve projectileSpeedAnimationCurve;
         
         private float _shootTimer;
         private Transform _target;
@@ -26,7 +32,8 @@ namespace Player.PlayerCombat.Projectile
                 _shootTimer = shootRate;
                 var projectile = Instantiate(projectilePrefab, transform.position, Quaternion.identity)
                     .GetComponent<Projectile>();
-                projectile.InitializeProjectile(_target,projectileMoveSpeed);
+                projectile.InitializeProjectile(_target,projectileMaxMoveSpeed, projectileMaxHeight);
+                projectile.InitializeAnimationCurves(trajectoryAnimationCurve, axisCorrectionAnimationCurve, projectileSpeedAnimationCurve);
             }
         }
     }
