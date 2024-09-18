@@ -19,7 +19,6 @@ namespace Player.PlayerAbilities
         {
             _playerHealth = playerMovement.gameObject.GetComponent<PlayerHealth>();
         }
-        
         public override void UseAbility()
         {
             if (CanUse)
@@ -27,7 +26,6 @@ namespace Player.PlayerAbilities
                 UseAbilityAsync().Forget();
             }
         }
-
         private async UniTask UseAbilityAsync()
         {
             CanUse = false;

@@ -1329,6 +1329,26 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1029930583}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1537943205 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3739623183934700978, guid: 23b9ff02b0de4e24e9ab088bacd9e9c6, type: 3}
+  m_PrefabInstance: {fileID: 5477026151846604366}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1537943215
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1537943205}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 130ceff1877d4e1bad4df74612db67b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  projectilePrefab: {fileID: 1763968073785075208, guid: ff0688dea1ae06a4b93f0b2847d94673, type: 3}
+  shootRate: 5
+  projectileMoveSpeed: 2
 --- !u!1 &1587113782 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1966964380622565022, guid: 506894731c8d5e44ca2900f8595de1f5, type: 3}
@@ -6748,6 +6768,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 745394447864189545, guid: 23b9ff02b0de4e24e9ab088bacd9e9c6, type: 3}
+      propertyPath: maxSpeed
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 745394447864189545, guid: 23b9ff02b0de4e24e9ab088bacd9e9c6, type: 3}
+      propertyPath: slowdownDistance
+      value: 0.76
+      objectReference: {fileID: 0}
+    - target: {fileID: 745394447864189545, guid: 23b9ff02b0de4e24e9ab088bacd9e9c6, type: 3}
+      propertyPath: endReachedDistance
+      value: 0.68
+      objectReference: {fileID: 0}
     - target: {fileID: 3355249478372164381, guid: 23b9ff02b0de4e24e9ab088bacd9e9c6, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.53
@@ -6790,20 +6822,24 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3739623183934700978, guid: 23b9ff02b0de4e24e9ab088bacd9e9c6, type: 3}
       propertyPath: m_Name
-      value: Leo
+      value: LeoShooter
       objectReference: {fileID: 0}
     - target: {fileID: 3739623183934700978, guid: 23b9ff02b0de4e24e9ab088bacd9e9c6, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6619848632396508895, guid: 23b9ff02b0de4e24e9ab088bacd9e9c6, type: 3}
       propertyPath: target
       value: 
       objectReference: {fileID: 1612465537}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: -8308885871178023761, guid: 23b9ff02b0de4e24e9ab088bacd9e9c6, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3739623183934700978, guid: 23b9ff02b0de4e24e9ab088bacd9e9c6, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1537943215}
   m_SourcePrefab: {fileID: 100100000, guid: 23b9ff02b0de4e24e9ab088bacd9e9c6, type: 3}
 --- !u!222 &5502690420559733824
 CanvasRenderer:
