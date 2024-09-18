@@ -33,6 +33,7 @@ namespace Player.PlayerAbilities
 
         private async UniTask UseAbilityAsync()
         {
+            //todo: show cooldown in UI 
             Debug.Log("Ability used");
             _canUse = false;
             _playerHealth.Heal(healAmount);
