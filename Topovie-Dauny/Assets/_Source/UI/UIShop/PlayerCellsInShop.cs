@@ -29,7 +29,11 @@ namespace UI.UIShop
             }
             SetEquipmentCellsOnStart();
             ChangeButtonsInteractable(false);
-            SubscribeOnEvents();
+            SubscribeOnEvents(true);
+        }
+        private void OnDestroy()
+        {
+            SubscribeOnEvents(false);
         }
         public void OnEquipmentCellChoose(int cellIndex)
         {
@@ -61,11 +65,21 @@ namespace UI.UIShop
             ChangeButtonsInteractable(true);
             _newAbilityToEquip = abilityToEquip;
         }
-        private void SubscribeOnEvents()
+        private void SubscribeOnEvents(bool subscribe)
         {
-            foreach (var shopCell in shopCells)
+            if (subscribe)
             {
-                shopCell.OnEquipAbilityModeEntered += EnterEquipAbilityMode;
+                foreach (var shopCell in shopCells)
+                {
+                    shopCell.OnEquipAbilityModeEntered += EnterEquipAbilityMode;
+                }
+            }
+            else
+            {
+                foreach (var shopCell in shopCells)
+                {
+                    shopCell.OnEquipAbilityModeEntered -= EnterEquipAbilityMode;
+                }
             }
         }
         

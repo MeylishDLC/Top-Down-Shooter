@@ -13,7 +13,6 @@ namespace Player.PlayerAbilities
         [SerializeField] private int healAmount;
 
         private PlayerHealth _playerHealth;
-        private bool _canUse = true;
 
         [Inject]
         public void Construct(PlayerMovement.PlayerMovement playerMovement)
@@ -23,22 +22,18 @@ namespace Player.PlayerAbilities
         
         public override void UseAbility()
         {
-            if (!_canUse)
+            if (CanUse)
             {
-                return;
+                UseAbilityAsync().Forget();
             }
-            
-            UseAbilityAsync().Forget();
         }
 
         private async UniTask UseAbilityAsync()
         {
-            //todo: show cooldown in UI 
-            Debug.Log("Ability used");
-            _canUse = false;
+            CanUse = false;
             _playerHealth.Heal(healAmount);
             await UniTask.Delay(CooldownMilliseconds);
-            _canUse = true;
+            CanUse = true;
         }
     }
 }
