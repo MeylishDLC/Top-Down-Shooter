@@ -13,8 +13,8 @@ namespace Core
         private static void SpawnRandomlyWithInjection(Transform[] spawnPoints, GameObject[] enemyPrefabs,
             SceneContext currentSceneContext)
         {
-            var randomSpawn = spawnPoints[Random.Range(0, spawnPoints.Length - 1)];
-            var randomEnemy = enemyPrefabs[Random.Range(0, enemyPrefabs.Length - 1)];
+            var randomSpawn = spawnPoints[Random.Range(0, spawnPoints.Length)];
+            var randomEnemy = enemyPrefabs[Random.Range(0, enemyPrefabs.Length)];
 
             currentSceneContext.Container.InstantiatePrefab(randomEnemy,
                 GetRandomPositionWithinSpawnRange(randomSpawn, Random.Range(0.1f, 0.5f)),

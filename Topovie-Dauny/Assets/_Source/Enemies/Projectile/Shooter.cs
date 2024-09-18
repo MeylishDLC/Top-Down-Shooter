@@ -1,8 +1,7 @@
 ﻿using UnityEngine;
-using UnityEngine.Serialization;
 using Zenject;
 
-namespace Player.PlayerCombat.Projectile
+namespace Enemies.Projectile
 {
     public class Shooter: MonoBehaviour
     {
@@ -20,7 +19,7 @@ namespace Player.PlayerCombat.Projectile
         private Transform _target;
 
         [Inject]
-        public void Construct(PlayerMovement.PlayerMovement playerMovement)
+        public void Construct(Player.PlayerMovement.PlayerMovement playerMovement)
         {
             _target = playerMovement.transform;
         }

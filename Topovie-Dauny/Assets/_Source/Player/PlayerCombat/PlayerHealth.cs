@@ -34,11 +34,15 @@ namespace Player.PlayerCombat
 
         private void OnTriggerStay2D(Collider2D other)
         {
-            if (other.gameObject.layer == LayerMask.NameToLayer("Enemy") && _canTakeDamage)
+            if (other.gameObject.layer == LayerMask.NameToLayer("EnemyAttack") && _canTakeDamage)
             {
-                var enemyAttack = other.gameObject.GetComponentInParent<EnemyAttack>();
+                if (!other.gameObject.TryGetComponent(out EnemyAttack enemyAttack))
+                {
+                    enemyAttack = other.gameObject.GetComponentInParent<EnemyAttack>();
+                }
                 TakeDamage(enemyAttack.Attack);
                 KnockBack.GetKnockedBack(other.gameObject.transform);
+                Destroy(other.gameObject);
             }
         }
 
