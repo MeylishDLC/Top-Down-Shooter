@@ -84,6 +84,7 @@ namespace Weapons.Test_Gun
             await UniTask.Delay(reloadTimeMilliseconds, cancellationToken: token);
             reloadingText.gameObject.SetActive(false);
             _currentBulletsAmount = BulletsAmount;
+            OnBulletsAmountChange?.Invoke(_currentBulletsAmount);
             _canShoot = true;
         }
         
