@@ -31,23 +31,13 @@ namespace Player.PlayerCombat
         {
             CurrentHealth = MaxHealth;
         }
-
-        private void OnTriggerStay2D(Collider2D other)
-        {
-            if (other.gameObject.layer == LayerMask.NameToLayer("EnemyAttack") && _canTakeDamage)
-            {
-                if (!other.gameObject.TryGetComponent(out EnemyAttack enemyAttack))
-                {
-                    enemyAttack = other.gameObject.GetComponentInParent<EnemyAttack>();
-                }
-                TakeDamage(enemyAttack.Attack);
-                KnockBack.GetKnockedBack(other.gameObject.transform);
-                Destroy(other.gameObject);
-            }
-        }
-
+        
         public void TakeDamage(int damageAmount)
         {
+            if (!_canTakeDamage)
+            {
+                return;
+            }
             _canTakeDamage = false;
             CurrentHealth -= damageAmount;
             OnDamageTaken?.Invoke(damageAmount);

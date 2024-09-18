@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5055111615172634123}
   - component: {fileID: 890344943724549107}
   - component: {fileID: 4241531698538572927}
-  m_Layer: 9
+  m_Layer: 10
   m_Name: EnemyProjectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -49,7 +49,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0241007708c64c6aa248e7763277e2ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lifetime: 2
+  lifetime: 1
   projectileVisual: {fileID: 5055111615172634123}
 --- !u!114 &5055111615172634123
 MonoBehaviour:
@@ -125,7 +125,7 @@ GameObject:
   m_Component:
   - component: {fileID: 508703514389899806}
   - component: {fileID: 3592168749407091660}
-  m_Layer: 9
+  m_Layer: 10
   m_Name: Visual
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -209,7 +209,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4217388738040431985}
   - component: {fileID: 2154988599796716471}
-  m_Layer: 9
+  m_Layer: 10
   m_Name: Shadow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
