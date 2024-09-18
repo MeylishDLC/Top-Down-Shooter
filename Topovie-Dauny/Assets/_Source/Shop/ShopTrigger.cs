@@ -25,7 +25,6 @@ namespace Shop
         private void Start()
         {
             visualQue.gameObject.SetActive(false);
-            _shop.CloseShop();
         }
         private void Update()
         {

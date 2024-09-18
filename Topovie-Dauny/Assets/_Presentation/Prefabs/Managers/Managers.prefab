@@ -65,7 +65,6 @@ GameObject:
   - component: {fileID: 4507905777205029754}
   - component: {fileID: 4335732150534116838}
   - component: {fileID: 1583973647282497821}
-  - component: {fileID: 3745436645743897076}
   - component: {fileID: 3513669596279278181}
   - component: {fileID: 8530786582695775956}
   m_Layer: 0
@@ -107,6 +106,7 @@ MonoBehaviour:
   minScale: 0.7
   scaleDuration: 0.1
   damageTextPrefab: {fileID: 4236086146360339903, guid: 2e28589b31d72bc4697c5a56ad2dc2ca, type: 3}
+  healTextPrefab: {fileID: 0}
   gameCanvas: {fileID: 0}
 --- !u!114 &4335732150534116838
 MonoBehaviour:
@@ -142,21 +142,6 @@ MonoBehaviour:
   chillStateTextColor: {r: 0.2392157, g: 0.37254903, b: 0.2509804, a: 1}
   attackStateText: ATTACK TIME
   attackStateTextColor: {r: 0.79215693, g: 0.23137257, b: 0.19607845, a: 1}
---- !u!114 &3745436645743897076
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1966964380622565022}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2fa505c01cc74761b66fa2ec60d87c47, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  shopUI: {fileID: 0}
-  playerGUI: {fileID: 0}
-  closeButton: {fileID: 0}
 --- !u!114 &3513669596279278181
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -232,6 +217,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sceneContext: {fileID: 0}
   shopTrigger: {fileID: 0}
+  rangeDetector: {fileID: 0}
   allSpawns: []
   portalCharges:
   - <SpawnPoints>k__BackingField:
@@ -245,7 +231,7 @@ MonoBehaviour:
     <RandomizeEnemySpawnAmount>k__BackingField: 1
     <MaxTimeBetweenSpawnMilliseconds>k__BackingField: 7000
     <MinTimeBetweenSpawnMilliseconds>k__BackingField: 5000
-    <WaveDurationSeconds>k__BackingField: 60
+    <TimeToActivatePencil>k__BackingField: 0
   - <SpawnPoints>k__BackingField: []
     <EnemyPrefabs>k__BackingField:
     - {fileID: 3739623183934700978, guid: 23b9ff02b0de4e24e9ab088bacd9e9c6, type: 3}
@@ -253,7 +239,7 @@ MonoBehaviour:
     <RandomizeEnemySpawnAmount>k__BackingField: 1
     <MaxTimeBetweenSpawnMilliseconds>k__BackingField: 6000
     <MinTimeBetweenSpawnMilliseconds>k__BackingField: 4000
-    <WaveDurationSeconds>k__BackingField: 60
+    <TimeToActivatePencil>k__BackingField: 0
   - <SpawnPoints>k__BackingField: []
     <EnemyPrefabs>k__BackingField:
     - {fileID: 3739623183934700978, guid: 23b9ff02b0de4e24e9ab088bacd9e9c6, type: 3}
@@ -261,7 +247,7 @@ MonoBehaviour:
     <RandomizeEnemySpawnAmount>k__BackingField: 1
     <MaxTimeBetweenSpawnMilliseconds>k__BackingField: 4000
     <MinTimeBetweenSpawnMilliseconds>k__BackingField: 2000
-    <WaveDurationSeconds>k__BackingField: 60
+    <TimeToActivatePencil>k__BackingField: 0
   changeStateDelayMilliseconds: 300
 --- !u!1 &8033264953020589378
 GameObject:

@@ -13,6 +13,8 @@ namespace Player.PlayerAbilities
         [field: TextArea]
         [field:SerializeField] public string AbilityDescription { get; private set; }
         
+        [field:TextArea]
+        [field:SerializeField] public string VetReactionText { get; private set; }
         public abstract void UseAbility();
     }
 }

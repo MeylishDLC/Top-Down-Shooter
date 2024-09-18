@@ -12,8 +12,7 @@ namespace UI.UIShop
         public event Action<Ability> OnEquipAbilityModeEntered; 
         
         [SerializeField] private Ability ability;
-        [SerializeField] private GameObject equipScreen;
-        [SerializeField] private InfoPanel infoPanel;
+        [SerializeField] private Shop shop;
 
         [Header("UI")] 
         [SerializeField] private Image equipImage;
@@ -29,19 +28,19 @@ namespace UI.UIShop
         }
         public void OnPointerEnter(PointerEventData eventData)
         {
-            infoPanel.gameObject.SetActive(true);
-            infoPanel.ChangeInfo(ability);
+            shop.InfoPanel.gameObject.SetActive(true);
+            shop.InfoPanel.ChangeInfo(ability);
             
             equipImage.gameObject.SetActive(true);
         }
         public void OnPointerExit(PointerEventData eventData)
         {
-            infoPanel.gameObject.SetActive(false);
+            shop.InfoPanel.gameObject.SetActive(false);
             equipImage.gameObject.SetActive(false);
         }
         private void EnterEquipAbilityMode()
         {
-            equipScreen.gameObject.SetActive(true);
+            shop.EquipScreen.gameObject.SetActive(true);
             OnEquipAbilityModeEntered?.Invoke(ability);
         }
       
