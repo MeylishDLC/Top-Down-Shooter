@@ -13,7 +13,7 @@ namespace UI.UIShop
         [SerializeField] private Button closeButton;
         private void Start()
         {
-            gameObject.SetActive(false);
+            shopUI.SetActive(false);
             closeButton.onClick.AddListener(CloseShop);
         }
         public void OpenShop()
