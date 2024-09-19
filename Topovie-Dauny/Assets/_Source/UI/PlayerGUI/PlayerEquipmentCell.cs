@@ -55,7 +55,14 @@ namespace UI.PlayerGUI
             {
                 abilityImage.color = new Color(_initialColor.r, _initialColor.g, _initialColor.b, transparencyOnCooldown);
                 cooldownText.gameObject.SetActive(true);
-                cooldownText.text = Mathf.CeilToInt(CurrentAbility.CooldownMilliseconds/1000).ToString();
+                if (_remainingTime > 0)
+                {
+                    cooldownText.text = Mathf.CeilToInt(_remainingTime).ToString();
+                }
+                else
+                {
+                    cooldownText.text = "cooldown";
+                }
                 return;
             }
             else

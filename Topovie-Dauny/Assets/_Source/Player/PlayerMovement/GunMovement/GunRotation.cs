@@ -13,6 +13,9 @@ namespace Player.PlayerMovement.GunMovement
         [SerializeField] private GameObject right;
         [SerializeField] private GameObject back;
 
+        //todo refactor 
+        [SerializeField] private SpriteRenderer gun;
+        
         private UI.UIShop.Shop _shop;
         private DialogueManager _dialogueManager;
         
@@ -63,6 +66,8 @@ namespace Player.PlayerMovement.GunMovement
                     left.SetActive(false);
                     right.SetActive(false);
                     back.SetActive(false);
+                    gun.sortingOrder = 1;
+                    
                     break;
                 
                 case Sides.Right:
@@ -70,7 +75,10 @@ namespace Player.PlayerMovement.GunMovement
                     left.SetActive(false);
                     right.SetActive(true);
                     back.SetActive(false);
-                    FlipGameObject(right, false);
+                    
+                    FlipGameObject(gun.gameObject, false);
+                    gun.sortingOrder = 1;
+                    
                     break;
                 
                 case Sides.Left:
@@ -78,7 +86,9 @@ namespace Player.PlayerMovement.GunMovement
                     left.SetActive(true);
                     right.SetActive(false);
                     back.SetActive(false);
-                    FlipGameObject(left, true); 
+                    FlipGameObject(gun.gameObject, true); 
+                    gun.sortingOrder = 1;
+                    
                     break;
                 
                 case Sides.Back:
@@ -86,6 +96,8 @@ namespace Player.PlayerMovement.GunMovement
                     left.SetActive(false);
                     right.SetActive(false);
                     back.SetActive(true);
+                    gun.sortingOrder = -1;
+                    
                     break;
                 
                 default:
@@ -98,10 +110,10 @@ namespace Player.PlayerMovement.GunMovement
             difference.Normalize();
             return difference;
         }
-        private void FlipGameObject(GameObject obj, bool flipX)
+        private void FlipGameObject(GameObject obj, bool flipY)
         {
             var scale = obj.transform.localScale;
-            scale.x = flipX ? -Mathf.Abs(scale.x) : Mathf.Abs(scale.x);
+            scale.y = flipY ? -Mathf.Abs(scale.y) : Mathf.Abs(scale.y);
             obj.transform.localScale = scale;
         }
         
