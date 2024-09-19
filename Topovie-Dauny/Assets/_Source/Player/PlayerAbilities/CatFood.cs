@@ -21,11 +21,19 @@ namespace Player.PlayerAbilities
         }
         public override void UseAbility()
         {
-           
-            
+            if (CanUse)
+            {
+                UseAbilityAsync().Forget( );
+            }
         }
-
         private async UniTask UseAbilityAsync()
+        {
+            CanUse = false;
+            ChangeSpeedForTime().Forget();
+            await UniTask.Delay(CooldownMilliseconds);
+            CanUse = true;
+        }
+        private async UniTask ChangeSpeedForTime()
         {
             _playerMovement.ChangeSpeed(newPlayerSpeed);
             await UniTask.Delay(TimeSpan.FromSeconds(boostDuration));
