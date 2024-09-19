@@ -61,6 +61,11 @@ namespace Player.PlayerCombat
                 OnHeal?.Invoke(healAmount);
             }
         }
+
+        public void SetCanTakeDamage(bool canTakeDamage)
+        {
+            _canTakeDamage = canTakeDamage;
+        }
         private async UniTask RecoverFromDamageAsync(CancellationToken token)
         {
             await UniTask.Delay(invincibilityTime, cancellationToken: token);

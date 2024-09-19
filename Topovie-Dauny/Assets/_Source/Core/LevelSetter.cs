@@ -87,7 +87,6 @@ namespace Core
                  _chargingPauseCts?.Cancel();
                  _chargingPauseCts?.Dispose();
                  _chargingPauseCts = new CancellationTokenSource();
-                 Debug.Log($"Charge paused. Time Remaining: {_timeRemaining}");
              }
          }
 

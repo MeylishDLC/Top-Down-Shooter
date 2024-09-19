@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using Zenject;
@@ -23,17 +24,17 @@ namespace Player.PlayerAbilities
         {
             if (CanUse)
             {
-                UseAbilityAsync().Forget( );
+                UseAbilityAsync(CancellationToken.None).Forget( );
             }
         }
-        private async UniTask UseAbilityAsync()
+        private async UniTask UseAbilityAsync(CancellationToken token)
         {
             CanUse = false;
-            ChangeSpeedForTime().Forget();
+            ChangeSpeedForTime(token).Forget();
             await UniTask.Delay(CooldownMilliseconds);
             CanUse = true;
         }
-        private async UniTask ChangeSpeedForTime()
+        private async UniTask ChangeSpeedForTime(CancellationToken token)
         {
             _playerMovement.ChangeSpeed(newPlayerSpeed);
             await UniTask.Delay(TimeSpan.FromSeconds(boostDuration));

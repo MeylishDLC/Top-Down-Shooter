@@ -730,6 +730,90 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 331812650}
   m_CullTransparentMesh: 1
+--- !u!1 &424344966
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 424344967}
+  - component: {fileID: 424344968}
+  m_Layer: 3
+  m_Name: Shield
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &424344967
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 424344966}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.017, y: -0.002, z: 0}
+  m_LocalScale: {x: 0.6578, y: 0.6578, z: 0.6578}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1612465537}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!212 &424344968
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 424344966}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 809442407
+  m_SortingLayer: 7
+  m_SortingOrder: -3
+  m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
+  m_Color: {r: 0.27033645, g: 0.5489147, b: 0.764151, a: 0.5019608}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 1, y: 1}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
 --- !u!1 &448693427
 GameObject:
   m_ObjectHideFlags: 0
@@ -985,6 +1069,10 @@ PrefabInstance:
     - target: {fileID: 3739623183934700978, guid: 23b9ff02b0de4e24e9ab088bacd9e9c6, type: 3}
       propertyPath: m_Name
       value: Leo
+      objectReference: {fileID: 0}
+    - target: {fileID: 3739623183934700978, guid: 23b9ff02b0de4e24e9ab088bacd9e9c6, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4292886182072004472, guid: 23b9ff02b0de4e24e9ab088bacd9e9c6, type: 3}
       propertyPath: <Attack>k__BackingField
@@ -2982,6 +3070,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: LeoShooter
       objectReference: {fileID: 0}
+    - target: {fileID: 7292485630082978289, guid: e06d826ac0f653b458e6765d59944e1f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7920992520623383771, guid: e06d826ac0f653b458e6765d59944e1f, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.764
@@ -3870,7 +3962,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1428535718592273555, guid: af35db23b32508c4ab8e46f098395935, type: 3}
       propertyPath: <MaxHealth>k__BackingField
-      value: 12121212
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 4250440572906355449, guid: af35db23b32508c4ab8e46f098395935, type: 3}
       propertyPath: m_Name
@@ -3902,7 +3994,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 5448661762863528021, guid: af35db23b32508c4ab8e46f098395935, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 424344967}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: af35db23b32508c4ab8e46f098395935, type: 3}
 --- !u!222 &646669113864600678
@@ -6657,15 +6752,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9151122059598083736, guid: 506894731c8d5e44ca2900f8595de1f5, type: 3}
       propertyPath: portalCharges.Array.data[0].<TimeToActivatePencil>k__BackingField
-      value: 10
+      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 9151122059598083736, guid: 506894731c8d5e44ca2900f8595de1f5, type: 3}
       propertyPath: portalCharges.Array.data[1].<TimeToActivatePencil>k__BackingField
-      value: 30
+      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 9151122059598083736, guid: 506894731c8d5e44ca2900f8595de1f5, type: 3}
       propertyPath: portalCharges.Array.data[2].<TimeToActivatePencil>k__BackingField
-      value: 30
+      value: 120
       objectReference: {fileID: 0}
     - target: {fileID: 9151122059598083736, guid: 506894731c8d5e44ca2900f8595de1f5, type: 3}
       propertyPath: portalCharges.Array.data[1].<SpawnPoints>k__BackingField.Array.size
@@ -8748,7 +8843,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: MainCanvas
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1439571280953025272, guid: 6d80ab505d31baa4e887b16081295467, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 6842836576396827355, guid: 6d80ab505d31baa4e887b16081295467, type: 3}
@@ -10309,7 +10405,7 @@ PrefabInstance:
     - target: {fileID: 3258387843817227132, guid: 1ee0cc302fc4acf44869fba793392279, type: 3}
       propertyPath: ability
       value: 
-      objectReference: {fileID: 8864887494570024766}
+      objectReference: {fileID: 0}
     - target: {fileID: 3258387843817227132, guid: 1ee0cc302fc4acf44869fba793392279, type: 3}
       propertyPath: infoPanel
       value: 
@@ -10325,7 +10421,7 @@ PrefabInstance:
     - target: {fileID: 3258387843817227132, guid: 1ee0cc302fc4acf44869fba793392279, type: 3}
       propertyPath: <ability>k__BackingField
       value: 
-      objectReference: {fileID: 8864887494570024766}
+      objectReference: {fileID: 8864887494570024770}
     - target: {fileID: 4839954947966395285, guid: 1ee0cc302fc4acf44869fba793392279, type: 3}
       propertyPath: m_SizeDelta.x
       value: 113.26
@@ -10417,7 +10513,7 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 2614414731863496875, guid: 1ee0cc302fc4acf44869fba793392279, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 8864887494570024766}
+      addedObject: {fileID: 8864887494570024770}
   m_SourcePrefab: {fileID: 100100000, guid: 1ee0cc302fc4acf44869fba793392279, type: 3}
 --- !u!1 &7610360333226107581 stripped
 GameObject:
@@ -11126,7 +11222,7 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!114 &8864887494570024766
+--- !u!114 &8864887494570024770
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -11135,10 +11231,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 7610360333226107581}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: af3fa72f69424d7494fad897a11fc3ac, type: 3}
+  m_Script: {fileID: 11500000, guid: f67daa440d674d8a861eda76a672a294, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <CooldownMilliseconds>k__BackingField: 15000
+  <CooldownMilliseconds>k__BackingField: 30000
   <AbilityImage>k__BackingField: {fileID: -1074475534, guid: 00de4253abcf3e5499833d33e7cc22ca, type: 3}
   <AbilityDefinition>k__BackingField: "\u0421\u0432\u044F\u0442\u043E\u0439 \u043E\u0431\u0435\u0440\u0435\u0433
     \u0438\u0437 \u043A\u043E\u0448\u0430\u0447\u044C\u0435\u0439 \u043C\u044F\u0442\u044B
@@ -11157,7 +11253,10 @@ MonoBehaviour:
     \u0432\u0435\u043B\u0438\u0447\u0435\u0441\u0442\u0432\u0435\u043D\u043D\u044B\u0439
     \u043F\u0440\u0435\u0434\u043C\u0435\u0442, \u0434\u0430 \u043F\u043E\u043C\u043E\u0433\u0443\u0442
     \u0442\u0435\u0431\u0435 \u0431\u043E\u0433\u0438 \u043A\u043E\u0448\u043A\u0438!"
-  healAmount: 1
+  shieldDuration: 10
+  shield: {fileID: 424344968}
+  shieldBlinkSpeedOnDisappear: 0.15
+  remainedTimeToStartBlink: 2
 --- !u!222 &8867376663540842874
 CanvasRenderer:
   m_ObjectHideFlags: 0

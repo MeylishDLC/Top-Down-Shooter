@@ -1,4 +1,5 @@
-﻿using Cysharp.Threading.Tasks;
+﻿using System.Threading;
+using Cysharp.Threading.Tasks;
 using Player.PlayerCombat;
 using TMPro;
 using UnityEngine;
@@ -23,10 +24,10 @@ namespace Player.PlayerAbilities
         {
             if (CanUse)
             {
-                UseAbilityAsync().Forget();
+                UseAbilityAsync(CancellationToken.None).Forget();
             }
         }
-        private async UniTask UseAbilityAsync()
+        private async UniTask UseAbilityAsync(CancellationToken token)
         {
             CanUse = false;
             _playerHealth.Heal(healAmount);
