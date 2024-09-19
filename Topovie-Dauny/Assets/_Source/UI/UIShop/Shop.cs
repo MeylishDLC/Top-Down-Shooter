@@ -52,7 +52,10 @@ namespace UI.UIShop
         }
         private void CloseShop()
         {
-            CloseShopAsync(_stopTypingCts.Token).Forget();
+            if (ShopIsOpen)
+            {
+                CloseShopAsync(_stopTypingCts.Token).Forget();
+            }
         }
         private async UniTask OpenShopAsync(CancellationToken token)
         {

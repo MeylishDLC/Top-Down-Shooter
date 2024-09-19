@@ -53,7 +53,15 @@ namespace UI.PlayerGUI
         {
             if (!CurrentAbility.CanUse)
             {
+                abilityImage.color = new Color(_initialColor.r, _initialColor.g, _initialColor.b, transparencyOnCooldown);
+                cooldownText.gameObject.SetActive(true);
+                cooldownText.text = Mathf.CeilToInt(CurrentAbility.CooldownMilliseconds/1000).ToString();
                 return;
+            }
+            else
+            {
+                abilityImage.color = _initialColor;
+                cooldownText.gameObject.SetActive(false);
             }
             
             if (Input.GetKeyDown(keyToUse))

@@ -50,13 +50,13 @@ namespace Core
         
         private void HandleChargePortalButtonHold()
         {
-            if (Input.GetKeyDown(KeyCode.G))
+            if (Input.GetKeyDown(KeyCode.F))
             {
                 _holdStartTime = Time.time;
                 _isHoldingButton = true;
             }
         
-            if (Input.GetKey(KeyCode.G) && _isHoldingButton)
+            if (Input.GetKey(KeyCode.F) && _isHoldingButton)
             {
                 if (Time.time - _holdStartTime >= holdChargePortalButtonDuration)
                 {
@@ -70,7 +70,7 @@ namespace Core
                 }
             }
         
-            if (Input.GetKeyUp(KeyCode.G))
+            if (Input.GetKeyUp(KeyCode.F))
             {
                 _isHoldingButton = false;
             }

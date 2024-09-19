@@ -70,6 +70,7 @@ namespace Player.PlayerMovement.GunMovement
                     left.SetActive(false);
                     right.SetActive(true);
                     back.SetActive(false);
+                    FlipGameObject(right, false);
                     break;
                 
                 case Sides.Left:
@@ -77,6 +78,7 @@ namespace Player.PlayerMovement.GunMovement
                     left.SetActive(true);
                     right.SetActive(false);
                     back.SetActive(false);
+                    FlipGameObject(left, true); 
                     break;
                 
                 case Sides.Back:
@@ -95,6 +97,12 @@ namespace Player.PlayerMovement.GunMovement
             var difference = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
             difference.Normalize();
             return difference;
+        }
+        private void FlipGameObject(GameObject obj, bool flipX)
+        {
+            var scale = obj.transform.localScale;
+            scale.x = flipX ? -Mathf.Abs(scale.x) : Mathf.Abs(scale.x);
+            obj.transform.localScale = scale;
         }
         
         private enum Sides
