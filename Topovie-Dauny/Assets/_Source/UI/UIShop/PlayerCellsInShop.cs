@@ -14,19 +14,18 @@ namespace UI.UIShop
         public event Action<int, Ability> OnAbilityChanged;
         
         [SerializeField] private Ability[] abilitiesOnStart;
-        [field:SerializeField] public Button[] EquipmentCells;
+        [field:SerializeField] public Button[] EquipmentCells { get; private set; }
         [SerializeField] private ShopCell[] shopCells;
         [SerializeField] private GameObject equipScreen;
-        
+
+        private Dictionary<Button, Ability> _equipmentCellAbilities = new();
         private List<Image> _equipmentCellImages = new();
         private Ability _newAbilityToEquip;
         private void Awake()
         {
-            foreach (var equipmentCell in EquipmentCells)
-            {
-                var image = equipmentCell.gameObject.transform.GetChild(0);
-                _equipmentCellImages.Add(image.GetComponent<Image>());
-            }
+            InitializeImages();
+            InitializeDictionary();
+            
             ChangeButtonsInteractable(false);
             SubscribeOnEvents(true);
             SetEquipmentCellsOnStart();
@@ -38,12 +37,52 @@ namespace UI.UIShop
         }
         public void OnEquipmentCellChoose(int cellIndex)
         {
-            Debug.Log($"Cell chosen: {cellIndex}");
             equipScreen.SetActive(false);
             ChangeButtonsInteractable(false);
-            var image = EquipmentCells[cellIndex].gameObject.transform.GetChild(0).GetComponent<Image>();
-            image.sprite = _newAbilityToEquip.AbilityImage;
+            
+            if (IsNewAbilitySetInOtherCells(cellIndex, out var indexOfOtherCell))
+            {
+                var abilityInTheCellChosen = _equipmentCellAbilities[EquipmentCells[cellIndex]];
+                _equipmentCellAbilities[EquipmentCells[cellIndex]] = _newAbilityToEquip;
+                _equipmentCellAbilities[EquipmentCells[indexOfOtherCell]] = abilityInTheCellChosen;
+                
+                var newAbilityImage = EquipmentCells[cellIndex].gameObject.transform.GetChild(0).GetComponent<Image>();
+                newAbilityImage.sprite = _newAbilityToEquip.AbilityImage;
+                
+                var prevAbilityImage = EquipmentCells[indexOfOtherCell].gameObject.transform.GetChild(0).GetComponent<Image>();
+                prevAbilityImage.sprite = abilityInTheCellChosen.AbilityImage;
+                
+                OnAbilityChanged?.Invoke(indexOfOtherCell, abilityInTheCellChosen);
+            }
+            else
+            {
+                _equipmentCellAbilities[EquipmentCells[cellIndex]]= _newAbilityToEquip;
+                
+                var image = EquipmentCells[cellIndex].gameObject.transform.GetChild(0).GetComponent<Image>();
+                image.sprite = _newAbilityToEquip.AbilityImage;
+            }
             OnAbilityChanged?.Invoke(cellIndex, _newAbilityToEquip);
+        }
+
+        private bool IsNewAbilitySetInOtherCells(int cellChosen, out int indexOfOtherCell)
+        {
+            indexOfOtherCell = default;
+            
+            for (int i = 0; i < EquipmentCells.Length; i++)
+            {
+                if (i == cellChosen)
+                {
+                    continue;
+                } 
+                
+                var image = EquipmentCells[i].gameObject.transform.GetChild(0).GetComponent<Image>();
+                if (image.sprite == _newAbilityToEquip.AbilityImage)
+                {
+                    indexOfOtherCell = i;
+                    return true;
+                }
+            }
+            return false;
         }
 
         private void SetEquipmentCellsOnStart()
@@ -58,6 +97,21 @@ namespace UI.UIShop
             for (int i = 0; i < abilitiesOnStart.Length; i++)
             {
                 OnAbilityChanged?.Invoke(i, abilitiesOnStart[i]);
+            }
+        }
+        private void InitializeImages()
+        {
+            foreach (var equipmentCell in EquipmentCells)
+            {
+                var image = equipmentCell.gameObject.transform.GetChild(0);
+                _equipmentCellImages.Add(image.GetComponent<Image>());
+            }
+        }
+        private void InitializeDictionary()
+        {
+            for (int i = 0; i < EquipmentCells.Length; i++)
+            {
+                _equipmentCellAbilities.Add(EquipmentCells[i], abilitiesOnStart[i]);
             }
         }
         private void EnterEquipAbilityMode(Ability abilityToEquip)

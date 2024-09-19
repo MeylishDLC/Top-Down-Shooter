@@ -47,7 +47,7 @@ namespace UI.UIShop
         {
             OpenShopAsync(_stopTypingCts.Token).Forget();
         }
-        public void CloseShop()
+        private void CloseShop()
         {
             CloseShopAsync(_stopTypingCts.Token).Forget();
         }

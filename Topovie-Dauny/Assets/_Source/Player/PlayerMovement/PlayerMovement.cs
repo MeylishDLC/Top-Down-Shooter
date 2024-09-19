@@ -4,6 +4,7 @@ using DialogueSystem;
 using Player.PlayerCombat;
 using UI;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Zenject;
 
 namespace Player.PlayerMovement
@@ -11,8 +12,9 @@ namespace Player.PlayerMovement
     [RequireComponent(typeof(Rigidbody2D))]
     public class PlayerMovement : MonoBehaviour
     {
+        [field: SerializeField] public float MovementSpeed { get; private set; } = 1.5f;
+
         [SerializeField] private Animator[] sides;
-        [SerializeField] private float movementSpeed = 1f; 
         [SerializeField] private float dodgeSpeed = 15f; 
         [SerializeField] private int dodgeTimeMilliseconds = 500;
         [SerializeField] private PlayerHealth playerHealth;
@@ -54,10 +56,13 @@ namespace Player.PlayerMovement
         {
             if (!_dialogueManager.DialogueIsPlaying && !playerHealth.KnockBack.GettingKnockedBack && !_shop.ShopIsOpen)
             {
-                _rb.velocity = new Vector2(_horizontal, _vertical).normalized * movementSpeed;
+                _rb.velocity = new Vector2(_horizontal, _vertical).normalized * MovementSpeed;
             }
         }
-
+        public void ChangeSpeed(float newSpeed)
+        {
+            MovementSpeed = newSpeed;
+        }
         private void HandleMovement()
         {
             _horizontal = Input.GetAxisRaw("Horizontal");
