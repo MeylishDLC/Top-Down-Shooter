@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Threading;
 using Cysharp.Threading.Tasks;
+using DG.Tweening;
 using Shop;
 using UnityEngine;
 using UnityEngine.Serialization;
+using UnityEngine.UI;
 using Zenject;
 
 namespace Core
@@ -13,7 +15,8 @@ namespace Core
          public event Action<States> OnStateChanged;
          public event Action<float, float> OnTimeRemainingChanged;
          public bool IsChargingPaused { get; private set; }
-
+         
+         [Header("Main")]
          [SerializeField] private PortalChargerTrigger[] portalChargeTriggers;
          
          [SerializeField] private SceneContext sceneContext;
@@ -44,7 +47,6 @@ namespace Core
          {
              shopTrigger.gameObject.SetActive(_currentState == States.Chill);
          }
-
          private void StartChargingPortal(int chargeIndex)
          {
              if (_chargesPassed < portalCharges.Length)
@@ -61,10 +63,7 @@ namespace Core
                  StartTimeTrackingAsync(enemyWave.TimeToActivatePencil, enemyWave.TimeToActivatePencil
                      ,_chargingPauseCts.Token).Forget();
              }
-             else
-             {
-                 Debug.Log("Level passed");
-             }
+             
          }
          private async UniTask ChargePortalAsync(float durationToCharge, CancellationToken token)
          {
@@ -135,6 +134,7 @@ namespace Core
              
              _currentState = States.Chill;
              OnStateChanged?.Invoke(_currentState);
+            
          }
          private void ClearAllSpawnsImmediate()
          {
@@ -147,7 +147,6 @@ namespace Core
                  }
              }
          }
-
          private void SubscribeOnEvents(bool subscribe)
          {
              if (subscribe)

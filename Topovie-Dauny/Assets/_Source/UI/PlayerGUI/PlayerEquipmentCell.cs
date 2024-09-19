@@ -27,8 +27,6 @@ namespace UI.PlayerGUI
         [SerializeField] private Image abilityImage;
         [Range(0f,1f)][SerializeField] private float transparencyOnCooldown;
         [SerializeField] private TMP_Text cooldownText;
-        [SerializeField] private TMP_Text holdKeyText;
-        [SerializeField] private float timeForTextDisappear;
         [SerializeField] private CustomCursor customCursor;
         [SerializeField] private Image holdIndicator;
 
@@ -81,11 +79,6 @@ namespace UI.PlayerGUI
                     ShowCooldownStarted(cooldownSecs);
                     StartTimeTracking(cooldownSecs).Forget();
                 }
-                else
-                {
-                    //todo get here cts
-                    ShowHoldButtonText(CancellationToken.None).Forget();
-                }
             }
 
             if (CurrentAbility.AbilityType == AbilityTypes.HoldButton)
@@ -131,12 +124,6 @@ namespace UI.PlayerGUI
                 }
             }
            
-        }
-        private async UniTask ShowHoldButtonText(CancellationToken token)
-        {
-            holdKeyText.gameObject.SetActive(true);
-            await UniTask.Delay(TimeSpan.FromSeconds(timeForTextDisappear), cancellationToken: token);
-            holdKeyText.gameObject.SetActive(false);
         }
         private async UniTask StartTimeTracking(float cooldown)
         {

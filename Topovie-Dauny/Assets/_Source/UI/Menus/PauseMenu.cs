@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using UI.Core;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace UI.Menus
@@ -9,6 +10,7 @@ namespace UI.Menus
         [SerializeField] private Button optionsButton;
         [SerializeField] private Button exitButton;
         [SerializeField] private GameObject optionsScreen;
+        [SerializeField] private CustomCursor customCursor;
         public bool IsPaused { get; private set; }
         private bool _optionsMenuActive;
         private void Start()
@@ -37,14 +39,22 @@ namespace UI.Menus
                 }
             }
         }
-        public void PauseGame()
+
+        private void PauseGame()
         {
+            Cursor.visible = true;
+            customCursor.gameObject.SetActive(false);
+            
             IsPaused = true;
             pauseMenu.SetActive(true);
             Time.timeScale = 0f;
         }
-        public void ResumeGame()
+
+        private void ResumeGame()
         {
+            Cursor.visible = false;
+            customCursor.gameObject.SetActive(true);
+            
             IsPaused = false;
             pauseMenu.SetActive(false);
             Time.timeScale = 1f;
