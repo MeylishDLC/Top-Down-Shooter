@@ -30,6 +30,7 @@ namespace UI.PlayerGUI
         [SerializeField] private TMP_Text holdKeyText;
         [SerializeField] private float timeForTextDisappear;
         [SerializeField] private CustomCursor customCursor;
+        [SerializeField] private Image holdIndicator;
 
         private Color _initialColor;
         private float _remainingTime;
@@ -83,6 +84,9 @@ namespace UI.PlayerGUI
             {
                 customCursor.SetCrosshair(false);
                 _isHoldingKey = false;
+                
+                holdIndicator.gameObject.SetActive(false);
+                holdIndicator.fillAmount = 1;
             }
             
             if (Input.GetKeyDown(keyToUse))
@@ -91,16 +95,22 @@ namespace UI.PlayerGUI
                 _isHoldingKey = true;
                 
                 customCursor.SetCrosshair(true);
+                holdIndicator.gameObject.SetActive(true);
+                holdIndicator.fillAmount = 1;
             }
             if (Input.GetKey(keyToUse) && _isHoldingKey)
             {
-                if (Time.time - _holdStartTime >= timeToHoldKey)
+                var elapsedTime = Time.time - _holdStartTime;
+                var fillAmount = Mathf.Clamp01(1 - (elapsedTime / timeToHoldKey));
+                holdIndicator.fillAmount = fillAmount;
+
+                if (elapsedTime >= timeToHoldKey)
                 {
                     CurrentAbility.UseAbility();
                     var cooldownSecs = (float)CurrentAbility.CooldownMilliseconds / 1000;
                     ShowCooldownStarted(cooldownSecs);
                     StartTimeTracking(cooldownSecs).Forget();
-                    
+
                     customCursor.SetCrosshair(false);
                     _isHoldingKey = false;
                 }
