@@ -16,9 +16,7 @@ namespace Core
             var randomSpawn = spawnPoints[Random.Range(0, spawnPoints.Length)];
             var randomEnemy = enemyPrefabs[Random.Range(0, enemyPrefabs.Length)];
 
-            currentSceneContext.Container.InstantiatePrefab(randomEnemy,
-                GetRandomPositionWithinSpawnRange(randomSpawn, Random.Range(0.1f, 0.5f)),
-                Quaternion.identity, randomSpawn);
+            currentSceneContext.Container.InstantiatePrefab(randomEnemy, randomSpawn.position, Quaternion.identity, randomSpawn);
         }
         public static async UniTask SpawnEnemiesRandomlyAsync(Transform[] spawnPoints, GameObject[] enemyPrefabs, SceneContext currentSceneContext, 
             int maxDelayBetweenSpawn, int minDelayBetweenSpawn, int maxEnemiesAtOnce, bool randomiseEnemiesAmount, CancellationToken token)

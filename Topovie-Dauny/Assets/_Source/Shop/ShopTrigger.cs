@@ -1,4 +1,5 @@
 ﻿using System;
+using Core;
 using UI;
 using UnityEngine;
 using Zenject;
@@ -7,27 +8,34 @@ namespace Shop
 {
     public class ShopTrigger: MonoBehaviour
     {
-        public event Action OnChargePortalPressed;
-        
         [SerializeField] private SpriteRenderer visualQue;
-        [SerializeField] private float holdChargePortalButtonDuration;
-        
+        [SerializeField] private UI.UIShop.Shop _shop;
+
         private bool _isHoldingButton;
         private float _holdStartTime;
         private bool _playerInRange;
-        private UI.UIShop.Shop _shop;
 
+        private LevelSetter _levelSetter;
+        
         [Inject]
-        public void Construct(UI.UIShop.Shop shop)
+        public void Construct(LevelSetter levelSetter)
         {
-            _shop = shop;
+            _levelSetter = levelSetter;
         }
-        private void Start()
+        private void Awake()
         {
+            _levelSetter.OnStateChanged += EnableOnChangeState;
             visualQue.gameObject.SetActive(false);
+            EnableOnChangeState(States.Chill);
         }
+        private void OnDestroy()
+        {
+            _levelSetter.OnStateChanged -= EnableOnChangeState;
+        }
+        
         private void Update()
         {
+
             if (_playerInRange)
             {
                 visualQue.gameObject.SetActive(true);
@@ -35,14 +43,16 @@ namespace Shop
                 {
                     _shop.OpenShop();
                 }
-                HandleChargePortalButtonHold();
             }
             else
             {
                 visualQue.gameObject.SetActive(false);
             }
         }
-
+        private void EnableOnChangeState(States state)
+        {
+            enabled = state == States.Chill;
+        }
         private void OnTriggerEnter2D(Collider2D other)
         {
             if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
@@ -56,32 +66,6 @@ namespace Shop
             if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
             {
                 _playerInRange = false;
-            }
-        }
-
-        private void HandleChargePortalButtonHold()
-        {
-            if (Input.GetKeyDown(KeyCode.G))
-            {
-                _holdStartTime = Time.time;
-                _isHoldingButton = true;
-            }
-        
-            if (Input.GetKey(KeyCode.G) && _isHoldingButton)
-            {
-                if (Time.time - _holdStartTime >= holdChargePortalButtonDuration)
-                {
-                    OnChargePortalPressed?.Invoke();
-                    Debug.Log("Portal Charge Started");
-                    
-                    gameObject.SetActive(false);
-                    _isHoldingButton = false;
-                }
-            }
-        
-            if (Input.GetKeyUp(KeyCode.G))
-            {
-                _isHoldingButton = false;
             }
         }
     }

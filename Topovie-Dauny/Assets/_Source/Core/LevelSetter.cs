@@ -13,10 +13,11 @@ namespace Core
          public event Action<States> OnStateChanged;
          public event Action<float, float> OnTimeRemainingChanged;
          public bool IsChargingPaused { get; private set; }
+
+         [SerializeField] private PortalChargerTrigger[] portalChargeTriggers;
          
          [SerializeField] private SceneContext sceneContext;
          [SerializeField] private ShopTrigger shopTrigger;
-         [SerializeField] private RangeDetector rangeDetector;
          [SerializeField] private Transform[] allSpawns;
          [SerializeField] private EnemyWave[] portalCharges;
 
@@ -24,36 +25,36 @@ namespace Core
          [SerializeField] private int changeStateDelayMilliseconds;
 
          private States _currentState = States.Chill;
-         private int _currentPortalChargeIndex;
          
          private CancellationTokenSource _chargingPauseCts = new();
          private CancellationTokenSource _chargingFinishCts = new();
          private float _timeRemaining;
+         
+         private int _chargesPassed;
+         private int _currentPortalIndex;
          private void Start()
          {
-             shopTrigger.OnChargePortalPressed += StartChargingPortal;
-             rangeDetector.OnPlayerEnterRange += ResumeChargingPortal;
-             rangeDetector.OnPlayerExitRange += PauseChargingPortal;
+             SubscribeOnEvents(true);
          }
          private void OnDestroy()
          {
-             shopTrigger.OnChargePortalPressed -= StartChargingPortal;
-             rangeDetector.OnPlayerEnterRange -= ResumeChargingPortal;
-             rangeDetector.OnPlayerExitRange -= PauseChargingPortal;
+             SubscribeOnEvents(false);
          }
          private void Update()
          {
              shopTrigger.gameObject.SetActive(_currentState == States.Chill);
          }
 
-         private void StartChargingPortal()
+         private void StartChargingPortal(int chargeIndex)
          {
-             if (_currentPortalChargeIndex < portalCharges.Length)
+             if (_chargesPassed < portalCharges.Length)
              {
                  _currentState = States.Fight;
+                 _currentPortalIndex = chargeIndex;
+                 
                  OnStateChanged?.Invoke(_currentState);
-
-                 var enemyWave = portalCharges[_currentPortalChargeIndex];
+                 
+                 var enemyWave = portalCharges[chargeIndex];
                  StartSpawningEnemies(enemyWave);
                  ChargePortalAsync(enemyWave.TimeToActivatePencil, _chargingPauseCts.Token).Forget();
                  
@@ -87,6 +88,7 @@ namespace Core
                  _chargingPauseCts?.Cancel();
                  _chargingPauseCts?.Dispose();
                  _chargingPauseCts = new CancellationTokenSource();
+                 Debug.Log("Charge Paused");
              }
          }
 
@@ -98,7 +100,8 @@ namespace Core
                  
                  ChargePortalAsync(_timeRemaining, _chargingPauseCts.Token).Forget();
                  StartTimeTrackingAsync(_timeRemaining, 
-                     portalCharges[_currentPortalChargeIndex].TimeToActivatePencil,_chargingPauseCts.Token).Forget();
+                     portalCharges[_currentPortalIndex].TimeToActivatePencil,_chargingPauseCts.Token).Forget();
+                 Debug.Log("Charge Resumed");
              }
          }
          private async UniTask StartTimeTrackingAsync(float remainedDuration, float initialDuration, CancellationToken token)
@@ -112,6 +115,7 @@ namespace Core
                      break;
                  }
                  _timeRemaining = remainedDuration - (Time.time - startTime);
+                 Debug.Log($"Time remained {_timeRemaining}, init duration {initialDuration}");
                  OnTimeRemainingChanged?.Invoke(_timeRemaining, initialDuration);
                  await UniTask.Yield(PlayerLoopTiming.TimeUpdate);
              }
@@ -127,7 +131,7 @@ namespace Core
              ClearAllSpawnsImmediate();
 
              await UniTask.Delay(changeStateDelayMilliseconds, cancellationToken: token);
-             _currentPortalChargeIndex++;
+             _currentPortalIndex = default;
              
              _currentState = States.Chill;
              OnStateChanged?.Invoke(_currentState);
@@ -140,6 +144,31 @@ namespace Core
                  for (int i = childCount - 1; i >= 0; i--)
                  {
                      DestroyImmediate(spawn.GetChild(i).gameObject);
+                 }
+             }
+         }
+
+         private void SubscribeOnEvents(bool subscribe)
+         {
+             if (subscribe)
+             {
+                 foreach (var trigger in portalChargeTriggers)
+                 {
+                     trigger.OnChargePortalPressed += StartChargingPortal;
+
+                     var rangeDetector = trigger.GetComponent<RangeDetector>();
+                     rangeDetector.OnPlayerEnterRange += ResumeChargingPortal;
+                     rangeDetector.OnPlayerExitRange += PauseChargingPortal;
+                 }
+             }
+             else
+             {
+                 foreach (var trigger in portalChargeTriggers)
+                 {
+                     trigger.OnChargePortalPressed -= StartChargingPortal;
+                     var rangeDetector = trigger.GetComponent<RangeDetector>();
+                     rangeDetector.OnPlayerEnterRange -= ResumeChargingPortal;
+                     rangeDetector.OnPlayerExitRange -= PauseChargingPortal;
                  }
              }
          }
