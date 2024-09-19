@@ -18,7 +18,6 @@ namespace Player.PlayerCombat
         [SerializeField] private SerializedDictionary<KeyCode, GameObject> weaponsObjects;
 
         [Header("Abilities")] 
-        [SerializeField] private PlayerEquipmentCell[] equipmentCells;
         
         private DialogueManager _dialogueManager;
         private UI.UIShop.Shop _shop;

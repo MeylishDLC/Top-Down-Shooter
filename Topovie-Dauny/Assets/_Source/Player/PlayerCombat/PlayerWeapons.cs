@@ -14,6 +14,7 @@ namespace Player.PlayerCombat
         private SerializedDictionary<KeyCode, GameObject> _weaponObjects;
         private List<IShooting> _weapons;
         private float _fireTimer;
+        private bool _canShoot = true;
         
         public PlayerWeapons(SerializedDictionary<KeyCode, GameObject> weaponObjects)
         {
@@ -22,9 +23,17 @@ namespace Player.PlayerCombat
             GetIShootingComponent();
             CurrentActiveWeaponIndex = GetActiveWeaponIndex();
         }
-
+        public void SetCanShoot(bool canShoot)
+        {
+            _canShoot = canShoot;
+        }
         public void HandleShooting()
         {
+            if (!_canShoot)
+            {
+                return;
+            }
+            
             if (_weapons[CurrentActiveWeaponIndex].ShootOnHold)
             {
                 if (Input.GetMouseButton(0) && _fireTimer <= 0)
@@ -52,7 +61,6 @@ namespace Player.PlayerCombat
 
             CheckSwitchWeapon();
         }
-
         private void Shoot()
         {
             _weapons[CurrentActiveWeaponIndex].Shoot();

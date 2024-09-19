@@ -4,10 +4,9 @@ namespace Enemies.Projectile
 {
     public class Projectile : MonoBehaviour
     {
-        [SerializeField] private float lifetime;
+        [SerializeField] public float lifetime;
         [SerializeField] private ProjectileVisual projectileVisual;
 
-        private Transform _target;
         private float _moveSpeed;
         private float _maxMoveSpeed;
         private float _trajectoryMaxRelativeHeight;
@@ -34,9 +33,14 @@ namespace Enemies.Projectile
             UpdateProjectilePosition();
         }
 
-        public void InitializeProjectile(Transform target, float maxMoveSpeed, float trajectoryMaxHeight)
+        public void InitializeAll(Transform target, float maxMoveSpeed, float trajectoryMaxHeight,
+            AnimationCurve trajectoryCurve, AnimationCurve axisCorrectionCurve,
+            AnimationCurve projectileSpeedCurve)
         {
-            _target = target;
+            _trajectoryAnimationCurve = trajectoryCurve;
+            _axisCorrectionAnimationCurve = axisCorrectionCurve;
+            _projectileSpeedAnimationCurve = projectileSpeedCurve;
+            
             _maxMoveSpeed = maxMoveSpeed;
 
             _initialTargetPosition = target.position;
@@ -44,7 +48,18 @@ namespace Enemies.Projectile
             var xDistanceToTarget = _initialTargetPosition.x - transform.position.x;
             _trajectoryMaxRelativeHeight = Mathf.Abs(xDistanceToTarget) * trajectoryMaxHeight;
 
-            projectileVisual.SetTarget(target);
+            projectileVisual?.SetTarget(target);
+        }
+        public void InitializeProjectile(Transform target, float maxMoveSpeed, float trajectoryMaxHeight)
+        {
+            _maxMoveSpeed = maxMoveSpeed;
+
+            _initialTargetPosition = target.position;
+
+            var xDistanceToTarget = _initialTargetPosition.x - transform.position.x;
+            _trajectoryMaxRelativeHeight = Mathf.Abs(xDistanceToTarget) * trajectoryMaxHeight;
+
+            projectileVisual?.SetTarget(target);
         }
 
         public void InitializeAnimationCurves(AnimationCurve trajectoryCurve, AnimationCurve axisCorrectionCurve,

@@ -134,7 +134,7 @@ GameObject:
   - component: {fileID: 6066935771954610813}
   - component: {fileID: 4717691597737457436}
   - component: {fileID: 478919944582719845}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LeoShooter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -242,8 +242,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.23955758, y: -0.34574342}
-  m_Size: {x: 1.2168195, y: 0.9033303}
+  m_Offset: {x: 0.10431476, y: -0.3804213}
+  m_Size: {x: 1.0919821, y: 0.69526833}
   m_Direction: 1
 --- !u!50 &5725136436602637774
 Rigidbody2D:
@@ -335,9 +335,9 @@ MonoBehaviour:
   targetCompatibility: {fileID: 0}
   maxAcceleration: -2.5
   rotationSpeed: 360
-  slowdownDistance: 0.76
+  slowdownDistance: 1.5
   pickNextWaypointDist: 0.05
-  endReachedDistance: 0.68
+  endReachedDistance: 1.5
   alwaysDrawGizmos: 0
   slowWhenNotFacingTarget: 1
   whenCloseToDestination: 0
@@ -386,24 +386,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   projectilePrefab: {fileID: 4854327939033642716, guid: 2518c1703936253469dad07f815c2dd3, type: 3}
-  shootRate: 2
+  shootRate: 1.5
   projectileMaxMoveSpeed: 2
-  projectileMaxHeight: 3
+  projectileMaxHeight: 10
   trajectoryAnimationCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
       time: 0
       value: 0
-      inSlope: 0.29027578
-      outSlope: 0.29027578
+      inSlope: 0.25362208
+      outSlope: 0.25362208
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0.15789348
+      outWeight: 0.04291896
     - serializedVersion: 3
-      time: 1.0291748
-      value: 0.0070762634
+      time: 0.9991455
+      value: 0.0006980896
       inSlope: -0.13767245
       outSlope: -0.13767245
       tangentMode: 0
@@ -442,7 +442,7 @@ MonoBehaviour:
     m_Curve:
     - serializedVersion: 3
       time: 0.0083351135
-      value: 1.0047302
+      value: 0.9970932
       inSlope: -0.13847858
       outSlope: -0.13847858
       tangentMode: 0
@@ -450,8 +450,8 @@ MonoBehaviour:
       inWeight: 0
       outWeight: 0.579173
     - serializedVersion: 3
-      time: 0.51061314
-      value: 0.8699966
+      time: 0.5439536
+      value: 0.8630081
       inSlope: -0.028689312
       outSlope: -0.028689312
       tangentMode: 0
