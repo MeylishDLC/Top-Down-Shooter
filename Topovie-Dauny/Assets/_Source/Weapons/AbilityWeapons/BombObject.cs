@@ -5,6 +5,7 @@ using System.Threading;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using Enemies;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -26,6 +27,12 @@ namespace Weapons.AbilityWeapons
         private void Start()
         {
             _collider = GetComponent<Collider2D>();
+        }
+
+        private void OnTriggerStay2D(Collider2D other)
+        {
+            BlowUp(CancellationToken.None).Forget();
+            _collider.enabled = false;
         }
 
         private void OnTriggerEnter2D(Collider2D other)

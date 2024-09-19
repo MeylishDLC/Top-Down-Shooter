@@ -4,6 +4,7 @@ using System.Threading;
 using Cysharp.Threading.Tasks;
 using Player.PlayerAbilities;
 using TMPro;
+using UI.Core;
 using UI.UIShop;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -28,6 +29,7 @@ namespace UI.PlayerGUI
         [SerializeField] private TMP_Text cooldownText;
         [SerializeField] private TMP_Text holdKeyText;
         [SerializeField] private float timeForTextDisappear;
+        [SerializeField] private CustomCursor customCursor;
 
         private Color _initialColor;
         private float _remainingTime;
@@ -48,13 +50,13 @@ namespace UI.PlayerGUI
 
         private void Update()
         {
+            if (!CurrentAbility.CanUse)
+            {
+                return;
+            }
+            
             if (Input.GetKeyDown(keyToUse))
             {
-                if (!CurrentAbility.CanUse)
-                {
-                    return;
-                }
-                
                 if (CurrentAbility.AbilityType == AbilityTypes.TapButton)
                 {
                     //todo: refactor
@@ -70,27 +72,26 @@ namespace UI.PlayerGUI
                 }
             }
 
-            if (Input.GetKey(keyToUse))
+            if (CurrentAbility.AbilityType == AbilityTypes.HoldButton)
             {
-                if (!CurrentAbility.CanUse)
-                {
-                    return;
-                }
-                
-                if (CurrentAbility.AbilityType == AbilityTypes.HoldButton)
-                {
-                    UseAbilityOnKeyHold();
-                }
+                UseAbilityOnKeyHold();
             }
         }
         private void UseAbilityOnKeyHold()
         {
+            if (Input.GetKeyUp(keyToUse))
+            {
+                customCursor.SetCrosshair(false);
+                _isHoldingKey = false;
+            }
+            
             if (Input.GetKeyDown(keyToUse))
             {
                 _holdStartTime = Time.time;
                 _isHoldingKey = true;
+                
+                customCursor.SetCrosshair(true);
             }
-        
             if (Input.GetKey(keyToUse) && _isHoldingKey)
             {
                 if (Time.time - _holdStartTime >= timeToHoldKey)
@@ -100,14 +101,11 @@ namespace UI.PlayerGUI
                     ShowCooldownStarted(cooldownSecs);
                     StartTimeTracking(cooldownSecs).Forget();
                     
+                    customCursor.SetCrosshair(false);
                     _isHoldingKey = false;
                 }
             }
-        
-            if (Input.GetKeyUp(keyToUse))
-            {
-                _isHoldingKey = false;
-            }
+           
         }
         private async UniTask ShowHoldButtonText(CancellationToken token)
         {
