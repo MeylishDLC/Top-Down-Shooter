@@ -1,45 +1,43 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
+using Player.PlayerMovement.GunMovement;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 using Weapons;
 
 namespace Player.PlayerCombat
 {
     public class PlayerWeapons
     {
-        public int CurrentActiveWeaponIndex { get; private set; }
-        public IEnumerable<IShooting> Weapons => _weapons;
+        public int CurrentActiveGunIndex { get; private set; }
+        public IEnumerable<Gun> Guns => _guns.Values;
 
-        private SerializedDictionary<KeyCode, GameObject> _weaponObjects;
-        private List<IShooting> _weapons;
+        private Image _gunUIImage;
+        private GunRotation _gunRotation;
+        private SerializedDictionary<KeyCode, Gun> _guns;
         private float _fireTimer;
-        private bool _canShoot = true;
-        
-        public PlayerWeapons(SerializedDictionary<KeyCode, GameObject> weaponObjects)
+        public PlayerWeapons(SerializedDictionary<KeyCode, Gun> guns, GunRotation gunRotation, Image gunUIImage)
         {
-            _weaponObjects = weaponObjects;
-            _weapons = new List<IShooting>();
-            GetIShootingComponent();
-            CurrentActiveWeaponIndex = GetActiveWeaponIndex();
+            _guns = guns;
+            _gunUIImage = gunUIImage;
+            CurrentActiveGunIndex = GetActiveWeaponIndex();
+            
+            _gunRotation = gunRotation;
+            _gunRotation.CurrentGun = _guns.Values.ElementAt(CurrentActiveGunIndex).GetComponent<SpriteRenderer>();
+            _gunUIImage.sprite = _guns.Values.ElementAt(CurrentActiveGunIndex).GunIconSprite;
         }
-        public void SetCanShoot(bool canShoot)
-        {
-            _canShoot = canShoot;
-        }
+      
         public void HandleShooting()
         {
-            if (!_canShoot)
-            {
-                return;
-            }
-            
-            if (_weapons[CurrentActiveWeaponIndex].ShootOnHold)
+            if (_guns.Values.ElementAt(CurrentActiveGunIndex).ShootOnHold)
             {
                 if (Input.GetMouseButton(0) && _fireTimer <= 0)
                 {
                     Shoot();
-                    _fireTimer = _weapons[CurrentActiveWeaponIndex].FireRate;
+                    _fireTimer = _guns.Values.ElementAt(CurrentActiveGunIndex).FireRate;
                 }
                 else
                 {
@@ -51,7 +49,7 @@ namespace Player.PlayerCombat
                 if (Input.GetMouseButtonDown(0) && _fireTimer <= 0)
                 {
                     Shoot();
-                    _fireTimer = _weapons[CurrentActiveWeaponIndex].FireRate;
+                    _fireTimer = _guns.Values.ElementAt(CurrentActiveGunIndex).FireRate;
                 }
                 else
                 {
@@ -63,16 +61,16 @@ namespace Player.PlayerCombat
         }
         private void Shoot()
         {
-            _weapons[CurrentActiveWeaponIndex].Shoot();
+            _guns.Values.ElementAt(CurrentActiveGunIndex).Shoot();
         }
 
         private void CheckSwitchWeapon()
         {
-            var keysArray = _weaponObjects.Keys.ToArray();
+            var keysArray = _guns.Keys.ToArray();
 
-            for (int i = 0; i < _weapons.Count; i++)
+            for (int i = 0; i < _guns.Count; i++)
             {
-                if (Input.GetKeyDown(keysArray[i]) && _weapons[i].IsUnlocked)
+                if (Input.GetKeyDown(keysArray[i]) && _guns.Values.ElementAt(i).IsUnlocked)
                 {
                     SwitchWeapon(i);
                 }
@@ -81,37 +79,36 @@ namespace Player.PlayerCombat
 
         private void SwitchWeapon(int weaponIndex)
         {
-            var weaponsObjectsArray = _weaponObjects.Values.ToArray();
-            weaponsObjectsArray[CurrentActiveWeaponIndex].SetActive(false);
-
-            CurrentActiveWeaponIndex = weaponIndex;
-            weaponsObjectsArray[CurrentActiveWeaponIndex].SetActive(true);
-        }
-
-        private void GetIShootingComponent()
-        {
-            var weaponObjectsValuesArray = _weaponObjects.Values.ToArray();
-
-            for (int i = 0; i < _weaponObjects.Count; i++)
+            var gunArray = _guns.Values.ToArray();
+            var currentGun = gunArray[CurrentActiveGunIndex];
+            
+            currentGun.gameObject.SetActive(false);
+            if (currentGun.IsReloading)
             {
-                if (weaponObjectsValuesArray[i].TryGetComponent(out IShooting weapon))
-                {
-                    _weapons.Add(weapon);
-                }
-                else
-                {
-                    throw new Exception("Couldn't get the IShooting component from the gun.");
-                }
+                currentGun.CancelReloadCts.Cancel();
+                currentGun.CancelReloadCts.Dispose();
+                currentGun.CancelReloadCts = new CancellationTokenSource();
+                
+                currentGun.StopReload();
             }
+            
+            CurrentActiveGunIndex = weaponIndex;
+            
+            _gunRotation.CurrentGun = _guns.Values.ElementAt(CurrentActiveGunIndex).GetComponent<SpriteRenderer>();
+            gunArray[CurrentActiveGunIndex].gameObject.SetActive(true);
+            
+            gunArray[CurrentActiveGunIndex].OnBulletsAmountChange
+                .Invoke(gunArray[CurrentActiveGunIndex].CurrentBulletsAmount);
+            _gunUIImage.sprite = gunArray[CurrentActiveGunIndex].GunIconSprite;
         }
 
         private int GetActiveWeaponIndex()
         {
-            var weaponObjectsValuesArray = _weaponObjects.Values.ToArray();
+            var gunObjectsValuesArray = _guns.Values.ToArray();
 
-            for (int i = 0; i < weaponObjectsValuesArray.Length; i++)
+            for (int i = 0; i < gunObjectsValuesArray.Length; i++)
             {
-                if (weaponObjectsValuesArray[i].activeSelf)
+                if (gunObjectsValuesArray[i].gameObject.activeSelf)
                 {
                     return i;
                 }

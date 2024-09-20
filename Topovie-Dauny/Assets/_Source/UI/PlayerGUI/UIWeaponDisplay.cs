@@ -21,8 +21,8 @@ namespace UI.PlayerGUI
         private void Start()
         {
             SubscribeOnEvents();
-            var currentWeapon = _playerEquipment.PlayerWeapons.Weapons.
-                ElementAt(_playerEquipment.PlayerWeapons.CurrentActiveWeaponIndex);
+            var currentWeapon = _playerEquipment.PlayerWeapons.Guns.
+                ElementAt(_playerEquipment.PlayerWeapons.CurrentActiveGunIndex);
             RefreshBulletsText(currentWeapon.BulletsAmount);
         }
 
@@ -37,14 +37,14 @@ namespace UI.PlayerGUI
         }
         private void SubscribeOnEvents()
         {
-            foreach (var weapon in _playerEquipment.PlayerWeapons.Weapons)
+            foreach (var weapon in _playerEquipment.PlayerWeapons.Guns)
             {
                 weapon.OnBulletsAmountChange += RefreshBulletsText;
             }
         }
         private void UnsubscribeOnEvents()
         {
-            foreach (var weapon in _playerEquipment.PlayerWeapons.Weapons)
+            foreach (var weapon in _playerEquipment.PlayerWeapons.Guns)
             {
                 weapon.OnBulletsAmountChange -= RefreshBulletsText;
             }

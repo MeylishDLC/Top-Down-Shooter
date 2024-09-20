@@ -2,19 +2,19 @@
 using DialogueSystem;
 using UI;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Zenject;
 
 namespace Player.PlayerMovement.GunMovement
 {
     public class GunRotation: MonoBehaviour
     { 
+        public SpriteRenderer CurrentGun { get; set; }
+        
         [SerializeField] private GameObject front; 
         [SerializeField] private GameObject left; 
         [SerializeField] private GameObject right;
         [SerializeField] private GameObject back;
-
-        //todo refactor 
-        [SerializeField] private SpriteRenderer gun;
         
         private UI.UIShop.Shop _shop;
         private DialogueManager _dialogueManager;
@@ -66,7 +66,7 @@ namespace Player.PlayerMovement.GunMovement
                     left.SetActive(false);
                     right.SetActive(false);
                     back.SetActive(false);
-                    gun.sortingOrder = 1;
+                    CurrentGun.sortingOrder = 1;
                     
                     break;
                 
@@ -76,8 +76,8 @@ namespace Player.PlayerMovement.GunMovement
                     right.SetActive(true);
                     back.SetActive(false);
                     
-                    FlipGameObject(gun.gameObject, false);
-                    gun.sortingOrder = 1;
+                    FlipGameObject(CurrentGun.gameObject, false);
+                    CurrentGun.sortingOrder = 1;
                     
                     break;
                 
@@ -86,8 +86,8 @@ namespace Player.PlayerMovement.GunMovement
                     left.SetActive(true);
                     right.SetActive(false);
                     back.SetActive(false);
-                    FlipGameObject(gun.gameObject, true); 
-                    gun.sortingOrder = 1;
+                    FlipGameObject(CurrentGun.gameObject, true); 
+                    CurrentGun.sortingOrder = 1;
                     
                     break;
                 
@@ -96,7 +96,7 @@ namespace Player.PlayerMovement.GunMovement
                     left.SetActive(false);
                     right.SetActive(false);
                     back.SetActive(true);
-                    gun.sortingOrder = -1;
+                    CurrentGun.sortingOrder = -1;
                     
                     break;
                 

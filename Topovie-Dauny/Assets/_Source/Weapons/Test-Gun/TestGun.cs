@@ -11,16 +11,9 @@ using Random = UnityEngine.Random;
 
 namespace Weapons.Test_Gun
 {
-    public class TestGun: MonoBehaviour, IShooting
+    public class TestGun: Gun
     {
-        public event Action<int> OnBulletsAmountChange;
-        public bool IsUnlocked { get; set; }
-        
         [field:Header("Main Settings")]
-        [field:SerializeField] public bool ShootOnHold { get; set; }
-        [field:SerializeField] public int BulletsAmount { get; set; }
-        [field: Range(0.01f, 1f)] [field:SerializeField] public float FireRate { get; set; }
-        [SerializeField] private int reloadTimeMilliseconds = 1000;
         [SerializeField] private GameObject bulletPrefab;
         
         [Header("Components")]
@@ -34,30 +27,38 @@ namespace Weapons.Test_Gun
         [SerializeField] private float dispersionAngle;
    
         private static readonly int shoot = Animator.StringToHash("shoot");
-
-        private int _currentBulletsAmount;
-        private bool _canShoot = true;
-
+        
         private PlayerKickback _playerKickback;
         private void Awake()
         {
             _playerKickback = new PlayerKickback(kickbackDistance, kickbackDuration,transform, kickbackTransform);
-            _currentBulletsAmount = BulletsAmount;
+            CurrentBulletsAmount = BulletsAmount;
         }
-        public void Shoot()
+
+        public override void Shoot()
         {
-            if (_canShoot && _currentBulletsAmount > 0)
+            if (!IsReloading && CurrentBulletsAmount > 0)
             {
                 HandleShooting();
-                _currentBulletsAmount--;
-                OnBulletsAmountChange?.Invoke(_currentBulletsAmount);
+                CurrentBulletsAmount--;
+                OnBulletsAmountChange?.Invoke(CurrentBulletsAmount);
             }
             
-            if (_canShoot && _currentBulletsAmount == 0)
+            if (!IsReloading && CurrentBulletsAmount == 0)
             {
-                _canShoot = false;
-                ReloadAsync(CancellationToken.None).Forget();
+                IsReloading = true;
+                Reload();
             }
+        }
+        public override void StopReload()
+        {
+            reloadingText.gameObject.SetActive(false);
+            CurrentBulletsAmount = 0;
+            IsReloading = false;   
+        }
+        protected override void Reload()
+        {
+            ReloadAsync(CancelReloadCts.Token).Forget();
         }
 
         private void HandleShooting()
@@ -81,12 +82,12 @@ namespace Weapons.Test_Gun
         private async UniTask ReloadAsync(CancellationToken token)
         {
             reloadingText.gameObject.SetActive(true);
-            await UniTask.Delay(reloadTimeMilliseconds, cancellationToken: token);
+            await UniTask.Delay(TimeSpan.FromSeconds(ReloadTime), cancellationToken: token);
             reloadingText.gameObject.SetActive(false);
-            _currentBulletsAmount = BulletsAmount;
-            OnBulletsAmountChange?.Invoke(_currentBulletsAmount);
-            _canShoot = true;
+
+            CurrentBulletsAmount = BulletsAmount;
+            OnBulletsAmountChange?.Invoke(CurrentBulletsAmount);
+            IsReloading = false;
         }
-        
     }
 }
