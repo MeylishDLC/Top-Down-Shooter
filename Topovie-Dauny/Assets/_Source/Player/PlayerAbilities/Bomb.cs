@@ -21,7 +21,6 @@ namespace Player.PlayerAbilities
         
         private Transform _target;
         private Transform _playerTransform;
-        private KeyCode _keyToUse;
         private Vector3 _targetPosition;
 
         [Inject]
@@ -32,7 +31,10 @@ namespace Player.PlayerAbilities
         }
         public override void UseAbility()
         {
-            UseAbilityAsync(CancellationToken.None).Forget();
+            if (CanUse)
+            {
+                UseAbilityAsync(CancellationToken.None).Forget();
+            }
         }
 
         private async UniTask UseAbilityAsync(CancellationToken token)
