@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Weapons
 {
@@ -19,6 +20,7 @@ namespace Weapons
         
         [field:Header("UI")]
         [field:SerializeField] public Sprite GunIconSprite { get; protected set; }
+        [field:SerializeField] public Image GunKeyImage { get; protected set; }
         public abstract void Shoot();
         public abstract void StopReload();
         protected abstract void Reload();

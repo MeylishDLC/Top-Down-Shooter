@@ -20,6 +20,8 @@ namespace Player.PlayerCombat
         [SerializeField] private SerializedDictionary<KeyCode, Gun> weaponsObjects;
         [SerializeField] private GunRotation gunRotation;
         [SerializeField] private Image gunUIImage;
+        [SerializeField] private Color gunKeyColorEnabled;
+        [SerializeField] private Color gunKeyColorDisabled;
 
         [Header("Abilities")] 
         
@@ -31,7 +33,7 @@ namespace Player.PlayerCombat
         {
             _dialogueManager = dialogueManager;
             _shop = shop;
-            PlayerWeapons = new PlayerWeapons(weaponsObjects, gunRotation, gunUIImage);
+            PlayerWeapons = new PlayerWeapons(weaponsObjects, gunRotation, gunUIImage, gunKeyColorEnabled, gunKeyColorDisabled);
         }
         private void Update()
         {

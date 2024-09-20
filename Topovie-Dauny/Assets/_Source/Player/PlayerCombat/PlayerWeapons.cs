@@ -16,18 +16,28 @@ namespace Player.PlayerCombat
         public IEnumerable<Gun> Guns => _guns.Values;
 
         private Image _gunUIImage;
+        private Color _keyImageEnabledColor;
+        private Color _keyImageDisabledColor;
+        
         private GunRotation _gunRotation;
         private SerializedDictionary<KeyCode, Gun> _guns;
         private float _fireTimer;
-        public PlayerWeapons(SerializedDictionary<KeyCode, Gun> guns, GunRotation gunRotation, Image gunUIImage)
+        public PlayerWeapons(SerializedDictionary<KeyCode, Gun> guns, GunRotation gunRotation, Image gunUIImage,
+        Color enabled, Color disabled)
         {
             _guns = guns;
             _gunUIImage = gunUIImage;
-            CurrentActiveGunIndex = GetActiveWeaponIndex();
+            _keyImageDisabledColor = disabled;
+            _keyImageEnabledColor = enabled;
             
+            CurrentActiveGunIndex = GetActiveWeaponIndex();
             _gunRotation = gunRotation;
-            _gunRotation.CurrentGun = _guns.Values.ElementAt(CurrentActiveGunIndex).GetComponent<SpriteRenderer>();
-            _gunUIImage.sprite = _guns.Values.ElementAt(CurrentActiveGunIndex).GunIconSprite;
+
+            var currentGun = _guns.Values.ElementAt(CurrentActiveGunIndex);
+            
+            _gunRotation.CurrentGun = currentGun.GetComponent<SpriteRenderer>();
+            _gunUIImage.sprite = currentGun.GunIconSprite;
+            currentGun.GunKeyImage.color = _keyImageEnabledColor;
         }
       
         public void HandleShooting()
@@ -76,7 +86,6 @@ namespace Player.PlayerCombat
                 }
             }
         }
-
         private void SwitchWeapon(int weaponIndex)
         {
             var gunArray = _guns.Values.ToArray();
@@ -91,21 +100,26 @@ namespace Player.PlayerCombat
                 
                 currentGun.StopReload();
             }
+
+            currentGun.GunKeyImage.color = _keyImageDisabledColor;
             
             CurrentActiveGunIndex = weaponIndex;
             
-            _gunRotation.CurrentGun = _guns.Values.ElementAt(CurrentActiveGunIndex).GetComponent<SpriteRenderer>();
             gunArray[CurrentActiveGunIndex].gameObject.SetActive(true);
-            
-            gunArray[CurrentActiveGunIndex].OnBulletsAmountChange
-                .Invoke(gunArray[CurrentActiveGunIndex].CurrentBulletsAmount);
-            _gunUIImage.sprite = gunArray[CurrentActiveGunIndex].GunIconSprite;
+            ChangeVisuals(gunArray[CurrentActiveGunIndex]);
         }
-
+        private void ChangeVisuals(Gun gun)
+        {
+            _gunRotation.CurrentGun = gun.GetComponent<SpriteRenderer>();
+            
+            gun.OnBulletsAmountChange
+                .Invoke(gun.CurrentBulletsAmount);
+            _gunUIImage.sprite = gun.GunIconSprite;
+            gun.GunKeyImage.color = _keyImageEnabledColor;
+        }
         private int GetActiveWeaponIndex()
         {
             var gunObjectsValuesArray = _guns.Values.ToArray();
-
             for (int i = 0; i < gunObjectsValuesArray.Length; i++)
             {
                 if (gunObjectsValuesArray[i].gameObject.activeSelf)
@@ -113,7 +127,6 @@ namespace Player.PlayerCombat
                     return i;
                 }
             }
-
             throw new Exception("No weapon was active");
         }
     }
