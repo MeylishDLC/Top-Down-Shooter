@@ -1,5 +1,6 @@
 ﻿using UI.Core;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace UI.Menus
@@ -8,6 +9,7 @@ namespace UI.Menus
     {
         [SerializeField] private GameObject pauseMenu; 
         [SerializeField] private Button optionsButton;
+        [SerializeField] private Button restartButton;
         [SerializeField] private Button exitButton;
         [SerializeField] private GameObject optionsScreen;
         [SerializeField] private CustomCursor customCursor;
@@ -17,6 +19,7 @@ namespace UI.Menus
         {
             exitButton.onClick.AddListener(ExitGame);
             optionsButton.onClick.AddListener(OpenOptionsPanel);
+            restartButton.onClick.AddListener(RestartLevel);
         }
         private void Update()
         {
@@ -49,7 +52,6 @@ namespace UI.Menus
             pauseMenu.SetActive(true);
             Time.timeScale = 0f;
         }
-
         private void ResumeGame()
         {
             Cursor.visible = false;
@@ -58,6 +60,15 @@ namespace UI.Menus
             IsPaused = false;
             pauseMenu.SetActive(false);
             Time.timeScale = 1f;
+        }
+        private void RestartLevel()
+        {
+            optionsButton.interactable = false;
+            exitButton.interactable = false;
+            exitButton.interactable = false;
+
+            Time.timeScale = 1f;
+            SceneManager.LoadScene("SampleScene");
         }
         private void OpenOptionsPanel()
         {
