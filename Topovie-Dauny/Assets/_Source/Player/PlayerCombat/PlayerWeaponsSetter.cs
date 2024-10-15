@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
-using Player.PlayerMovement.GunMovement;
+using Player.PlayerControl.GunMovement;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -10,7 +10,7 @@ using Weapons;
 
 namespace Player.PlayerCombat
 {
-    public class PlayerWeapons
+    public class PlayerWeaponsSetter
     {
         public int CurrentActiveGunIndex { get; private set; }
         public IEnumerable<Gun> Guns => _guns.Values;
@@ -22,7 +22,7 @@ namespace Player.PlayerCombat
         private GunRotation _gunRotation;
         private SerializedDictionary<KeyCode, Gun> _guns;
         private float _fireTimer;
-        public PlayerWeapons(SerializedDictionary<KeyCode, Gun> guns, GunRotation gunRotation, Image gunUIImage,
+        public PlayerWeaponsSetter(SerializedDictionary<KeyCode, Gun> guns, GunRotation gunRotation, Image gunUIImage,
         Color enabled, Color disabled)
         {
             _guns = guns;

@@ -1,5 +1,5 @@
 ﻿using Player.PlayerCombat;
-using Player.PlayerMovement;
+using Player.PlayerControl;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;

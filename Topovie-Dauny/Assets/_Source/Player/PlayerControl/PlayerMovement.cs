@@ -2,12 +2,10 @@ using System.Threading;
 using Cysharp.Threading.Tasks;
 using DialogueSystem;
 using Player.PlayerCombat;
-using UI;
 using UnityEngine;
-using UnityEngine.Serialization;
 using Zenject;
 
-namespace Player.PlayerMovement
+namespace Player.PlayerControl
 {
     [RequireComponent(typeof(Rigidbody2D))]
     public class PlayerMovement : MonoBehaviour

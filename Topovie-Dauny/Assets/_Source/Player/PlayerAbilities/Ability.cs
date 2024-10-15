@@ -1,11 +1,11 @@
-﻿using UnityEngine;
+﻿using Player.PlayerControl;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace Player.PlayerAbilities
 {
-    public abstract class Ability: MonoBehaviour
+    public abstract class Ability: ScriptableObject
     {
-        public bool CanUse { get; protected set; } = true;
         [field:SerializeField] public int CooldownMilliseconds { get; protected set; }
         [field:SerializeField] public Sprite AbilityImage { get; protected set; }
         [field: TextArea]
@@ -16,6 +16,7 @@ namespace Player.PlayerAbilities
         [field:TextArea]
         [field:SerializeField] public string VetReactionText { get; private set; }
         public AbilityTypes AbilityType { get; protected set; } = AbilityTypes.TapButton;
+        public abstract void Construct(PlayerMovement playerMovement);
         public abstract void UseAbility();
     }
 

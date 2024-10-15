@@ -69,17 +69,14 @@ namespace Enemies.Projectile
             _axisCorrectionAnimationCurve = axisCorrectionCurve;
             _projectileSpeedAnimationCurve = projectileSpeedCurve;
         }
-
         public Vector3 GetProjectileMoveDir()
         {
             return _projectileMoveDir;
         }
-
         public float GetNextYTrajectoryPosition()
         {
             return _nextYTrajectoryPosition;
         }
-
         public float GetNextPositionYCorrectionAbsolute()
         {
             return _nextPositionYCorrectionAbsolute;

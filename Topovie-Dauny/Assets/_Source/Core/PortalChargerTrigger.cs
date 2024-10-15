@@ -18,7 +18,6 @@ namespace Core
         {
             visualQue.gameObject.SetActive(false);
         }
-
         private void Update()
         {
             if (_playerInRange)
@@ -31,7 +30,6 @@ namespace Core
                 visualQue.gameObject.SetActive(false);
             }
         }
-
         private void OnTriggerEnter2D(Collider2D other)
         {
             if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
@@ -39,7 +37,6 @@ namespace Core
                 _playerInRange = true;
             }
         }
-
         private void OnTriggerExit2D(Collider2D other)
         {
             if (other.gameObject.layer == LayerMask.NameToLayer("Player"))

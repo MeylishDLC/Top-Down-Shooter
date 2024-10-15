@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Player.PlayerControl;
+using UnityEngine;
 using Zenject;
 
 namespace Enemies.Projectile
@@ -17,7 +18,7 @@ namespace Enemies.Projectile
         
         private float _shootTimer;
         private Transform _target;
-        public void Construct(Player.PlayerMovement.PlayerMovement playerMovement)
+        public void Construct(PlayerMovement playerMovement)
         {
             _target = playerMovement.transform;
         }

@@ -1,6 +1,6 @@
 ﻿namespace Core
 {
-    public enum States
+    public enum GameStates
     {
         Fight,
         Chill

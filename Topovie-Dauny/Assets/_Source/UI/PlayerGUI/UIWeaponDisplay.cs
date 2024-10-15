@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 using Player.PlayerCombat;
-using Player.PlayerMovement;
+using Player.PlayerControl;
 using TMPro;
 using UnityEngine;
 using Zenject;
@@ -21,8 +21,8 @@ namespace UI.PlayerGUI
         private void Start()
         {
             SubscribeOnEvents();
-            var currentWeapon = _playerEquipment.PlayerWeapons.Guns.
-                ElementAt(_playerEquipment.PlayerWeapons.CurrentActiveGunIndex);
+            var currentWeapon = _playerEquipment.PlayerWeaponsSetter.Guns.
+                ElementAt(_playerEquipment.PlayerWeaponsSetter.CurrentActiveGunIndex);
             RefreshBulletsText(currentWeapon.BulletsAmount);
         }
 
@@ -37,14 +37,14 @@ namespace UI.PlayerGUI
         }
         private void SubscribeOnEvents()
         {
-            foreach (var weapon in _playerEquipment.PlayerWeapons.Guns)
+            foreach (var weapon in _playerEquipment.PlayerWeaponsSetter.Guns)
             {
                 weapon.OnBulletsAmountChange += RefreshBulletsText;
             }
         }
         private void UnsubscribeOnEvents()
         {
-            foreach (var weapon in _playerEquipment.PlayerWeapons.Guns)
+            foreach (var weapon in _playerEquipment.PlayerWeaponsSetter.Guns)
             {
                 weapon.OnBulletsAmountChange -= RefreshBulletsText;
             }

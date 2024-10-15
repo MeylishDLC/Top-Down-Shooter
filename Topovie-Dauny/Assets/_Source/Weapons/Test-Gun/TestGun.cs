@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Threading;
 using Cysharp.Threading.Tasks;
-using Player.PlayerMovement;
-using Player.PlayerMovement.GunMovement;
+using Player.PlayerControl.GunMovement;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Serialization;

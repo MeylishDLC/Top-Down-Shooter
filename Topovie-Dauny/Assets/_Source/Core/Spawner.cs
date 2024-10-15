@@ -3,7 +3,7 @@ using System.Threading;
 using Cysharp.Threading.Tasks;
 using Enemies;
 using Enemies.Projectile;
-using Player.PlayerMovement;
+using Player.PlayerControl;
 using UnityEngine;
 using Zenject;
 using Object = UnityEngine.Object;
@@ -31,7 +31,6 @@ namespace Core
             {
                 var randomDelay = Random.Range(_currentEnemyWave.MinTimeBetweenSpawnMilliseconds, 
                     _currentEnemyWave.MaxTimeBetweenSpawnMilliseconds + 1);
-
                 try
                 {
                     await UniTask.Delay(randomDelay, cancellationToken: token);

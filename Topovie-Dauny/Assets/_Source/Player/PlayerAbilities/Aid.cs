@@ -1,6 +1,7 @@
 ﻿using System.Threading;
 using Cysharp.Threading.Tasks;
 using Player.PlayerCombat;
+using Player.PlayerControl;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,6 +9,7 @@ using Zenject;
 
 namespace Player.PlayerAbilities
 {
+    [CreateAssetMenu(fileName = "Aid", menuName = "Abilities/Aid")]
     public class Aid: Ability
     {
         [Header("Specific Settings")]
@@ -15,24 +17,18 @@ namespace Player.PlayerAbilities
 
         private PlayerHealth _playerHealth;
 
-        [Inject]
-        public void Construct(PlayerMovement.PlayerMovement playerMovement)
+        public override void Construct(PlayerMovement playerMovement)
         {
             _playerHealth = playerMovement.gameObject.GetComponent<PlayerHealth>();
         }
         public override void UseAbility()
         {
-            if (CanUse)
-            {
-                UseAbilityAsync(CancellationToken.None).Forget();
-            }
+            UseAbilityAsync(CancellationToken.None).Forget();
         }
         private async UniTask UseAbilityAsync(CancellationToken token)
         {
-            CanUse = false;
             _playerHealth.Heal(healAmount);
-            await UniTask.Delay(CooldownMilliseconds);
-            CanUse = true;
+            await UniTask.Delay(CooldownMilliseconds, cancellationToken: token);
         }
     }
 }

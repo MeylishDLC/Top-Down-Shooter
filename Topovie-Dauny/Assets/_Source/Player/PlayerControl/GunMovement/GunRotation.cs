@@ -1,11 +1,9 @@
 ﻿using System;
 using DialogueSystem;
-using UI;
 using UnityEngine;
-using UnityEngine.Serialization;
 using Zenject;
 
-namespace Player.PlayerMovement.GunMovement
+namespace Player.PlayerControl.GunMovement
 {
     public class GunRotation: MonoBehaviour
     { 

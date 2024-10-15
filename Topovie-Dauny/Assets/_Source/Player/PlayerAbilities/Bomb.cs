@@ -1,16 +1,16 @@
 ﻿using System.Threading;
 using Cysharp.Threading.Tasks;
 using Enemies.Projectile;
+using Player.PlayerControl;
 using UnityEngine;
 using Zenject;
 
 namespace Player.PlayerAbilities
 {
+    [CreateAssetMenu(fileName = "Bomb", menuName = "Abilities/Bomb")]
     public class Bomb: Ability
     {
         [SerializeField] private GameObject bombPrefab;
-        [SerializeField] private Camera cinemachineCamera;
-        
         [SerializeField] private float projectileMaxMoveSpeed;
         [SerializeField] private float projectileMaxHeight;
         
@@ -22,37 +22,28 @@ namespace Player.PlayerAbilities
         private Transform _target;
         private Transform _playerTransform;
         private Vector3 _targetPosition;
-
-        [Inject]
-        public void Construct(PlayerMovement.PlayerMovement playerMovement)
+        
+        public override void Construct(PlayerMovement playerMovement)
         {
             _playerTransform = playerMovement.transform;
             AbilityType = AbilityTypes.HoldButton;
         }
         public override void UseAbility()
         {
-            if (CanUse)
-            {
-                UseAbilityAsync(CancellationToken.None).Forget();
-            }
+            UseAbilityAsync(CancellationToken.None).Forget();
         }
-
         private async UniTask UseAbilityAsync(CancellationToken token)
         {
-            CanUse = false;
-            
             SetTarget();
             ThrowBomb();
             
-            await UniTask.Delay(CooldownMilliseconds, cancellationToken: token);
-            CanUse = true;
+            await UniTask.Delay(CooldownMilliseconds, cancellationToken: token); 
         }
-        
         private void SetTarget()
         {
             var cursorScreenPosition = Input.mousePosition;
 
-            var cursorWorldPosition = cinemachineCamera.ScreenToWorldPoint(cursorScreenPosition);
+            var cursorWorldPosition = Camera.main.ScreenToWorldPoint(cursorScreenPosition);
 
             _targetPosition = new Vector3(cursorWorldPosition.x, cursorWorldPosition.y, 0);
 

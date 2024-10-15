@@ -1,6 +1,7 @@
 using Core;
 using DialogueSystem;
-using Player.PlayerMovement;
+using Player.PlayerCombat;
+using Player.PlayerControl;
 using UI;
 using UnityEngine;
 using UnityEngine.Serialization;

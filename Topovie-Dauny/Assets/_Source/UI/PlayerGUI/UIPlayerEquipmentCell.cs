@@ -12,8 +12,9 @@ using UnityEngine.UI;
 
 namespace UI.PlayerGUI
 {
-    public class PlayerEquipmentCell: MonoBehaviour
+    public class UIPlayerEquipmentCell: MonoBehaviour
     {
+        public event Action<Ability> OnUseAbility; 
         public Ability CurrentAbility { get; private set; }
 
         //todo refactor
@@ -30,10 +31,13 @@ namespace UI.PlayerGUI
         [SerializeField] private CustomCursor customCursor;
         [SerializeField] private Image holdIndicator;
 
+        private bool _canUseAbility = true;
+        
         private Color _initialColor;
         private float _remainingTime;
         private float _holdStartTime;
         private bool _isHoldingKey;
+        private CancellationTokenSource _cancelCooldownCts = new();
         private void Awake()
         {
             playerCellsInShop.OnAbilityChanged += SwitchAbility;
@@ -41,62 +45,37 @@ namespace UI.PlayerGUI
             cooldownText.gameObject.SetActive(false);
             CurrentAbility = initialAbility;
         }
-        
         private void OnDestroy()
         {
             playerCellsInShop.OnAbilityChanged -= SwitchAbility;
         }
-
         private void Update()
         {
-            if (!CurrentAbility.CanUse)
+            if (!_canUseAbility)
             {
-                abilityImage.color = new Color(_initialColor.r, _initialColor.g, _initialColor.b, transparencyOnCooldown);
-                cooldownText.gameObject.SetActive(true);
-                if (_remainingTime > 0)
-                {
-                    cooldownText.text = Mathf.CeilToInt(_remainingTime).ToString();
-                }
-                else
-                {
-                    cooldownText.text = "cooldown";
-                }
                 return;
             }
-            else
-            {
-                abilityImage.color = _initialColor;
-                cooldownText.gameObject.SetActive(false);
-            }
             
-            if (Input.GetKeyDown(keyToUse))
+            if (CurrentAbility.AbilityType == AbilityTypes.TapButton)
             {
-                if (CurrentAbility.AbilityType == AbilityTypes.TapButton)
-                {
-                    //todo: refactor
-                    CurrentAbility.UseAbility();
-                    var cooldownSecs = (float)CurrentAbility.CooldownMilliseconds / 1000;
-                    ShowCooldownStarted(cooldownSecs);
-                    StartTimeTracking(cooldownSecs).Forget();
-                }
+                UseAbilityOnKeyTap();
             }
-
             if (CurrentAbility.AbilityType == AbilityTypes.HoldButton)
             {
                 UseAbilityOnKeyHold();
             }
         }
+        private void UseAbilityOnKeyTap()
+        {
+            if (Input.GetKeyDown(keyToUse))
+            {
+                OnUseAbility?.Invoke(CurrentAbility);
+                _canUseAbility = false;
+                StartCooldown();
+            }
+        }
         private void UseAbilityOnKeyHold()
         {
-            if (Input.GetKeyUp(keyToUse))
-            {
-                customCursor.SetCrosshair(false);
-                _isHoldingKey = false;
-                
-                holdIndicator.gameObject.SetActive(false);
-                holdIndicator.fillAmount = 1;
-            }
-            
             if (Input.GetKeyDown(keyToUse))
             {
                 _holdStartTime = Time.time;
@@ -114,22 +93,41 @@ namespace UI.PlayerGUI
 
                 if (elapsedTime >= timeToHoldKey)
                 {
-                    CurrentAbility.UseAbility();
-                    var cooldownSecs = (float)CurrentAbility.CooldownMilliseconds / 1000;
-                    ShowCooldownStarted(cooldownSecs);
-                    StartTimeTracking(cooldownSecs).Forget();
+                    OnUseAbility?.Invoke(CurrentAbility);
+                    _canUseAbility = false;
+                    StartCooldown();
 
                     customCursor.SetCrosshair(false);
                     _isHoldingKey = false;
+                    holdIndicator.gameObject.SetActive(false);
+                    holdIndicator.fillAmount = 1;
                 }
             }
-           
+            if (Input.GetKeyUp(keyToUse))
+            {
+                customCursor.SetCrosshair(false);
+                _isHoldingKey = false;
+                holdIndicator.gameObject.SetActive(false);
+                holdIndicator.fillAmount = 1;
+            }
         }
-        private async UniTask StartTimeTracking(float cooldown)
+        private void StartCooldown()
+        {
+            var cooldown = (float)CurrentAbility.CooldownMilliseconds / 1000;
+            ShowCooldownStarted(cooldown);
+            StartCooldownTracking(cooldown, _cancelCooldownCts.Token).Forget();
+        }
+        private void ShowCooldownStarted(float cooldown)
+        {
+            abilityImage.color = new Color(_initialColor.r, _initialColor.g, _initialColor.b, transparencyOnCooldown);
+            cooldownText.gameObject.SetActive(true);
+            cooldownText.text = Mathf.CeilToInt(cooldown).ToString();
+        }
+        private async UniTask StartCooldownTracking(float cooldown, CancellationToken token)
         {
             _remainingTime = cooldown;
 
-            while (_remainingTime > 0)
+            while (_remainingTime > 0 && !token.IsCancellationRequested)
             {
                 cooldownText.text = Mathf.CeilToInt(_remainingTime).ToString();
 
@@ -137,20 +135,26 @@ namespace UI.PlayerGUI
 
                 _remainingTime -= Time.deltaTime;
             }
+
             ShowCooldownEnded();
         }
-
-        private void ShowCooldownStarted(float cooldown)
+        private void CancelCooldownTracking()
         {
-            abilityImage.color = new Color(_initialColor.r, _initialColor.g, _initialColor.b, transparencyOnCooldown);
-            cooldownText.gameObject.SetActive(true);
-            cooldownText.text = Mathf.CeilToInt(cooldown).ToString();
+            _cancelCooldownCts?.Cancel();
+            _cancelCooldownCts?.Dispose();
+            _cancelCooldownCts = new CancellationTokenSource();
         }
-
         private void ShowCooldownEnded()
         {
+            _canUseAbility = true;
+
+            _remainingTime = 0;
             abilityImage.color = _initialColor;
             cooldownText.gameObject.SetActive(false);
+            
+            customCursor.SetCrosshair(false);
+            holdIndicator.gameObject.SetActive(false);
+            holdIndicator.fillAmount = 1;
         }
         private void SwitchAbility(int abilityCellIndex, Ability newAbility)
         {
@@ -158,7 +162,8 @@ namespace UI.PlayerGUI
             {
                 CurrentAbility = newAbility;
                 abilityImage.sprite = CurrentAbility.AbilityImage;
-                Debug.Log("Ability switched");
+                
+                CancelCooldownTracking();
             }
         }
         

@@ -4,57 +4,55 @@ using _Support.Demigiant.DOTween.Modules;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using Player.PlayerCombat;
+using Player.PlayerControl;
 using UnityEngine;
 using UnityEngine.Serialization;
 using Zenject;
 
 namespace Player.PlayerAbilities
 {
+    [CreateAssetMenu(fileName = "Shield", menuName = "Abilities/Shield")]
     public class Shield: Ability
     {
-        [SerializeField] private float shieldDuration;
-        [SerializeField] private SpriteRenderer shield;
+        [SerializeField] private float shieldDuration; 
         [SerializeField] private float shieldBlinkSpeedOnDisappear;
         [SerializeField] private float remainedTimeToStartBlink;
+        [SerializeField] private GameObject shieldPrefab;
 
         private float _initialTransparency;
         private PlayerHealth _playerHealth;
+        private SpriteRenderer _shieldRenderer;
         
-        [Inject]
-        public void Construct(PlayerMovement.PlayerMovement playerMovement)
+        public override void Construct(PlayerMovement playerMovement)
         {
             _playerHealth = playerMovement.GetComponent<PlayerHealth>();
-            _initialTransparency = shield.color.a;
         }
         public override void UseAbility()
         {
-            if (CanUse)
-            {
-                UseAbilityAsync(CancellationToken.None).Forget();
-            }
+            UseAbilityAsync(CancellationToken.None).Forget();
         }
         private async UniTask UseAbilityAsync(CancellationToken token)
         {
-            CanUse = false;
             EnableShield(token).Forget();
             await UniTask.Delay(CooldownMilliseconds, cancellationToken: token);
-            CanUse = true;
         }
         private async UniTask EnableShield(CancellationToken token)
         {
-            //todo: visualize soon disappearance of shield
             _playerHealth.SetCanTakeDamage(false);
-            shield.gameObject.SetActive(true);
+            var shield = Instantiate(shieldPrefab, _playerHealth.gameObject.transform);
+            _shieldRenderer = shield.GetComponent<SpriteRenderer>();
+            _initialTransparency = _shieldRenderer.color.a;
             
             //todo: throw exception if negative
             await UniTask.Delay(TimeSpan.FromSeconds(shieldDuration - remainedTimeToStartBlink), cancellationToken: token);
 
             var loopsAmount = (int)Math.Round(remainedTimeToStartBlink / shieldBlinkSpeedOnDisappear);
-            await shield.DOFade(0f, shieldBlinkSpeedOnDisappear).SetLoops(loopsAmount, LoopType.Yoyo);
+            await _shieldRenderer.DOFade(0f, shieldBlinkSpeedOnDisappear).SetLoops(loopsAmount, LoopType.Yoyo);
             
             _playerHealth.SetCanTakeDamage(true);
-            shield.gameObject.SetActive(false);
-            await shield.DOFade(_initialTransparency, 0f);
+            _shieldRenderer.gameObject.SetActive(false);
+            await _shieldRenderer.DOFade(_initialTransparency, 0f);
+            Destroy(shield);
         }
     }
 }

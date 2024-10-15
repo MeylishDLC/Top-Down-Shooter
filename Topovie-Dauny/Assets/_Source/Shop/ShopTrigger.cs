@@ -26,7 +26,7 @@ namespace Shop
         {
             _levelSetter.OnStateChanged += EnableOnChangeState;
             visualQue.gameObject.SetActive(false);
-            EnableOnChangeState(States.Chill);
+            EnableOnChangeState(GameStates.Chill);
         }
         private void OnDestroy()
         {
@@ -49,9 +49,9 @@ namespace Shop
                 visualQue.gameObject.SetActive(false);
             }
         }
-        private void EnableOnChangeState(States state)
+        private void EnableOnChangeState(GameStates gameState)
         {
-            enabled = state == States.Chill;
+            enabled = gameState == GameStates.Chill;
         }
         private void OnTriggerEnter2D(Collider2D other)
         {

@@ -19,15 +19,15 @@ namespace Core
         private void Awake()
         {
             _levelSetter.OnStateChanged += EnableOnChangeState;
-            EnableOnChangeState(States.Chill);
+            EnableOnChangeState(GameStates.Chill);
         }
         private void OnDestroy()
         {
             _levelSetter.OnStateChanged -= EnableOnChangeState;
         }
-        private void EnableOnChangeState(States state)
+        private void EnableOnChangeState(GameStates gameState)
         {
-            enabled = state == States.Fight;
+            enabled = gameState == GameStates.Fight;
         }
         private void OnTriggerEnter2D(Collider2D other)
         {

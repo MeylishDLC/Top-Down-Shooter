@@ -1,36 +1,32 @@
 ﻿using System.Threading;
 using Bullets;
 using Cysharp.Threading.Tasks;
+using Player.PlayerControl;
 using UnityEngine;
 using Weapons.AbilityWeapons;
 using Zenject;
 
 namespace Player.PlayerAbilities
 {
+    [CreateAssetMenu(fileName = "Knife", menuName = "Abilities/Knife")]
     public class Knife: Ability
     {
         [SerializeField] private KnifeObject knifePrefab;
 
         private Transform _playerTransform;
 
-        [Inject]
-        public void Construct(PlayerMovement.PlayerMovement playerMovement)
+        public override void Construct(PlayerMovement playerMovement)
         {
             _playerTransform = playerMovement.transform;
             AbilityType = AbilityTypes.HoldButton;
         }
         public override void UseAbility()
         {
-            if (CanUse)
-            {
-                UseAbilityAsync(CancellationToken.None).Forget();
-            }
+            UseAbilityAsync(CancellationToken.None).Forget();
         }
 
         private async UniTask UseAbilityAsync(CancellationToken token)
-        {
-            CanUse = false;
-
+        { 
             var mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             mousePosition.z = 0;
             var direction = (mousePosition - _playerTransform.position).normalized;
@@ -42,7 +38,6 @@ namespace Player.PlayerAbilities
             knife.ShootInDirection(direction);
 
             await UniTask.Delay(CooldownMilliseconds, cancellationToken: token);
-            CanUse = true;
         }
     }
 }

@@ -12,7 +12,7 @@ namespace Core
 {
      public class LevelSetter: MonoBehaviour
      {
-         public event Action<States> OnStateChanged;
+         public event Action<GameStates> OnStateChanged;
          public event Action<float, float> OnTimeRemainingChanged;
          
          [Header("Main")]
@@ -27,7 +27,7 @@ namespace Core
 
          
          private Spawner _spawner;
-         private States _currentState = States.Chill;
+         private GameStates _currentGameState = GameStates.Chill;
          
          private CancellationTokenSource _chargingPauseCts = new();
          private CancellationTokenSource _chargingFinishCts = new();
@@ -51,7 +51,7 @@ namespace Core
          }
          private void Update()
          {
-             shopTrigger.gameObject.SetActive(_currentState == States.Chill);
+             shopTrigger.gameObject.SetActive(_currentGameState == GameStates.Chill);
          }
          private void StartChargingPortal(int chargeIndex)
          {
@@ -60,10 +60,10 @@ namespace Core
                  return;
              }
              
-             _currentState = States.Fight;
+             _currentGameState = GameStates.Fight;
              _currentPortalIndex = chargeIndex;
                  
-             OnStateChanged?.Invoke(_currentState);
+             OnStateChanged?.Invoke(_currentGameState);
                  
              var enemyWave = portalCharges[chargeIndex];
              StartSpawningEnemies(enemyWave);
@@ -132,8 +132,8 @@ namespace Core
                  await UniTask.Delay(changeStateDelayMilliseconds, cancellationToken: token);
                  _currentPortalIndex = default;
              
-                 _currentState = States.Chill;
-                 OnStateChanged?.Invoke(_currentState);
+                 _currentGameState = GameStates.Chill;
+                 OnStateChanged?.Invoke(_currentGameState);
              }
              catch
              {

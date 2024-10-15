@@ -1,9 +1,8 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using System.Threading;
+﻿using System.Threading;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
-namespace Player.PlayerMovement.GunMovement
+namespace Player.PlayerControl.GunMovement
 {
     public class PlayerKickback
     {

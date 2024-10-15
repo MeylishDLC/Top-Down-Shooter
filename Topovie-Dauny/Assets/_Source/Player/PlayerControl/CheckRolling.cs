@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Player.PlayerMovement
+namespace Player.PlayerControl
 {
     public class CheckRolling: MonoBehaviour
     {

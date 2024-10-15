@@ -18,8 +18,8 @@ namespace UI.UIShop
         [SerializeField] private ShopCell[] shopCells;
         [SerializeField] private GameObject equipScreen;
 
-        private Dictionary<Button, Ability> _equipmentCellAbilities = new();
-        private List<Image> _equipmentCellImages = new();
+        private readonly Dictionary<Button, Ability> _equipmentCellAbilities = new();
+        private readonly List<Image> _equipmentCellImages = new();
         private Ability _newAbilityToEquip;
         private void Awake()
         {
@@ -30,7 +30,6 @@ namespace UI.UIShop
             SubscribeOnEvents(true);
             SetEquipmentCellsOnStart();
         }
-
         private void OnDestroy()
         {
             SubscribeOnEvents(false);
@@ -66,7 +65,7 @@ namespace UI.UIShop
 
         private bool IsNewAbilitySetInOtherCells(int cellChosen, out int indexOfOtherCell)
         {
-            indexOfOtherCell = default;
+            indexOfOtherCell = -1;
             
             for (int i = 0; i < EquipmentCells.Length; i++)
             {

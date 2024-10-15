@@ -41,7 +41,7 @@ namespace UI.PlayerGUI
         }
         private void Start()
         {
-            ChangeStateText(States.Chill);
+            ChangeStateText(GameStates.Chill);
             timeRemainingSlider.transform.DOMoveY(sliderMoveYOnDisappear, 0f);
             timeRemainingSlider.value = 1f;
             timeRemainingSlider.gameObject.SetActive(false);
@@ -59,9 +59,9 @@ namespace UI.PlayerGUI
                 timeRemainingSlider.value = remainingTime / duration;
             }
         }
-        private void ChangeStateText(States state)
+        private void ChangeStateText(GameStates gameState)
         {
-            if (state == States.Chill)
+            if (gameState == GameStates.Chill)
             {
                 stateText.text = chillStateText;
                 stateText.color = chillStateTextColor;
@@ -73,9 +73,9 @@ namespace UI.PlayerGUI
             }
         }
 
-        private void EnableSliderOnChangeState(States state)
+        private void EnableSliderOnChangeState(GameStates gameState)
         {
-            if (state == States.Chill)
+            if (gameState == GameStates.Chill)
             {
                 if (timeRemainingSlider.gameObject.activeSelf)
                 {

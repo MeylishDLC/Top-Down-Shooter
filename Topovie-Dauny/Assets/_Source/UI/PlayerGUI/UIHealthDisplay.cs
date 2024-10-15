@@ -3,7 +3,7 @@ using System.Threading;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using Player.PlayerCombat;
-using Player.PlayerMovement;
+using Player.PlayerControl;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
