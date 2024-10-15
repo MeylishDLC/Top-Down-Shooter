@@ -1279,7 +1279,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   portalChargeTriggers:
   - {fileID: 104703908}
-  sceneContext: {fileID: 1489755105}
   shopTrigger: {fileID: 78815747}
   allSpawns:
   - {fileID: 815121855}
@@ -1296,7 +1295,7 @@ MonoBehaviour:
     - {fileID: 3739623183934700978, guid: 23b9ff02b0de4e24e9ab088bacd9e9c6, type: 3}
     - {fileID: 7292485630082978289, guid: e06d826ac0f653b458e6765d59944e1f, type: 3}
     <MaxEnemySpawnAtOnce>k__BackingField: 3
-    <RandomizeEnemySpawnAmount>k__BackingField: 1
+    <MinEnemySpawnAtOnce>k__BackingField: 1
     <MaxTimeBetweenSpawnMilliseconds>k__BackingField: 5500
     <MinTimeBetweenSpawnMilliseconds>k__BackingField: 3000
     <TimeToActivatePencil>k__BackingField: 60

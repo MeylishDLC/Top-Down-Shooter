@@ -1,49 +1,73 @@
 ﻿using System;
 using System.Threading;
 using Cysharp.Threading.Tasks;
+using Enemies;
+using Enemies.Projectile;
+using Player.PlayerMovement;
 using UnityEngine;
 using Zenject;
+using Object = UnityEngine.Object;
 using Random = UnityEngine.Random;
 
 namespace Core
 {
-    //todo: meylish what the fuck refactor this later
-    public static class Spawner
+    public class Spawner
     {
-        private static void SpawnRandomlyWithInjection(Transform[] spawnPoints, GameObject[] enemyPrefabs,
-            SceneContext currentSceneContext)
+        private EnemyWave _currentEnemyWave;
+        private PlayerMovement _playerMovement;
+        
+        [Inject]
+        public void Construct(PlayerMovement playerMovement)
         {
-            var randomSpawn = spawnPoints[Random.Range(0, spawnPoints.Length)];
-            var randomEnemy = enemyPrefabs[Random.Range(0, enemyPrefabs.Length)];
-
-            currentSceneContext.Container.InstantiatePrefab(randomEnemy, randomSpawn.position, Quaternion.identity, randomSpawn);
+            _playerMovement = playerMovement;
         }
-        public static async UniTask SpawnEnemiesRandomlyAsync(Transform[] spawnPoints, GameObject[] enemyPrefabs, SceneContext currentSceneContext, 
-            int maxDelayBetweenSpawn, int minDelayBetweenSpawn, int maxEnemiesAtOnce, bool randomiseEnemiesAmount, CancellationToken token)
+        public void InitializeEnemyWave(EnemyWave enemyWave)
         {
-            while (true)
+            _currentEnemyWave = enemyWave;
+        }
+        public async UniTask SpawnEnemiesRandomlyAsync(CancellationToken token)
+        {
+            while (!token.IsCancellationRequested)
             {
-                var randomDelay = Random.Range(minDelayBetweenSpawn, maxDelayBetweenSpawn + 1);
-                await UniTask.Delay(randomDelay, cancellationToken: token);
-                
-                if (randomiseEnemiesAmount)
+                var randomDelay = Random.Range(_currentEnemyWave.MinTimeBetweenSpawnMilliseconds, 
+                    _currentEnemyWave.MaxTimeBetweenSpawnMilliseconds + 1);
+
+                try
                 {
-                    var randomAmount = Random.Range(1, maxEnemiesAtOnce+1);
+                    await UniTask.Delay(randomDelay, cancellationToken: token);
+                
+                    var randomAmount = Random.Range(_currentEnemyWave.MinEnemySpawnAtOnce, _currentEnemyWave.MaxEnemySpawnAtOnce+1);
                     for (var i = 0; i < randomAmount; i++)
                     {
-                        SpawnRandomlyWithInjection(spawnPoints, enemyPrefabs, currentSceneContext);
+                        SpawnRandomly();
                     }
                 }
-                else
+                catch
                 {
-                    for (var i = 0; i < maxEnemiesAtOnce; i++)
-                    {
-                        SpawnRandomlyWithInjection(spawnPoints, enemyPrefabs, currentSceneContext);
-                    }
+                    // ignored
                 }
             }
         }
-        private static Vector3 GetRandomPositionWithinSpawnRange(Transform spawn, float spawnRange)
+        private void SpawnRandomly()
+        {
+            var randomSpawn = _currentEnemyWave.SpawnPoints[Random.Range(0, _currentEnemyWave.SpawnPoints.Length)];
+            var randomEnemy = _currentEnemyWave.EnemyPrefabs[Random.Range(0, _currentEnemyWave.EnemyPrefabs.Length)];
+
+            var enemy = Object.Instantiate(randomEnemy, randomSpawn.position, Quaternion.identity);
+            enemy.transform.SetParent(randomSpawn);
+            InitializeEnemy(enemy);
+        }
+        private void InitializeEnemy(GameObject enemy)
+        {
+            var enemyComponent = enemy.GetComponent<EnemyHealth>();
+            enemyComponent.Construct(_playerMovement);
+
+            if (enemy.TryGetComponent<Shooter>(out var shooter))
+            {
+                shooter.Construct(_playerMovement);
+            }
+        }
+        private Vector3 GetRandomPositionWithinSpawnRange(Transform spawn, float spawnRange)
         {
             var randomOffset = new Vector3(
                 Random.Range(-spawnRange, spawnRange),
@@ -53,6 +77,5 @@ namespace Core
             var spawnPosition = spawn.position + randomOffset;
             return spawnPosition;
         }
-        
     }
 }

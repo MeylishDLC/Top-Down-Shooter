@@ -14,12 +14,10 @@ namespace Core
      {
          public event Action<States> OnStateChanged;
          public event Action<float, float> OnTimeRemainingChanged;
-         public bool IsChargingPaused { get; private set; }
          
          [Header("Main")]
          [SerializeField] private PortalChargerTrigger[] portalChargeTriggers;
          
-         [SerializeField] private SceneContext sceneContext;
          [SerializeField] private ShopTrigger shopTrigger;
          [SerializeField] private Transform[] allSpawns;
          [SerializeField] private EnemyWave[] portalCharges;
@@ -27,6 +25,8 @@ namespace Core
          [Header("Time Settings")] 
          [SerializeField] private int changeStateDelayMilliseconds;
 
+         
+         private Spawner _spawner;
          private States _currentState = States.Chill;
          
          private CancellationTokenSource _chargingPauseCts = new();
@@ -35,6 +35,12 @@ namespace Core
          
          private int _chargesPassed;
          private int _currentPortalIndex;
+
+         [Inject]
+         public void Construct(Spawner spawner)
+         {
+             _spawner = spawner;
+         }
          private void Start()
          {
              SubscribeOnEvents(true);
@@ -49,61 +55,55 @@ namespace Core
          }
          private void StartChargingPortal(int chargeIndex)
          {
-             if (_chargesPassed < portalCharges.Length)
+             if (_chargesPassed >= portalCharges.Length)
              {
-                 _currentState = States.Fight;
-                 _currentPortalIndex = chargeIndex;
-                 
-                 OnStateChanged?.Invoke(_currentState);
-                 
-                 var enemyWave = portalCharges[chargeIndex];
-                 StartSpawningEnemies(enemyWave);
-                 ChargePortalAsync(enemyWave.TimeToActivatePencil, _chargingPauseCts.Token).Forget();
-                 
-                 StartTimeTrackingAsync(enemyWave.TimeToActivatePencil, enemyWave.TimeToActivatePencil
-                     ,_chargingPauseCts.Token).Forget();
+                 return;
              }
              
-         }
-         private async UniTask ChargePortalAsync(float durationToCharge, CancellationToken token)
-         {
-             await UniTask.Delay(TimeSpan.FromSeconds(durationToCharge), cancellationToken: token);
+             _currentState = States.Fight;
+             _currentPortalIndex = chargeIndex;
+                 
+             OnStateChanged?.Invoke(_currentState);
+                 
+             var enemyWave = portalCharges[chargeIndex];
+             StartSpawningEnemies(enemyWave);
+             ChargePortal(enemyWave.TimeToActivatePencil, _chargingPauseCts.Token).Forget();
+                 
+             StartTimeTracking(enemyWave.TimeToActivatePencil, enemyWave.TimeToActivatePencil
+                 ,_chargingPauseCts.Token).Forget();
 
-             if (!token.IsCancellationRequested)
+         }
+         private async UniTask ChargePortal(float durationToCharge, CancellationToken token)
+         {
+             try
              {
+                 await UniTask.Delay(TimeSpan.FromSeconds(durationToCharge), cancellationToken: token);
                  _chargingFinishCts.Cancel();
                  _chargingFinishCts.Dispose();
                  _chargingFinishCts = new();
              
                  await EndWave(CancellationToken.None);
              }
+             catch
+             {
+                 // ignored
+             }
          }
          private void PauseChargingPortal()
          {
-             if (!IsChargingPaused)
-             {
-                 IsChargingPaused = true;
-                 
-                 _chargingPauseCts?.Cancel();
-                 _chargingPauseCts?.Dispose();
-                 _chargingPauseCts = new CancellationTokenSource();
-                 Debug.Log("Charge Paused");
-             }
+             _chargingPauseCts?.Cancel();
+             _chargingPauseCts?.Dispose();
+             _chargingPauseCts = new CancellationTokenSource();
+             Debug.Log("Charge Paused");
          }
-
          private void ResumeChargingPortal()
          {
-             if (IsChargingPaused)
-             {
-                 IsChargingPaused = false;
-                 
-                 ChargePortalAsync(_timeRemaining, _chargingPauseCts.Token).Forget();
-                 StartTimeTrackingAsync(_timeRemaining, 
-                     portalCharges[_currentPortalIndex].TimeToActivatePencil,_chargingPauseCts.Token).Forget();
-                 Debug.Log("Charge Resumed");
-             }
+             ChargePortal(_timeRemaining, _chargingPauseCts.Token).Forget();
+             StartTimeTracking(_timeRemaining, 
+                 portalCharges[_currentPortalIndex].TimeToActivatePencil,_chargingPauseCts.Token).Forget();
+             Debug.Log("Charge Resumed");
          }
-         private async UniTask StartTimeTrackingAsync(float remainedDuration, float initialDuration, CancellationToken token)
+         private async UniTask StartTimeTracking(float remainedDuration, float initialDuration, CancellationToken token)
          {
              var startTime = Time.time;
              _timeRemaining = remainedDuration;
@@ -114,27 +114,31 @@ namespace Core
                      break;
                  }
                  _timeRemaining = remainedDuration - (Time.time - startTime);
-                 Debug.Log($"Time remained {_timeRemaining}, init duration {initialDuration}");
                  OnTimeRemainingChanged?.Invoke(_timeRemaining, initialDuration);
                  await UniTask.Yield(PlayerLoopTiming.TimeUpdate);
              }
          }
          private void StartSpawningEnemies(EnemyWave enemyWave)
          {
-             Spawner.SpawnEnemiesRandomlyAsync(enemyWave.SpawnPoints, enemyWave.EnemyPrefabs, sceneContext,
-                 enemyWave.MaxTimeBetweenSpawnMilliseconds, enemyWave.MinTimeBetweenSpawnMilliseconds,
-                 enemyWave.MaxEnemySpawnAtOnce, enemyWave.RandomizeEnemySpawnAmount, _chargingFinishCts.Token).Forget();
+             _spawner.InitializeEnemyWave(enemyWave);
+             _spawner.SpawnEnemiesRandomlyAsync(_chargingFinishCts.Token).Forget();
          }
          private async UniTask EndWave(CancellationToken token)
          {
              ClearAllSpawnsImmediate();
 
-             await UniTask.Delay(changeStateDelayMilliseconds, cancellationToken: token);
-             _currentPortalIndex = default;
+             try
+             {
+                 await UniTask.Delay(changeStateDelayMilliseconds, cancellationToken: token);
+                 _currentPortalIndex = default;
              
-             _currentState = States.Chill;
-             OnStateChanged?.Invoke(_currentState);
-            
+                 _currentState = States.Chill;
+                 OnStateChanged?.Invoke(_currentState);
+             }
+             catch
+             {
+                 // ignored
+             }
          }
          private void ClearAllSpawnsImmediate()
          {

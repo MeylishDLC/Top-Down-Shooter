@@ -61,7 +61,7 @@ namespace Weapons.AbilityWeapons
                 }
             }
             
-            gameObject.transform.DOScale(scaleIncreaseWhenBlowup, 0f);
+            await gameObject.transform.DOScale(scaleIncreaseWhenBlowup, 0f);
             animator.SetTrigger(Blowup);
             Destroy(gameObject, blowupDuration);
         }

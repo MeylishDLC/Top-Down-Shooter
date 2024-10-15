@@ -54,7 +54,7 @@ namespace Player.PlayerAbilities
             
             _playerHealth.SetCanTakeDamage(true);
             shield.gameObject.SetActive(false);
-            shield.DOFade(_initialTransparency, 0f);
+            await shield.DOFade(_initialTransparency, 0f);
         }
     }
 }

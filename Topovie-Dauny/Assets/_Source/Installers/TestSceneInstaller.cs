@@ -16,10 +16,17 @@ namespace Installers
         [SerializeField] private UI.UIShop.Shop shop;
         public override void InstallBindings()
         {
+            BindProjectContext();
             BindDialogueManager();
             BindPlayer();
+            BindSpawner();
             BindLevelSetter();
             BindUIShopDisplay();
+        }
+        private void BindProjectContext()
+        {
+            var context = FindFirstObjectByType<ProjectContext>();
+            Container.Bind<ProjectContext>().FromInstance(context).AsSingle();
         }
         private void BindDialogueManager()
         {
@@ -29,6 +36,10 @@ namespace Installers
         {
             Container.Bind<PlayerMovement>().FromComponentOn(playerObject).AsSingle();
         }
+        private void BindSpawner()
+        {
+            Container.Bind<Spawner>().AsSingle();
+        }
         private void BindLevelSetter()
         {
             Container.Bind<LevelSetter>().FromInstance(levelSetter).AsSingle();
@@ -36,6 +47,6 @@ namespace Installers
         private void BindUIShopDisplay()
         {
             Container.Bind<UI.UIShop.Shop>().FromInstance(shop).AsSingle();
-        }
+        } 
     }
 }

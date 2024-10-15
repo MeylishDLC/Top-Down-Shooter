@@ -28,9 +28,8 @@ namespace Enemies
         private PlayerMovement _playerMovement;
         private int _currentHealth;
         private bool _isDead;
-
-        [Inject]
-        private void Construct(PlayerMovement playerMovement)
+        
+        public void Construct(PlayerMovement playerMovement)
         {
             _playerMovement = playerMovement;
             _playerTransform = playerMovement.gameObject.transform;

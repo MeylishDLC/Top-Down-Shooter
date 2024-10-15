@@ -8,7 +8,7 @@ namespace Core
         [field:SerializeField] public Transform[] SpawnPoints { get; private set; }
         [field:SerializeField] public GameObject[] EnemyPrefabs { get; private set; }
         [field:SerializeField] public int MaxEnemySpawnAtOnce { get; private set; }
-        [field:SerializeField] public bool RandomizeEnemySpawnAmount { get; private set; }
+        [field:SerializeField] public int MinEnemySpawnAtOnce { get; private set; }
         
         [field:Header("Time Settings")]
         [field:SerializeField] public int MaxTimeBetweenSpawnMilliseconds { get; private set; }

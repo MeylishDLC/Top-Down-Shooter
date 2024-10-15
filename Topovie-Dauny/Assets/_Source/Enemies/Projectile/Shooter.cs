@@ -17,8 +17,6 @@ namespace Enemies.Projectile
         
         private float _shootTimer;
         private Transform _target;
-
-        [Inject]
         public void Construct(Player.PlayerMovement.PlayerMovement playerMovement)
         {
             _target = playerMovement.transform;

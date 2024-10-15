@@ -46,13 +46,12 @@ namespace UI.PlayerGUI
             timeRemainingSlider.value = 1f;
             timeRemainingSlider.gameObject.SetActive(false);
         }
-        void OnDestroy()
+        private void OnDestroy()
         {
             _levelSetter.OnStateChanged -= ChangeStateText;
             _levelSetter.OnStateChanged -= EnableSliderOnChangeState;
             _levelSetter.OnTimeRemainingChanged -= UpdateSliderValue;
         }
-        
         private void UpdateSliderValue(float remainingTime, float duration)
         {
             if (timeRemainingSlider != null)
