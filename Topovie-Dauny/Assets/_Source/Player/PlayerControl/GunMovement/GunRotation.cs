@@ -1,5 +1,6 @@
 ﻿using System;
 using DialogueSystem;
+using UI.UIShop;
 using UnityEngine;
 using Zenject;
 
@@ -14,18 +15,18 @@ namespace Player.PlayerControl.GunMovement
         [SerializeField] private GameObject right;
         [SerializeField] private GameObject back;
         
-        private UI.UIShop.Shop _shop;
+        private Shop _shop;
         private DialogueManager _dialogueManager;
         
         [Inject]
-        public void Construct(DialogueManager dialogueManager, UI.UIShop.Shop shop)
+        public void Construct(DialogueManager dialogueManager, Shop shop)
         {
             _dialogueManager = dialogueManager;
             _shop = shop;
         }
         private void FixedUpdate()
         {
-            if (_shop.ShopIsOpen || _dialogueManager.DialogueIsPlaying)
+            if (_shop.IsShopOpen() || _dialogueManager.DialogueIsPlaying)
             {
                 return;
             }

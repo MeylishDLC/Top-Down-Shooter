@@ -7,6 +7,7 @@ using Player.PlayerControl;
 using Player.PlayerControl.GunMovement;
 using UI;
 using UI.PlayerGUI;
+using UI.UIShop;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
@@ -28,20 +29,20 @@ namespace Player.PlayerCombat
         [Header("Abilities")] 
         [SerializeField] private UIPlayerEquipmentCell[] uiPlayerEquipmentCells;
 
-        private PlayerWeaponsSetter _playerWeaponsSetter;
+        private WeaponsSetter _weaponsSetter;
         private PlayerMovement _playerMovement;
         private DialogueManager _dialogueManager;
-        private UI.UIShop.Shop _shop;
+        private Shop _shop;
 
         [Inject]
         public void Construct(PlayerMovement playerMovement, DialogueManager dialogueManager, 
-            UI.UIShop.Shop shop, PlayerWeaponsSetter playerWeaponsSetter)
+            Shop shop, WeaponsSetter weaponsSetter)
         {
             _playerMovement = playerMovement;
             _dialogueManager = dialogueManager;
             _shop = shop;
-            _playerWeaponsSetter = playerWeaponsSetter;
-            _playerWeaponsSetter.Initialize(weaponsObjects, gunRotation, gunUIImage, gunKeyColorEnabled, gunKeyColorDisabled);
+            _weaponsSetter = weaponsSetter;
+            _weaponsSetter.Initialize(weaponsObjects, gunRotation, gunUIImage, gunKeyColorEnabled, gunKeyColorDisabled);
         }
         private void Start()
         {
@@ -53,9 +54,9 @@ namespace Player.PlayerCombat
         }
         private void Update()
         {
-            if (!_dialogueManager.DialogueIsPlaying && !_shop.ShopIsOpen)
+            if (!_dialogueManager.DialogueIsPlaying && !_shop.IsShopOpen())
             {
-                _playerWeaponsSetter.HandleShooting();
+                _weaponsSetter.HandleShooting();
             }
         }
         private void EnableAbility(Ability ability)

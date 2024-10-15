@@ -1,15 +1,14 @@
-﻿using System;
-using Core;
-using UI;
+﻿using Core;
+using UI.UIShop;
 using UnityEngine;
 using Zenject;
 
-namespace Shop
+namespace WorldShop
 {
     public class ShopTrigger: MonoBehaviour
     {
         [SerializeField] private SpriteRenderer visualQue;
-        [SerializeField] private UI.UIShop.Shop _shop;
+        [SerializeField] private Shop _shop;
 
         private bool _isHoldingButton;
         private float _holdStartTime;

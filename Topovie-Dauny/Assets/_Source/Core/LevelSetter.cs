@@ -2,10 +2,10 @@
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
-using Shop;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
+using WorldShop;
 using Zenject;
 
 namespace Core

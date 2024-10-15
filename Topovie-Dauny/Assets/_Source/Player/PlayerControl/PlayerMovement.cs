@@ -2,6 +2,7 @@ using System.Threading;
 using Cysharp.Threading.Tasks;
 using DialogueSystem;
 using Player.PlayerCombat;
+using UI.UIShop;
 using UnityEngine;
 using Zenject;
 
@@ -23,13 +24,13 @@ namespace Player.PlayerControl
         private Vector2 _direction;
         private bool _dodgeRoll;
         private DialogueManager _dialogueManager;
-        private UI.UIShop.Shop _shop;
+        private Shop _shop;
         
         private static readonly int isWalking = Animator.StringToHash("isWalking");
         private static readonly int isRolling = Animator.StringToHash("isRolling");
 
         [Inject]
-        public void Construct(DialogueManager dialogueManager, UI.UIShop.Shop shop)
+        public void Construct(DialogueManager dialogueManager, Shop shop)
         {
             _dialogueManager = dialogueManager;
             _shop = shop;
@@ -40,7 +41,7 @@ namespace Player.PlayerControl
         }
         private void Update()
         {
-            if (!_dialogueManager.DialogueIsPlaying && !playerHealth.KnockBack.GettingKnockedBack && !_shop.ShopIsOpen)
+            if (!_dialogueManager.DialogueIsPlaying && !playerHealth.KnockBack.GettingKnockedBack && !_shop.IsShopOpen())
             {
                 if (_dodgeRoll)
                 {
@@ -52,7 +53,7 @@ namespace Player.PlayerControl
         }
         private void FixedUpdate()
         {
-            if (!_dialogueManager.DialogueIsPlaying && !playerHealth.KnockBack.GettingKnockedBack && !_shop.ShopIsOpen)
+            if (!_dialogueManager.DialogueIsPlaying && !playerHealth.KnockBack.GettingKnockedBack && !_shop.IsShopOpen())
             {
                 _rb.velocity = new Vector2(_horizontal, _vertical).normalized * MovementSpeed;
             }

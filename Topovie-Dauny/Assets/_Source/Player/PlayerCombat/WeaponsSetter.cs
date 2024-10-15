@@ -10,7 +10,7 @@ using Weapons;
 
 namespace Player.PlayerCombat
 {
-    public class PlayerWeaponsSetter
+    public class WeaponsSetter
     {
         public int CurrentActiveGunIndex { get; private set; }
         public IEnumerable<Gun> Guns => _guns.Values;

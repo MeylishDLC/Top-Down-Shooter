@@ -11,10 +11,8 @@ namespace UI.UIShop
 {
     public class Shop: MonoBehaviour
     {
-        public bool ShopIsOpen { get; private set; }
         [field:SerializeField] public GameObject EquipScreen { get; private set; } 
         [field:SerializeField] public InfoPanel InfoPanel { get; private set; }
-        
         [SerializeField] private GameObject shopUI;
         [SerializeField] private GameObject playerGUI;
         [SerializeField] private Button closeButton;
@@ -45,21 +43,24 @@ namespace UI.UIShop
         }
         public void OpenShop()
         {
-            if (!ShopIsOpen)
+            if (!IsShopOpen())
             {
                 OpenShopAsync(_stopTypingCts.Token).Forget();
             }
         }
+        public bool IsShopOpen()
+        {
+            return shopUI.activeSelf;
+        }
         private void CloseShop()
         {
-            if (ShopIsOpen)
+            if (IsShopOpen())
             {
                 CloseShopAsync(_stopTypingCts.Token).Forget();
             }
         }
         private async UniTask OpenShopAsync(CancellationToken token)
         {
-            ShopIsOpen = true;
             shopUI.SetActive(true);
             playerGUI.SetActive(false);
             vetDialogueText.text = "";
@@ -76,7 +77,6 @@ namespace UI.UIShop
             _isTyping = false;
             await UniTask.Delay(delayBeforeShopClosingMillisecons, cancellationToken: token);
             
-            ShopIsOpen = false;
             shopUI.SetActive(false);
             playerGUI.SetActive(true);
         }
@@ -91,7 +91,6 @@ namespace UI.UIShop
             }
             ChangeDialogueAsync(ability, _stopTypingCts.Token).Forget();
         }
-
         private async UniTask ChangeDialogueAsync(Ability ability, CancellationToken token)
         {
             vetDialogueText.text = "";

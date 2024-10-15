@@ -52,7 +52,7 @@ namespace Installers
         } 
         private void BindPlayerWeaponsSetter()
         {
-            Container.Bind<PlayerWeaponsSetter>().AsSingle();
+            Container.Bind<WeaponsSetter>().AsSingle();
         } 
     }
 }
