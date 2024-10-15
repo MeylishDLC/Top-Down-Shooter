@@ -21,28 +21,18 @@ namespace Weapons.AbilityWeapons
         [SerializeField] private Animator animator;
         
         private static readonly int Blowup = Animator.StringToHash("blowup");
-
         private Collider2D _collider;
-
         private void Start()
         {
             _collider = GetComponent<Collider2D>();
         }
-
-        private void OnTriggerStay2D(Collider2D other)
-        {
-            BlowUp(CancellationToken.None).Forget();
-            _collider.enabled = false;
-        }
-
         private void OnTriggerEnter2D(Collider2D other)
         {
             BlowUp(CancellationToken.None).Forget();
-            _collider.enabled = false;
         }
-
         private async UniTask BlowUp(CancellationToken token)
         {
+            _collider.enabled = false;
             await UniTask.Delay(timeBeforeBlowMilliseconds, cancellationToken: token);
 
             var colliders = new Collider2D[100];

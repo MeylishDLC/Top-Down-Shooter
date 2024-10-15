@@ -22,8 +22,9 @@ namespace Player.PlayerCombat
         private GunRotation _gunRotation;
         private SerializedDictionary<KeyCode, Gun> _guns;
         private float _fireTimer;
-        public PlayerWeaponsSetter(SerializedDictionary<KeyCode, Gun> guns, GunRotation gunRotation, Image gunUIImage,
-        Color enabled, Color disabled)
+      
+        public void Initialize(SerializedDictionary<KeyCode, Gun> guns, GunRotation gunRotation, Image gunUIImage,
+            Color enabled, Color disabled)
         {
             _guns = guns;
             _gunUIImage = gunUIImage;
@@ -39,7 +40,6 @@ namespace Player.PlayerCombat
             _gunUIImage.sprite = currentGun.GunIconSprite;
             currentGun.GunKeyImage.color = _keyImageEnabledColor;
         }
-      
         public void HandleShooting()
         {
             if (_guns.Values.ElementAt(CurrentActiveGunIndex).ShootOnHold)

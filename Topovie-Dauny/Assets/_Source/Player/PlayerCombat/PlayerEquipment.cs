@@ -17,7 +17,6 @@ namespace Player.PlayerCombat
 {
     public class PlayerEquipment: MonoBehaviour
     {
-        public PlayerWeaponsSetter PlayerWeaponsSetter { get; private set; }
         
         [Header("Weapons")]
         [SerializeField] private SerializedDictionary<KeyCode, Gun> weaponsObjects;
@@ -29,18 +28,20 @@ namespace Player.PlayerCombat
         [Header("Abilities")] 
         [SerializeField] private UIPlayerEquipmentCell[] uiPlayerEquipmentCells;
 
+        private PlayerWeaponsSetter _playerWeaponsSetter;
         private PlayerMovement _playerMovement;
         private DialogueManager _dialogueManager;
         private UI.UIShop.Shop _shop;
 
         [Inject]
         public void Construct(PlayerMovement playerMovement, DialogueManager dialogueManager, 
-            UI.UIShop.Shop shop)
+            UI.UIShop.Shop shop, PlayerWeaponsSetter playerWeaponsSetter)
         {
             _playerMovement = playerMovement;
             _dialogueManager = dialogueManager;
             _shop = shop;
-            PlayerWeaponsSetter = new PlayerWeaponsSetter(weaponsObjects, gunRotation, gunUIImage, gunKeyColorEnabled, gunKeyColorDisabled);
+            _playerWeaponsSetter = playerWeaponsSetter;
+            _playerWeaponsSetter.Initialize(weaponsObjects, gunRotation, gunUIImage, gunKeyColorEnabled, gunKeyColorDisabled);
         }
         private void Start()
         {
@@ -54,7 +55,7 @@ namespace Player.PlayerCombat
         {
             if (!_dialogueManager.DialogueIsPlaying && !_shop.ShopIsOpen)
             {
-                PlayerWeaponsSetter.HandleShooting();
+                _playerWeaponsSetter.HandleShooting();
             }
         }
         private void EnableAbility(Ability ability)

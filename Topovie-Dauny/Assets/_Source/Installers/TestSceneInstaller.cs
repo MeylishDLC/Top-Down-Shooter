@@ -23,6 +23,7 @@ namespace Installers
             BindSpawner();
             BindLevelSetter();
             BindUIShopDisplay();
+            BindPlayerWeaponsSetter();
         }
         private void BindProjectContext()
         {
@@ -48,6 +49,10 @@ namespace Installers
         private void BindUIShopDisplay()
         {
             Container.Bind<UI.UIShop.Shop>().FromInstance(shop).AsSingle();
+        } 
+        private void BindPlayerWeaponsSetter()
+        {
+            Container.Bind<PlayerWeaponsSetter>().AsSingle();
         } 
     }
 }
