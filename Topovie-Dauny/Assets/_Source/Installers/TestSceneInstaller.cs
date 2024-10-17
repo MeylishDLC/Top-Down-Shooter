@@ -11,7 +11,7 @@ namespace Installers
 {
     public class TestSceneInstaller : MonoInstaller
     {
-        [SerializeField] private LevelSetter levelSetter;
+        [FormerlySerializedAs("levelSetter")] [SerializeField] private LevelChargesHandler levelChargesHandler;
         [SerializeField] private DialogueManager dialogueManager;
         [SerializeField] private GameObject playerObject;
         [SerializeField] private UI.UIShop.Shop shop;
@@ -44,7 +44,7 @@ namespace Installers
         }
         private void BindLevelSetter()
         {
-            Container.Bind<LevelSetter>().FromInstance(levelSetter).AsSingle();
+            Container.Bind<LevelChargesHandler>().FromInstance(levelChargesHandler).AsSingle();
         }
         private void BindUIShopDisplay()
         {

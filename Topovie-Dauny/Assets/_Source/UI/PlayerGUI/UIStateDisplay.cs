@@ -26,18 +26,18 @@ namespace UI.PlayerGUI
         [SerializeField] private string attackStateText;
         [SerializeField] private Color attackStateTextColor;
 
-        private LevelSetter _levelSetter;
+        private LevelChargesHandler _levelChargesHandler;
         
         [Inject]
-        public void Construct(LevelSetter levelSetter)
+        public void Construct(LevelChargesHandler levelChargesHandler)
         {
-            _levelSetter = levelSetter;
+            _levelChargesHandler = levelChargesHandler;
         }
         private void Awake()
         {
-            _levelSetter.OnStateChanged += ChangeStateText;
-            _levelSetter.OnStateChanged += EnableSliderOnChangeState;
-            _levelSetter.OnTimeRemainingChanged += UpdateSliderValue;
+            _levelChargesHandler.OnStateChanged += ChangeStateText;
+            _levelChargesHandler.OnStateChanged += EnableSliderOnChangeState;
+            _levelChargesHandler.OnTimeRemainingChanged += UpdateSliderValue;
         }
         private void Start()
         {
@@ -48,9 +48,9 @@ namespace UI.PlayerGUI
         }
         private void OnDestroy()
         {
-            _levelSetter.OnStateChanged -= ChangeStateText;
-            _levelSetter.OnStateChanged -= EnableSliderOnChangeState;
-            _levelSetter.OnTimeRemainingChanged -= UpdateSliderValue;
+            _levelChargesHandler.OnStateChanged -= ChangeStateText;
+            _levelChargesHandler.OnStateChanged -= EnableSliderOnChangeState;
+            _levelChargesHandler.OnTimeRemainingChanged -= UpdateSliderValue;
         }
         private void UpdateSliderValue(float remainingTime, float duration)
         {

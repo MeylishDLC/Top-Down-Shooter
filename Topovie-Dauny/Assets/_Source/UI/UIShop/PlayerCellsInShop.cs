@@ -12,9 +12,9 @@ namespace UI.UIShop
     public class PlayerCellsInShop: MonoBehaviour
     {
         public event Action<int, Ability> OnAbilityChanged;
-        
-        [SerializeField] private Ability[] abilitiesOnStart;
         [field:SerializeField] public Button[] EquipmentCells { get; private set; }
+
+        [SerializeField] private Ability[] abilitiesOnStart;
         [SerializeField] private ShopCell[] shopCells;
         [SerializeField] private GameObject equipScreen;
 
@@ -45,6 +45,7 @@ namespace UI.UIShop
                 _equipmentCellAbilities[EquipmentCells[cellIndex]] = _newAbilityToEquip;
                 _equipmentCellAbilities[EquipmentCells[indexOfOtherCell]] = abilityInTheCellChosen;
                 
+                //todo refactor
                 var newAbilityImage = EquipmentCells[cellIndex].gameObject.transform.GetChild(0).GetComponent<Image>();
                 newAbilityImage.sprite = _newAbilityToEquip.AbilityImage;
                 

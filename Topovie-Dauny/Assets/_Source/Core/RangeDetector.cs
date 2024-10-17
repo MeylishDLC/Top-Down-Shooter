@@ -9,21 +9,21 @@ namespace Core
         public event Action OnPlayerEnterRange;
         public event Action OnPlayerExitRange;
 
-        private LevelSetter _levelSetter;
+        private LevelChargesHandler _levelChargesHandler;
         
         [Inject]
-        public void Construct(LevelSetter levelSetter)
+        public void Construct(LevelChargesHandler levelChargesHandler)
         {
-            _levelSetter = levelSetter;
+            _levelChargesHandler = levelChargesHandler;
         }
         private void Awake()
         {
-            _levelSetter.OnStateChanged += EnableOnChangeState;
+            _levelChargesHandler.OnStateChanged += EnableOnChangeState;
             EnableOnChangeState(GameStates.Chill);
         }
         private void OnDestroy()
         {
-            _levelSetter.OnStateChanged -= EnableOnChangeState;
+            _levelChargesHandler.OnStateChanged -= EnableOnChangeState;
         }
         private void EnableOnChangeState(GameStates gameState)
         {

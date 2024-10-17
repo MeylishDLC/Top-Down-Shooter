@@ -28,12 +28,20 @@ namespace UI.UIShop
         }
         public void OnPointerEnter(PointerEventData eventData)
         {
+            ShowInfo();
+        }
+        public void OnPointerExit(PointerEventData eventData)
+        {
+            HideInfo();
+        }
+        private void ShowInfo()
+        {
             shop.InfoPanel.gameObject.SetActive(true);
             shop.InfoPanel.ChangeInfo(ability);
             
             equipImage.gameObject.SetActive(true);
         }
-        public void OnPointerExit(PointerEventData eventData)
+        private void HideInfo()
         {
             shop.InfoPanel.gameObject.SetActive(false);
             equipImage.gameObject.SetActive(false);

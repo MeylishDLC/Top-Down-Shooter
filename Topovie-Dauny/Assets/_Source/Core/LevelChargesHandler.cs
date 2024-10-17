@@ -10,21 +10,19 @@ using Zenject;
 
 namespace Core
 {
-     public class LevelSetter: MonoBehaviour
+     public class LevelChargesHandler: MonoBehaviour
      {
          public event Action<GameStates> OnStateChanged;
          public event Action<float, float> OnTimeRemainingChanged;
          
          [Header("Main")]
          [SerializeField] private PortalChargerTrigger[] portalChargeTriggers;
-         
          [SerializeField] private ShopTrigger shopTrigger;
          [SerializeField] private Transform[] allSpawns;
          [SerializeField] private EnemyWave[] portalCharges;
 
          [Header("Time Settings")] 
          [SerializeField] private int changeStateDelayMilliseconds;
-
          
          private Spawner _spawner;
          private GameStates _currentGameState = GameStates.Chill;
