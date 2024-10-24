@@ -68,7 +68,7 @@ namespace UI.Menus
             exitButton.interactable = false;
 
             Time.timeScale = 1f;
-            SceneManager.LoadScene("SampleScene");
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
         private void OpenOptionsPanel()
         {

@@ -37,7 +37,8 @@ namespace UI.Menus
         private void RestartLevel()
         {
             restartButton.interactable = false;
-            SceneManager.LoadScene("SampleScene");
+            //todo add loading??
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
     }
 }

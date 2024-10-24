@@ -231,10 +231,10 @@ CapsuleCollider2D:
   m_Material: {fileID: 6200000, guid: 3bf006bf19b5a714bbf95cdc2b8aa018, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 256
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 1791
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
@@ -251,8 +251,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.26924923, y: -0.4765789}
-  m_Size: {x: 2.234441, y: 1.6108193}
+  m_Offset: {x: -0.25681272, y: -0.7270011}
+  m_Size: {x: 1.7921015, y: 1.1100007}
   m_Direction: 1
 --- !u!50 &1806200799139148078
 Rigidbody2D:
@@ -322,7 +322,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   version: 5
-  radius: 4.67
+  radius: 4.39
   height: 0.01
   canMove: 1
   maxSpeed: 2.5
@@ -338,15 +338,15 @@ MonoBehaviour:
   autoRepath:
     mode: 2
     interval: 0.5
-    sensitivity: 11.3
+    sensitivity: 10
     maximumInterval: 2
-    visualizeSensitivity: 0
+    visualizeSensitivity: 1
   targetCompatibility: {fileID: 0}
   maxAcceleration: -2.5
   rotationSpeed: 360
   slowdownDistance: 0.31
   pickNextWaypointDist: 0.05
-  endReachedDistance: 0.1
+  endReachedDistance: 0.07
   alwaysDrawGizmos: 1
   slowWhenNotFacingTarget: 1
   whenCloseToDestination: 1

@@ -33,7 +33,7 @@ namespace Core
          private float _timeRemaining;
          
          private int _chargesPassed;
-         private int _currentPortalIndex;
+         private int _currentChargeIndex;
 
          [Inject]
          public void Construct(Spawner spawner)
@@ -42,11 +42,11 @@ namespace Core
          }
          private void Start()
          {
-             SubscribeOnEvents(true);
+             SubscribeOnStartCharging();
          }
          private void OnDestroy()
          {
-             SubscribeOnEvents(false);
+             UnsubscribeOnStartCharging();
          }
          private void Update()
          {
@@ -61,7 +61,8 @@ namespace Core
              }
              
              _currentGameState = GameStates.Fight;
-             _currentPortalIndex = chargeIndex;
+             _currentChargeIndex = chargeIndex;
+             SubscribeOnChargeEvents(portalChargeTriggers[_currentChargeIndex].GetComponent<RangeDetector>());
                  
              OnStateChanged?.Invoke(_currentGameState);
                  
@@ -100,7 +101,7 @@ namespace Core
          {
              ChargePortal(_timeRemaining, _chargingPauseCts.Token).Forget();
              StartTimeTracking(_timeRemaining, 
-                 portalCharges[_currentPortalIndex].TimeToActivatePencil,_chargingPauseCts.Token).Forget();
+                 portalCharges[_currentChargeIndex].TimeToActivatePencil,_chargingPauseCts.Token).Forget();
              Debug.Log("Charge Resumed");
          }
          private async UniTask StartTimeTracking(float remainedDuration, float initialDuration, CancellationToken token)
@@ -126,10 +127,11 @@ namespace Core
          private async UniTask EndWave(CancellationToken token)
          {
              ClearAllSpawnsImmediate();
+             UnsubscribeOnChargeEvents(portalChargeTriggers[_currentChargeIndex].GetComponent<RangeDetector>());
              try
              {
                  await UniTask.Delay(changeStateDelayMilliseconds, cancellationToken: token);
-                 _currentPortalIndex = default;
+                 _currentChargeIndex = -1;
              
                  _currentGameState = GameStates.Chill;
                  OnStateChanged?.Invoke(_currentGameState);
@@ -150,28 +152,28 @@ namespace Core
                  }
              }
          }
-         private void SubscribeOnEvents(bool subscribe)
+         private void SubscribeOnChargeEvents(RangeDetector rangeDetector)
          {
-             if (subscribe)
+             rangeDetector.OnPlayerEnterRange += ResumeChargingPortal;
+             rangeDetector.OnPlayerExitRange += PauseChargingPortal;
+         }
+         private void UnsubscribeOnChargeEvents(RangeDetector rangeDetector)
+         {
+             rangeDetector.OnPlayerEnterRange -= ResumeChargingPortal;
+             rangeDetector.OnPlayerExitRange -= PauseChargingPortal;
+         }
+         private void SubscribeOnStartCharging()
+         {
+             foreach (var trigger in portalChargeTriggers)
              {
-                 foreach (var trigger in portalChargeTriggers)
-                 {
-                     trigger.OnChargePortalPressed += StartChargingPortal;
-
-                     var rangeDetector = trigger.GetComponent<RangeDetector>();
-                     rangeDetector.OnPlayerEnterRange += ResumeChargingPortal;
-                     rangeDetector.OnPlayerExitRange += PauseChargingPortal;
-                 }
+                 trigger.OnChargePortalPressed += StartChargingPortal;
              }
-             else
+         }
+         private void UnsubscribeOnStartCharging()
+         {
+             foreach (var trigger in portalChargeTriggers)
              {
-                 foreach (var trigger in portalChargeTriggers)
-                 {
-                     trigger.OnChargePortalPressed -= StartChargingPortal;
-                     var rangeDetector = trigger.GetComponent<RangeDetector>();
-                     rangeDetector.OnPlayerEnterRange -= ResumeChargingPortal;
-                     rangeDetector.OnPlayerExitRange -= PauseChargingPortal;
-                 }
+                 trigger.OnChargePortalPressed -= StartChargingPortal;
              }
          }
      }

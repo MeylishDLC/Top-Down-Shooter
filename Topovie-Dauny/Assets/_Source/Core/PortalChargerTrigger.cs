@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using Zenject;
 
 namespace Core
 {
@@ -14,9 +15,22 @@ namespace Core
         private bool _isHoldingButton;
         private float _holdStartTime;
         private bool _playerInRange;
+        private LevelChargesHandler _levelChargesHandler;
+
+        [Inject]
+        public void Construct(LevelChargesHandler levelChargesHandler)
+        {
+            _levelChargesHandler = levelChargesHandler;
+            _levelChargesHandler.OnStateChanged += EnableOnChangeState;
+        }
+        private void OnDestroy()
+        {
+            _levelChargesHandler.OnStateChanged -= EnableOnChangeState;
+        }
         private void Start()
         {
             visualQue.gameObject.SetActive(false);
+            EnableOnChangeState(GameStates.Chill);
         }
         private void Update()
         {
@@ -44,7 +58,10 @@ namespace Core
                 _playerInRange = false;
             }
         }
-        
+        private void EnableOnChangeState(GameStates state)
+        {
+            enabled = state == GameStates.Chill;
+        }
         private void HandleChargePortalButtonHold()
         {
             if (Input.GetKeyDown(KeyCode.F))
@@ -58,6 +75,7 @@ namespace Core
                 if (Time.time - _holdStartTime >= holdChargePortalButtonDuration)
                 {
                     OnChargePortalPressed?.Invoke(chargeIndex);
+                    _levelChargesHandler.OnStateChanged -= EnableOnChangeState;
                     Debug.Log("Portal Charge Started");
                     
                     visualQue.gameObject.SetActive(false);
