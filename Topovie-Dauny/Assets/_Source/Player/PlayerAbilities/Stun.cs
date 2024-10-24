@@ -14,9 +14,9 @@ namespace Player.PlayerAbilities
 
         private Transform _playerTransform;
 
-        public override void Construct(PlayerMovement _playerMovement)
+        public override void Construct(PlayerMovement playerMovement)
         {
-            _playerTransform = _playerMovement.transform;
+            _playerTransform = playerMovement.transform;
         }
         public override void UseAbility()
         {

@@ -48,11 +48,6 @@ namespace Core
          {
              UnsubscribeOnStartCharging();
          }
-         private void Update()
-         {
-             //TODO remove
-             shopTrigger.gameObject.SetActive(_currentGameState == GameStates.Chill);
-         }
          private void StartChargingPortal(int chargeIndex)
          {
              if (_chargesPassed >= portalCharges.Length)

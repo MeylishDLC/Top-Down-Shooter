@@ -1,6 +1,7 @@
 ﻿using Core;
 using UI.UIShop;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Zenject;
 
 namespace WorldShop
@@ -8,7 +9,7 @@ namespace WorldShop
     public class ShopTrigger: MonoBehaviour
     {
         [SerializeField] private SpriteRenderer visualQue;
-        [SerializeField] private Shop _shop;
+        [SerializeField] private Shop shop;
 
         private bool _isHoldingButton;
         private float _holdStartTime;
@@ -31,7 +32,6 @@ namespace WorldShop
         {
             _levelChargesHandler.OnStateChanged -= EnableOnChangeState;
         }
-        
         private void Update()
         {
             if (_playerInRange)
@@ -39,7 +39,7 @@ namespace WorldShop
                 visualQue.gameObject.SetActive(true);
                 if (Input.GetKeyDown(KeyCode.F))
                 {
-                    _shop.OpenShop();
+                    shop.OpenShop();
                 }
             }
             else

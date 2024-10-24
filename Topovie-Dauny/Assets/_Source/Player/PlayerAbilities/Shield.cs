@@ -22,6 +22,7 @@ namespace Player.PlayerAbilities
         private float _initialTransparency;
         private PlayerHealth _playerHealth;
         private SpriteRenderer _shieldRenderer;
+        private CancellationTokenSource _invincibilityCts = new();
         
         public override void Construct(PlayerMovement playerMovement)
         {
@@ -39,6 +40,8 @@ namespace Player.PlayerAbilities
         private async UniTask EnableShield(CancellationToken token)
         {
             _playerHealth.SetCanTakeDamage(false);
+            KeepPlayerInvincible(_invincibilityCts.Token).Forget();
+            
             var shield = Instantiate(shieldPrefab, _playerHealth.gameObject.transform);
             _shieldRenderer = shield.GetComponent<SpriteRenderer>();
             _initialTransparency = _shieldRenderer.color.a;
@@ -49,10 +52,27 @@ namespace Player.PlayerAbilities
             var loopsAmount = (int)Math.Round(remainedTimeToStartBlink / shieldBlinkSpeedOnDisappear);
             await _shieldRenderer.DOFade(0f, shieldBlinkSpeedOnDisappear).SetLoops(loopsAmount, LoopType.Yoyo);
             
+            CancelInvincibility();
             _playerHealth.SetCanTakeDamage(true);
             _shieldRenderer.gameObject.SetActive(false);
+            
             await _shieldRenderer.DOFade(_initialTransparency, 0f);
             Destroy(shield);
+        }
+        //todo refactor
+        private async UniTask KeepPlayerInvincible(CancellationToken token)
+        {
+            while (!token.IsCancellationRequested)
+            {
+                _playerHealth.SetCanTakeDamage(false);
+                await UniTask.Yield(PlayerLoopTiming.Update);
+            }
+        }
+        private void CancelInvincibility()
+        {
+            _invincibilityCts.Cancel();
+            _invincibilityCts.Dispose();
+            _invincibilityCts = new CancellationTokenSource();
         }
     }
 }
