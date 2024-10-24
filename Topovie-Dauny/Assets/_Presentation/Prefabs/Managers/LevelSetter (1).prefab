@@ -1,0 +1,98 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2039089777870092746
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6607713425588773280}
+  - component: {fileID: 834534571342559636}
+  m_Layer: 0
+  m_Name: LevelSetter (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6607713425588773280
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2039089777870092746}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &834534571342559636
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2039089777870092746}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e1d410abaa34f1291df47ee071ae256, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  portalChargeTriggers:
+  - {fileID: 0}
+  - {fileID: 0}
+  shopTrigger: {fileID: 0}
+  allSpawns:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  portalCharges:
+  - <EnemySpawnsPairs>k__BackingField:
+    - <EnemiesPrefabs>k__BackingField:
+      - {fileID: 3739623183934700978, guid: 23b9ff02b0de4e24e9ab088bacd9e9c6, type: 3}
+      <SpawnPoints>k__BackingField:
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+    - <EnemiesPrefabs>k__BackingField:
+      - {fileID: 7292485630082978289, guid: e06d826ac0f653b458e6765d59944e1f, type: 3}
+      <SpawnPoints>k__BackingField:
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+    <MaxEnemySpawnAtOnce>k__BackingField: 2
+    <MinEnemySpawnAtOnce>k__BackingField: 1
+    <MaxTimeBetweenSpawn>k__BackingField: 7
+    <MinTimeBetweenSpawn>k__BackingField: 3
+    <TimeToActivatePencil>k__BackingField: 30
+  - <EnemySpawnsPairs>k__BackingField:
+    - <EnemiesPrefabs>k__BackingField:
+      - {fileID: 3739623183934700978, guid: 23b9ff02b0de4e24e9ab088bacd9e9c6, type: 3}
+      <SpawnPoints>k__BackingField:
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+    <MaxEnemySpawnAtOnce>k__BackingField: 2
+    <MinEnemySpawnAtOnce>k__BackingField: 1
+    <MaxTimeBetweenSpawn>k__BackingField: 5
+    <MinTimeBetweenSpawn>k__BackingField: 2
+    <TimeToActivatePencil>k__BackingField: 30
+  changeStateDelayMilliseconds: 300
