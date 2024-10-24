@@ -1,4 +1,5 @@
 using System;
+using Cinemachine;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -7,40 +8,32 @@ namespace UI.Core
     public class CustomCursor : MonoBehaviour
     {
         [SerializeField] private Camera cam;
-
-        [SerializeField] private float smoothTime = 0.1f;
-
+        [SerializeField] private float smoothFactor = 10f;
         [SerializeField] private SpriteRenderer defaultCrosshair;
         [SerializeField] private SpriteRenderer aimCrosshair;
-        
+
         private Vector2 _targetPos;
-        private Vector2 _currentPos;
-        private Vector2 _velocity;
         private void Awake()
         {
             Cursor.visible = false;
-            _currentPos = transform.position; 
-        }
 
-        private void Update()
+            CinemachineCore.CameraUpdatedEvent.AddListener(OnCinemachineCameraUpdated);
+        }
+        private void OnDestroy()
+        {
+            CinemachineCore.CameraUpdatedEvent.RemoveListener(OnCinemachineCameraUpdated);
+        }
+        private void OnCinemachineCameraUpdated(CinemachineBrain brain)
         {
             _targetPos = cam.ScreenToWorldPoint(Input.mousePosition);
-            _currentPos = Vector2.SmoothDamp(_currentPos, _targetPos, ref _velocity, smoothTime);
-            transform.position = _currentPos;
+
+            transform.position = Vector2.Lerp(transform.position, _targetPos, Time.deltaTime * smoothFactor);
         }
 
         public void SetCrosshair(bool aim)
         {
-            if (aim)
-            {
-                aimCrosshair.gameObject.SetActive(true);
-                defaultCrosshair.gameObject.SetActive(false);
-            }
-            else
-            {
-                aimCrosshair.gameObject.SetActive(false);
-                defaultCrosshair.gameObject.SetActive(true);
-            }
+            aimCrosshair.gameObject.SetActive(aim);
+            defaultCrosshair.gameObject.SetActive(!aim);
         }
     }
 }
