@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading;
+using Core.EnemyWaveData;
 using Cysharp.Threading.Tasks;
 using Enemies;
 using Enemies.Projectile;
@@ -29,11 +30,11 @@ namespace Core
         {
             while (!token.IsCancellationRequested)
             {
-                var randomDelay = Random.Range(_currentEnemyWave.MinTimeBetweenSpawnMilliseconds, 
-                    _currentEnemyWave.MaxTimeBetweenSpawnMilliseconds + 1);
+                var randomDelay = Random.Range(_currentEnemyWave.MinTimeBetweenSpawn, 
+                    _currentEnemyWave.MaxTimeBetweenSpawn + 1);
                 try
                 {
-                    await UniTask.Delay(randomDelay, cancellationToken: token);
+                    await UniTask.Delay(TimeSpan.FromSeconds(randomDelay), cancellationToken: token);
                 
                     var randomAmount = Random.Range(_currentEnemyWave.MinEnemySpawnAtOnce, _currentEnemyWave.MaxEnemySpawnAtOnce+1);
                     for (var i = 0; i < randomAmount; i++)
@@ -49,12 +50,29 @@ namespace Core
         }
         private void SpawnRandomly()
         {
-            var randomSpawn = _currentEnemyWave.SpawnPoints[Random.Range(0, _currentEnemyWave.SpawnPoints.Length)];
-            var randomEnemy = _currentEnemyWave.EnemyPrefabs[Random.Range(0, _currentEnemyWave.EnemyPrefabs.Length)];
-
+            var randomPair = GetRandomEnemySpawnsPair();
+            var randomEnemy = GatRandomEnemy(randomPair);
+            var randomSpawn = GetRandomSpawnPoint(randomPair);
+            
             var enemy = Object.Instantiate(randomEnemy, randomSpawn.position, Quaternion.identity);
             enemy.transform.SetParent(randomSpawn);
             InitializeEnemy(enemy);
+        }
+        private EnemySpawnsPair GetRandomEnemySpawnsPair()
+        {
+            //todo add chance?
+            var randomPair = _currentEnemyWave.EnemySpawnsPairs[Random.Range(0, _currentEnemyWave.EnemySpawnsPairs.Length)];
+            return randomPair;
+        }
+        private Transform GetRandomSpawnPoint(EnemySpawnsPair enemySpawnsPair)
+        {
+            var randomSpawn = enemySpawnsPair.SpawnPoints[Random.Range(0, enemySpawnsPair.SpawnPoints.Length)];
+            return randomSpawn;
+        }
+        private GameObject GatRandomEnemy(EnemySpawnsPair enemySpawnsPair)
+        {
+            var randomEnemy = enemySpawnsPair.EnemiesPrefabs[Random.Range(0, enemySpawnsPair.EnemiesPrefabs.Length)];
+            return randomEnemy;
         }
         private void InitializeEnemy(GameObject enemy)
         {

@@ -34,6 +34,7 @@ namespace Core
             if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
             {
                 OnPlayerEnterRange?.Invoke();
+                Debug.Log("Is in range");
             }
         }
         private void OnTriggerExit2D(Collider2D other)
@@ -41,6 +42,7 @@ namespace Core
             if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
             {
                 OnPlayerExitRange?.Invoke();
+                Debug.Log("Is not in range");
             }
         }
     }

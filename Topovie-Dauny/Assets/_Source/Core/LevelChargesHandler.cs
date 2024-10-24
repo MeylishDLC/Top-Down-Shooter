@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading;
+using Core.EnemyWaveData;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using UnityEngine;
@@ -49,6 +50,7 @@ namespace Core
          }
          private void Update()
          {
+             //TODO remove
              shopTrigger.gameObject.SetActive(_currentGameState == GameStates.Chill);
          }
          private void StartChargingPortal(int chargeIndex)
@@ -84,7 +86,7 @@ namespace Core
              }
              catch
              {
-                 // ignored
+                 //ignored
              }
          }
          private void PauseChargingPortal()
@@ -124,7 +126,6 @@ namespace Core
          private async UniTask EndWave(CancellationToken token)
          {
              ClearAllSpawnsImmediate();
-
              try
              {
                  await UniTask.Delay(changeStateDelayMilliseconds, cancellationToken: token);
@@ -135,7 +136,7 @@ namespace Core
              }
              catch
              {
-                 // ignored
+                 //ignored
              }
          }
          private void ClearAllSpawnsImmediate()
