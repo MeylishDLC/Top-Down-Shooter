@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using Core;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
@@ -24,7 +25,10 @@ namespace UI.PlayerGUI
         [SerializeField] private Color chillStateTextColor;
         
         [SerializeField] private string attackStateText;
-        [SerializeField] private Color attackStateTextColor;
+        [SerializeField] private Color attackStateTextColor; 
+        
+        [SerializeField] private string portalChargedStateText;
+        [SerializeField] private Color portalChargedTextColor;
 
         private LevelChargesHandler _levelChargesHandler;
         
@@ -61,36 +65,41 @@ namespace UI.PlayerGUI
         }
         private void ChangeStateText(GameStates gameState)
         {
-            if (gameState == GameStates.Chill)
+            switch (gameState)
             {
-                stateText.text = chillStateText;
-                stateText.color = chillStateTextColor;
-            }
-            else
-            {
-                stateText.text = attackStateText;
-                stateText.color = attackStateTextColor;
+                case GameStates.Chill:
+                    stateText.text = chillStateText;
+                    stateText.color = chillStateTextColor;
+                    break;
+                case GameStates.PortalCharged:
+                    stateText.text = portalChargedStateText;
+                    stateText.color = portalChargedTextColor;
+                    break;
+                case GameStates.Fight:
+                    stateText.text = attackStateText;
+                    stateText.color = attackStateTextColor;
+                    break;
+                default:
+                    throw new Exception("Game state not supported");
             }
         }
-
         private void EnableSliderOnChangeState(GameStates gameState)
         {
-            if (gameState == GameStates.Chill)
-            {
-                if (timeRemainingSlider.gameObject.activeSelf)
-                {
-                    SliderDisappearAsync(CancellationToken.None).Forget();
-                }
-            }
-            else
+            if(gameState == GameStates.Fight)
             {
                 if (!timeRemainingSlider.gameObject.activeSelf)
                 {
                     SliderAppearAsync(CancellationToken.None).Forget();
                 }
             }
+            else
+            {
+                if (timeRemainingSlider.gameObject.activeSelf)
+                {
+                    SliderDisappearAsync(CancellationToken.None).Forget();
+                }
+            }
         }
-        
         private async UniTask SliderAppearAsync(CancellationToken token)
         {
             timeRemainingSlider.gameObject.SetActive(true);

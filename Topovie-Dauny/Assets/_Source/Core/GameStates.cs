@@ -3,6 +3,7 @@
     public enum GameStates
     {
         Fight,
-        Chill
+        Chill,
+        PortalCharged
     }
 }

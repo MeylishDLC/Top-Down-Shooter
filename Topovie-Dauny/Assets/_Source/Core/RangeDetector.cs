@@ -27,7 +27,14 @@ namespace Core
         }
         private void EnableOnChangeState(GameStates gameState)
         {
-            enabled = gameState == GameStates.Fight;
+            if (gameState == GameStates.Fight)
+            {
+                enabled = true;
+            }
+            else
+            {
+                enabled = false;
+            }
         }
         private void OnTriggerEnter2D(Collider2D other)
         {

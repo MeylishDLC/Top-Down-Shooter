@@ -60,7 +60,14 @@ namespace Core
         }
         private void EnableOnChangeState(GameStates state)
         {
-            enabled = state == GameStates.Chill;
+            if (state != GameStates.Fight)
+            {
+                enabled = true;
+            }
+            else
+            {
+                enabled = false;
+            }
         }
         private void HandleChargePortalButtonHold()
         {

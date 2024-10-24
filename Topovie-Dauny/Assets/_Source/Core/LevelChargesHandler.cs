@@ -127,8 +127,17 @@ namespace Core
              {
                  await UniTask.Delay(changeStateDelayMilliseconds, cancellationToken: token);
                  _currentChargeIndex = -1;
-             
-                 _currentGameState = GameStates.Chill;
+                 _chargesPassed += 1;
+
+                 if (_chargesPassed >= portalCharges.Length)
+                 {
+                     _currentGameState = GameStates.PortalCharged;
+                 }
+                 else
+                 {
+                     _currentGameState = GameStates.Chill;
+                 }
+                 
                  OnStateChanged?.Invoke(_currentGameState);
              }
              catch
