@@ -11,7 +11,7 @@ namespace Installers
 {
     public class TestSceneInstaller : MonoInstaller
     {
-        [FormerlySerializedAs("levelSetter")] [SerializeField] private LevelChargesHandler levelChargesHandler;
+        [SerializeField] private LevelChargesHandler levelChargesHandler;
         [SerializeField] private DialogueManager dialogueManager;
         [SerializeField] private GameObject playerObject;
         [SerializeField] private UI.UIShop.Shop shop;

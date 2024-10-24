@@ -29,7 +29,7 @@ namespace UI.PlayerGUI
         [Range(0f,1f)][SerializeField] private float transparencyOnCooldown;
         [SerializeField] private TMP_Text cooldownText;
         [SerializeField] private CustomCursor customCursor;
-        [SerializeField] private Image holdIndicator;
+        [SerializeField] private Slider abilityChargeSlider;
 
         private bool _canUseAbility = true;
         
@@ -44,6 +44,7 @@ namespace UI.PlayerGUI
             _initialColor = abilityImage.color;
             cooldownText.gameObject.SetActive(false);
             CurrentAbility = initialAbility;
+            ResetSliderValue();
         }
         private void OnDestroy()
         {
@@ -54,6 +55,10 @@ namespace UI.PlayerGUI
             if (!_canUseAbility)
             {
                 return;
+            }
+            if (!_isHoldingKey)
+            {
+                ResetSliderValue();
             }
             
             if (CurrentAbility.AbilityType == AbilityTypes.TapButton)
@@ -82,14 +87,14 @@ namespace UI.PlayerGUI
                 _isHoldingKey = true;
                 
                 customCursor.SetCrosshair(true);
-                holdIndicator.gameObject.SetActive(true);
-                holdIndicator.fillAmount = 1;
+                abilityChargeSlider.gameObject.SetActive(true);
+                abilityChargeSlider.value = 0;
             }
-            if (Input.GetKey(keyToUse) && _isHoldingKey)
+            else if (Input.GetKey(keyToUse) && _isHoldingKey)
             {
                 var elapsedTime = Time.time - _holdStartTime;
-                var fillAmount = Mathf.Clamp01(1 - (elapsedTime / timeToHoldKey));
-                holdIndicator.fillAmount = fillAmount;
+                var fillAmount = Mathf.Clamp01(elapsedTime / timeToHoldKey);
+                abilityChargeSlider.value = fillAmount;
 
                 if (elapsedTime >= timeToHoldKey)
                 {
@@ -99,16 +104,14 @@ namespace UI.PlayerGUI
 
                     customCursor.SetCrosshair(false);
                     _isHoldingKey = false;
-                    holdIndicator.gameObject.SetActive(false);
-                    holdIndicator.fillAmount = 1;
+                    ResetSliderValue();
                 }
             }
-            if (Input.GetKeyUp(keyToUse))
+            else if (Input.GetKeyUp(keyToUse))
             {
                 customCursor.SetCrosshair(false);
                 _isHoldingKey = false;
-                holdIndicator.gameObject.SetActive(false);
-                holdIndicator.fillAmount = 1;
+                ResetSliderValue();
             }
         }
         private void StartCooldown()
@@ -144,6 +147,11 @@ namespace UI.PlayerGUI
             _cancelCooldownCts?.Dispose();
             _cancelCooldownCts = new CancellationTokenSource();
         }
+        private void ResetSliderValue()
+        {
+            abilityChargeSlider.gameObject.SetActive(false);
+            abilityChargeSlider.value = 0;
+        }
         private void ShowCooldownEnded()
         {
             _canUseAbility = true;
@@ -152,9 +160,8 @@ namespace UI.PlayerGUI
             abilityImage.color = _initialColor;
             cooldownText.gameObject.SetActive(false);
             
-            customCursor.SetCrosshair(false);
-            holdIndicator.gameObject.SetActive(false);
-            holdIndicator.fillAmount = 1;
+            customCursor.SetCrosshair(false); 
+            ResetSliderValue();
         }
         private void SwitchAbility(int abilityCellIndex, Ability newAbility)
         {
