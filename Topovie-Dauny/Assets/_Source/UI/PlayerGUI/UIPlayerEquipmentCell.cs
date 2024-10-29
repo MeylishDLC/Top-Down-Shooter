@@ -60,6 +60,11 @@ namespace UI.PlayerGUI
             {
                 ResetSliderValue();
             }
+            if (_isHoldingKey && !Input.GetKey(keyToUse))
+            {
+                _isHoldingKey = false;
+                ResetSliderValue();
+            }
             
             if (CurrentAbility.AbilityType == AbilityTypes.TapButton)
             {
