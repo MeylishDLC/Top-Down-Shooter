@@ -1,20 +1,21 @@
+using Bullets;
 using Core;
+using Core.PoolingSystem;
 using DialogueSystem;
 using Player.PlayerCombat;
 using Player.PlayerControl;
-using UI;
 using UnityEngine;
-using UnityEngine.Serialization;
 using Zenject;
 
 namespace Installers
 {
-    public class TestSceneInstaller : MonoInstaller
+    public class TutorialSceneInstaller : MonoInstaller
     {
         [SerializeField] private LevelChargesHandler levelChargesHandler;
         [SerializeField] private DialogueManager dialogueManager;
         [SerializeField] private GameObject playerObject;
         [SerializeField] private UI.UIShop.Shop shop;
+        
         public override void InstallBindings()
         {
             BindProjectContext();
@@ -53,6 +54,6 @@ namespace Installers
         private void BindPlayerWeaponsSetter()
         {
             Container.Bind<WeaponsSetter>().AsSingle();
-        } 
+        }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading;
+using Bullets;
 using Cysharp.Threading.Tasks;
 using Player.PlayerControl.GunMovement;
 using TMPro;
@@ -10,7 +11,7 @@ using Random = UnityEngine.Random;
 
 namespace Weapons.Test_Gun
 {
-    public class TestGun: Gun
+    public class BasicGun: Gun
     {
         [field:Header("Main Settings")]
         [SerializeField] private GameObject bulletPrefab;
@@ -28,12 +29,13 @@ namespace Weapons.Test_Gun
         private static readonly int shoot = Animator.StringToHash("shoot");
         
         private PlayerKickback _playerKickback;
-        private void Awake()
+        private BulletPool _bulletPool;
+        public void Initialize(BulletPool bulletPool)
         {
             _playerKickback = new PlayerKickback(kickbackDistance, kickbackDuration,transform, kickbackTransform);
             CurrentBulletsAmount = BulletsAmount;
+            _bulletPool = bulletPool;
         }
-
         public override void Shoot()
         {
             if (!IsReloading && CurrentBulletsAmount > 0)
@@ -59,17 +61,19 @@ namespace Weapons.Test_Gun
         {
             ReloadAsync(CancelReloadCts.Token).Forget();
         }
-
         private void HandleShooting()
         {
             firingPointAnimator.SetTrigger(shoot);
             var firingPointTransform = firingPointAnimator.transform;
-            var bullet = Instantiate(bulletPrefab, firingPointTransform.position, firingPointTransform.rotation);
-            bullet.transform.right = GetBulletDirectionWithDispersion();
-            
-            _playerKickback.ApplyKickback(CancellationToken.None).Forget();
-        }
 
+            if (_bulletPool.TryGetFromPool(out var bullet))
+            {
+                bullet.transform.position = firingPointTransform.position;
+                bullet.transform.rotation = firingPointTransform.rotation;
+                bullet.transform.right = GetBulletDirectionWithDispersion();
+                _playerKickback.ApplyKickback(CancellationToken.None).Forget();
+            } 
+        }
         private Vector3 GetBulletDirectionWithDispersion()
         {
             var randomAngle = Random.Range(-dispersionAngle, dispersionAngle);

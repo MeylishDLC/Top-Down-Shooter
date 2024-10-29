@@ -1,5 +1,5 @@
 ﻿using DialogueSystem;
-using Player.PlayerCombat;
+using Player.PlayerAbilities;
 using Player.PlayerControl;
 using Player.PlayerControl.GunMovement;
 using UI.PlayerGUI;
@@ -9,11 +9,10 @@ using UnityEngine.UI;
 using Weapons;
 using Zenject;
 
-namespace Player.PlayerAbilities
+namespace Player.PlayerCombat
 {
     public class PlayerEquipment: MonoBehaviour
     {
-        
         [Header("Weapons")]
         [SerializeField] private SerializedDictionary<KeyCode, Gun> weaponsObjects;
         [SerializeField] private GunRotation gunRotation;
@@ -23,7 +22,7 @@ namespace Player.PlayerAbilities
 
         [Header("Abilities")] 
         [SerializeField] private UIPlayerEquipmentCell[] uiPlayerEquipmentCells;
-
+        
         private WeaponsSetter _weaponsSetter;
         private PlayerMovement _playerMovement;
         private DialogueManager _dialogueManager;
