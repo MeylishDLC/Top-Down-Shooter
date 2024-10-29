@@ -1,20 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using DialogueSystem;
-using Player.PlayerAbilities;
+﻿using DialogueSystem;
+using Player.PlayerCombat;
 using Player.PlayerControl;
 using Player.PlayerControl.GunMovement;
-using UI;
 using UI.PlayerGUI;
 using UI.UIShop;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 using Weapons;
 using Zenject;
 
-namespace Player.PlayerCombat
+namespace Player.PlayerAbilities
 {
     public class PlayerEquipment: MonoBehaviour
     {
