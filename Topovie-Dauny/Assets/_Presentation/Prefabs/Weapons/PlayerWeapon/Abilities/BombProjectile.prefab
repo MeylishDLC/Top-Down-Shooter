@@ -154,7 +154,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0241007708c64c6aa248e7763277e2ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <Attack>k__BackingField: 0
   <Lifetime>k__BackingField: 2
   projectileVisual: {fileID: 0}
 --- !u!58 &6784122366351618346
@@ -210,6 +209,7 @@ MonoBehaviour:
   blowupRange: 0.6
   scaleIncreaseWhenBlowup: 2
   animator: {fileID: 2669164117899866956}
+  projectile: {fileID: 6264927948899818874}
 --- !u!1 &5635704285975446471
 GameObject:
   m_ObjectHideFlags: 0

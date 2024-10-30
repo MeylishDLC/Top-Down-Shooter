@@ -1,9 +1,11 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace Bullets.Projectile
 {
     public class ProjectileCalculations
     {
+        public event Action OnDestinationReached;
         public Vector3 ProjectileMoveDir { get; private set; }
         public float NextYTrajectoryPosition { get; private set; }
         public float NextPositionYCorrectionAbsolute { get; private set; }
@@ -75,6 +77,19 @@ namespace Bullets.Projectile
             ProjectileMoveDir = newPosition - projectile.transform.position;
 
             projectile.transform.position = newPosition;
+            CheckIfDistanceReached(newPosition);
+        }
+        private void CheckIfDistanceReached(Vector3 newPosition)
+        {
+            var roundedNewPos = new Vector3((float)Math.Round(newPosition.x), (float)Math.Round(newPosition.y), 
+                (float)Math.Round(newPosition.z));
+            var roundedInitPos = new Vector3((float)Math.Round(_initialTargetPosition.x), 
+                (float)Math.Round(_initialTargetPosition.y), (float)Math.Round(_initialTargetPosition.z));
+            
+            if (roundedNewPos == roundedInitPos)
+            {
+                OnDestinationReached?.Invoke();
+            }
         }
         private void CalculateNextProjectileSpeed(float nextPositionXNormalized)
         {

@@ -13,28 +13,28 @@ MonoBehaviour:
   m_Name: ManShooterProjectile
   m_EditorClassIdentifier: 
   <Prefab>k__BackingField: {fileID: 4854327939033642716, guid: 2518c1703936253469dad07f815c2dd3, type: 3}
-  <MaxMoveSpeed>k__BackingField: 2
+  <MaxMoveSpeed>k__BackingField: 3
   <MaxHeight>k__BackingField: 10
   <TrajectoryAnimationCurve>k__BackingField:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
-      time: -0.004562378
-      value: 0.00064086914
-      inSlope: 0.21292835
-      outSlope: 0.21292835
+      time: 0.0042915344
+      value: -0.000061035156
+      inSlope: 0.18549696
+      outSlope: 0.18549696
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0.07180287
+      outWeight: 0.0625
     - serializedVersion: 3
-      time: 1.0051985
-      value: 0.00046785548
-      inSlope: -0.18745723
-      outSlope: -0.18745723
+      time: 1.0007429
+      value: -0.00072233006
+      inSlope: -0.21225695
+      outSlope: -0.21225695
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.06854346
+      inWeight: 0.07083335
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
@@ -44,9 +44,9 @@ MonoBehaviour:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
-      inSlope: 1
-      outSlope: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
       tangentMode: 34
       weightedMode: 0
       inWeight: 0
@@ -54,8 +54,8 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 1
       value: 1
-      inSlope: 1
-      outSlope: 1
+      inSlope: 0
+      outSlope: 0
       tangentMode: 34
       weightedMode: 0
       inWeight: 0
@@ -67,8 +67,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
-      time: 0.000256693
-      value: 1.002694
+      time: 0.008149302
+      value: 0.94993675
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -85,8 +85,8 @@ MonoBehaviour:
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 1.0095673
-      value: 1.0023689
+      time: 1.0013885
+      value: 0.9496517
       inSlope: 0
       outSlope: 0
       tangentMode: 0

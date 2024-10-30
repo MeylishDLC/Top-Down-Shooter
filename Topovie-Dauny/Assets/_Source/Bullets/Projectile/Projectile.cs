@@ -3,19 +3,19 @@ using System.Threading;
 using Core.PoolingSystem;
 using Cysharp.Threading.Tasks;
 using Enemies.Combat;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Bullets.Projectile
 {
     public class Projectile : MonoBehaviour
     {
+        public readonly ProjectileCalculations Calculations = new();
         [field:SerializeField] public float Lifetime {get; private set;}
         [SerializeField] private ProjectileVisual projectileVisual;
-        
-        private readonly ProjectileCalculations _calculations = new();
         private void Awake()
         {
-            Destroy(gameObject, Lifetime);
+            Calculations.OnDestinationReached += DestroyOnDistanceReached;
         }
         private void Update()
         {
@@ -23,13 +23,23 @@ namespace Bullets.Projectile
         }
         public void Initialize(Transform target, ProjectileConfig config)
         {
-            _calculations.Initialize(target, transform, config, projectileVisual);
+            Calculations.Initialize(target, transform, config, projectileVisual);
         }
         private void UpdatePosition()
         {
-            _calculations.UpdateProjectilePosition(transform);
+            Calculations.UpdateProjectilePosition(transform);
         }
-       
+        private void DestroyOnDistanceReached()
+        {
+            Calculations.OnDestinationReached -= DestroyOnDistanceReached;
+            DestroyOnDistanceReachedAsync(CancellationToken.None).Forget();
+        }
+
+        private async UniTask DestroyOnDistanceReachedAsync(CancellationToken token)
+        {
+            await UniTask.Delay(TimeSpan.FromSeconds(Lifetime), cancellationToken: token);
+            Destroy(gameObject);
+        }
     }
 
 }

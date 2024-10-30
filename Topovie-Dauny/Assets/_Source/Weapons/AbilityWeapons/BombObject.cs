@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using Bullets.Projectile;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using Enemies;
@@ -19,20 +20,20 @@ namespace Weapons.AbilityWeapons
         [SerializeField] private float blowupRange;
         [SerializeField] private float scaleIncreaseWhenBlowup;
         [SerializeField] private Animator animator;
+        [SerializeField] private Projectile projectile;
         
         private static readonly int Blowup = Animator.StringToHash("blowup");
-        private Collider2D _collider;
         private void Start()
         {
-            _collider = GetComponent<Collider2D>();
+            projectile.Calculations.OnDestinationReached += BlowUp;
         }
-        private void OnTriggerEnter2D(Collider2D other)
+        private void BlowUp()
         {
-            BlowUp(CancellationToken.None).Forget();
+            projectile.Calculations.OnDestinationReached -= BlowUp;
+            BlowUpAsync(CancellationToken.None).Forget();
         }
-        private async UniTask BlowUp(CancellationToken token)
+        private async UniTask BlowUpAsync(CancellationToken token)
         {
-            _collider.enabled = false;
             await UniTask.Delay(timeBeforeBlowMilliseconds, cancellationToken: token);
 
             var colliders = new Collider2D[100];
@@ -56,7 +57,6 @@ namespace Weapons.AbilityWeapons
             await UniTask.Delay(TimeSpan.FromSeconds(blowupDuration), cancellationToken: token);
             gameObject.SetActive(false);
         }
-
         private void OnDrawGizmosSelected()
         {
             Gizmos.color = Color.red;

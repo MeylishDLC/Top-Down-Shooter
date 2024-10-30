@@ -3,6 +3,7 @@ using System.Threading;
 using Core.PoolingSystem;
 using Cysharp.Threading.Tasks;
 using Enemies.Combat;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Bullets.Projectile
@@ -18,21 +19,19 @@ namespace Bullets.Projectile
         [SerializeField] private ProjectileVisual projectileVisual;
         
         private readonly ProjectileCalculations _calculations = new();
-        private CancellationTokenSource _cancelDisableCts = new();
         private void OnEnable()
         {
-            DisableAfterDelay(_cancelDisableCts.Token).Forget();
+            _calculations.OnDestinationReached += DisableOnDistanceReached;
         }
         private void OnDisable()
         {
-            OnObjectDisabled?.Invoke(this);
+            _calculations.OnDestinationReached -= DisableOnDistanceReached;
         }
         protected override void OnTriggerEnter2D(Collider2D other)
         {
             base.OnTriggerEnter2D(other);
             if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
             {
-                CancelDisableRecreateCts();
                 gameObject.SetActive(false);
             }
         }
@@ -41,7 +40,6 @@ namespace Bullets.Projectile
             base.OnTriggerStay2D(other);
             if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
             {
-                CancelDisableRecreateCts();
                 gameObject.SetActive(false);
             }
         }
@@ -57,16 +55,15 @@ namespace Bullets.Projectile
         {
             _calculations.UpdateProjectilePosition(transform);
         }
-        private async UniTask DisableAfterDelay(CancellationToken token)
+        private void DisableOnDistanceReached()
         {
+            DisableOnDistanceReachedAsync(CancellationToken.None).Forget();
+        }
+        private async UniTask DisableOnDistanceReachedAsync(CancellationToken token)
+        {
+            _calculations.OnDestinationReached -= DisableOnDistanceReached;
             await UniTask.Delay(TimeSpan.FromSeconds(Lifetime), cancellationToken: token);
             gameObject.SetActive(false);
-        }
-        private void CancelDisableRecreateCts()
-        {
-            _cancelDisableCts?.Cancel();
-            _cancelDisableCts?.Dispose();
-            _cancelDisableCts = new CancellationTokenSource();
         }
     }
 }
