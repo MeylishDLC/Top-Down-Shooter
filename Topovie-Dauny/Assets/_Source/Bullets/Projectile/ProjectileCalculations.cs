@@ -6,9 +6,8 @@ namespace Bullets.Projectile
     public class ProjectileCalculations
     {
         public event Action OnDestinationReached;
-        public Vector3 ProjectileMoveDir { get; private set; }
-        public float NextYTrajectoryPosition { get; private set; }
-        public float NextPositionYCorrectionAbsolute { get; private set; }
+        private float _nextYTrajectoryPosition;
+        private float _nextPositionYCorrectionAbsolute;
         
         private float _moveSpeed;
         private float _maxMoveSpeed;
@@ -56,20 +55,17 @@ namespace Bullets.Projectile
             nextPositionXNormalized = Mathf.Clamp01(nextPositionXNormalized);
 
             var nextPositionYNormalized = _trajectoryCurve.Evaluate(nextPositionXNormalized);
-            NextYTrajectoryPosition = nextPositionYNormalized * _trajectoryMaxRelativeHeight;
+            _nextYTrajectoryPosition = nextPositionYNormalized * _trajectoryMaxRelativeHeight;
 
             var nextPositionYCorrectionNormalized = _axisCorrectionCurve.Evaluate(nextPositionXNormalized);
-            NextPositionYCorrectionAbsolute = nextPositionYCorrectionNormalized * trajectoryRange.y;
+            _nextPositionYCorrectionAbsolute = nextPositionYCorrectionNormalized * trajectoryRange.y;
 
-            var nextPositionY = _trajectoryStartPoint.y + NextYTrajectoryPosition + NextPositionYCorrectionAbsolute;
+            var nextPositionY = _trajectoryStartPoint.y + _nextYTrajectoryPosition + _nextPositionYCorrectionAbsolute;
 
             var newPosition = Vector3.Lerp(_trajectoryStartPoint, _initialTargetPosition, nextPositionXNormalized);
             newPosition.y = nextPositionY;
 
             CalculateNextProjectileSpeed(nextPositionXNormalized);
-
-            ProjectileMoveDir = newPosition - projectile.transform.position;
-
             projectile.transform.position = newPosition;
             CheckIfDistanceReached(newPosition);
         }

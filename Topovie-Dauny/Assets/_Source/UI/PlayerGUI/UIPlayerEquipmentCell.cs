@@ -54,24 +54,14 @@ namespace UI.PlayerGUI
         {
             if (!_canUseAbility)
             {
-                if (_isHoldingKey && !Input.GetKey(keyToUse))
-                {
-                    _isHoldingKey = false;
-                    ResetSliderValue();
-                    ResetCursor();
-                }
                 return;
-            }
-            if (!_isHoldingKey)
-            {
-                ResetSliderValue();
             }
             
             if (CurrentAbility.AbilityType == AbilityTypes.TapButton)
             {
                 UseAbilityOnKeyTap();
             }
-            if (CurrentAbility.AbilityType == AbilityTypes.HoldButton)
+            else if (CurrentAbility.AbilityType == AbilityTypes.HoldButton)
             {
                 UseAbilityOnKeyHold();
             }
@@ -91,10 +81,10 @@ namespace UI.PlayerGUI
             {
                 _holdStartTime = Time.time;
                 _isHoldingKey = true;
-                
+                abilityChargeSlider.value = 0;
+
                 customCursor.SetCrosshair(true);
                 abilityChargeSlider.gameObject.SetActive(true);
-                abilityChargeSlider.value = 0;
             }
             else if (Input.GetKey(keyToUse) && _isHoldingKey)
             {
@@ -115,9 +105,14 @@ namespace UI.PlayerGUI
             }
             else if (Input.GetKeyUp(keyToUse))
             {
-                ResetCursor();
-                _isHoldingKey = false;
-                ResetSliderValue();
+                var elapsedTime = Time.time - _holdStartTime;
+                
+                if (elapsedTime < timeToHoldKey)
+                {
+                    _isHoldingKey = false;
+                    ResetCursor();
+                    ResetSliderValue();
+                }
             }
         }
         private void StartCooldown()
