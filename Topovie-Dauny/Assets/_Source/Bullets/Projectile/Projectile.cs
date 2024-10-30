@@ -9,9 +9,6 @@ namespace Bullets.Projectile
 {
     public class Projectile : MonoBehaviour
     {
-        public Vector3 ProjectileMoveDir => _calculations.ProjectileMoveDir;
-        public float NextYTrajectoryPosition => _calculations.NextYTrajectoryPosition;
-        public float NextPositionYCorrectionAbsolute => _calculations.NextPositionYCorrectionAbsolute;
         [field:SerializeField] public float Lifetime {get; private set;}
         [SerializeField] private ProjectileVisual projectileVisual;
         

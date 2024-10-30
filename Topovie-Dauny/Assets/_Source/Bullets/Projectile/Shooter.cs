@@ -28,6 +28,7 @@ namespace Bullets.Projectile
                 _shootTimer = shootRate;
                 if (_projectilePool.TryGetFromPool(out var projectile))
                 {
+                    projectile.transform.position = transform.position;
                     projectile.Initialize(_target, projectileConfig);
                 }
             }

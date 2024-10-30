@@ -30,14 +30,20 @@ namespace Bullets.Projectile
         protected override void OnTriggerEnter2D(Collider2D other)
         {
             base.OnTriggerEnter2D(other);
-            CancelDisableRecreateCts();
-            gameObject.SetActive(false);
+            if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
+            {
+                CancelDisableRecreateCts();
+                gameObject.SetActive(false);
+            }
         }
         protected override void OnTriggerStay2D(Collider2D other)
         {
             base.OnTriggerStay2D(other);
-            CancelDisableRecreateCts();
-            gameObject.SetActive(false);
+            if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
+            {
+                CancelDisableRecreateCts();
+                gameObject.SetActive(false);
+            }
         }
         private void Update()
         {
