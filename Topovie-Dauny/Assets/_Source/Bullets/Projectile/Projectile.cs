@@ -12,7 +12,6 @@ namespace Bullets.Projectile
     {
         public readonly ProjectileCalculations Calculations = new();
         [field:SerializeField] public float Lifetime {get; private set;}
-        [SerializeField] private ProjectileVisual projectileVisual;
         private void Awake()
         {
             Calculations.OnDestinationReached += DestroyOnDistanceReached;
@@ -23,7 +22,7 @@ namespace Bullets.Projectile
         }
         public void Initialize(Transform target, ProjectileConfig config)
         {
-            Calculations.Initialize(target, transform, config, projectileVisual);
+            Calculations.Initialize(target, transform, config);
         }
         private void UpdatePosition()
         {

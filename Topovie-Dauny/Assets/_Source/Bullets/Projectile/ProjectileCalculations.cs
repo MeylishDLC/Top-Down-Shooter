@@ -21,24 +21,18 @@ namespace Bullets.Projectile
         private Vector3 _trajectoryStartPoint;
         private Vector3 _initialTargetPosition;
         
-        private ProjectileVisual _projectileVisual;
-        
-        public void Initialize(Transform target, Transform projectile, ProjectileConfig config, ProjectileVisual projectileVisual)
+        public void Initialize(Transform target, Transform projectile, ProjectileConfig config)
         {
             _trajectoryStartPoint = projectile.transform.position;
-            _projectileVisual = projectileVisual;
             SetAnimationCurves(config);
             SetProjectileParameters(target, projectile, config);
         }
-        
         private void SetProjectileParameters(Transform target, Transform projectile, ProjectileConfig config)
         {
             _maxMoveSpeed = config.MaxMoveSpeed;
             _initialTargetPosition = target.position;
             var xDistanceToTarget = Mathf.Abs(_initialTargetPosition.x - projectile.position.x);
             _trajectoryMaxRelativeHeight = xDistanceToTarget * config.MaxHeight;
-            
-            _projectileVisual?.SetTarget(target);
         }
         private void SetAnimationCurves(ProjectileConfig config)
         {

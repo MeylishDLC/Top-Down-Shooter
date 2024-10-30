@@ -16,7 +16,6 @@ namespace Bullets.Projectile
         public float NextPositionYCorrectionAbsolute => _calculations.NextPositionYCorrectionAbsolute;
         
         [field:SerializeField] public float Lifetime {get; private set;}
-        [SerializeField] private ProjectileVisual projectileVisual;
         
         private readonly ProjectileCalculations _calculations = new();
         private void OnEnable()
@@ -49,7 +48,7 @@ namespace Bullets.Projectile
         }
         public void Initialize(Transform target, ProjectileConfig config)
         {
-            _calculations.Initialize(target, transform, config, projectileVisual);
+            _calculations.Initialize(target, transform, config);
         }
         private void UpdatePosition()
         {
