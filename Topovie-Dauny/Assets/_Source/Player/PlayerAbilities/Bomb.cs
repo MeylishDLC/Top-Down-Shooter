@@ -51,6 +51,7 @@ namespace Player.PlayerAbilities
         {
             var projectile = Instantiate(bombPrefab, _playerTransform.position, Quaternion.identity)
                 .GetComponent<Projectile>(); 
+            projectile.transform.position = _playerTransform.position;
             projectile.Initialize(_target, config);
             Destroy(_target.gameObject, projectile.Lifetime);
         }
