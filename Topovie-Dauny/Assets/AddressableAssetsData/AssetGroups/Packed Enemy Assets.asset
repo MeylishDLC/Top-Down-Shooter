@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Packed Enemy Assets
+  m_EditorClassIdentifier: 
+  m_GroupName: Packed Enemy Assets
+  m_Data:
+    m_SerializedData: []
+  m_GUID: bac9f2a142a8cf24a82577b9164a58b7
+  m_SerializeEntries:
+  - m_GUID: e06d826ac0f653b458e6765d59944e1f
+    m_Address: Assets/_Presentation/Prefabs/Enemies/Shooters/MuzhikShooter.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 23b9ff02b0de4e24e9ab088bacd9e9c6
+    m_Address: Assets/_Presentation/Prefabs/Enemies/ShortRange/Leo.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 1567954be7496e641961d7efd8f9655f, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: b475a34088e142f4692a7e4eda2798ff, type: 2}
+    - {fileID: 11400000, guid: 97236589b4d27834082582bfb5b54a9b, type: 2}

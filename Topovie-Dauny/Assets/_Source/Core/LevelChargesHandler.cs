@@ -43,10 +43,12 @@ namespace Core
          private void Start()
          {
              SubscribeOnStartCharging();
+             LoadAllEnemyAssetsAsync().Forget();
          }
          private void OnDestroy()
          {
              UnsubscribeOnStartCharging();
+             UnloadAllEnemyAssetsAsync().Forget();
          }
          private void StartChargingPortal(int chargeIndex)
          {
@@ -178,6 +180,26 @@ namespace Core
              foreach (var trigger in portalChargeTriggers)
              {
                  trigger.OnChargePortalPressed -= StartChargingPortal;
+             }
+         }
+         private async UniTask LoadAllEnemyAssetsAsync()
+         {
+             foreach (var enemyWave in portalCharges)
+             {
+                 foreach (var enemySpawnsPair in enemyWave.EnemySpawnsPairs)
+                 {
+                     await enemySpawnsPair.LoadAssets(CancellationToken.None);
+                 }
+             }
+         }
+         private async UniTask UnloadAllEnemyAssetsAsync()
+         {
+             foreach (var enemyWave in portalCharges)
+             {
+                 foreach (var enemySpawnsPair in enemyWave.EnemySpawnsPairs)
+                 {
+                     await enemySpawnsPair.UnloadAssets(CancellationToken.None);
+                 }
              }
          }
      }

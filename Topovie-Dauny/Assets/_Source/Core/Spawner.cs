@@ -6,6 +6,8 @@ using Cysharp.Threading.Tasks;
 using Enemies;
 using Player.PlayerControl;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
 using Zenject;
 using Object = UnityEngine.Object;
 using Random = UnityEngine.Random;
@@ -40,7 +42,7 @@ namespace Core
                 
                     var randomAmount = Random.Range(_currentEnemyWave.MinEnemySpawnAtOnce, _currentEnemyWave.MaxEnemySpawnAtOnce+1);
                     for (var i = 0; i < randomAmount; i++)
-                    {
+                    { 
                         SpawnRandomly();
                     }
                 }
@@ -53,7 +55,7 @@ namespace Core
         private void SpawnRandomly()
         {
             var randomPair = GetRandomEnemySpawnsPair();
-            var randomEnemy = GatRandomEnemy(randomPair);
+            var randomEnemy = GetRandomEnemy(randomPair);
             var randomSpawn = GetRandomSpawnPoint(randomPair);
             
             var enemy = Object.Instantiate(randomEnemy, randomSpawn.position, Quaternion.identity);
@@ -71,9 +73,9 @@ namespace Core
             var randomSpawn = enemySpawnsPair.SpawnPoints[Random.Range(0, enemySpawnsPair.SpawnPoints.Length)];
             return randomSpawn;
         }
-        private GameObject GatRandomEnemy(EnemySpawnsPair enemySpawnsPair)
+        private GameObject GetRandomEnemy(EnemySpawnsPair enemySpawnsPair)
         {
-            var randomEnemy = enemySpawnsPair.EnemiesPrefabs[Random.Range(0, enemySpawnsPair.EnemiesPrefabs.Length)];
+            var randomEnemy = enemySpawnsPair.EnemiesPrefabs[Random.Range(0, enemySpawnsPair.EnemiesPrefabs.Count)];
             return randomEnemy;
         }
         private void InitializeEnemy(GameObject enemy)
