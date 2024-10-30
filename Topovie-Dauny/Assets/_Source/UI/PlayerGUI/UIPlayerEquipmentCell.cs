@@ -58,6 +58,7 @@ namespace UI.PlayerGUI
                 {
                     _isHoldingKey = false;
                     ResetSliderValue();
+                    ResetCursor();
                 }
                 return;
             }
@@ -107,14 +108,14 @@ namespace UI.PlayerGUI
                     _canUseAbility = false;
                     StartCooldown();
 
-                    customCursor.SetCrosshair(false);
+                    ResetCursor();
                     _isHoldingKey = false;
                     ResetSliderValue();
                 }
             }
             else if (Input.GetKeyUp(keyToUse))
             {
-                customCursor.SetCrosshair(false);
+                ResetCursor();
                 _isHoldingKey = false;
                 ResetSliderValue();
             }
@@ -156,6 +157,10 @@ namespace UI.PlayerGUI
         {
             abilityChargeSlider.gameObject.SetActive(false);
             abilityChargeSlider.value = 0;
+        }
+        private void ResetCursor()
+        {
+            customCursor.SetCrosshair(false);
         }
         private void ShowCooldownEnded()
         {
