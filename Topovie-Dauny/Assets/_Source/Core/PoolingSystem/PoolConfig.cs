@@ -8,6 +8,5 @@ namespace Core.PoolingSystem
         [field: SerializeField] public int InitialPoolSize { get; private set; }
         [field: SerializeField] public int MaxPoolSize { get; private set; }
         [field: SerializeField] public GameObject Prefab { get; private set; }
-        [field: SerializeField] public string PoolName { get; private set; }
     }
 }

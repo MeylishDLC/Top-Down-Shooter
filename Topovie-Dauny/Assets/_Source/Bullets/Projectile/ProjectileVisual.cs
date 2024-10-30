@@ -1,12 +1,12 @@
 using UnityEngine;
 
-namespace Enemies.Projectile
+namespace Bullets.Projectile
 {
     public class ProjectileVisual : MonoBehaviour
     {
         [SerializeField] private Transform projectileVisual;
         [SerializeField] private Transform projectileShadow;
-        [SerializeField] private Projectile projectile;
+        [SerializeField] private EnemyProjectile projectile;
         [SerializeField] private float rotationSpeed = 5f;
 
         private Transform _target;
@@ -32,7 +32,7 @@ namespace Enemies.Projectile
         }
         private void UpdateProjectileRotation()
         {
-            var projectileMoveDir = projectile.GetProjectileMoveDir();
+            var projectileMoveDir = projectile.ProjectileMoveDir;
     
             var targetAngle = Mathf.Atan2(projectileMoveDir.y, projectileMoveDir.x) * Mathf.Rad2Deg;
     
@@ -44,7 +44,7 @@ namespace Enemies.Projectile
         } 
         private void UpdateProjectileShadowRotation()
         {
-            var projectileMoveDir = projectile.GetProjectileMoveDir();
+            var projectileMoveDir = projectile.ProjectileMoveDir;
     
             var targetAngle = Mathf.Atan2(projectileMoveDir.y, projectileMoveDir.x) * Mathf.Rad2Deg;
     
@@ -57,8 +57,8 @@ namespace Enemies.Projectile
         private void UpdateShadowPosition()
         {
             var newPosition = transform.position;
-            newPosition.y = _trajectoryStartPosition.y + projectile.GetNextYTrajectoryPosition() / _shadowPositionYDivider +
-                            projectile.GetNextPositionYCorrectionAbsolute();
+            newPosition.y = _trajectoryStartPosition.y + projectile.NextYTrajectoryPosition / _shadowPositionYDivider +
+                            projectile.NextPositionYCorrectionAbsolute;
             projectileShadow.position = newPosition;
         }
         public void SetTarget(Transform target)

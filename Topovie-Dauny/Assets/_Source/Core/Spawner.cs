@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Threading;
+using Bullets.Projectile;
 using Core.EnemyWaveData;
 using Cysharp.Threading.Tasks;
 using Enemies;
-using Enemies.Projectile;
 using Player.PlayerControl;
 using UnityEngine;
 using Zenject;
@@ -14,6 +14,8 @@ namespace Core
 {
     public class Spawner
     {
+        public event Action<Shooter> OnShootingEnemyInitialised;
+        
         private EnemyWave _currentEnemyWave;
         private PlayerMovement _playerMovement;
         
@@ -82,6 +84,7 @@ namespace Core
             if (enemy.TryGetComponent<Shooter>(out var shooter))
             {
                 shooter.Construct(_playerMovement);
+                OnShootingEnemyInitialised?.Invoke(shooter);
             }
         }
         private Vector3 GetRandomPositionWithinSpawnRange(Transform spawn, float spawnRange)

@@ -10,7 +10,7 @@ namespace Enemies.Combat
         [field:SerializeField] public int Attack { get; private set; }
 
         private PlayerHealth _playerHealth;
-        private void OnTriggerEnter2D(Collider2D other)
+        protected virtual void OnTriggerEnter2D(Collider2D other)
         {
             if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
             {
@@ -21,15 +21,9 @@ namespace Enemies.Combat
                 
                 _playerHealth.TakeDamage(Attack);
                 _playerHealth.KnockBack.GetKnockedBack(transform);
-                
-                if (gameObject.layer == LayerMask.NameToLayer("EnemyBullet"))
-                {
-                    Destroy(gameObject);
-                }
             }
         }
-
-        private void OnTriggerStay2D(Collider2D other)
+        protected virtual void OnTriggerStay2D(Collider2D other)
         {
             if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
             {
@@ -40,11 +34,6 @@ namespace Enemies.Combat
                 
                 _playerHealth.TakeDamage(Attack);
                 _playerHealth.KnockBack.GetKnockedBack(transform);
-
-                if (gameObject.layer == LayerMask.NameToLayer("EnemyBullet"))
-                {
-                    Destroy(gameObject);
-                }
             }
         }
     }

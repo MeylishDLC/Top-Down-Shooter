@@ -13,10 +13,8 @@ namespace Core.PoolingSystem
         protected readonly Transform ParentTransform;
         
         private readonly int _startPoolSize;
-        private readonly string _poolName;
         protected GenericPool(PoolConfig poolConfig, Transform parentTransform)
         {
-            _poolName = poolConfig.PoolName;
             _startPoolSize = poolConfig.InitialPoolSize;
             MaxPoolSize = poolConfig.MaxPoolSize;
             ObjectPrefab = poolConfig.Prefab.GetComponent<T>();

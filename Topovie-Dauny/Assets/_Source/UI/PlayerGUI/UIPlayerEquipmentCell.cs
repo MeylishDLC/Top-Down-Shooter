@@ -54,15 +54,15 @@ namespace UI.PlayerGUI
         {
             if (!_canUseAbility)
             {
+                if (_isHoldingKey && !Input.GetKey(keyToUse))
+                {
+                    _isHoldingKey = false;
+                    ResetSliderValue();
+                }
                 return;
             }
             if (!_isHoldingKey)
             {
-                ResetSliderValue();
-            }
-            if (_isHoldingKey && !Input.GetKey(keyToUse))
-            {
-                _isHoldingKey = false;
                 ResetSliderValue();
             }
             

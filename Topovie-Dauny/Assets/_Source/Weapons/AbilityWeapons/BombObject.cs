@@ -53,7 +53,8 @@ namespace Weapons.AbilityWeapons
             
             await gameObject.transform.DOScale(scaleIncreaseWhenBlowup, 0f);
             animator.SetTrigger(Blowup);
-            Destroy(gameObject, blowupDuration);
+            await UniTask.Delay(TimeSpan.FromSeconds(blowupDuration), cancellationToken: token);
+            gameObject.SetActive(false);
         }
 
         private void OnDrawGizmosSelected()

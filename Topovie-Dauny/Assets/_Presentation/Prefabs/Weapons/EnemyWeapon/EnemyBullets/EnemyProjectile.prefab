@@ -9,10 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7919925997018271609}
-  - component: {fileID: 6641394496772454880}
   - component: {fileID: 5055111615172634123}
   - component: {fileID: 890344943724549107}
-  - component: {fileID: 4241531698538572927}
+  - component: {fileID: -2968593841227263534}
   m_Layer: 10
   m_Name: EnemyProjectile
   m_TagString: Untagged
@@ -37,20 +36,6 @@ Transform:
   - {fileID: 4217388738040431985}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6641394496772454880
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4854327939033642716}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0241007708c64c6aa248e7763277e2ad, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  lifetime: 1
-  projectileVisual: {fileID: 5055111615172634123}
 --- !u!114 &5055111615172634123
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -65,7 +50,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   projectileVisual: {fileID: 508703514389899806}
   projectileShadow: {fileID: 4217388738040431985}
-  projectile: {fileID: 6641394496772454880}
+  projectile: {fileID: -2968593841227263534}
   rotationSpeed: 5
 --- !u!58 &890344943724549107
 CircleCollider2D:
@@ -102,7 +87,7 @@ CircleCollider2D:
   m_Offset: {x: -0.00090509653, y: 0}
   serializedVersion: 2
   m_Radius: 0.06284118
---- !u!114 &4241531698538572927
+--- !u!114 &-2968593841227263534
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -111,10 +96,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 4854327939033642716}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5262b00d5dc942d4b08e51eaf51c2abe, type: 3}
+  m_Script: {fileID: 11500000, guid: 5fb4ebcfc20c459cb312e25beff27455, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   <Attack>k__BackingField: 5
+  <Lifetime>k__BackingField: 2
+  projectileVisual: {fileID: 5055111615172634123}
 --- !u!1 &7349700265796605328
 GameObject:
   m_ObjectHideFlags: 0
