@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading;
+using Core.InputSystem;
 using Cysharp.Threading.Tasks;
 using Ink.Runtime;
 using ModestTree;
@@ -8,6 +9,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using Zenject;
 
 namespace DialogueSystem
 {
@@ -33,15 +35,21 @@ namespace DialogueSystem
         private Story _currentStory;
         private bool _hasChosen;
 
-        private const string SPEAKER_TAG = "speaker";
-        private const string SPRITE_TAG = "sprite";
-        private const string LAYOUT_TAG = "layout";
+        private const string SpeakerTag = "speaker";
+        private const string SpriteTag = "sprite";
+        private const string LayoutTag = "layout";
+        private InputListener _inputListener;
+        
+        [Inject]
+        public void Construct(InputListener inputListener)
+        {
+            _inputListener = inputListener;
+        }
         private void Start()
         {
             dialoguePanel.gameObject.SetActive(false);
             InitializeChoicesText();
         }
-
         private void Update()
         {
             if (!DialogueIsPlaying)
@@ -62,10 +70,10 @@ namespace DialogueSystem
                 }
             }
         }
-
-        public void EnterDialogueMode(TextAsset inkJSON)
+        public void EnterDialogueMode(TextAsset inkJson)
         {
-            _currentStory = new Story(inkJSON.text);
+            _inputListener.SetFiringAbility(false);
+            _currentStory = new Story(inkJson.text);
             DialogueIsPlaying = true;
             CanEnterDialogueMode = false;
             dialoguePanel.gameObject.SetActive(true);
@@ -74,13 +82,11 @@ namespace DialogueSystem
 
             ContinueStory();
         }
-
         public void MakeChoice(int choiceIndex)
         {
             _currentStory.ChooseChoiceIndex(choiceIndex);
             ContinueStory();
         }
-        
         private void ContinueStory()
         {
             if (_currentStory.canContinue)
@@ -96,6 +102,7 @@ namespace DialogueSystem
         }
         private async UniTask ExitDialogueModeAsync(CancellationToken token)
         {
+            _inputListener.SetFiringAbility(true);
             DialogueIsPlaying = false;
             dialoguePanel.gameObject.SetActive(false);
             dialogueText.text = "";
@@ -104,16 +111,12 @@ namespace DialogueSystem
             CanEnterDialogueMode = true;
             
         }
-
         private void ResetVisuals()
         {
             nameText.text = "???";
             spriteAnimator.Play("default");
             layoutAnimator.Play("left");
         }
-
-       
-
         private void HandleTags(List<string> currentTags)
         {
             foreach (var tag in currentTags)
@@ -129,13 +132,13 @@ namespace DialogueSystem
 
                 switch (tagKey)
                 {
-                    case SPEAKER_TAG:
+                    case SpeakerTag:
                         nameText.text = tagValue;
                         break;
-                    case SPRITE_TAG:
+                    case SpriteTag:
                         spriteAnimator.Play(tagValue);
                         break;
-                    case LAYOUT_TAG:
+                    case LayoutTag:
                         layoutAnimator.Play(tagValue);
                         break;
                     default:

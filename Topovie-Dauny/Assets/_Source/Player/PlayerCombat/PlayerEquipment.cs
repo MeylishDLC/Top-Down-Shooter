@@ -44,18 +44,6 @@ namespace Player.PlayerCombat
             UnsubscribeOnEvents();
             _weaponsSetter.UnsubscribeOnInputEvents(_inputListener);
         }
-        private void Update()
-        {
-            //todo refactor
-            if (!_dialogueManager.DialogueIsPlaying && !_shop.IsShopOpen())
-            {
-                _inputListener.SetFiringAbility(true);
-            }
-            else
-            {
-                _inputListener.SetFiringAbility(false);
-            }
-        }
         private void EnableAbility(Ability ability)
         {
             ability.Construct(_playerMovement);

@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Threading;
+using Core.InputSystem;
 using Cysharp.Threading.Tasks;
 using Player.PlayerAbilities;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
+using Zenject;
 
 namespace UI.UIShop
 {
@@ -26,9 +28,16 @@ namespace UI.UIShop
         [SerializeField] private int delayBeforeShopClosingMillisecons;
         [SerializeField] private PlayerCellsInShop playerCellsInShop;
 
+        private InputListener _inputListener;
         private ShopDialogue _shopDialogue;
         private bool _isTyping;
         private CancellationTokenSource _stopTypingCts = new();
+
+        [Inject]
+        public void Construct(InputListener inputListener)
+        {
+            _inputListener = inputListener;
+        }
         private void Start()
         {
             shopUI.SetActive(false);
@@ -61,6 +70,7 @@ namespace UI.UIShop
         }
         private async UniTask OpenShopAsync(CancellationToken token)
         {
+            _inputListener.SetFiringAbility(false);
             shopUI.SetActive(true);
             playerGUI.SetActive(false);
             vetDialogueText.text = "";
@@ -72,6 +82,7 @@ namespace UI.UIShop
 
         private async UniTask CloseShopAsync(CancellationToken token)
         {
+            _inputListener.SetFiringAbility(true);
             _isTyping = true;
             await _shopDialogue.TypeDialogueAsync(speechOnExitShop, token);
             _isTyping = false;
