@@ -8,6 +8,8 @@ namespace Core.InputSystem
     public class InputListener : MonoBehaviour
     {
         public event Action<int> OnSwitchWeaponPressed; 
+        public event Action<int> OnUseAbilityPressed;
+        public event Action<int> OnUseAbilityReleased; 
         public event Action OnFirePressed;
         public event Action OnFireReleased;
         public event Action OnRollPressed;
@@ -28,16 +30,19 @@ namespace Core.InputSystem
             SetupFireAction();
             SetupRollAction();
             SetupSwitchWeaponButtons();
+            SetupAbilityActions();
         }
         private void OnDisable()
         {
             DisableMovementActions();
             DisableWeaponSwitchActions();
+            DisableUseAbilityActions();
         }
         private void OnDestroy()
         {
             ExposeMoveActions();
             ExposeWeaponSwitchActions();
+            ExposeUseAbilityActions();
         }
         public Vector2 GetMovementValue()
         {
@@ -54,6 +59,17 @@ namespace Core.InputSystem
             {
                 _fireAction.Disable();
                 DisableWeaponSwitchActions();
+            }
+        }
+        public void SetUseAbility(bool enable)
+        {
+            if (enable)
+            {
+                ExposeUseAbilityActions();
+            }
+            else
+            {
+                DisableUseAbilityActions();
             }
         }
         private void OnFireButtonPressed(InputAction.CallbackContext context)
@@ -84,14 +100,23 @@ namespace Core.InputSystem
         {
             OnSwitchWeaponPressed?.Invoke(4);
         }
-
-        private void EnableWeaponSwitchActions()
+        private void OnUseAbility1Pressed(InputAction.CallbackContext context)
         {
-            _inputActions.Player.WeaponSwitch1.Enable();
-            _inputActions.Player.WeaponSwitch2.Enable();
-            _inputActions.Player.WeaponSwitch3.Enable();
-            _inputActions.Player.WeaponSwitch4.Enable();
+            OnUseAbilityPressed?.Invoke(1);
         }
+        private void OnUseAbility1Released(InputAction.CallbackContext context)
+        {
+            OnUseAbilityReleased?.Invoke(1);
+        }
+        private void OnUseAbility2Pressed(InputAction.CallbackContext context)
+        {
+            OnUseAbilityPressed?.Invoke(2);
+        }
+        private void OnUseAbility2Released(InputAction.CallbackContext context)
+        {
+            OnUseAbilityReleased?.Invoke(2);
+        }
+        
         #region ACTIONS_SETUP
         private void SetupMoveAction()
         {
@@ -110,6 +135,15 @@ namespace Core.InputSystem
             _rollAction = _inputActions.Player.Roll;
             _rollAction.started += OnRollButtonPressed;
             _rollAction.Enable();
+        }
+        private void SetupAbilityActions()
+        {
+            _inputActions.Player.UseAbility1.started += OnUseAbility1Pressed;
+            _inputActions.Player.UseAbility2.started += OnUseAbility2Pressed;
+            _inputActions.Player.UseAbility1.canceled += OnUseAbility1Released;
+            _inputActions.Player.UseAbility2.canceled += OnUseAbility2Released;
+            _inputActions.Player.UseAbility1.Enable();
+            _inputActions.Player.UseAbility2.Enable();
         }
         private void SetupSwitchWeaponButtons()
         {
@@ -139,16 +173,23 @@ namespace Core.InputSystem
             _inputActions.Player.WeaponSwitch3.started -= OnSwitchWeapon3Pressed;
             _inputActions.Player.WeaponSwitch4.started -= OnSwitchWeapon4Pressed;
         }
+        private void ExposeUseAbilityActions()
+        {
+            _inputActions.Player.UseAbility1.started -= OnUseAbility1Pressed;
+            _inputActions.Player.UseAbility2.started -= OnUseAbility2Pressed;
+            _inputActions.Player.UseAbility1.canceled -= OnUseAbility1Released;
+            _inputActions.Player.UseAbility2.canceled -= OnUseAbility2Released;
+        }
         #endregion
 
         #region ACTIONS_DISABLE
-
         private void DisableMovementActions()
         {
             _moveAction.Disable();
             _fireAction.Disable();
             _rollAction.Disable();
         }
+
         private void DisableWeaponSwitchActions()
         {
             _inputActions.Player.WeaponSwitch1.Disable();
@@ -156,6 +197,29 @@ namespace Core.InputSystem
             _inputActions.Player.WeaponSwitch3.Disable();
             _inputActions.Player.WeaponSwitch4.Disable();
         }
+
+        private void DisableUseAbilityActions()
+        {
+            _inputActions.Player.UseAbility1.Disable();
+            _inputActions.Player.UseAbility2.Disable();
+        }
+        #endregion
+
+        #region ACTIONS_ENABLE
+
+        private void EnableWeaponSwitchActions()
+        {
+            _inputActions.Player.WeaponSwitch1.Enable();
+            _inputActions.Player.WeaponSwitch2.Enable();
+            _inputActions.Player.WeaponSwitch3.Enable();
+            _inputActions.Player.WeaponSwitch4.Enable();
+        }
+        private void EnableUseAbilityActions()
+        {
+            _inputActions.Player.UseAbility1.Enable();
+            _inputActions.Player.UseAbility2.Enable();
+        }
+
         #endregion
     }
 }

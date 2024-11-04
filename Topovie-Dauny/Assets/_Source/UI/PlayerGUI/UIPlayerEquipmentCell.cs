@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Globalization;
 using System.Threading;
+using Core.InputSystem;
 using Cysharp.Threading.Tasks;
 using Player.PlayerAbilities;
 using TMPro;
@@ -9,6 +10,7 @@ using UI.UIShop;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
+using Zenject;
 
 namespace UI.PlayerGUI
 {
@@ -17,9 +19,7 @@ namespace UI.PlayerGUI
         public event Action<Ability> OnUseAbility; 
         public Ability CurrentAbility { get; private set; }
 
-        //todo refactor
         [SerializeField] private Ability initialAbility;
-        [SerializeField] private KeyCode keyToUse;
         [SerializeField] private int cellIndex; 
         [SerializeField] private PlayerCellsInShop playerCellsInShop;
         [SerializeField] private float timeToHoldKey;
@@ -38,6 +38,16 @@ namespace UI.PlayerGUI
         private float _holdStartTime;
         private bool _isHoldingKey;
         private CancellationTokenSource _cancelCooldownCts = new();
+        private InputListener _inputListener;
+        
+        //todo split logic from displaying
+        [Inject]
+        public void Construct(InputListener inputListener)
+        {
+            _inputListener = inputListener;
+            _inputListener.OnUseAbilityPressed += UseAbility;
+            _inputListener.OnUseAbilityReleased += OnAbilityReleased;
+        }
         private void Awake()
         {
             playerCellsInShop.OnAbilityChanged += SwitchAbility;
@@ -49,44 +59,44 @@ namespace UI.PlayerGUI
         private void OnDestroy()
         {
             playerCellsInShop.OnAbilityChanged -= SwitchAbility;
+            _inputListener.OnUseAbilityPressed -= UseAbility;
+            _inputListener.OnUseAbilityReleased -= OnAbilityReleased;
         }
-        private void Update()
+        private void UseAbility(int abilityNumber)
         {
+            if (abilityNumber-1 != cellIndex)
+            {
+                return;
+            }
             if (!_canUseAbility)
             {
                 return;
             }
-            
+
             if (CurrentAbility.AbilityType == AbilityTypes.TapButton)
             {
                 UseAbilityOnKeyTap();
             }
             else if (CurrentAbility.AbilityType == AbilityTypes.HoldButton)
             {
-                UseAbilityOnKeyHold();
+                UseAbilityOnKeyHold(CancellationToken.None).Forget();
             }
         }
         private void UseAbilityOnKeyTap()
         {
-            if (Input.GetKeyDown(keyToUse))
-            {
-                OnUseAbility?.Invoke(CurrentAbility);
-                _canUseAbility = false;
-                StartCooldown();
-            }
+            OnUseAbility?.Invoke(CurrentAbility);
+            _canUseAbility = false;
+            StartCooldown();
         }
-        private void UseAbilityOnKeyHold()
+        private async UniTask UseAbilityOnKeyHold(CancellationToken token)
         {
-            if (Input.GetKeyDown(keyToUse))
-            {
-                _holdStartTime = Time.time;
-                _isHoldingKey = true;
-                abilityChargeSlider.value = 0;
+            _holdStartTime = Time.time;
+            _isHoldingKey = true;
+            ResetSliderValue();
+            customCursor.SetCrosshair(true);
+            abilityChargeSlider.gameObject.SetActive(true);
 
-                customCursor.SetCrosshair(true);
-                abilityChargeSlider.gameObject.SetActive(true);
-            }
-            else if (Input.GetKey(keyToUse) && _isHoldingKey)
+            while (_isHoldingKey)
             {
                 var elapsedTime = Time.time - _holdStartTime;
                 var fillAmount = Mathf.Clamp01(elapsedTime / timeToHoldKey);
@@ -99,21 +109,22 @@ namespace UI.PlayerGUI
                     StartCooldown();
 
                     ResetCursor();
-                    _isHoldingKey = false;
                     ResetSliderValue();
+                    _isHoldingKey = false;
                 }
+                await UniTask.Yield(PlayerLoopTiming.Update);
             }
-            else if (Input.GetKeyUp(keyToUse))
+        }
+        private void OnAbilityReleased(int abilityNumber)
+        {
+            if (abilityNumber-1 != cellIndex)
             {
-                var elapsedTime = Time.time - _holdStartTime;
-                
-                if (elapsedTime < timeToHoldKey)
-                {
-                    _isHoldingKey = false;
-                    ResetCursor();
-                    ResetSliderValue();
-                }
+                return;
             }
+            
+            _isHoldingKey = false;
+            ResetCursor();
+            ResetSliderValue();
         }
         private void StartCooldown()
         {
