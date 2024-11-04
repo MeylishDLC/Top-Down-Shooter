@@ -1,4 +1,6 @@
+using System;
 using System.Threading;
+using Core.InputSystem;
 using Cysharp.Threading.Tasks;
 using DialogueSystem;
 using Player.PlayerCombat;
@@ -11,49 +13,57 @@ namespace Player.PlayerControl
     [RequireComponent(typeof(Rigidbody2D))]
     public class PlayerMovement : MonoBehaviour
     {
+        private static readonly int isWalking = Animator.StringToHash("isWalking");
+        private static readonly int isRolling = Animator.StringToHash("isRolling");
         [field: SerializeField] public float MovementSpeed { get; private set; } = 1.5f;
 
         [SerializeField] private Animator[] sides;
-        [SerializeField] private float dodgeSpeed = 15f; 
+        [SerializeField] private float dodgeSpeed = 15f;
         [SerializeField] private int dodgeTimeMilliseconds = 500;
         [SerializeField] private PlayerHealth playerHealth;
         
-        private Rigidbody2D _rb;
-        private float _vertical;
-        private float _horizontal;
         private Vector2 _direction;
         private bool _dodgeRoll;
-        private DialogueManager _dialogueManager;
-        private Shop _shop;
-        
-        private static readonly int isWalking = Animator.StringToHash("isWalking");
-        private static readonly int isRolling = Animator.StringToHash("isRolling");
+        private float _horizontal;
+        private float _vertical;
 
+        private Rigidbody2D _rb;
+        private Shop _shop;
+        private InputListener _inputListener;
+        private DialogueManager _dialogueManager;
+        
         [Inject]
-        public void Construct(DialogueManager dialogueManager, Shop shop)
+        public void Construct(InputListener inputListener, DialogueManager dialogueManager, Shop shop)
         {
+            _inputListener = inputListener;
             _dialogueManager = dialogueManager;
             _shop = shop;
         }
-        private void Start()
+        private void Awake()
         {
             _rb = gameObject.GetComponent<Rigidbody2D>();
+            _inputListener.OnRollPressed += HandleRolling;
+        }
+        private void OnDestroy()
+        {
+            _inputListener.OnRollPressed -= HandleRolling;
         }
         private void Update()
         {
-            if (!_dialogueManager.DialogueIsPlaying && !playerHealth.KnockBack.GettingKnockedBack && !_shop.IsShopOpen())
+            if (!_dialogueManager.DialogueIsPlaying && !playerHealth.KnockBack.GettingKnockedBack &&
+                !_shop.IsShopOpen())
             {
                 if (_dodgeRoll)
                 {
                     _rb.AddForce(_direction * dodgeSpeed);
                 }
-                HandleMovement(); 
-                HandleRolling();
+                HandleMovement();
             }
         }
         private void FixedUpdate()
         {
-            if (!_dialogueManager.DialogueIsPlaying && !playerHealth.KnockBack.GettingKnockedBack && !_shop.IsShopOpen())
+            if (!_dialogueManager.DialogueIsPlaying && !playerHealth.KnockBack.GettingKnockedBack &&
+                !_shop.IsShopOpen())
             {
                 _rb.velocity = new Vector2(_horizontal, _vertical).normalized * MovementSpeed;
             }
@@ -64,8 +74,8 @@ namespace Player.PlayerControl
         }
         private void HandleMovement()
         {
-            _horizontal = Input.GetAxisRaw("Horizontal");
-            _vertical = Input.GetAxisRaw("Vertical");
+            _horizontal = _inputListener.GetMovementValue().x;
+            _vertical = _inputListener.GetMovementValue().y;
 
             if (_horizontal > 0 || _horizontal < 0 || _vertical < 0 || _vertical > 0)
             {
@@ -87,13 +97,12 @@ namespace Player.PlayerControl
                     }
                 }
             }
-            
+
             _direction = new Vector2(_horizontal, _vertical);
         }
-
         private void HandleRolling()
         {
-            if (Input.GetKeyDown(KeyCode.LeftShift) && !CheckRolling.IsRolling)
+            if (!CheckRolling.IsRolling)
             {
                 foreach (var side in sides)
                 {
@@ -101,18 +110,16 @@ namespace Player.PlayerControl
                     {
                         side.SetTrigger(isRolling);
                     }
-                    
+
                     RollAsync(CancellationToken.None).Forget();
                 }
             }
         }
-
         private async UniTask RollAsync(CancellationToken token)
         {
             _dodgeRoll = true;
             await UniTask.Delay(dodgeTimeMilliseconds, cancellationToken: token);
             _dodgeRoll = false;
         }
-        
     }
 }

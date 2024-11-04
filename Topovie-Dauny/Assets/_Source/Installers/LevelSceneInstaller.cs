@@ -1,5 +1,6 @@
 using Bullets;
 using Core;
+using Core.InputSystem;
 using Core.LevelSettings;
 using Core.PoolingSystem;
 using Core.SceneManagement;
@@ -13,6 +14,7 @@ namespace Installers
 {
     public class LevelSceneInstaller : MonoInstaller
     {
+        [SerializeField] private InputListener inputListener;
         [SerializeField] private LevelChargesHandler levelChargesHandler;
         [SerializeField] private DialogueManager dialogueManager;
         [SerializeField] private GameObject playerObject;
@@ -22,6 +24,7 @@ namespace Installers
         public override void InstallBindings()
         {
             BindSceneLoader();
+            BindInputListener();
             BindProjectContext();
             BindDialogueManager();
             BindPlayer();
@@ -29,6 +32,10 @@ namespace Installers
             BindLevelSetter();
             BindUIShopDisplay();
             BindPlayerWeaponsSetter();
+        }
+        private void BindInputListener()
+        {
+            Container.Bind<InputListener>().FromInstance(inputListener).AsSingle();
         }
         private void BindSceneLoader()
         {
