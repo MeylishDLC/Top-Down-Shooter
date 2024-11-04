@@ -1,8 +1,12 @@
 ﻿using System;
+using System.Threading;
+using Core.InputSystem;
+using Core.LevelSettings;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using Zenject;
 
-namespace Core.LevelSettings
+namespace GameEnvironment
 {
     public class PortalChargerTrigger: MonoBehaviour
     {
@@ -16,16 +20,22 @@ namespace Core.LevelSettings
         private float _holdStartTime;
         private bool _playerInRange;
         private LevelChargesHandler _levelChargesHandler;
-
+        private InputListener _inputListener;
+        
         [Inject]
-        public void Construct(LevelChargesHandler levelChargesHandler)
+        public void Construct(LevelChargesHandler levelChargesHandler, InputListener inputListener)
         {
+            _inputListener = inputListener;
             _levelChargesHandler = levelChargesHandler;
             _levelChargesHandler.OnStateChanged += EnableOnChangeState;
+            _inputListener.OnInteractPressed += StartHoldingChargeButton;
+            _inputListener.OnInteractReleased += ReleaseChargeButton;
         }
         private void OnDestroy()
         {
             _levelChargesHandler.OnStateChanged -= EnableOnChangeState;
+            _inputListener.OnInteractPressed -= StartHoldingChargeButton;
+            _inputListener.OnInteractReleased -= ReleaseChargeButton;
         }
         private void Start()
         {
@@ -37,7 +47,6 @@ namespace Core.LevelSettings
             if (_playerInRange)
             {
                 visualQue.gameObject.SetActive(true);
-                HandleChargePortalButtonHold();
             }
             else
             {
@@ -58,26 +67,21 @@ namespace Core.LevelSettings
                 _playerInRange = false;
             }
         }
-        private void EnableOnChangeState(GameStates state)
+        private void StartHoldingChargeButton()
         {
-            if (state != GameStates.Fight)
+            if (!_playerInRange)
             {
-                enabled = true;
+                return;
             }
-            else
-            {
-                enabled = false;
-            }
+            
+            StartHoldingChargeButtonAsync(CancellationToken.None).Forget();
         }
-        private void HandleChargePortalButtonHold()
+        private async UniTask StartHoldingChargeButtonAsync(CancellationToken token)
         {
-            if (Input.GetKeyDown(KeyCode.F))
-            {
-                _holdStartTime = Time.time;
-                _isHoldingButton = true;
-            }
-        
-            if (Input.GetKey(KeyCode.F) && _isHoldingButton)
+            _holdStartTime = Time.time;
+            _isHoldingButton = true;
+
+            while (_isHoldingButton)
             {
                 if (Time.time - _holdStartTime >= holdChargePortalButtonDuration)
                 {
@@ -90,12 +94,24 @@ namespace Core.LevelSettings
                     
                     enabled = false;
                 }
-            }
-        
-            if (Input.GetKeyUp(KeyCode.F))
-            {
-                _isHoldingButton = false;
+                await UniTask.Yield(PlayerLoopTiming.Update);
             }
         }
+        private void ReleaseChargeButton()
+        {
+            _isHoldingButton = false;
+        }
+        private void EnableOnChangeState(GameStates state)
+        {
+            if (state != GameStates.Fight)
+            {
+                enabled = true;
+            }
+            else
+            {
+                enabled = false;
+            }
+        }
+        
     }
 }

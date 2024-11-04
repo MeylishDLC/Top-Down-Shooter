@@ -104,11 +104,14 @@ namespace Player.PlayerCombat
             {
                 throw new Exception($"The gun with the key {weaponNum} is not registered.");
             }
-            
             var weaponIndex = weaponNum - 1;
             if (!_guns.Values.ElementAt(weaponIndex).IsUnlocked)
             {
                 Debug.Log("The weapon is not unlocked yet");
+                return;
+            }
+            if (CurrentActiveGunIndex == weaponIndex)
+            {
                 return;
             }
             

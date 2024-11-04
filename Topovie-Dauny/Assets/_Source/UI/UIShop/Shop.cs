@@ -70,6 +70,7 @@ namespace UI.UIShop
         }
         private async UniTask OpenShopAsync(CancellationToken token)
         {
+            DisableInput();
             _inputListener.SetFiringAbility(false);
             shopUI.SetActive(true);
             playerGUI.SetActive(false);
@@ -82,7 +83,7 @@ namespace UI.UIShop
 
         private async UniTask CloseShopAsync(CancellationToken token)
         {
-            _inputListener.SetFiringAbility(true);
+            EnableInput();
             _isTyping = true;
             await _shopDialogue.TypeDialogueAsync(speechOnExitShop, token);
             _isTyping = false;
@@ -90,6 +91,16 @@ namespace UI.UIShop
             
             shopUI.SetActive(false);
             playerGUI.SetActive(true);
+        }
+        private void DisableInput()
+        {
+            _inputListener.SetFiringAbility(false);
+            _inputListener.SetUseAbility(false);
+        }
+        private void EnableInput()
+        {
+            _inputListener.SetFiringAbility(true);
+            _inputListener.SetUseAbility(true);
         }
         private void ChangeDialogue(int _, Ability ability)
         {

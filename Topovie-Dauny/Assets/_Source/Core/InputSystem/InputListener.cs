@@ -13,12 +13,15 @@ namespace Core.InputSystem
         public event Action OnFirePressed;
         public event Action OnFireReleased;
         public event Action OnRollPressed;
+        public event Action OnInteractPressed;
+        public event Action OnInteractReleased;
         
         private InputActions _inputActions;
 
         private InputAction _moveAction;
         private InputAction _fireAction;
         private InputAction _rollAction;
+        private InputAction _interactAction;
         
         private void Awake()
         {
@@ -31,18 +34,21 @@ namespace Core.InputSystem
             SetupRollAction();
             SetupSwitchWeaponButtons();
             SetupAbilityActions();
+            SetupInteractAction();
         }
         private void OnDisable()
         {
             DisableMovementActions();
             DisableWeaponSwitchActions();
             DisableUseAbilityActions();
+            DisableInteractAction();
         }
         private void OnDestroy()
         {
             ExposeMoveActions();
             ExposeWeaponSwitchActions();
             ExposeUseAbilityActions();
+            ExposeInteractAction();
         }
         public Vector2 GetMovementValue()
         {
@@ -65,12 +71,20 @@ namespace Core.InputSystem
         {
             if (enable)
             {
-                ExposeUseAbilityActions();
+                EnableUseAbilityActions();
             }
             else
             {
                 DisableUseAbilityActions();
             }
+        }
+        private void OnInteractButtonPressed(InputAction.CallbackContext context)
+        {
+            OnInteractPressed?.Invoke();
+        }
+        private void OnInteractButtonReleased(InputAction.CallbackContext context)
+        {
+            OnInteractReleased?.Invoke();
         }
         private void OnFireButtonPressed(InputAction.CallbackContext context)
         {
@@ -122,6 +136,13 @@ namespace Core.InputSystem
         {
             _moveAction = _inputActions.Player.Move;
             _moveAction.Enable();
+        }
+        private void SetupInteractAction()
+        {
+            _interactAction = _inputActions.Player.Interact;
+            _interactAction.started += OnInteractButtonPressed;
+            _interactAction.canceled += OnInteractButtonReleased;
+            _interactAction.Enable();
         }
         private void SetupFireAction()
         {
@@ -180,6 +201,11 @@ namespace Core.InputSystem
             _inputActions.Player.UseAbility1.canceled -= OnUseAbility1Released;
             _inputActions.Player.UseAbility2.canceled -= OnUseAbility2Released;
         }
+        private void ExposeInteractAction()
+        {
+            _interactAction.started -= OnInteractButtonPressed;
+            _interactAction.canceled -= OnInteractButtonReleased;
+        }
         #endregion
 
         #region ACTIONS_DISABLE
@@ -189,7 +215,6 @@ namespace Core.InputSystem
             _fireAction.Disable();
             _rollAction.Disable();
         }
-
         private void DisableWeaponSwitchActions()
         {
             _inputActions.Player.WeaponSwitch1.Disable();
@@ -197,16 +222,18 @@ namespace Core.InputSystem
             _inputActions.Player.WeaponSwitch3.Disable();
             _inputActions.Player.WeaponSwitch4.Disable();
         }
-
         private void DisableUseAbilityActions()
         {
             _inputActions.Player.UseAbility1.Disable();
             _inputActions.Player.UseAbility2.Disable();
         }
+        private void DisableInteractAction()
+        {
+            _interactAction.Disable();
+        }
         #endregion
 
         #region ACTIONS_ENABLE
-
         private void EnableWeaponSwitchActions()
         {
             _inputActions.Player.WeaponSwitch1.Enable();
@@ -219,7 +246,10 @@ namespace Core.InputSystem
             _inputActions.Player.UseAbility1.Enable();
             _inputActions.Player.UseAbility2.Enable();
         }
-
+        private void EnableInteractAction()
+        {
+            _interactAction.Enable();
+        }
         #endregion
     }
 }

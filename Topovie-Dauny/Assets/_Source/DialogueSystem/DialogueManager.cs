@@ -71,8 +71,9 @@ namespace DialogueSystem
             }
         }
         public void EnterDialogueMode(TextAsset inkJson)
-        {
-            _inputListener.SetFiringAbility(false);
+        { 
+            DisableInput();
+            
             _currentStory = new Story(inkJson.text);
             DialogueIsPlaying = true;
             CanEnterDialogueMode = false;
@@ -102,7 +103,8 @@ namespace DialogueSystem
         }
         private async UniTask ExitDialogueModeAsync(CancellationToken token)
         {
-            _inputListener.SetFiringAbility(true);
+            EnableInput();
+            
             DialogueIsPlaying = false;
             dialoguePanel.gameObject.SetActive(false);
             dialogueText.text = "";
@@ -182,6 +184,16 @@ namespace DialogueSystem
         {
             EventSystem.current.SetSelectedGameObject(null);
             EventSystem.current.SetSelectedGameObject(choices[0].gameObject);
+        }
+        private void DisableInput()
+        {
+            _inputListener.SetFiringAbility(false);
+            _inputListener.SetUseAbility(false);
+        }
+        private void EnableInput()
+        {
+            _inputListener.SetFiringAbility(true);
+            _inputListener.SetUseAbility(true);
         }
     }
 }

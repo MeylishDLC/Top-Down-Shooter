@@ -1,18 +1,14 @@
-﻿using Core.LevelSettings;
-using UI.UIShop;
+﻿using System;
+using Core.LevelSettings;
 using UnityEngine;
 using Zenject;
 
-namespace GameEnvironment.WorldShop
+namespace GameEnvironment
 {
-    public class ShopTrigger: MonoBehaviour
+    public class RangeDetector: MonoBehaviour
     {
-        [SerializeField] private SpriteRenderer visualQue;
-        [SerializeField] private Shop shop;
-
-        private bool _isHoldingButton;
-        private float _holdStartTime;
-        private bool _playerInRange;
+        public event Action OnPlayerEnterRange;
+        public event Action OnPlayerExitRange;
 
         private LevelChargesHandler _levelChargesHandler;
         
@@ -24,31 +20,15 @@ namespace GameEnvironment.WorldShop
         private void Awake()
         {
             _levelChargesHandler.OnStateChanged += EnableOnChangeState;
-            visualQue.gameObject.SetActive(false);
             EnableOnChangeState(GameStates.Chill);
         }
         private void OnDestroy()
         {
             _levelChargesHandler.OnStateChanged -= EnableOnChangeState;
         }
-        private void Update()
-        {
-            if (_playerInRange)
-            {
-                visualQue.gameObject.SetActive(true);
-                if (Input.GetKeyDown(KeyCode.F))
-                {
-                    shop.OpenShop();
-                }
-            }
-            else
-            {
-                visualQue.gameObject.SetActive(false);
-            }
-        }
         private void EnableOnChangeState(GameStates gameState)
         {
-            if (gameState != GameStates.Fight)
+            if (gameState == GameStates.Fight)
             {
                 enabled = true;
             }
@@ -61,15 +41,16 @@ namespace GameEnvironment.WorldShop
         {
             if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
             {
-                _playerInRange = true;
+                OnPlayerEnterRange?.Invoke();
+                Debug.Log("Is in range");
             }
         }
-
         private void OnTriggerExit2D(Collider2D other)
         {
             if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
             {
-                _playerInRange = false;
+                OnPlayerExitRange?.Invoke();
+                Debug.Log("Is not in range");
             }
         }
     }

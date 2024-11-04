@@ -2,7 +2,7 @@
 using System.Threading;
 using Core.EnemyWaveData;
 using Cysharp.Threading.Tasks;
-using GameEnvironment.WorldShop;
+using GameEnvironment;
 using UnityEngine;
 using Zenject;
 
