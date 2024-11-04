@@ -1,4 +1,5 @@
-﻿using DialogueSystem;
+﻿using Core.InputSystem;
+using DialogueSystem;
 using Player.PlayerAbilities;
 using Player.PlayerControl;
 using Player.PlayerControl.GunMovement;
@@ -13,30 +14,26 @@ namespace Player.PlayerCombat
 {
     public class PlayerEquipment: MonoBehaviour
     {
-        [Header("Weapons")]
-        [SerializeField] private SerializedDictionary<KeyCode, Gun> weaponsObjects;
-        [SerializeField] private GunRotation gunRotation;
-        [SerializeField] private Image gunUIImage;
-        [SerializeField] private Color gunKeyColorEnabled;
-        [SerializeField] private Color gunKeyColorDisabled;
-
         [Header("Abilities")] 
         [SerializeField] private UIPlayerEquipmentCell[] uiPlayerEquipmentCells;
         
-        private WeaponsSetter _weaponsSetter;
         private PlayerMovement _playerMovement;
         private DialogueManager _dialogueManager;
         private Shop _shop;
+        private InputListener _inputListener;
+        private WeaponsSetter _weaponsSetter;
 
         [Inject]
         public void Construct(PlayerMovement playerMovement, DialogueManager dialogueManager, 
-            Shop shop, WeaponsSetter weaponsSetter)
+            Shop shop, InputListener inputListener, WeaponsSetter weaponsSetter)
         {
             _playerMovement = playerMovement;
+            _weaponsSetter = weaponsSetter;
+            _inputListener = inputListener;
             _dialogueManager = dialogueManager;
             _shop = shop;
-            _weaponsSetter = weaponsSetter;
-            _weaponsSetter.Initialize(weaponsObjects, gunRotation, gunUIImage, gunKeyColorEnabled, gunKeyColorDisabled);
+            
+            _weaponsSetter.SubscribeOnInputEvents(_inputListener);
         }
         private void Start()
         {
@@ -45,12 +42,18 @@ namespace Player.PlayerCombat
         private void OnDestroy()
         {
             UnsubscribeOnEvents();
+            _weaponsSetter.UnsubscribeOnInputEvents(_inputListener);
         }
         private void Update()
         {
+            //todo refactor
             if (!_dialogueManager.DialogueIsPlaying && !_shop.IsShopOpen())
             {
-                _weaponsSetter.HandleShooting();
+                _inputListener.SetFiringAbility(true);
+            }
+            else
+            {
+                _inputListener.SetFiringAbility(false);
             }
         }
         private void EnableAbility(Ability ability)

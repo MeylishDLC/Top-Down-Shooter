@@ -20,6 +20,7 @@ namespace Installers
         [SerializeField] private GameObject playerObject;
         [SerializeField] private UI.UIShop.Shop shop;
         [SerializeField] private SceneLoader sceneLoader;
+        [SerializeField] private WeaponsSetterConfig weaponsSetterConfig;
         
         public override void InstallBindings()
         {
@@ -68,7 +69,7 @@ namespace Installers
         } 
         private void BindPlayerWeaponsSetter()
         {
-            Container.Bind<WeaponsSetter>().AsSingle();
+            Container.Bind<WeaponsSetter>().AsSingle().WithArguments(weaponsSetterConfig);
         }
     }
 }

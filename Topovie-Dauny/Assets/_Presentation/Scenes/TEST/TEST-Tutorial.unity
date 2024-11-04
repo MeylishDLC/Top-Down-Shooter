@@ -3911,6 +3911,18 @@ MonoBehaviour:
   playerObject: {fileID: 1612465535}
   shop: {fileID: 2071173030}
   sceneLoader: {fileID: 1023462140}
+  weaponsSetterConfig:
+    <Guns>k__BackingField:
+      pairs:
+      - key: 1
+        value: {fileID: 696262010}
+      - key: 2
+        value: {fileID: 620779489402787807}
+      error: 0
+    <GunRotation>k__BackingField: {fileID: 620779489402787810}
+    <GunUIImage>k__BackingField: {fileID: 5110674191528860455}
+    <GunKeyColorEnabled>k__BackingField: {r: 0.62352943, g: 0.50980395, b: 0.50980395, a: 1}
+    <GunKeyColorDisabled>k__BackingField: {r: 0.37647063, g: 0.30980393, b: 0.30980393, a: 1}
 --- !u!4 &1541323200 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8174025445893226128, guid: 7ce0b5d5a93d2914ca0ba8e663533d87, type: 3}
@@ -4998,6 +5010,102 @@ PrefabInstance:
       objectReference: {fileID: 696262010}
     - target: {fileID: 5332433347470275641, guid: af35db23b32508c4ab8e46f098395935, type: 3}
       propertyPath: weaponsObjects.pairs.Array.data[1].value
+      value: 
+      objectReference: {fileID: 620779489402787807}
+    - target: {fileID: 5332433347470275641, guid: af35db23b32508c4ab8e46f098395935, type: 3}
+      propertyPath: weaponsSetterConfig.<Enabled>k__BackingField.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5332433347470275641, guid: af35db23b32508c4ab8e46f098395935, type: 3}
+      propertyPath: weaponsSetterConfig.<Enabled>k__BackingField.b
+      value: 0.50980395
+      objectReference: {fileID: 0}
+    - target: {fileID: 5332433347470275641, guid: af35db23b32508c4ab8e46f098395935, type: 3}
+      propertyPath: weaponsSetterConfig.<Enabled>k__BackingField.g
+      value: 0.50980395
+      objectReference: {fileID: 0}
+    - target: {fileID: 5332433347470275641, guid: af35db23b32508c4ab8e46f098395935, type: 3}
+      propertyPath: weaponsSetterConfig.<Enabled>k__BackingField.r
+      value: 0.62352943
+      objectReference: {fileID: 0}
+    - target: {fileID: 5332433347470275641, guid: af35db23b32508c4ab8e46f098395935, type: 3}
+      propertyPath: weaponsSetterConfig.<Disabled>k__BackingField.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5332433347470275641, guid: af35db23b32508c4ab8e46f098395935, type: 3}
+      propertyPath: weaponsSetterConfig.<Disabled>k__BackingField.b
+      value: 0.30980393
+      objectReference: {fileID: 0}
+    - target: {fileID: 5332433347470275641, guid: af35db23b32508c4ab8e46f098395935, type: 3}
+      propertyPath: weaponsSetterConfig.<Disabled>k__BackingField.g
+      value: 0.30980393
+      objectReference: {fileID: 0}
+    - target: {fileID: 5332433347470275641, guid: af35db23b32508c4ab8e46f098395935, type: 3}
+      propertyPath: weaponsSetterConfig.<Disabled>k__BackingField.r
+      value: 0.37647063
+      objectReference: {fileID: 0}
+    - target: {fileID: 5332433347470275641, guid: af35db23b32508c4ab8e46f098395935, type: 3}
+      propertyPath: weaponsSetterConfig.<GunUIImage>k__BackingField
+      value: 
+      objectReference: {fileID: 5110674191528860455}
+    - target: {fileID: 5332433347470275641, guid: af35db23b32508c4ab8e46f098395935, type: 3}
+      propertyPath: weaponsSetterConfig.<Guns>k__BackingField.error
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5332433347470275641, guid: af35db23b32508c4ab8e46f098395935, type: 3}
+      propertyPath: weaponsSetterConfig.<GunRotation>k__BackingField
+      value: 
+      objectReference: {fileID: 620779489402787810}
+    - target: {fileID: 5332433347470275641, guid: af35db23b32508c4ab8e46f098395935, type: 3}
+      propertyPath: weaponsSetterConfig.<GunKeyColorEnabled>k__BackingField.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5332433347470275641, guid: af35db23b32508c4ab8e46f098395935, type: 3}
+      propertyPath: weaponsSetterConfig.<GunKeyColorEnabled>k__BackingField.b
+      value: 0.50980395
+      objectReference: {fileID: 0}
+    - target: {fileID: 5332433347470275641, guid: af35db23b32508c4ab8e46f098395935, type: 3}
+      propertyPath: weaponsSetterConfig.<GunKeyColorEnabled>k__BackingField.g
+      value: 0.50980395
+      objectReference: {fileID: 0}
+    - target: {fileID: 5332433347470275641, guid: af35db23b32508c4ab8e46f098395935, type: 3}
+      propertyPath: weaponsSetterConfig.<GunKeyColorEnabled>k__BackingField.r
+      value: 0.62352943
+      objectReference: {fileID: 0}
+    - target: {fileID: 5332433347470275641, guid: af35db23b32508c4ab8e46f098395935, type: 3}
+      propertyPath: weaponsSetterConfig.<GunKeyColorDisabled>k__BackingField.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5332433347470275641, guid: af35db23b32508c4ab8e46f098395935, type: 3}
+      propertyPath: weaponsSetterConfig.<GunKeyColorDisabled>k__BackingField.b
+      value: 0.30980393
+      objectReference: {fileID: 0}
+    - target: {fileID: 5332433347470275641, guid: af35db23b32508c4ab8e46f098395935, type: 3}
+      propertyPath: weaponsSetterConfig.<GunKeyColorDisabled>k__BackingField.g
+      value: 0.30980393
+      objectReference: {fileID: 0}
+    - target: {fileID: 5332433347470275641, guid: af35db23b32508c4ab8e46f098395935, type: 3}
+      propertyPath: weaponsSetterConfig.<GunKeyColorDisabled>k__BackingField.r
+      value: 0.37647063
+      objectReference: {fileID: 0}
+    - target: {fileID: 5332433347470275641, guid: af35db23b32508c4ab8e46f098395935, type: 3}
+      propertyPath: weaponsSetterConfig.<Guns>k__BackingField.pairs.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5332433347470275641, guid: af35db23b32508c4ab8e46f098395935, type: 3}
+      propertyPath: weaponsSetterConfig.<Guns>k__BackingField.pairs.Array.data[0].key
+      value: 49
+      objectReference: {fileID: 0}
+    - target: {fileID: 5332433347470275641, guid: af35db23b32508c4ab8e46f098395935, type: 3}
+      propertyPath: weaponsSetterConfig.<Guns>k__BackingField.pairs.Array.data[1].key
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 5332433347470275641, guid: af35db23b32508c4ab8e46f098395935, type: 3}
+      propertyPath: weaponsSetterConfig.<Guns>k__BackingField.pairs.Array.data[0].value
+      value: 
+      objectReference: {fileID: 696262010}
+    - target: {fileID: 5332433347470275641, guid: af35db23b32508c4ab8e46f098395935, type: 3}
+      propertyPath: weaponsSetterConfig.<Guns>k__BackingField.pairs.Array.data[1].value
       value: 
       objectReference: {fileID: 620779489402787807}
     - target: {fileID: 6201013786433417657, guid: af35db23b32508c4ab8e46f098395935, type: 3}
