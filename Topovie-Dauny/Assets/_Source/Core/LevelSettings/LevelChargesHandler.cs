@@ -2,14 +2,11 @@
 using System.Threading;
 using Core.EnemyWaveData;
 using Cysharp.Threading.Tasks;
-using DG.Tweening;
+using GameEnvironment.WorldShop;
 using UnityEngine;
-using UnityEngine.Serialization;
-using UnityEngine.UI;
-using WorldShop;
 using Zenject;
 
-namespace Core
+namespace Core.LevelSettings
 {
      public class LevelChargesHandler: MonoBehaviour
      {

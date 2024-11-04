@@ -1,6 +1,8 @@
 using Bullets;
 using Core;
+using Core.LevelSettings;
 using Core.PoolingSystem;
+using Core.SceneManagement;
 using DialogueSystem;
 using Player.PlayerCombat;
 using Player.PlayerControl;
@@ -9,15 +11,17 @@ using Zenject;
 
 namespace Installers
 {
-    public class TutorialSceneInstaller : MonoInstaller
+    public class LevelSceneInstaller : MonoInstaller
     {
         [SerializeField] private LevelChargesHandler levelChargesHandler;
         [SerializeField] private DialogueManager dialogueManager;
         [SerializeField] private GameObject playerObject;
         [SerializeField] private UI.UIShop.Shop shop;
+        [SerializeField] private SceneLoader sceneLoader;
         
         public override void InstallBindings()
         {
+            BindSceneLoader();
             BindProjectContext();
             BindDialogueManager();
             BindPlayer();
@@ -25,6 +29,10 @@ namespace Installers
             BindLevelSetter();
             BindUIShopDisplay();
             BindPlayerWeaponsSetter();
+        }
+        private void BindSceneLoader()
+        {
+            Container.Bind<SceneLoader>().FromInstance(sceneLoader).AsSingle();
         }
         private void BindProjectContext()
         {

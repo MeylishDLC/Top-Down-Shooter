@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Bullets;
 using Bullets.Projectile;
+using Core.LevelSettings;
 using Core.PoolingSystem;
 using UnityEngine;
 using UnityEngine.Serialization;

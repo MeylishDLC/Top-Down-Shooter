@@ -1,10 +1,9 @@
-﻿using Core;
+﻿using Core.LevelSettings;
 using UI.UIShop;
 using UnityEngine;
-using UnityEngine.Serialization;
 using Zenject;
 
-namespace WorldShop
+namespace GameEnvironment.WorldShop
 {
     public class ShopTrigger: MonoBehaviour
     {

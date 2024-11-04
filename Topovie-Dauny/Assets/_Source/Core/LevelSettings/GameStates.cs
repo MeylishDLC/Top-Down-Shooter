@@ -1,4 +1,4 @@
-﻿namespace Core
+﻿namespace Core.LevelSettings
 {
     public enum GameStates
     {

@@ -1,7 +1,11 @@
-﻿using UI.Core;
+﻿using System.Threading;
+using Core.SceneManagement;
+using Cysharp.Threading.Tasks;
+using UI.Core;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using Zenject;
 
 namespace UI.Menus
 {
@@ -13,8 +17,16 @@ namespace UI.Menus
         [SerializeField] private Button exitButton;
         [SerializeField] private GameObject optionsScreen;
         [SerializeField] private CustomCursor customCursor;
+        
+        private SceneLoader _sceneLoader;
         public bool IsPaused { get; private set; }
         private bool _optionsMenuActive;
+
+        [Inject]
+        public void Construct(SceneLoader sceneLoader)
+        {
+            _sceneLoader = sceneLoader;
+        }
         private void Start()
         {
             exitButton.onClick.AddListener(ExitGame);
@@ -63,12 +75,17 @@ namespace UI.Menus
         }
         private void RestartLevel()
         {
+            RestartLevelAsync(CancellationToken.None).Forget();
+        }
+        private async UniTask RestartLevelAsync(CancellationToken token)
+        {
             optionsButton.interactable = false;
-            exitButton.interactable = false;
+            restartButton.interactable = false;
             exitButton.interactable = false;
 
             Time.timeScale = 1f;
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            await _sceneLoader.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex, token);
         }
         private void OpenOptionsPanel()
         {

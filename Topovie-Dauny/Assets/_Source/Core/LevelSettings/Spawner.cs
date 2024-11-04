@@ -6,13 +6,11 @@ using Cysharp.Threading.Tasks;
 using Enemies;
 using Player.PlayerControl;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
-using UnityEngine.ResourceManagement.AsyncOperations;
 using Zenject;
 using Object = UnityEngine.Object;
 using Random = UnityEngine.Random;
 
-namespace Core
+namespace Core.LevelSettings
 {
     public class Spawner
     {

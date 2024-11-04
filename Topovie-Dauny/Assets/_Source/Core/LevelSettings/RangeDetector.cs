@@ -2,7 +2,7 @@
 using UnityEngine;
 using Zenject;
 
-namespace Core
+namespace Core.LevelSettings
 {
     public class RangeDetector: MonoBehaviour
     {
