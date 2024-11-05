@@ -54,6 +54,17 @@ namespace Core.InputSystem
         {
             return _moveAction.ReadValue<Vector2>();
         }
+        public void SetInput(bool enable)
+        {
+            if (enable)
+            {
+                _inputActions.Enable();
+            }
+            else
+            {
+                _inputActions.Disable();
+            }
+        }
         public void SetFiringAbility(bool enable)
         {
             if (enable)

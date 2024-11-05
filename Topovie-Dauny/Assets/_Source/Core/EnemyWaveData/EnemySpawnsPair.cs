@@ -49,7 +49,7 @@ namespace Core.EnemyWaveData
             }
         }
 
-        public async UniTask UnloadAssets(CancellationToken token)
+        public void UnloadAssets()
         {
             foreach (var enemyAsset in EnemiesAssets)
             {

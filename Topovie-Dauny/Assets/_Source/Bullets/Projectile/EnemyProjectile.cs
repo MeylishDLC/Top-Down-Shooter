@@ -21,6 +21,7 @@ namespace Bullets.Projectile
         private void OnDisable()
         {
             _calculations.OnDestinationReached -= DisableOnDistanceReached;
+            OnObjectDisabled?.Invoke(this);
         }
         protected override void OnTriggerEnter2D(Collider2D other)
         {

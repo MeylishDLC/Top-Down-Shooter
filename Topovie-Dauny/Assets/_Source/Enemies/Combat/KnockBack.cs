@@ -31,6 +31,10 @@ namespace Enemies.Combat
         private async UniTask KnockAsync(CancellationToken token)
         {
             await UniTask.Delay(_knockbackTime, cancellationToken: token);
+            if (_rb is null)
+            {
+                return;
+            }
             _rb.velocity = Vector2.zero;
             GettingKnockedBack = false;
         }

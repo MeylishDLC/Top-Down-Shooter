@@ -45,7 +45,34 @@ namespace Core.LevelSettings
          private void OnDestroy()
          {
              UnsubscribeOnStartCharging();
-             UnloadAllEnemyAssetsAsync().Forget();
+             UnloadAllEnemyAssetsAsync();
+         }
+         public void ClearAllSpawnsImmediate()
+         {
+             foreach (var spawn in allSpawns)
+             {
+                 var childCount = spawn.childCount;
+                 for (int i = childCount - 1; i >= 0; i--)
+                 {
+                     DestroyImmediate(spawn.GetChild(i).gameObject);
+                 }
+             }
+         }
+         public void ClearAllSpawns()
+         {
+             foreach (var spawn in allSpawns)
+             {
+                 var childCount = spawn.childCount;
+                 for (int i = childCount - 1; i >= 0; i--)
+                 {
+                     Destroy(spawn.GetChild(i).gameObject);
+                 }
+             }
+         }
+         public void StopSpawning()
+         {
+             _chargingFinishCts?.Cancel();
+             _chargingFinishCts?.Dispose();
          }
          private void StartChargingPortal(int chargeIndex)
          {
@@ -144,17 +171,6 @@ namespace Core.LevelSettings
                  //ignored
              }
          }
-         private void ClearAllSpawnsImmediate()
-         {
-             foreach (var spawn in allSpawns)
-             {
-                 var childCount = spawn.childCount;
-                 for (int i = childCount - 1; i >= 0; i--)
-                 {
-                     DestroyImmediate(spawn.GetChild(i).gameObject);
-                 }
-             }
-         }
          private void SubscribeOnChargeEvents(RangeDetector rangeDetector)
          {
              rangeDetector.OnPlayerEnterRange += ResumeChargingPortal;
@@ -189,13 +205,13 @@ namespace Core.LevelSettings
                  }
              }
          }
-         private async UniTask UnloadAllEnemyAssetsAsync()
+         private void UnloadAllEnemyAssetsAsync()
          {
              foreach (var enemyWave in portalCharges)
              {
                  foreach (var enemySpawnsPair in enemyWave.EnemySpawnsPairs)
                  {
-                     await enemySpawnsPair.UnloadAssets(CancellationToken.None);
+                     enemySpawnsPair.UnloadAssets();
                  }
              }
          }

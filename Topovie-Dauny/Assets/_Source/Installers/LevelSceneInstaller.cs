@@ -24,8 +24,8 @@ namespace Installers
         
         public override void InstallBindings()
         {
-            BindSceneLoader();
             BindInputListener();
+            BindSceneLoader();
             BindProjectContext();
             BindDialogueManager();
             BindPlayer();
