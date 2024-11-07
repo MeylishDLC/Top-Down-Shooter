@@ -1,7 +1,11 @@
 ﻿using System;
+using System.Threading;
+using Core.SceneManagement;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using Zenject;
 
 namespace UI.Menus
 {
@@ -10,6 +14,14 @@ namespace UI.Menus
         [SerializeField] private Button playButton;
         [SerializeField] private Button settingsButton;
         [SerializeField] private Button exitButton;
+        
+        private SceneLoader _sceneLoader;
+
+        [Inject]
+        public void Construct(SceneLoader sceneLoader)
+        {
+            _sceneLoader = sceneLoader;
+        }
         private void Start()
         {
             playButton.onClick.AddListener(StartGame);
@@ -21,7 +33,8 @@ namespace UI.Menus
             exitButton.interactable = false;
             settingsButton.interactable = false;
             
-            SceneManager.LoadScene("SampleScene");
+            //todo change??
+            _sceneLoader.LoadSceneAsync(1, CancellationToken.None).Forget();
         }
         private void ExitGame()
         {

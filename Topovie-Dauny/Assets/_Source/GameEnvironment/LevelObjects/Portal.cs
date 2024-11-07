@@ -1,25 +1,45 @@
 ﻿using System;
+using System.Threading;
+using Core.InputSystem;
 using Core.LevelSettings;
+using Core.SceneManagement;
+using Cysharp.Threading.Tasks;
+using UI.LevelUI;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
+using UnityEngine.SceneManagement;
 using Zenject;
 
 namespace GameEnvironment.LevelObjects
 {
     public class Portal: MonoBehaviour
     {
-        [SerializeField] private SpriteRenderer portalVisual;
+        [SerializeField] private ConfirmationScreen confirmationScreen;
         [SerializeField] private Light2D portalLight;
         [SerializeField] private Collider2D rangeTrigger;
         [SerializeField] private SpriteRenderer textBubble;
-
+        
         private LevelChargesHandler _levelChargesHandler;
-
+        private SceneLoader _sceneLoader;
+        private InputListener _inputListener;
+        private bool _isInRange;
+        
         [Inject]
-        public void Construct(LevelChargesHandler levelChargesHandler)
+        public void Construct(LevelChargesHandler levelChargesHandler, SceneLoader sceneLoader, InputListener inputListener)
         {
+            _inputListener = inputListener;
+            _sceneLoader = sceneLoader;
             _levelChargesHandler = levelChargesHandler;
+            
             _levelChargesHandler.OnStateChanged += ActivateOnChangeState;
+            confirmationScreen.OnConfirmed += GoToNextLevel;
+            _inputListener.OnInteractPressed += ShowConfirmationScreen;
+        }
+        private void OnDestroy()
+        {
+            _levelChargesHandler.OnStateChanged -= ActivateOnChangeState;
+            confirmationScreen.OnConfirmed -= GoToNextLevel;
+            _inputListener.OnInteractPressed -= ShowConfirmationScreen;
         }
         private void Awake()
         {
@@ -30,6 +50,7 @@ namespace GameEnvironment.LevelObjects
             if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
             {
                 ShowTextBubble(true);
+                _isInRange = true;
             }
         }
         private void OnTriggerExit2D(Collider2D other)
@@ -37,6 +58,7 @@ namespace GameEnvironment.LevelObjects
             if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
             {
                 ShowTextBubble(false);
+                _isInRange = false;
             }
         }
         private void ActivateOnChangeState(GameStates state)
@@ -60,6 +82,19 @@ namespace GameEnvironment.LevelObjects
         private void ShowTextBubble(bool show)
         {
             textBubble.gameObject.SetActive(show);
+        }
+        private void ShowConfirmationScreen()
+        {
+            if (_isInRange)
+            {
+                confirmationScreen.OpenConfirmationScreen();
+            }
+        }
+        private void GoToNextLevel()
+        {
+            _inputListener.SetInput(false);
+            var nextSceneIndex = SceneManager.GetActiveScene().buildIndex + 1;
+            _sceneLoader.LoadSceneAsync(nextSceneIndex, CancellationToken.None).Forget();
         }
     }
 }

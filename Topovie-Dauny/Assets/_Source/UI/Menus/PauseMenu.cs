@@ -1,4 +1,5 @@
 ﻿using System.Threading;
+using Core.InputSystem;
 using Core.SceneManagement;
 using Cysharp.Threading.Tasks;
 using UI.Core;
@@ -11,20 +12,24 @@ namespace UI.Menus
 {
     public class PauseMenu: MonoBehaviour
     {
+        public bool IsPaused { get; private set; }
+
         [SerializeField] private GameObject pauseMenu; 
         [SerializeField] private Button optionsButton;
         [SerializeField] private Button restartButton;
         [SerializeField] private Button exitButton;
         [SerializeField] private GameObject optionsScreen;
-        [SerializeField] private CustomCursor customCursor;
         
+        private CustomCursor _customCursor;
         private SceneLoader _sceneLoader;
-        public bool IsPaused { get; private set; }
+        private InputListener _inputListener;
         private bool _optionsMenuActive;
 
         [Inject]
-        public void Construct(SceneLoader sceneLoader)
+        public void Construct(SceneLoader sceneLoader, CustomCursor customCursor, InputListener inputListener)
         {
+            _inputListener = inputListener;
+            _customCursor = customCursor;
             _sceneLoader = sceneLoader;
         }
         private void Start()
@@ -58,7 +63,7 @@ namespace UI.Menus
         private void PauseGame()
         {
             Cursor.visible = true;
-            customCursor.gameObject.SetActive(false);
+            _customCursor.gameObject.SetActive(false);
             
             IsPaused = true;
             pauseMenu.SetActive(true);
@@ -67,7 +72,7 @@ namespace UI.Menus
         private void ResumeGame()
         {
             Cursor.visible = false;
-            customCursor.gameObject.SetActive(true);
+            _customCursor.gameObject.SetActive(true);
             
             IsPaused = false;
             pauseMenu.SetActive(false);
@@ -75,6 +80,7 @@ namespace UI.Menus
         }
         private void RestartLevel()
         {
+            _inputListener.SetInput(false);
             RestartLevelAsync(CancellationToken.None).Forget();
         }
         private async UniTask RestartLevelAsync(CancellationToken token)
@@ -84,7 +90,6 @@ namespace UI.Menus
             exitButton.interactable = false;
 
             Time.timeScale = 1f;
-            //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
             await _sceneLoader.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex, token);
         }
         private void OpenOptionsPanel()

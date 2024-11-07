@@ -28,23 +28,24 @@ namespace UI.PlayerGUI
         [SerializeField] private Image abilityImage;
         [Range(0f,1f)][SerializeField] private float transparencyOnCooldown;
         [SerializeField] private TMP_Text cooldownText;
-        [SerializeField] private CustomCursor customCursor;
         [SerializeField] private Slider abilityChargeSlider;
 
         private bool _canUseAbility = true;
-        
         private Color _initialColor;
         private float _remainingTime;
         private float _holdStartTime;
         private bool _isHoldingKey;
+        
         private CancellationTokenSource _cancelCooldownCts = new();
         private InputListener _inputListener;
+        private CustomCursor _customCursor;
         
         //todo split logic from displaying
         [Inject]
-        public void Construct(InputListener inputListener)
+        public void Construct(InputListener inputListener, CustomCursor customCursor)
         {
             _inputListener = inputListener;
+            _customCursor = customCursor;
             _inputListener.OnUseAbilityPressed += UseAbility;
             _inputListener.OnUseAbilityReleased += OnAbilityReleased;
         }
@@ -93,7 +94,7 @@ namespace UI.PlayerGUI
             _holdStartTime = Time.time;
             _isHoldingKey = true;
             ResetSliderValue();
-            customCursor.SetCrosshair(true);
+            _customCursor.SetCrosshair(true);
             abilityChargeSlider.gameObject.SetActive(true);
 
             while (_isHoldingKey)
@@ -166,7 +167,7 @@ namespace UI.PlayerGUI
         }
         private void ResetCursor()
         {
-            customCursor.SetCrosshair(false);
+            _customCursor.SetCrosshair(false);
         }
         private void ShowCooldownEnded()
         {
@@ -176,7 +177,7 @@ namespace UI.PlayerGUI
             abilityImage.color = _initialColor;
             cooldownText.gameObject.SetActive(false);
             
-            customCursor.SetCrosshair(false); 
+            _customCursor.SetCrosshair(false); 
             ResetSliderValue();
         }
         private void SwitchAbility(int abilityCellIndex, Ability newAbility)

@@ -7,6 +7,7 @@ using Core.SceneManagement;
 using DialogueSystem;
 using Player.PlayerCombat;
 using Player.PlayerControl;
+using UI.Core;
 using UnityEngine;
 using Zenject;
 
@@ -21,6 +22,7 @@ namespace Installers
         [SerializeField] private UI.UIShop.Shop shop;
         [SerializeField] private SceneLoader sceneLoader;
         [SerializeField] private WeaponsSetterConfig weaponsSetterConfig;
+        [SerializeField] private CustomCursor customCursor;
         
         public override void InstallBindings()
         {
@@ -33,6 +35,7 @@ namespace Installers
             BindLevelSetter();
             BindUIShopDisplay();
             BindPlayerWeaponsSetter();
+            BindCustomCursor();
         }
         private void BindInputListener()
         {
@@ -70,6 +73,10 @@ namespace Installers
         private void BindPlayerWeaponsSetter()
         {
             Container.Bind<WeaponsSetter>().AsSingle().WithArguments(weaponsSetterConfig);
+        }
+        private void BindCustomCursor()
+        {
+            Container.Bind<CustomCursor>().FromInstance(customCursor).AsSingle();
         }
     }
 }

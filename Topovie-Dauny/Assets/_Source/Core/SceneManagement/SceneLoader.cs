@@ -13,17 +13,8 @@ namespace Core.SceneManagement
     {
         [SerializeField] private RectTransform loadingScreen;
         [SerializeField] private Slider loadingSlider;
-
-        private InputListener _inputListener;
-        
-        [Inject]
-        public void Construct(InputListener inputListener)
-        {
-            _inputListener = inputListener;
-        }
         public async UniTask LoadSceneAsync(int index, CancellationToken token)
         {
-            DisableInput();
             loadingSlider.value = 0;
             loadingScreen.gameObject.SetActive(true);
             
@@ -45,10 +36,6 @@ namespace Core.SceneManagement
                 }
                 await UniTask.Yield();
             }
-        }
-        private void DisableInput()
-        {
-            _inputListener.SetInput(false);
         }
     }
 }

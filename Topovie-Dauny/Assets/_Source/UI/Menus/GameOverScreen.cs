@@ -62,6 +62,7 @@ namespace UI.Menus
         }
         private void RestartLevel()
         {
+            _inputListener.SetInput(false);
             restartButton.interactable = false;
             _sceneLoader.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex, CancellationToken.None).Forget();
         }
