@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using Core.InputSystem;
 using Core.SceneManagement;
 using Cysharp.Threading.Tasks;
@@ -37,29 +38,30 @@ namespace UI.Menus
             exitButton.onClick.AddListener(ExitGame);
             optionsButton.onClick.AddListener(OpenOptionsPanel);
             restartButton.onClick.AddListener(RestartLevel);
+            _inputListener.OnPausePressed += HandlePausePressed;
         }
-        private void Update()
+        private void OnDestroy()
         {
-            if (Input.GetKeyDown(KeyCode.Escape))
+            _inputListener.OnPausePressed -= HandlePausePressed;
+        }
+        private void HandlePausePressed()
+        {
+            if (IsPaused)
             {
-                if (IsPaused)
+                if (_optionsMenuActive)
                 {
-                    if (_optionsMenuActive)
-                    {
-                        ReturnToPause();
-                    }
-                    else
-                    {
-                        ResumeGame();
-                    }
+                    ReturnToPause();
                 }
                 else
                 {
-                    PauseGame();
+                    ResumeGame();
                 }
             }
+            else
+            {
+                PauseGame();
+            }
         }
-
         private void PauseGame()
         {
             Cursor.visible = true;

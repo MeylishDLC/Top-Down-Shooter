@@ -93,6 +93,7 @@ namespace GameEnvironment.LevelObjects
         private void GoToNextLevel()
         {
             _inputListener.SetInput(false);
+            confirmationScreen.gameObject.SetActive(false);
             var nextSceneIndex = SceneManager.GetActiveScene().buildIndex + 1;
             _sceneLoader.LoadSceneAsync(nextSceneIndex, CancellationToken.None).Forget();
         }
