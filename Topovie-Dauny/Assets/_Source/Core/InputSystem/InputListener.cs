@@ -59,15 +59,35 @@ namespace Core.InputSystem
         {
             return _moveAction.ReadValue<Vector2>();
         }
-        public void SetInput(bool enable)
+        public void SetInput(bool enable, bool enableInteractOnly = false)
         {
-            if (enable)
+            if (enableInteractOnly)
             {
-                _inputActions.Enable();
+                if (enable)
+                {
+                    EnableUseAbilityActions();
+                    EnableMovementActions();
+                    EnableWeaponSwitchActions();
+                    EnableUseAbilityActions();
+                }
+                else
+                {
+                    DisableUseAbilityActions();
+                    DisableMovementActions();
+                    DisableWeaponSwitchActions();
+                    DisableUseAbilityActions();
+                }
             }
             else
             {
-                _inputActions.Disable();
+                if (enable)
+                {
+                    _inputActions.Enable();
+                }
+                else
+                {
+                    _inputActions.Disable();
+                }
             }
         }
         public void SetFiringAbility(bool enable)
@@ -263,6 +283,18 @@ namespace Core.InputSystem
         #endregion
 
         #region ACTIONS_ENABLE
+
+        private void EnableMovementActions()
+        {
+            _moveAction.Enable();
+            _fireAction.Enable();
+            _rollAction.Enable();
+        }
+
+        private void EnablePauseAction()
+        {
+            _pauseAction.Enable();
+        }
         private void EnableWeaponSwitchActions()
         {
             _inputActions.Player.WeaponSwitch1.Enable();

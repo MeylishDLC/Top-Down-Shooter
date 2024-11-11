@@ -477,10 +477,10 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 8045817742208426582}
   - {fileID: 5523838230680544707}
   - {fileID: 5841167749047628550}
   - {fileID: 537350095230960382}
+  - {fileID: 8045817742208426582}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -1164,7 +1164,6 @@ MonoBehaviour:
   abilityImage: {fileID: 5195988859351267785}
   transparencyOnCooldown: 0.7
   cooldownText: {fileID: 5986005126626447514}
-  customCursor: {fileID: 0}
   abilityChargeSlider: {fileID: 5585187059407814935}
 --- !u!1 &1465336470604462262
 GameObject:
@@ -2500,7 +2499,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.206, g: 0.08034, b: 0.08034, a: 0.65882355}
+  m_Color: {r: 0.206, g: 0.08034, b: 0.08034, a: 0.8352941}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -2529,13 +2528,14 @@ GameObject:
   - component: {fileID: 8776811689435461579}
   - component: {fileID: 5560542415287682300}
   - component: {fileID: 1086924829658895321}
+  - component: {fileID: 2179353724306346591}
   m_Layer: 5
   m_Name: DialoguePanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &8045817742208426582
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2621,6 +2621,27 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &2179353724306346591
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2706655506471321921}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 372ff67bea7e401f9b1434747063fd85, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <DialoguePanel>k__BackingField: {fileID: 5560542415287682300}
+  <DialogueText>k__BackingField: {fileID: 1083597495495098906}
+  <NameText>k__BackingField: {fileID: 2792637000038558294}
+  <SpriteAnimator>k__BackingField: {fileID: 3737923322470934131}
+  <LayoutAnimator>k__BackingField: {fileID: 1086924829658895321}
+  <Choices>k__BackingField:
+  - {fileID: 7846770282918444239}
+  - {fileID: 8623989176129332380}
+  <DialogueRestartDelayMilliseconds>k__BackingField: 100
 --- !u!1 &3088161425981589313
 GameObject:
   m_ObjectHideFlags: 0
@@ -2949,19 +2970,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 3123915822083136117}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: DialogueSystem.DialogueManager, Assembly-CSharp
-        m_MethodName: MakeChoice
-        m_Mode: 3
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!1 &3692108665463875547
 GameObject:
   m_ObjectHideFlags: 0
@@ -4663,7 +4672,6 @@ MonoBehaviour:
   abilityImage: {fileID: 8954684707082003822}
   transparencyOnCooldown: 0.7
   cooldownText: {fileID: 4694879996880096830}
-  customCursor: {fileID: 0}
   abilityChargeSlider: {fileID: 4031761356209406387}
 --- !u!1 &6909421344354518060
 GameObject:
@@ -5049,19 +5057,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 7064408100086005223}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: DialogueSystem.DialogueManager, Assembly-CSharp
-        m_MethodName: MakeChoice
-        m_Mode: 3
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 1
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!1 &7440323829195069550
 GameObject:
   m_ObjectHideFlags: 0

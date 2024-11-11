@@ -1,3 +1,4 @@
+using System;
 using Bullets;
 using Core;
 using Core.InputSystem;
@@ -17,19 +18,19 @@ namespace Installers
     {
         [SerializeField] private InputListener inputListener;
         [SerializeField] private LevelChargesHandler levelChargesHandler;
-        [SerializeField] private DialogueManager dialogueManager;
         [SerializeField] private GameObject playerObject;
         [SerializeField] private UI.UIShop.Shop shop;
         [SerializeField] private SceneLoader sceneLoader;
         [SerializeField] private WeaponsSetterConfig weaponsSetterConfig;
         [SerializeField] private CustomCursor customCursor;
+        [SerializeField] private DialogueDisplay baseDialogueDisplay;
         
         public override void InstallBindings()
         {
             BindInputListener();
             BindSceneLoader();
-            BindProjectContext();
             BindDialogueManager();
+            BindProjectContext();
             BindPlayer();
             BindSpawner();
             BindLevelSetter();
@@ -52,7 +53,7 @@ namespace Installers
         }
         private void BindDialogueManager()
         {
-            Container.Bind<DialogueManager>().FromInstance(dialogueManager).AsSingle();
+            Container.Bind<DialogueManager>().AsSingle().WithArguments(inputListener, baseDialogueDisplay);
         }
         private void BindPlayer()
         {

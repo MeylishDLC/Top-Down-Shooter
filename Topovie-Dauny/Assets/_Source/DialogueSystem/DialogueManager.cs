@@ -13,24 +13,14 @@ using Zenject;
 
 namespace DialogueSystem
 {
-    public class DialogueManager : MonoBehaviour
+    public class DialogueManager
     {
+        public event Action OnDialogueStarted;
+        public event Action OnDialogueEnded;
         public bool DialogueIsPlaying { get; private set; }
         public bool CanEnterDialogueMode { get; private set; } = true;
         
-        [Header("Dialogue UI")] 
-        [SerializeField] private Image dialoguePanel;
-        [SerializeField] private TMP_Text dialogueText;
-        [SerializeField] private TMP_Text nameText;
-        [SerializeField] private Animator spriteAnimator;
-        [SerializeField] private Animator layoutAnimator;
-
-        [Header("Choices UI")]
-        [SerializeField] private GameObject[] choices; 
-        private TMP_Text[] _choicesText;
-
-        [Header("Other Settings")] 
-        [SerializeField] private int dialogueRestartDelayMilliseconds;
+        private DialogueDisplay _currentDialogueDisplay;
         
         private Story _currentStory;
         private bool _hasChosen;
@@ -38,46 +28,32 @@ namespace DialogueSystem
         private const string SpeakerTag = "speaker";
         private const string SpriteTag = "sprite";
         private const string LayoutTag = "layout";
-        private InputListener _inputListener;
-        
-        [Inject]
-        public void Construct(InputListener inputListener)
+        private readonly InputListener _inputListener;
+
+        public DialogueManager(InputListener inputListener, DialogueDisplay dialogueDisplay)
         {
             _inputListener = inputListener;
+            _currentDialogueDisplay = dialogueDisplay;
+            
+            _currentDialogueDisplay.gameObject.SetActive(false);
+            _inputListener.OnInteractPressed += HandleInput;
+            SubscribeChoices();
         }
-        private void Start()
+        //todo call it on scene unload
+        public void Expose()
         {
-            dialoguePanel.gameObject.SetActive(false);
-            InitializeChoicesText();
-        }
-        private void Update()
-        {
-            if (!DialogueIsPlaying)
-            {
-                return;
-            }
-
-            if (Input.GetKeyDown(KeyCode.F))
-            {
-                if (_currentStory.canContinue && _currentStory.currentChoices.IsEmpty())
-                {
-                    ContinueStory();
-                }
-                //todo: fix
-                if (!_currentStory.canContinue && _currentStory.currentChoices.IsEmpty())
-                {
-                    ExitDialogueModeAsync(CancellationToken.None).Forget();
-                }
-            }
+            _inputListener.OnInteractPressed -= HandleInput;
+            UnsubscribeChoices();
         }
         public void EnterDialogueMode(TextAsset inkJson)
         { 
+            OnDialogueStarted?.Invoke();
             DisableInput();
             
             _currentStory = new Story(inkJson.text);
             DialogueIsPlaying = true;
             CanEnterDialogueMode = false;
-            dialoguePanel.gameObject.SetActive(true);
+            _currentDialogueDisplay.gameObject.SetActive(true);
 
             ResetVisuals();
 
@@ -88,11 +64,28 @@ namespace DialogueSystem
             _currentStory.ChooseChoiceIndex(choiceIndex);
             ContinueStory();
         }
+        private void HandleInput()
+        {
+            if (!DialogueIsPlaying)
+            {
+                return;
+            }
+            
+            if (_currentStory.canContinue && _currentStory.currentChoices.IsEmpty())
+            {
+                ContinueStory();
+            }
+            //todo: fix
+            if (!_currentStory.canContinue && _currentStory.currentChoices.IsEmpty())
+            {
+                ExitDialogueModeAsync(CancellationToken.None).Forget();
+            }
+        }
         private void ContinueStory()
         {
             if (_currentStory.canContinue)
             {
-                dialogueText.text = _currentStory.Continue();
+                _currentDialogueDisplay.DialogueText.text = _currentStory.Continue();
                 DisplayChoices();
                 HandleTags(_currentStory.currentTags);
             }
@@ -106,18 +99,18 @@ namespace DialogueSystem
             EnableInput();
             
             DialogueIsPlaying = false;
-            dialoguePanel.gameObject.SetActive(false);
-            dialogueText.text = "";
+            _currentDialogueDisplay.DialoguePanel.gameObject.SetActive(false);
+            _currentDialogueDisplay.DialogueText.text = "";
 
-            await UniTask.Delay(dialogueRestartDelayMilliseconds, cancellationToken: token);
+            await UniTask.Delay(_currentDialogueDisplay.DialogueRestartDelayMilliseconds, cancellationToken: token);
             CanEnterDialogueMode = true;
-            
+            OnDialogueEnded?.Invoke();
         }
         private void ResetVisuals()
         {
-            nameText.text = "???";
-            spriteAnimator.Play("default");
-            layoutAnimator.Play("left");
+            _currentDialogueDisplay.NameText.text = "???";
+            _currentDialogueDisplay.SpriteAnimator.Play("default");
+            _currentDialogueDisplay.LayoutAnimator.Play("left");
         }
         private void HandleTags(List<string> currentTags)
         {
@@ -135,13 +128,13 @@ namespace DialogueSystem
                 switch (tagKey)
                 {
                     case SpeakerTag:
-                        nameText.text = tagValue;
+                        _currentDialogueDisplay.NameText.text = tagValue;
                         break;
                     case SpriteTag:
-                        spriteAnimator.Play(tagValue);
+                        _currentDialogueDisplay.SpriteAnimator.Play(tagValue);
                         break;
                     case LayoutTag:
-                        layoutAnimator.Play(tagValue);
+                        _currentDialogueDisplay.LayoutAnimator.Play(tagValue);
                         break;
                     default:
                         throw new Exception($"Tag isn't being handled: {tag}");
@@ -151,7 +144,7 @@ namespace DialogueSystem
         private void DisplayChoices()
         {
             var currentChoices = _currentStory.currentChoices;
-            if (currentChoices.Count > choices.Length)
+            if (currentChoices.Count > _currentDialogueDisplay.Choices.Length)
             {
                 throw new Exception("More choices were given than UI can support");
             }
@@ -159,31 +152,22 @@ namespace DialogueSystem
             var index = 0;
             foreach (var choice in currentChoices)
             {
-                choices[index].gameObject.SetActive(true);
-                _choicesText[index].text = choice.text;
+                _currentDialogueDisplay.Choices[index].gameObject.SetActive(true);
+                _currentDialogueDisplay.ChoicesText[index].text = choice.text;
                 index++;
             }
 
-            for (int i = index; i < choices.Length; i++)
+            for (int i = index; i < _currentDialogueDisplay.Choices.Length; i++)
             {
-                choices[i].gameObject.SetActive(false);
+                _currentDialogueDisplay.Choices[i].gameObject.SetActive(false);
             }
             
             SelectFirstChoice();
         }
-        private void InitializeChoicesText()
-        {
-            _choicesText = new TMP_Text[choices.Length];
-            
-            for (int i = 0; i < choices.Length; i++)
-            {
-                _choicesText[i] = choices[i].GetComponentInChildren<TMP_Text>();
-            }
-        }
         private void SelectFirstChoice()
         {
             EventSystem.current.SetSelectedGameObject(null);
-            EventSystem.current.SetSelectedGameObject(choices[0].gameObject);
+            EventSystem.current.SetSelectedGameObject(_currentDialogueDisplay.Choices[0].gameObject);
         }
         private void DisableInput()
         {
@@ -194,6 +178,22 @@ namespace DialogueSystem
         {
             _inputListener.SetFiringAbility(true);
             _inputListener.SetUseAbility(true);
+        }
+        private void SubscribeChoices()
+        {
+            for (int i = 0; i < _currentDialogueDisplay.Choices.Length; i++)
+            {
+                var buttonIndex = i;
+                _currentDialogueDisplay.Choices[i].onClick.AddListener(() => MakeChoice(buttonIndex));
+            }
+        }
+        private void UnsubscribeChoices()
+        {
+            for (int i = 0; i < _currentDialogueDisplay.Choices.Length; i++)
+            {
+                var buttonIndex = i;
+                _currentDialogueDisplay.Choices[i].onClick.AddListener(() => MakeChoice(buttonIndex));
+            }
         }
     }
 }

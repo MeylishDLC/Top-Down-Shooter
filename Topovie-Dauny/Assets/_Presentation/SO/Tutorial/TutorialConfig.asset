@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0273af5f6c64897b239338e346a7a7a, type: 3}
+  m_Name: TutorialConfig
+  m_EditorClassIdentifier: 
+  <TimeOnWasdChecked>k__BackingField: 2
+  <TimeOnShootingChecked>k__BackingField: 2
+  <TimeOnAbilitiesChecked>k__BackingField: 2
+  <TimeOnCameraSlideToShop>k__BackingField: 2
+  <TimeOnCameraSlideToCharge>k__BackingField: 2
+  <TimeOnCameraSlideToPlayer>k__BackingField: 2
+  <OnTutorialStarted>k__BackingField: {fileID: 4900000, guid: dfd6670a7b2bd5046aebcfc52e751c66, type: 3}
+  <OnWasdExplained>k__BackingField: {fileID: 4900000, guid: aff7abd85e207d545bbfdb3c7eda18f4, type: 3}
+  <OnShootingExplained>k__BackingField: {fileID: 4900000, guid: aff7abd85e207d545bbfdb3c7eda18f4, type: 3}
+  <OnHealthExplained>k__BackingField: {fileID: 4900000, guid: aff7abd85e207d545bbfdb3c7eda18f4, type: 3}
+  <OnAbilitiesExplained>k__BackingField: {fileID: 4900000, guid: aff7abd85e207d545bbfdb3c7eda18f4, type: 3}
+  <OnShopExplained>k__BackingField: {fileID: 4900000, guid: aff7abd85e207d545bbfdb3c7eda18f4, type: 3}
+  <OnChargeExplained>k__BackingField: {fileID: 4900000, guid: aff7abd85e207d545bbfdb3c7eda18f4, type: 3}
+  <OnTutorialEnded>k__BackingField: {fileID: 4900000, guid: aff7abd85e207d545bbfdb3c7eda18f4, type: 3}
