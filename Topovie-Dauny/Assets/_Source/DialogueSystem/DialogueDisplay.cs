@@ -19,8 +19,9 @@ namespace DialogueSystem
         [field: SerializeField] public Button[] Choices {get; private set;}
         public TMP_Text[] ChoicesText {get; private set;}
 
-        [field:Header("Other Settings")] 
-        [field: SerializeField] public int DialogueRestartDelayMilliseconds {get; private set;}
+        [field:Header("Time Settings")] 
+        [field: SerializeField] public float DialogueRestartDelay {get; private set;}
+        [field: SerializeField] public float DialogueTypeSpeed {get; private set;}
 
         private void Start()
         {

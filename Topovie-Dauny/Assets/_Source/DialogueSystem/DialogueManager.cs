@@ -20,16 +20,19 @@ namespace DialogueSystem
         public bool DialogueIsPlaying { get; private set; }
         public bool CanEnterDialogueMode { get; private set; } = true;
         
-        private DialogueDisplay _currentDialogueDisplay;
+        private readonly DialogueDisplay _currentDialogueDisplay;
         
         private Story _currentStory;
         private bool _hasChosen;
+        private bool _canContinueLine;
 
+        private CancellationTokenSource _cancelDialogueTypingCts = new();
+        
         private const string SpeakerTag = "speaker";
         private const string SpriteTag = "sprite";
         private const string LayoutTag = "layout";
         private readonly InputListener _inputListener;
-
+        
         public DialogueManager(InputListener inputListener, DialogueDisplay dialogueDisplay)
         {
             _inputListener = inputListener;
@@ -42,6 +45,7 @@ namespace DialogueSystem
         //todo call it on scene unload
         public void Expose()
         {
+            _cancelDialogueTypingCts?.Dispose();
             _inputListener.OnInteractPressed -= HandleInput;
             UnsubscribeChoices();
         }
@@ -59,7 +63,7 @@ namespace DialogueSystem
 
             ContinueStory();
         }
-        public void MakeChoice(int choiceIndex)
+        private void MakeChoice(int choiceIndex)
         {
             _currentStory.ChooseChoiceIndex(choiceIndex);
             ContinueStory();
@@ -70,28 +74,71 @@ namespace DialogueSystem
             {
                 return;
             }
-            
-            if (_currentStory.canContinue && _currentStory.currentChoices.IsEmpty())
+            if (_canContinueLine && _currentStory.currentChoices.IsEmpty())
             {
                 ContinueStory();
-            }
-            //todo: fix
-            if (!_currentStory.canContinue && _currentStory.currentChoices.IsEmpty())
-            {
-                ExitDialogueModeAsync(CancellationToken.None).Forget();
             }
         }
         private void ContinueStory()
         {
             if (_currentStory.canContinue)
             {
-                _currentDialogueDisplay.DialogueText.text = _currentStory.Continue();
-                DisplayChoices();
+                CancelRecreateCts();
+                
+                var nextLine = _currentStory.Continue();
                 HandleTags(_currentStory.currentTags);
+                DisplayLineAsync(nextLine, _cancelDialogueTypingCts.Token).Forget();
             }
             else
             {
                 ExitDialogueModeAsync(CancellationToken.None).Forget();
+            }
+            HandleTags(_currentStory.currentTags);
+        }
+        private async UniTask DisplayLineAsync(string line, CancellationToken token)
+        {
+            _currentDialogueDisplay.DialogueText.text = line;
+            _currentDialogueDisplay.DialogueText.maxVisibleCharacters = 0;
+
+            _canContinueLine = false;
+            HideChoices();
+
+            var addingTextTagChanges = false;
+            try
+            {
+                foreach (var letter in line.ToCharArray())
+                {
+                    if (token.IsCancellationRequested)
+                    {
+                        _currentDialogueDisplay.DialogueText.maxVisibleCharacters = line.Length;
+                        break;
+                    }
+
+                    //check for ink tags
+                    if (letter == '<' || addingTextTagChanges)
+                    {
+                        addingTextTagChanges = true;
+                        if (letter == '>')
+                        {
+                            addingTextTagChanges = false;
+                        }
+                    }
+                    else
+                    {
+                        _currentDialogueDisplay.DialogueText.maxVisibleCharacters++;
+                        await UniTask.Delay(TimeSpan.FromSeconds(_currentDialogueDisplay.DialogueTypeSpeed),
+                            cancellationToken: token);
+                    }
+                }
+            }
+            catch
+            {
+                //
+            }
+            finally
+            {
+                DisplayChoices();
+                _canContinueLine = true;
             }
         }
         private async UniTask ExitDialogueModeAsync(CancellationToken token)
@@ -102,7 +149,7 @@ namespace DialogueSystem
             _currentDialogueDisplay.DialoguePanel.gameObject.SetActive(false);
             _currentDialogueDisplay.DialogueText.text = "";
 
-            await UniTask.Delay(_currentDialogueDisplay.DialogueRestartDelayMilliseconds, cancellationToken: token);
+            await UniTask.Delay(TimeSpan.FromSeconds(_currentDialogueDisplay.DialogueRestartDelay), cancellationToken: token);
             CanEnterDialogueMode = true;
             OnDialogueEnded?.Invoke();
         }
@@ -163,6 +210,22 @@ namespace DialogueSystem
             }
             
             SelectFirstChoice();
+        }
+        private void HideChoices()
+        {
+            foreach (var choiceButton in _currentDialogueDisplay.Choices)
+            {
+                choiceButton.gameObject.SetActive(false);
+            }
+        }
+        private void CancelRecreateCts()
+        {
+            if (_cancelDialogueTypingCts != null)
+            {
+                _cancelDialogueTypingCts.Cancel();
+                _cancelDialogueTypingCts.Dispose();
+            }
+            _cancelDialogueTypingCts = new CancellationTokenSource();
         }
         private void SelectFirstChoice()
         {

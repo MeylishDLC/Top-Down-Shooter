@@ -1,7 +1,8 @@
 -> main
 
 === main ===
-So you basically have wasd
-And you can walk
-Go try it idk
+Невероятно, но ты можешь ходить!
+С помощью WASD, просто вау
+А с помощью SHIFT даже бегать!
+Ну в общем иди уже, попробуй
 -> END

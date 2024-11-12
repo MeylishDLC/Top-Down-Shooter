@@ -23,6 +23,8 @@ namespace DialogueSystem.TutorialDialogue
         private bool _isDialoguePlaying;
         private Story _currentStory;
         
+        //todo disable player rotating script
+        
         [Inject]
         public void Construct(InputListener inputListener)
         {
