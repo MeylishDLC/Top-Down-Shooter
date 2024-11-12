@@ -3,6 +3,7 @@ using System.Threading;
 using Core.InputSystem;
 using Cysharp.Threading.Tasks;
 using Ink.Runtime;
+using ModestTree;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -19,8 +20,12 @@ namespace DialogueSystem.TutorialDialogue
         [SerializeField] private Image dialoguePanel;
         [SerializeField] private TMP_Text dialogueText;
 
+        [Header("Time Settings")] 
+        [SerializeField] private float dialogueTypeSpeed;
+
         private InputListener _inputListener;
         private bool _isDialoguePlaying;
+        private bool _canContinueLine;
         private Story _currentStory;
         
         //todo disable player rotating script
@@ -42,7 +47,7 @@ namespace DialogueSystem.TutorialDialogue
         public void EnterDialogueMode(TextAsset inkJson)
         { 
             OnDialogueStart?.Invoke();
-            _inputListener.SetInput(false);
+            _inputListener.SetInput(false, true);
             
             _currentStory = new Story(inkJson.text);
             _isDialoguePlaying = true;
@@ -57,31 +62,70 @@ namespace DialogueSystem.TutorialDialogue
                 return;
             }
             
-            if (_currentStory.canContinue)
+            if (_canContinueLine && _currentStory.currentChoices.IsEmpty())
             {
                 ContinueStory();
-            }
-            //todo: fix
-            if (!_currentStory.canContinue)
-            {
-                ExitDialogueMode();
             }
         }
         private void ContinueStory()
         {
             if (_currentStory.canContinue)
             {
-                dialogueText.text = _currentStory.Continue();
+                var nextLine = dialogueText.text = _currentStory.Continue();
+                DisplayLineAsync(nextLine, CancellationToken.None).Forget();
             }
             else
             {
                 ExitDialogueMode();
             }
         }
+        private async UniTask DisplayLineAsync(string line, CancellationToken token)
+        {
+            dialogueText.text = line;
+            dialogueText.maxVisibleCharacters = 0;
+
+            _canContinueLine = false;
+
+            var addingTextTagChanges = false;
+            try
+            {
+                foreach (var letter in line.ToCharArray())
+                {
+                    if (token.IsCancellationRequested)
+                    {
+                        dialogueText.maxVisibleCharacters = line.Length;
+                        break;
+                    }
+                    //check for ink tags
+                    if (letter == '<' || addingTextTagChanges)
+                    {
+                        addingTextTagChanges = true;
+                        if (letter == '>')
+                        {
+                            addingTextTagChanges = false;
+                        }
+                    }
+                    else
+                    {
+                        dialogueText.maxVisibleCharacters++;
+                        await UniTask.Delay(TimeSpan.FromSeconds(dialogueTypeSpeed),
+                            cancellationToken: token);
+                    }
+                }
+            }
+            catch
+            {
+                //
+            }
+            finally
+            {
+                _canContinueLine = true;
+            }
+        }
         private void ExitDialogueMode()
         {
             OnDialogueEnd?.Invoke();
-            _inputListener.SetInput(true);
+            _inputListener.SetInput(true, true);
             
             _isDialoguePlaying = false;
             dialoguePanel.gameObject.SetActive(false);

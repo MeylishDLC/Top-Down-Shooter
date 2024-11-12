@@ -20,7 +20,7 @@ namespace DialogueSystem
         public bool DialogueIsPlaying { get; private set; }
         public bool CanEnterDialogueMode { get; private set; } = true;
         
-        private readonly DialogueDisplay _currentDialogueDisplay;
+        private readonly DialogueDisplay _dialogueDisplay;
         
         private Story _currentStory;
         private bool _hasChosen;
@@ -36,9 +36,9 @@ namespace DialogueSystem
         public DialogueManager(InputListener inputListener, DialogueDisplay dialogueDisplay)
         {
             _inputListener = inputListener;
-            _currentDialogueDisplay = dialogueDisplay;
+            _dialogueDisplay = dialogueDisplay;
             
-            _currentDialogueDisplay.gameObject.SetActive(false);
+            _dialogueDisplay.gameObject.SetActive(false);
             _inputListener.OnInteractPressed += HandleInput;
             SubscribeChoices();
         }
@@ -57,7 +57,7 @@ namespace DialogueSystem
             _currentStory = new Story(inkJson.text);
             DialogueIsPlaying = true;
             CanEnterDialogueMode = false;
-            _currentDialogueDisplay.gameObject.SetActive(true);
+            _dialogueDisplay.gameObject.SetActive(true);
 
             ResetVisuals();
 
@@ -97,8 +97,8 @@ namespace DialogueSystem
         }
         private async UniTask DisplayLineAsync(string line, CancellationToken token)
         {
-            _currentDialogueDisplay.DialogueText.text = line;
-            _currentDialogueDisplay.DialogueText.maxVisibleCharacters = 0;
+            _dialogueDisplay.DialogueText.text = line;
+            _dialogueDisplay.DialogueText.maxVisibleCharacters = 0;
 
             _canContinueLine = false;
             HideChoices();
@@ -110,7 +110,7 @@ namespace DialogueSystem
                 {
                     if (token.IsCancellationRequested)
                     {
-                        _currentDialogueDisplay.DialogueText.maxVisibleCharacters = line.Length;
+                        _dialogueDisplay.DialogueText.maxVisibleCharacters = line.Length;
                         break;
                     }
 
@@ -125,8 +125,8 @@ namespace DialogueSystem
                     }
                     else
                     {
-                        _currentDialogueDisplay.DialogueText.maxVisibleCharacters++;
-                        await UniTask.Delay(TimeSpan.FromSeconds(_currentDialogueDisplay.DialogueTypeSpeed),
+                        _dialogueDisplay.DialogueText.maxVisibleCharacters++;
+                        await UniTask.Delay(TimeSpan.FromSeconds(_dialogueDisplay.DialogueTypeSpeed),
                             cancellationToken: token);
                     }
                 }
@@ -146,18 +146,18 @@ namespace DialogueSystem
             EnableInput();
             
             DialogueIsPlaying = false;
-            _currentDialogueDisplay.DialoguePanel.gameObject.SetActive(false);
-            _currentDialogueDisplay.DialogueText.text = "";
+            _dialogueDisplay.DialoguePanel.gameObject.SetActive(false);
+            _dialogueDisplay.DialogueText.text = "";
 
-            await UniTask.Delay(TimeSpan.FromSeconds(_currentDialogueDisplay.DialogueRestartDelay), cancellationToken: token);
+            await UniTask.Delay(TimeSpan.FromSeconds(_dialogueDisplay.DialogueRestartDelay), cancellationToken: token);
             CanEnterDialogueMode = true;
             OnDialogueEnded?.Invoke();
         }
         private void ResetVisuals()
         {
-            _currentDialogueDisplay.NameText.text = "???";
-            _currentDialogueDisplay.SpriteAnimator.Play("default");
-            _currentDialogueDisplay.LayoutAnimator.Play("left");
+            _dialogueDisplay.NameText.text = "???";
+            _dialogueDisplay.SpriteAnimator.Play("default");
+            _dialogueDisplay.LayoutAnimator.Play("left");
         }
         private void HandleTags(List<string> currentTags)
         {
@@ -175,13 +175,13 @@ namespace DialogueSystem
                 switch (tagKey)
                 {
                     case SpeakerTag:
-                        _currentDialogueDisplay.NameText.text = tagValue;
+                        _dialogueDisplay.NameText.text = tagValue;
                         break;
                     case SpriteTag:
-                        _currentDialogueDisplay.SpriteAnimator.Play(tagValue);
+                        _dialogueDisplay.SpriteAnimator.Play(tagValue);
                         break;
                     case LayoutTag:
-                        _currentDialogueDisplay.LayoutAnimator.Play(tagValue);
+                        _dialogueDisplay.LayoutAnimator.Play(tagValue);
                         break;
                     default:
                         throw new Exception($"Tag isn't being handled: {tag}");
@@ -191,7 +191,7 @@ namespace DialogueSystem
         private void DisplayChoices()
         {
             var currentChoices = _currentStory.currentChoices;
-            if (currentChoices.Count > _currentDialogueDisplay.Choices.Length)
+            if (currentChoices.Count > _dialogueDisplay.Choices.Length)
             {
                 throw new Exception("More choices were given than UI can support");
             }
@@ -199,21 +199,21 @@ namespace DialogueSystem
             var index = 0;
             foreach (var choice in currentChoices)
             {
-                _currentDialogueDisplay.Choices[index].gameObject.SetActive(true);
-                _currentDialogueDisplay.ChoicesText[index].text = choice.text;
+                _dialogueDisplay.Choices[index].gameObject.SetActive(true);
+                _dialogueDisplay.ChoicesText[index].text = choice.text;
                 index++;
             }
 
-            for (int i = index; i < _currentDialogueDisplay.Choices.Length; i++)
+            for (int i = index; i < _dialogueDisplay.Choices.Length; i++)
             {
-                _currentDialogueDisplay.Choices[i].gameObject.SetActive(false);
+                _dialogueDisplay.Choices[i].gameObject.SetActive(false);
             }
             
             SelectFirstChoice();
         }
         private void HideChoices()
         {
-            foreach (var choiceButton in _currentDialogueDisplay.Choices)
+            foreach (var choiceButton in _dialogueDisplay.Choices)
             {
                 choiceButton.gameObject.SetActive(false);
             }
@@ -230,7 +230,7 @@ namespace DialogueSystem
         private void SelectFirstChoice()
         {
             EventSystem.current.SetSelectedGameObject(null);
-            EventSystem.current.SetSelectedGameObject(_currentDialogueDisplay.Choices[0].gameObject);
+            EventSystem.current.SetSelectedGameObject(_dialogueDisplay.Choices[0].gameObject);
         }
         private void DisableInput()
         {
@@ -244,18 +244,18 @@ namespace DialogueSystem
         }
         private void SubscribeChoices()
         {
-            for (int i = 0; i < _currentDialogueDisplay.Choices.Length; i++)
+            for (int i = 0; i < _dialogueDisplay.Choices.Length; i++)
             {
                 var buttonIndex = i;
-                _currentDialogueDisplay.Choices[i].onClick.AddListener(() => MakeChoice(buttonIndex));
+                _dialogueDisplay.Choices[i].onClick.AddListener(() => MakeChoice(buttonIndex));
             }
         }
         private void UnsubscribeChoices()
         {
-            for (int i = 0; i < _currentDialogueDisplay.Choices.Length; i++)
+            for (int i = 0; i < _dialogueDisplay.Choices.Length; i++)
             {
                 var buttonIndex = i;
-                _currentDialogueDisplay.Choices[i].onClick.AddListener(() => MakeChoice(buttonIndex));
+                _dialogueDisplay.Choices[i].onClick.AddListener(() => MakeChoice(buttonIndex));
             }
         }
     }

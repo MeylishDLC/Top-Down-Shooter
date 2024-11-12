@@ -3,6 +3,8 @@ using Core.InputSystem;
 using Cysharp.Threading.Tasks;
 using DialogueSystem;
 using DialogueSystem.TutorialDialogue;
+using Player.PlayerControl;
+using Player.PlayerControl.GunMovement;
 using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
@@ -14,8 +16,9 @@ namespace UI.Tutorial
         [Header("Display Settings")]
         [SerializeField] private DialogueDisplay defaultDialogueDisplay;
         [SerializeField] private TutorialDialogueDisplay tutorialDialogueDisplay;
-        
-        [Header("Configuration")]
+
+        [Header("Configuration")] 
+        [SerializeField] private GunRotation gunRotation;
         [SerializeField] private TutorialConfig tutorialConfig;
 
         [Header("UI Elements")] 
@@ -40,6 +43,10 @@ namespace UI.Tutorial
         private void Start()
         {
             SetAllScreensActive(false);
+            ShowStartDialogue();
+        }
+        private void ShowStartDialogue()
+        {
             _dialogueManager.OnDialogueEnded += StartTutorial;
             _dialogueManager.EnterDialogueMode(tutorialConfig.OnTutorialStarted);
         }
@@ -48,11 +55,16 @@ namespace UI.Tutorial
             _dialogueManager.OnDialogueEnded -= StartTutorial;
             
             screenOnWasdExplained.gameObject.SetActive(true);
+            gunRotation.enabled = false;
+
             tutorialDialogueDisplay.OnDialogueEnd += ReadMoveInput;
             tutorialDialogueDisplay.EnterDialogueMode(tutorialConfig.OnWasdExplained);
         }
         private void ReadMoveInput()
         {
+            screenOnWasdExplained.gameObject.SetActive(false);
+            gunRotation.enabled = true;
+            
             tutorialDialogueDisplay.OnDialogueEnd -= ReadMoveInput;
             ReadMoveInputAsync().Forget();
         }
