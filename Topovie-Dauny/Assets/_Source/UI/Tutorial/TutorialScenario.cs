@@ -1,4 +1,5 @@
 using System;
+using System.Threading;
 using Core.InputSystem;
 using Cysharp.Threading.Tasks;
 using DialogueSystem;
@@ -80,9 +81,30 @@ namespace UI.Tutorial
         }
         private void ProceedToShootingTutorial()
         {
-            Debug.Log("Wasd tutor passed!!");
-            //tutorialDialogueDisplay.OnDialogueEnd += ;
-            //tutorialDialogueDisplay.EnterDialogueMode(tutorialConfig.OnShootingExplained);
+            screenOnShootingExplained.gameObject.SetActive(true);
+            gunRotation.enabled = false;
+            
+            tutorialDialogueDisplay.OnDialogueEnd += ReadShootingInput;
+            tutorialDialogueDisplay.EnterDialogueMode(tutorialConfig.OnShootingExplained);
+        }
+        private void ReadShootingInput()
+        {
+            tutorialDialogueDisplay.OnDialogueEnd -= ReadShootingInput;
+            
+            screenOnShootingExplained.gameObject.SetActive(false);
+            gunRotation.enabled = true;
+            
+            _inputListener.OnFirePressed += GetFirePressed;
+        }
+        private void GetFirePressed()
+        {
+            _inputListener.OnFirePressed -= GetFirePressed;
+            UniTask.Delay(TimeSpan.FromSeconds(tutorialConfig.TimeOnShootingChecked))
+                .ContinueWith(ProceedToHealthTutorial).Forget();
+        }
+        private void ProceedToHealthTutorial()
+        {
+            Debug.Log("Proceed to Health Tutorial");
         }
         private void SetAllScreensActive(bool active)
         {
