@@ -1,9 +1,9 @@
 ﻿using Bullets.BulletPools;
+using Bullets.Projectile;
 using Player.PlayerControl;
 using UnityEngine;
-using UnityEngine.Serialization;
 
-namespace Bullets.Projectile
+namespace Enemies
 {
     public class Shooter: MonoBehaviour
     {
