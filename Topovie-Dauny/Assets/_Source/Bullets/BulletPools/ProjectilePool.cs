@@ -1,7 +1,8 @@
-﻿using Core.PoolingSystem;
+﻿using Bullets.Projectile;
+using Core.PoolingSystem;
 using UnityEngine;
 
-namespace Bullets.Projectile
+namespace Bullets.BulletPools
 {
     public class ProjectilePool: GenericPool<EnemyProjectile>
     {

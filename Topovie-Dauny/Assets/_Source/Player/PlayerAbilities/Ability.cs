@@ -7,6 +7,7 @@ namespace Player.PlayerAbilities
 {
     public abstract class Ability: ScriptableObject
     {
+        //todo use ability and start cooldown ONLY on successfully used
         public Action OnAbilitySuccessfullyUsed;
         [field:SerializeField] public int CooldownMilliseconds { get; protected set; }
         [field:SerializeField] public Sprite AbilityImage { get; protected set; }

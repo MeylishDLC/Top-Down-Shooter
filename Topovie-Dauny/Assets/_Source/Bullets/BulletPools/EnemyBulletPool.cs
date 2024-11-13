@@ -1,14 +1,14 @@
-﻿using System.Collections.Generic;
-using Core.PoolingSystem;
+﻿using Core.PoolingSystem;
 using UnityEngine;
+using Zenject;
 
-namespace Bullets
+namespace Bullets.BulletPools
 {
-    public class BulletPool: GenericPool<Bullet>
+    public class EnemyBulletPool: GenericPool<EnemyBullet>
     {
-        public BulletPool(PoolConfig poolConfig, Transform parentTransform) : base(poolConfig, parentTransform) { }
+        public EnemyBulletPool(PoolConfig poolConfig, Transform parentTransform) : base(poolConfig, parentTransform) { }
 
-        public override bool TryGetFromPool(out Bullet instance)
+        public override bool TryGetFromPool(out EnemyBullet instance)
         {
             if (Pool.TryDequeue(out instance))
             {
@@ -26,7 +26,7 @@ namespace Bullets
             instance = null;
             return false;
         }
-        protected override Bullet InstantiateNewObject()
+        protected override EnemyBullet InstantiateNewObject()
         {
             var bulletInstance = Object.Instantiate(ObjectPrefab, ParentTransform);
             bulletInstance.gameObject.SetActive(false);
