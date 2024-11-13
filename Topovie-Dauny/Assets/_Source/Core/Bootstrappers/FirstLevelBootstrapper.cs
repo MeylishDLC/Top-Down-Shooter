@@ -17,7 +17,7 @@ using Zenject;
 
 namespace Core.Bootstrappers
 {
-    public class TutorialSceneBootstrapper: MonoBehaviour
+    public class FirstLevelBootstrapper: MonoBehaviour, ILevelBootstrapper
     {
         [Header("Scene Load Stuff")] 
         [SerializeField] private AssetReferenceGameObject environmentPrefab;
@@ -40,7 +40,7 @@ namespace Core.Bootstrappers
         private AssetLoader _environmentLoader = new();
         private async void Awake()
         {
-            await InstantiateAllAssets(CancellationToken.None);
+            await InstantiateAssets(CancellationToken.None);
             InitializePools();
             InitializeGuns();
         }
@@ -58,7 +58,7 @@ namespace Core.Bootstrappers
             _spawner = spawner;
             _spawner.OnShootingEnemyInitialised += InitializeEnemyProjectilePool;
         }
-        private async UniTask InstantiateAllAssets(CancellationToken token)
+        public async UniTask InstantiateAssets(CancellationToken token)
         {
             _sceneLoader.SetLoadingScreenActive(true);
             await InstantiateEnvironment(token);
@@ -68,25 +68,25 @@ namespace Core.Bootstrappers
         {
             await _environmentLoader.LoadGameObject(environmentPrefab, token).ContinueWith(Instantiate);
         }
-        private void InitializePools()
+        public void InitializePools()
         {
             _pistolBulletPool = new BulletPool(pistolBulletPoolDataPair.PoolConfig, pistolBulletPoolDataPair.PoolParent);
             _ppBulletPool = new BulletPool(pistolBulletPoolDataPair.PoolConfig, ppBulletPoolDataPair.PoolParent);
             _enemyProjectilePool = new ProjectilePool(enemyProjectileDataPair.PoolConfig, enemyProjectileDataPair.PoolParent);
         }
-        private void InitializeGuns()
+        public void InitializeGuns()
         {
             pistolGun.Initialize(_pistolBulletPool);
             ppGun.Initialize(_ppBulletPool);
         }
-        private void InitializeEnemyProjectilePool(Shooter shooter)
-        {
-            shooter.InitializePool(_enemyProjectilePool);
-        }
-        private void CleanUpPools()
+        public void CleanUpPools()
         {
             _pistolBulletPool.CleanUp();
             _ppBulletPool.CleanUp();
+        }
+        private void InitializeEnemyProjectilePool(Shooter shooter)
+        {
+            shooter.InitializePool(_enemyProjectilePool);
         }
     }
 }

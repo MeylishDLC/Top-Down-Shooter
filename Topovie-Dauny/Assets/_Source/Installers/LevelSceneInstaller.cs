@@ -29,6 +29,7 @@ namespace Installers
         
         public override void InstallBindings()
         {
+            BindMainCamera();
             BindInputListener();
             BindSceneLoader();
             BindDialogueManager();
@@ -39,7 +40,6 @@ namespace Installers
             BindUIShopDisplay();
             BindPlayerWeaponsSetter();
             BindCustomCursor();
-            BindMainCamera();
         }
         private void BindInputListener()
         {

@@ -7,6 +7,7 @@ namespace Core.InputSystem
 { 
     public class InputListener : MonoBehaviour
     {
+        [SerializeField] private int weaponCountForLevel;
         public event Action<int> OnSwitchWeaponPressed; 
         public event Action<int> OnUseAbilityPressed;
         public event Action<int> OnUseAbilityReleased; 
@@ -213,10 +214,29 @@ namespace Core.InputSystem
         }
         private void SetupSwitchWeaponButtons()
         {
-            _inputActions.Player.WeaponSwitch1.started += OnSwitchWeapon1Pressed;
-            _inputActions.Player.WeaponSwitch2.started += OnSwitchWeapon2Pressed;
-            // _inputActions.Player.WeaponSwitch3.started += OnSwitchWeapon3Pressed;
-            // _inputActions.Player.WeaponSwitch4.started += OnSwitchWeapon4Pressed;
+            switch (weaponCountForLevel)
+            {
+                case 1:
+                    _inputActions.Player.WeaponSwitch1.started += OnSwitchWeapon1Pressed;
+                    break;
+                case 2:
+                    _inputActions.Player.WeaponSwitch1.started += OnSwitchWeapon1Pressed;
+                    _inputActions.Player.WeaponSwitch2.started += OnSwitchWeapon2Pressed;
+                    break;
+                case 3:
+                    _inputActions.Player.WeaponSwitch1.started += OnSwitchWeapon1Pressed;
+                    _inputActions.Player.WeaponSwitch2.started += OnSwitchWeapon2Pressed;
+                    _inputActions.Player.WeaponSwitch3.started += OnSwitchWeapon3Pressed;
+                    break;
+                case 4:
+                    _inputActions.Player.WeaponSwitch1.started += OnSwitchWeapon1Pressed;
+                    _inputActions.Player.WeaponSwitch2.started += OnSwitchWeapon2Pressed;
+                    _inputActions.Player.WeaponSwitch3.started += OnSwitchWeapon3Pressed;
+                    _inputActions.Player.WeaponSwitch4.started += OnSwitchWeapon4Pressed;
+                    break;
+                default:
+                    throw new Exception($"Amount of weapons is not supported : {weaponCountForLevel}");
+            }
             EnableWeaponSwitchActions();
         }
         #endregion
@@ -236,8 +256,8 @@ namespace Core.InputSystem
         {
             _inputActions.Player.WeaponSwitch1.started -= OnSwitchWeapon1Pressed;
             _inputActions.Player.WeaponSwitch2.started -= OnSwitchWeapon2Pressed;
-            //_inputActions.Player.WeaponSwitch3.started -= OnSwitchWeapon3Pressed;
-            //_inputActions.Player.WeaponSwitch4.started -= OnSwitchWeapon4Pressed;
+            _inputActions.Player.WeaponSwitch3.started -= OnSwitchWeapon3Pressed;
+            _inputActions.Player.WeaponSwitch4.started -= OnSwitchWeapon4Pressed;
         }
         private void ExposeUseAbilityActions()
         {
@@ -268,8 +288,8 @@ namespace Core.InputSystem
         {
             _inputActions.Player.WeaponSwitch1.Disable();
             _inputActions.Player.WeaponSwitch2.Disable();
-            //_inputActions.Player.WeaponSwitch3.Disable();
-            //_inputActions.Player.WeaponSwitch4.Disable();
+            _inputActions.Player.WeaponSwitch3.Disable();
+            _inputActions.Player.WeaponSwitch4.Disable();
         }
         private void DisableUseAbilityActions()
         {
@@ -299,8 +319,8 @@ namespace Core.InputSystem
         {
             _inputActions.Player.WeaponSwitch1.Enable();
             _inputActions.Player.WeaponSwitch2.Enable();
-            //_inputActions.Player.WeaponSwitch3.Enable();
-            //_inputActions.Player.WeaponSwitch4.Enable();
+            _inputActions.Player.WeaponSwitch3.Enable();
+            _inputActions.Player.WeaponSwitch4.Enable();
         }
         private void EnableUseAbilityActions()
         {
