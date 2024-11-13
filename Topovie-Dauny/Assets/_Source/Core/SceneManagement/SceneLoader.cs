@@ -13,7 +13,7 @@ namespace Core.SceneManagement
     {
         [SerializeField] private RectTransform loadingScreen;
         [SerializeField] private Slider loadingSlider;
-        public async UniTask LoadSceneAsync(int index, CancellationToken token)
+        public async UniTask LoadSceneAsync(int index)
         {
             loadingSlider.value = 0;
             loadingScreen.gameObject.SetActive(true);

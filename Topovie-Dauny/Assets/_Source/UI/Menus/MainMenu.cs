@@ -39,7 +39,7 @@ namespace UI.Menus
         {
             SetButtonsInteractable(false);
             //todo load scene with level choose
-            _sceneLoader.LoadSceneAsync(1, CancellationToken.None).Forget();
+            _sceneLoader.LoadSceneAsync(1).Forget();
         }
         private void ExitGame()
         {

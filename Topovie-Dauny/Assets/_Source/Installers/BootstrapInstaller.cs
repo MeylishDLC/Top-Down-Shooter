@@ -1,3 +1,4 @@
+using Core.LevelSettings;
 using Core.SceneManagement;
 using UnityEngine;
 using Zenject;
@@ -9,6 +10,11 @@ namespace Installers
     {
         public override void InstallBindings()
         {
+            BindLevelSave();
+        }
+        private void BindLevelSave()
+        {
+            Container.Bind<LevelSave>().AsSingle();
         }
     }
 }

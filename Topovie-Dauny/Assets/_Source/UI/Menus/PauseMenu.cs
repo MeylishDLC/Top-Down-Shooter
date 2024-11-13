@@ -83,16 +83,16 @@ namespace UI.Menus
         private void RestartLevel()
         {
             _inputListener.SetInput(false);
-            RestartLevelAsync(CancellationToken.None).Forget();
+            RestartLevelAsync().Forget();
         }
-        private async UniTask RestartLevelAsync(CancellationToken token)
+        private async UniTask RestartLevelAsync()
         {
             optionsButton.interactable = false;
             restartButton.interactable = false;
             exitButton.interactable = false;
 
             Time.timeScale = 1f;
-            await _sceneLoader.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex, token);
+            await _sceneLoader.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex);
         }
         private void OpenOptionsPanel()
         {

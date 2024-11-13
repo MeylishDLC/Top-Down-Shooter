@@ -64,7 +64,7 @@ namespace UI.Menus
         {
             _inputListener.SetInput(false);
             restartButton.interactable = false;
-            _sceneLoader.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex, CancellationToken.None).Forget();
+            _sceneLoader.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex).Forget();
         }
         private void DisableInput()
         {

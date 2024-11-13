@@ -216,6 +216,8 @@ namespace Core.InputSystem
         {
             switch (weaponCountForLevel)
             {
+                case 0:
+                    break;
                 case 1:
                     _inputActions.Player.WeaponSwitch1.started += OnSwitchWeapon1Pressed;
                     break;
