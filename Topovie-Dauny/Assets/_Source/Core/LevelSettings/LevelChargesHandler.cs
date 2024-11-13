@@ -44,7 +44,10 @@ namespace Core.LevelSettings
          }
          private void OnDestroy()
          {
-             UnsubscribeOnStartCharging();
+             foreach (var trigger in portalChargeTriggers)
+             {
+                 UnsubscribeOnStartCharging(trigger);
+             }
              UnloadAllEnemyAssetsAsync();
          }
          public void ClearAllSpawnsImmediate()
@@ -76,6 +79,11 @@ namespace Core.LevelSettings
          }
          private void StartChargingPortal(int chargeIndex)
          {
+             if (_currentGameState == GameStates.Fight)
+             {
+                 return;
+             }
+                 
              if (_chargesPassed >= portalCharges.Length)
              {
                  return;
@@ -83,6 +91,7 @@ namespace Core.LevelSettings
              
              _currentGameState = GameStates.Fight;
              _currentChargeIndex = chargeIndex;
+             UnsubscribeOnStartCharging(portalChargeTriggers[_currentChargeIndex]);
              SubscribeOnChargeEvents(portalChargeTriggers[_currentChargeIndex].GetComponent<RangeDetector>());
                  
              OnStateChanged?.Invoke(_currentGameState);
@@ -149,6 +158,7 @@ namespace Core.LevelSettings
          {
              ClearAllSpawnsImmediate();
              UnsubscribeOnChargeEvents(portalChargeTriggers[_currentChargeIndex].GetComponent<RangeDetector>());
+             portalChargeTriggers[_currentChargeIndex].enabled = false;
              try
              {
                  await UniTask.Delay(changeStateDelayMilliseconds, cancellationToken: token);
@@ -188,12 +198,9 @@ namespace Core.LevelSettings
                  trigger.OnChargePortalPressed += StartChargingPortal;
              }
          }
-         private void UnsubscribeOnStartCharging()
+         private void UnsubscribeOnStartCharging(PortalChargerTrigger trigger)
          {
-             foreach (var trigger in portalChargeTriggers)
-             {
-                 trigger.OnChargePortalPressed -= StartChargingPortal;
-             }
+             trigger.OnChargePortalPressed -= StartChargingPortal;
          }
          private async UniTask LoadAllEnemyAssetsAsync()
          {

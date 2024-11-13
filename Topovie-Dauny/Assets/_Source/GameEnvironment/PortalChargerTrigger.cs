@@ -87,7 +87,7 @@ namespace GameEnvironment
                 {
                     OnChargePortalPressed?.Invoke(chargeIndex);
                     _levelChargesHandler.OnStateChanged -= EnableOnChangeState;
-                    Debug.Log("Portal Charge Started");
+                    Debug.Log("F held");
                     
                     visualQue.gameObject.SetActive(false);
                     _isHoldingButton = false;
