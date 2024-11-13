@@ -37,5 +37,10 @@ namespace Core.SceneManagement
                 await UniTask.Yield();
             }
         }
+
+        public void SetLoadingScreenActive(bool active)
+        {
+            loadingScreen.gameObject.SetActive(active);
+        }
     }
 }

@@ -9,7 +9,6 @@ namespace GameEnvironment
     public class ShopTrigger: MonoBehaviour
     {
         [SerializeField] private SpriteRenderer visualQue;
-        [SerializeField] private Shop shop;
 
         private bool _isHoldingButton;
         private float _holdStartTime;
@@ -17,10 +16,12 @@ namespace GameEnvironment
 
         private LevelChargesHandler _levelChargesHandler;
         private InputListener _inputListener;
+        private Shop _shop;
         
         [Inject]
-        public void Construct(LevelChargesHandler levelChargesHandler, InputListener inputListener)
+        public void Construct(LevelChargesHandler levelChargesHandler, InputListener inputListener, Shop shop)
         {
+            _shop = shop;
             _levelChargesHandler = levelChargesHandler;
             _inputListener = inputListener;
         }
@@ -41,7 +42,7 @@ namespace GameEnvironment
         {
             if (_playerInRange)
             {
-                shop.OpenShop();
+                _shop.OpenShop();
             }
         }
         private void Update()

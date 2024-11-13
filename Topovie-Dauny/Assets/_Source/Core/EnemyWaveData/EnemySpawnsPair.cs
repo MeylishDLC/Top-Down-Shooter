@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading;
+using Core.LoadingSystem;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -14,6 +15,8 @@ namespace Core.EnemyWaveData
         private List<GameObject> _enemiesPrefabs = new();
         [field: SerializeField] public AssetReferenceGameObject[] EnemiesAssets {get; private set;}
         [field: SerializeField] public Transform[] SpawnPoints {get; private set;}
+        
+        private List<AssetLoader> loaders = new();
         public async UniTask LoadAssets(CancellationToken token)
         {
             _enemiesPrefabs.Clear();
@@ -24,12 +27,16 @@ namespace Core.EnemyWaveData
                 {
                     var handle = enemyAsset.Asset as GameObject;
 
-                    if (handle == null) 
+                    if (handle == null)
                     {
-                        var loadedAsset = await enemyAsset.LoadAssetAsync().ToUniTask(cancellationToken: token);
+                        var loader = new AssetLoader();
+                        //var loadedAsset = await enemyAsset.LoadAssetAsync().ToUniTask(cancellationToken: token);
+                        
+                        var loadedAsset = await loader.LoadGameObject(enemyAsset, token);
                         if (loadedAsset != null)
                         {
                             _enemiesPrefabs.Add(loadedAsset);
+                            loaders.Add(loader);
                         }
                         else
                         {
@@ -51,7 +58,7 @@ namespace Core.EnemyWaveData
 
         public void UnloadAssets()
         {
-            foreach (var enemyAsset in EnemiesAssets)
+            /*foreach (var enemyAsset in EnemiesAssets)
             {
                 if (enemyAsset.RuntimeKeyIsValid())
                 {
@@ -65,6 +72,11 @@ namespace Core.EnemyWaveData
                     Debug.LogWarning($"Invalid asset reference in EnemiesAssets array at index " +
                                      $"{System.Array.IndexOf(EnemiesAssets, enemyAsset)}");
                 }
+            }*/
+
+            foreach (var loader in loaders)
+            {
+                loader.ReleaseStoredInstance();
             }
             _enemiesPrefabs.Clear();
         }
