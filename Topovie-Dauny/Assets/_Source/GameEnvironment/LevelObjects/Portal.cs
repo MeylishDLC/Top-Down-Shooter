@@ -22,11 +22,14 @@ namespace GameEnvironment.LevelObjects
         private LevelChargesHandler _levelChargesHandler;
         private SceneLoader _sceneLoader;
         private InputListener _inputListener;
+        private LevelSave _levelSave;
         private bool _isInRange;
         
         [Inject]
-        public void Construct(LevelChargesHandler levelChargesHandler, SceneLoader sceneLoader, InputListener inputListener)
+        public void Construct(LevelChargesHandler levelChargesHandler, SceneLoader sceneLoader, 
+            InputListener inputListener, LevelSave levelSave)
         {
+            _levelSave = levelSave;
             _inputListener = inputListener;
             _sceneLoader = sceneLoader;
             _levelChargesHandler = levelChargesHandler;
@@ -92,6 +95,13 @@ namespace GameEnvironment.LevelObjects
         }
         private void GoToNextLevel()
         {
+            var currentLevelNumber = SceneManager.GetActiveScene().buildIndex - 2;
+
+            if (_levelSave.GetLevelsPassed() < currentLevelNumber + 1)
+            {
+                _levelSave.SaveProgress(SceneManager.GetActiveScene().buildIndex - 2);
+            }
+            
             _inputListener.SetInput(false);
             confirmationScreen.gameObject.SetActive(false);
             var nextSceneIndex = SceneManager.GetActiveScene().buildIndex + 1;

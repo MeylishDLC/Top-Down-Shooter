@@ -11,6 +11,7 @@ namespace Core.LevelSettings
             if (PlayerPrefs.HasKey("LevelsPassed"))
             {
                 LevelsPassed = PlayerPrefs.GetInt("LevelsPassed");
+                Debug.Log("LevelsPassed: " + LevelsPassed);
             }
             else
             {
@@ -21,6 +22,7 @@ namespace Core.LevelSettings
         public void SaveProgress(int passedLevelNumber)
         {
             PlayerPrefs.SetInt("LevelsPassed", passedLevelNumber + 1);
+            Debug.Log($"Levels passed : {GetLevelsPassed()}");
         }
         public int GetLevelsPassed()
         {
