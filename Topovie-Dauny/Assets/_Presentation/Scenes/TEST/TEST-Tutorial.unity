@@ -1165,6 +1165,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0884d62387a464c8e2ef1b583d6d33f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &696700938
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 696700939}
+  m_Layer: 0
+  m_Name: EnemyBulletPool
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &696700939
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 696700938}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1830432310}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &703528070
 GameObject:
   m_ObjectHideFlags: 0
@@ -1601,6 +1632,63 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1204279071}
   m_CullTransparentMesh: 1
+--- !u!1001 &1234094773
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 7706175414264198118, guid: 5fb17d422d6371b4cba1446c777663ca, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7706175414264198118, guid: 5fb17d422d6371b4cba1446c777663ca, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7706175414264198118, guid: 5fb17d422d6371b4cba1446c777663ca, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7706175414264198118, guid: 5fb17d422d6371b4cba1446c777663ca, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7706175414264198118, guid: 5fb17d422d6371b4cba1446c777663ca, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7706175414264198118, guid: 5fb17d422d6371b4cba1446c777663ca, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7706175414264198118, guid: 5fb17d422d6371b4cba1446c777663ca, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7706175414264198118, guid: 5fb17d422d6371b4cba1446c777663ca, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7706175414264198118, guid: 5fb17d422d6371b4cba1446c777663ca, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7706175414264198118, guid: 5fb17d422d6371b4cba1446c777663ca, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8818922851791141888, guid: 5fb17d422d6371b4cba1446c777663ca, type: 3}
+      propertyPath: m_Name
+      value: TestEnvironment
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 5fb17d422d6371b4cba1446c777663ca, type: 3}
 --- !u!4 &1237964180 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7609261480083674614, guid: 637439a1a38e067499a4b213fa7a750e, type: 3}
@@ -1967,9 +2055,13 @@ MonoBehaviour:
     m_SubObjectType: 
     m_EditorAssetChanged: 0
   pistolGun: {fileID: 696262010}
+  bulletSpawner: {fileID: 2000303415}
   pistolBulletPoolDataPair:
     <PoolConfig>k__BackingField: {fileID: 11400000, guid: f6eab5df3f4956547bdad8f63f772cf0, type: 2}
     <PoolParent>k__BackingField: {fileID: 1610764014}
+  enemyBulletPoolDataPair:
+    <PoolConfig>k__BackingField: {fileID: 11400000, guid: caa156d2c8051e34e96e0ae371b8fa7a, type: 2}
+    <PoolParent>k__BackingField: {fileID: 696700939}
 --- !u!1 &1546368150
 GameObject:
   m_ObjectHideFlags: 0
@@ -2175,6 +2267,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1610764014}
+  - {fileID: 696700939}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1849246834
@@ -2348,6 +2441,57 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 226edb1fd5d34a9880930a6e278f94ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &2000303413
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2000303414}
+  - component: {fileID: 2000303415}
+  m_Layer: 0
+  m_Name: TestSpawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2000303414
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2000303413}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.605, y: -0.266, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2000303415
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2000303413}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fec11dddd10946ae99b5b41e18031072, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lifetime: 10
+  speed: 2
+  damage: 3
+  spawnerType: 1
+  firingRate: 0.1
+  spinSpeed: 250
+  config: {fileID: 11400000, guid: 94780a11103d990418e77409ac5b9701, type: 2}
 --- !u!224 &2007168043 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5123703312492009252, guid: ba3f276fa16aec249a029d4ce9df78dd, type: 3}
@@ -3726,3 +3870,5 @@ SceneRoots:
   - {fileID: 1830432310}
   - {fileID: 535823487}
   - {fileID: 1149408284}
+  - {fileID: 1234094773}
+  - {fileID: 2000303414}
