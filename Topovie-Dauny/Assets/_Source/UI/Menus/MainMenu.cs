@@ -15,6 +15,10 @@ namespace UI.Menus
         [SerializeField] private Button settingsButton;
         [SerializeField] private Button exitButton;
         
+        [Header("Settings Screen")]
+        [SerializeField] private RectTransform settingsScreen;
+        [SerializeField] private Button returnButton;
+        
         private SceneLoader _sceneLoader;
 
         [Inject]
@@ -24,21 +28,36 @@ namespace UI.Menus
         }
         private void Start()
         {
-            playButton.onClick.AddListener(StartGame);
-            exitButton.onClick.AddListener(ExitGame);
-        }
-        private void StartGame()
-        {
-            playButton.interactable = false;
-            exitButton.interactable = false;
-            settingsButton.interactable = false;
+            settingsScreen.gameObject.SetActive(false);
             
-            //todo change??
+            playButton.onClick.AddListener(LoadChooseLevelScreen);
+            settingsButton.onClick.AddListener(OpenSettingsScreen);
+            exitButton.onClick.AddListener(ExitGame);
+            returnButton.onClick.AddListener(CloseSettingsScreen);
+        }
+        private void LoadChooseLevelScreen()
+        {
+            SetButtonsInteractable(false);
+            //todo load scene with level choose
             _sceneLoader.LoadSceneAsync(1, CancellationToken.None).Forget();
         }
         private void ExitGame()
         {
             Application.Quit();
+        }
+        private void OpenSettingsScreen()
+        {
+            settingsScreen.gameObject.SetActive(true);
+        }
+        private void CloseSettingsScreen()
+        {
+            settingsScreen.gameObject.SetActive(false);
+        }
+        private void SetButtonsInteractable(bool isEnabled)
+        {
+            playButton.interactable = isEnabled;
+            exitButton.interactable = isEnabled;
+            settingsButton.interactable = isEnabled;
         }
     }
 }

@@ -4,7 +4,7 @@ using Zenject;
 
 namespace Installers
 {
-    public class MainMenuInstaller : MonoInstaller
+    public class SceneLoaderInstaller : MonoInstaller
     {
         [SerializeField] private SceneLoader sceneLoader;
 

@@ -23,15 +23,11 @@ namespace Core.Bootstrappers
         [Header("GUNS")] 
         [SerializeField] private BasicGun pistolGun;
         
-        [Header("BULLET SPAWNS")]
-        [SerializeField] private BulletSpawner bulletSpawner;
-        
         [Header("POOLS")] 
         [SerializeField] private PoolConfigParentPair pistolBulletPoolDataPair;
         [SerializeField] private PoolConfigParentPair enemyBulletPoolDataPair;
         
         private BulletPool _pistolBulletPool;
-        private EnemyBulletPool _enemyBulletPool;
 
         private SceneLoader _sceneLoader;
         private AssetLoader _environmentLoader = new();
@@ -40,7 +36,6 @@ namespace Core.Bootstrappers
             await InstantiateAssets(CancellationToken.None);
             InitializePools();
             InitializeGuns();
-            bulletSpawner.Construct(_enemyBulletPool);
         }
         private void OnDestroy()
         {
@@ -65,7 +60,6 @@ namespace Core.Bootstrappers
         public void InitializePools()
         {
             _pistolBulletPool = new BulletPool(pistolBulletPoolDataPair.PoolConfig, pistolBulletPoolDataPair.PoolParent);
-            _enemyBulletPool = new EnemyBulletPool(enemyBulletPoolDataPair.PoolConfig, enemyBulletPoolDataPair.PoolParent);
         }
         public void InitializeGuns()
         {
