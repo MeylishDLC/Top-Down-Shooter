@@ -27,6 +27,7 @@ namespace Player.PlayerAbilities
         }
         private async UniTask UseAbilityAsync(CancellationToken token)
         {
+            OnAbilitySuccessfullyUsed?.Invoke();
             ChangeSpeedForTime(token).Forget();
             await UniTask.Delay(CooldownMilliseconds, cancellationToken: token);
         }

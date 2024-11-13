@@ -36,6 +36,7 @@ namespace Player.PlayerAbilities
             knife.transform.right = direction;
 
             knife.ShootInDirection(direction);
+            OnAbilitySuccessfullyUsed?.Invoke();
 
             await UniTask.Delay(CooldownMilliseconds, cancellationToken: token);
         }

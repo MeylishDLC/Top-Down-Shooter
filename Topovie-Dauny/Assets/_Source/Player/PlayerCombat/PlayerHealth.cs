@@ -74,10 +74,8 @@ namespace Player.PlayerCombat
 
         private void CheckIfDead()
         {
-            //todo: play death animation and show game over screen 
             if (CurrentHealth <= 0)
             {
-                //todo: pause whole game
                 OnDeath?.Invoke();
             }
         }

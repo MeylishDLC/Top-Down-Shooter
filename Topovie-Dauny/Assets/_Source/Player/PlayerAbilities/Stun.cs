@@ -22,10 +22,10 @@ namespace Player.PlayerAbilities
         {
             UseAbilityAsync(CancellationToken.None).Forget();
         }
-
         private async UniTask UseAbilityAsync(CancellationToken token)
         {
             Instantiate(stunZonePrefab, _playerTransform.position, Quaternion.identity);
+            OnAbilitySuccessfullyUsed?.Invoke();
             await UniTask.Delay(CooldownMilliseconds, cancellationToken: token);
         }
     }

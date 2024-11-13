@@ -23,11 +23,16 @@ namespace Player.PlayerAbilities
         }
         public override void UseAbility()
         {
+            if (Mathf.Approximately(_playerHealth.CurrentHealth, _playerHealth.MaxHealth))
+            {
+                return;
+            }
             UseAbilityAsync(CancellationToken.None).Forget();
         }
         private async UniTask UseAbilityAsync(CancellationToken token)
         {
             _playerHealth.Heal(healAmount);
+            OnAbilitySuccessfullyUsed?.Invoke();
             await UniTask.Delay(CooldownMilliseconds, cancellationToken: token);
         }
     }

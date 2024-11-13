@@ -35,6 +35,7 @@ namespace Player.PlayerAbilities
         private async UniTask UseAbilityAsync(CancellationToken token)
         {
             EnableShield(token).Forget();
+            OnAbilitySuccessfullyUsed?.Invoke();
             await UniTask.Delay(CooldownMilliseconds, cancellationToken: token);
         }
         private async UniTask EnableShield(CancellationToken token)

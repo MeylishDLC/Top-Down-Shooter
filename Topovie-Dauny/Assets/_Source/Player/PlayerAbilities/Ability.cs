@@ -1,4 +1,5 @@
-﻿using Player.PlayerControl;
+﻿using System;
+using Player.PlayerControl;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -6,6 +7,7 @@ namespace Player.PlayerAbilities
 {
     public abstract class Ability: ScriptableObject
     {
+        public Action OnAbilitySuccessfullyUsed;
         [field:SerializeField] public int CooldownMilliseconds { get; protected set; }
         [field:SerializeField] public Sprite AbilityImage { get; protected set; }
         [field: TextArea]

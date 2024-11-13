@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using Bullets.Projectile;
 using Cysharp.Threading.Tasks;
 using Player.PlayerControl;
@@ -33,7 +34,7 @@ namespace Player.PlayerAbilities
         {
             SetTarget();
             ThrowBomb();
-            
+            OnAbilitySuccessfullyUsed?.Invoke();
             await UniTask.Delay(CooldownMilliseconds, cancellationToken: token); 
         }
         private void SetTarget()

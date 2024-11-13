@@ -32,15 +32,14 @@ namespace UI.PlayerGUI
 
         private bool _canUseAbility = true;
         private Color _initialColor;
-        private float _remainingTime;
         private float _holdStartTime;
         private bool _isHoldingKey;
         
-        private CancellationTokenSource _cancelCooldownCts = new();
+        private CancellationTokenSource _cancelUpdateCooldownCts = new();
         private InputListener _inputListener;
         private CustomCursor _customCursor;
+        private AbilityTimer _abilityTimer;
         
-        //todo split logic from displaying
         [Inject]
         public void Construct(InputListener inputListener, CustomCursor customCursor)
         {
@@ -48,6 +47,8 @@ namespace UI.PlayerGUI
             _customCursor = customCursor;
             _inputListener.OnUseAbilityPressed += UseAbility;
             _inputListener.OnUseAbilityReleased += OnAbilityReleased;
+            _abilityTimer = new AbilityTimer(initialAbility);
+            _abilityTimer.OnCooldownEnded += ShowCooldownEnded;
         }
         private void Awake()
         {
@@ -62,6 +63,11 @@ namespace UI.PlayerGUI
             playerCellsInShop.OnAbilityChanged -= SwitchAbility;
             _inputListener.OnUseAbilityPressed -= UseAbility;
             _inputListener.OnUseAbilityReleased -= OnAbilityReleased;
+            _abilityTimer.OnCooldownEnded -= ShowCooldownEnded;
+
+            _cancelUpdateCooldownCts?.Cancel();
+            _cancelUpdateCooldownCts?.Dispose();
+            _abilityTimer.Expose();
         }
         private void UseAbility(int abilityNumber)
         {
@@ -87,7 +93,7 @@ namespace UI.PlayerGUI
         {
             OnUseAbility?.Invoke(CurrentAbility);
             _canUseAbility = false;
-            StartCooldown();
+            StartAbilityCooldown();
         }
         private async UniTask UseAbilityOnKeyHold(CancellationToken token)
         {
@@ -107,11 +113,12 @@ namespace UI.PlayerGUI
                 {
                     OnUseAbility?.Invoke(CurrentAbility);
                     _canUseAbility = false;
-                    StartCooldown();
-
+                    
                     ResetCursor();
                     ResetSliderValue();
                     _isHoldingKey = false;
+                    
+                    StartAbilityCooldown();
                 }
                 await UniTask.Yield(PlayerLoopTiming.Update);
             }
@@ -127,11 +134,13 @@ namespace UI.PlayerGUI
             ResetCursor();
             ResetSliderValue();
         }
-        private void StartCooldown()
+        private void StartAbilityCooldown()
         {
             var cooldown = (float)CurrentAbility.CooldownMilliseconds / 1000;
+            _abilityTimer.StartCooldown(cooldown);
+            
             ShowCooldownStarted(cooldown);
-            StartCooldownTracking(cooldown, _cancelCooldownCts.Token).Forget();
+            UpdateCooldownText(_cancelUpdateCooldownCts.Token).Forget();
         }
         private void ShowCooldownStarted(float cooldown)
         {
@@ -139,26 +148,13 @@ namespace UI.PlayerGUI
             cooldownText.gameObject.SetActive(true);
             cooldownText.text = Mathf.CeilToInt(cooldown).ToString();
         }
-        private async UniTask StartCooldownTracking(float cooldown, CancellationToken token)
+        private async UniTask UpdateCooldownText(CancellationToken token)
         {
-            _remainingTime = cooldown;
-
-            while (_remainingTime > 0 && !token.IsCancellationRequested)
+            while (!token.IsCancellationRequested)
             {
-                cooldownText.text = Mathf.CeilToInt(_remainingTime).ToString();
-
+                cooldownText.text = Mathf.CeilToInt(_abilityTimer.RemainingTime).ToString();
                 await UniTask.Yield(PlayerLoopTiming.Update);
-
-                _remainingTime -= Time.deltaTime;
             }
-
-            ShowCooldownEnded();
-        }
-        private void CancelCooldownTracking()
-        {
-            _cancelCooldownCts?.Cancel();
-            _cancelCooldownCts?.Dispose();
-            _cancelCooldownCts = new CancellationTokenSource();
         }
         private void ResetSliderValue()
         {
@@ -171,9 +167,10 @@ namespace UI.PlayerGUI
         }
         private void ShowCooldownEnded()
         {
+            CancelCooldownTracking();
+            
             _canUseAbility = true;
 
-            _remainingTime = 0;
             abilityImage.color = _initialColor;
             cooldownText.gameObject.SetActive(false);
             
@@ -182,14 +179,22 @@ namespace UI.PlayerGUI
         }
         private void SwitchAbility(int abilityCellIndex, Ability newAbility)
         {
-            if (abilityCellIndex == cellIndex)
+            if (abilityCellIndex != cellIndex)
             {
-                CurrentAbility = newAbility;
-                abilityImage.sprite = CurrentAbility.AbilityImage;
-                
-                CancelCooldownTracking();
+                return;
             }
+            
+            CurrentAbility = newAbility;
+            abilityImage.sprite = CurrentAbility.AbilityImage;
+            CancelCooldownTracking();
+                
+            _abilityTimer.SetCurrentAbility(CurrentAbility);
         }
-        
+        private void CancelCooldownTracking()
+        {
+            _cancelUpdateCooldownCts?.Cancel();
+            _cancelUpdateCooldownCts?.Dispose();
+            _cancelUpdateCooldownCts = new CancellationTokenSource();
+        }
     }
 }
