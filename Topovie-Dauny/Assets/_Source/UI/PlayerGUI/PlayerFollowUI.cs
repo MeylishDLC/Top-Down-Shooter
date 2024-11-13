@@ -7,20 +7,21 @@ namespace UI.PlayerGUI
 {
     public class PlayerFollowUI: MonoBehaviour
     {
-        [SerializeField] private Camera mainCamera;
         [SerializeField] private GameObject objectToFollowPlayer;
         [SerializeField] private Canvas canvas;
         [SerializeField] private Vector2 padding;
         [SerializeField] private float smoothTime = 0.1f;
 
+        private Camera _mainCamera;
         private Transform _playerTransform;
         private RectTransform _uiRectTransform;
         private Vector2 _velocity = Vector2.zero;
 
         [Inject]
-        public void Construct(PlayerMovement playerMovement)
+        public void Construct(PlayerMovement playerMovement, Camera mainCamera)
         {
             _playerTransform = playerMovement.transform;
+            _mainCamera = mainCamera;
         }
         private void Awake()
         {
@@ -47,10 +48,10 @@ namespace UI.PlayerGUI
         }
         private Vector2 GetCanvasPosition()
         {
-            var playerScreenPosition = mainCamera.WorldToScreenPoint(_playerTransform.position);
+            var playerScreenPosition = _mainCamera.WorldToScreenPoint(_playerTransform.position);
 
             var canvasRect = canvas.GetComponent<RectTransform>();
-            RectTransformUtility.ScreenPointToLocalPointInRectangle(canvasRect, playerScreenPosition, mainCamera, 
+            RectTransformUtility.ScreenPointToLocalPointInRectangle(canvasRect, playerScreenPosition, _mainCamera, 
                 out var canvasPosition);
 
             canvasPosition += padding;

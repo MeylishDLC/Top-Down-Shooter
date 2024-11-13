@@ -9,6 +9,7 @@ using DialogueSystem;
 using Player.PlayerCombat;
 using Player.PlayerControl;
 using UI.Core;
+using UI.UIShop;
 using UnityEngine;
 using Zenject;
 
@@ -19,11 +20,12 @@ namespace Installers
         [SerializeField] private InputListener inputListener;
         [SerializeField] private LevelChargesHandler levelChargesHandler;
         [SerializeField] private GameObject playerObject;
-        [SerializeField] private UI.UIShop.Shop shop;
+        [SerializeField] private Shop shop;
         [SerializeField] private SceneLoader sceneLoader;
         [SerializeField] private WeaponsSetterConfig weaponsSetterConfig;
         [SerializeField] private CustomCursor customCursor;
         [SerializeField] private DialogueDisplay baseDialogueDisplay;
+        [SerializeField] private Camera mainCamera;
         
         public override void InstallBindings()
         {
@@ -37,6 +39,7 @@ namespace Installers
             BindUIShopDisplay();
             BindPlayerWeaponsSetter();
             BindCustomCursor();
+            BindMainCamera();
         }
         private void BindInputListener()
         {
@@ -78,6 +81,10 @@ namespace Installers
         private void BindCustomCursor()
         {
             Container.Bind<CustomCursor>().FromInstance(customCursor).AsSingle();
+        }
+        private void BindMainCamera()
+        {
+            Container.Bind<Camera>().FromInstance(mainCamera).AsSingle();
         }
     }
 }

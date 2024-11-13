@@ -2364,7 +2364,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.01004, y: -0.000045776367}
+  m_AnchoredPosition: {x: -0.0049773, y: -0.000045776367}
   m_SizeDelta: {x: 1245.9, y: 279.9}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3614788735614040856
@@ -2530,12 +2530,12 @@ GameObject:
   - component: {fileID: 1086924829658895321}
   - component: {fileID: 2179353724306346591}
   m_Layer: 5
-  m_Name: DialoguePanel
+  m_Name: DialoguePanel_DEFAULT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &8045817742208426582
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2641,7 +2641,8 @@ MonoBehaviour:
   <Choices>k__BackingField:
   - {fileID: 7846770282918444239}
   - {fileID: 8623989176129332380}
-  <DialogueRestartDelayMilliseconds>k__BackingField: 100
+  <DialogueRestartDelay>k__BackingField: 0.1
+  <DialogueTypeSpeed>k__BackingField: 0.03
 --- !u!1 &3088161425981589313
 GameObject:
   m_ObjectHideFlags: 0
@@ -3524,8 +3525,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -506, y: 322.04993}
-  m_SizeDelta: {x: 330.9, y: 782.7}
+  m_AnchoredPosition: {x: -552, y: 269.84998}
+  m_SizeDelta: {x: 530.6, y: 819.6}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1052660247145600890
 CanvasRenderer:
@@ -3555,9 +3556,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 92521151fa1c6224aa710a521ea5a168, type: 3}
+  m_Sprite: {fileID: -809602736, guid: 459e2be6c7196cb4b9f8addb824e61df, type: 3}
   m_Type: 0
-  m_PreserveAspect: 0
+  m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1
