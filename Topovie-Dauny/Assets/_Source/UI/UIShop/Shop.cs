@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using Core.InputSystem;
+using Core.LevelSettings;
 using Cysharp.Threading.Tasks;
 using Player.PlayerAbilities;
 using TMPro;
@@ -28,30 +29,44 @@ namespace UI.UIShop
         [SerializeField] private int delayBeforeShopClosingMillisecons;
         [SerializeField] private PlayerCellsInShop playerCellsInShop;
 
+        private LevelChargesHandler _levelChargesHandler;
         private InputListener _inputListener;
         private ShopDialogue _shopDialogue;
+        private bool _canBeOpen = true;
         private bool _isTyping;
         private CancellationTokenSource _stopTypingCts = new();
 
         [Inject]
-        public void Construct(InputListener inputListener)
+        public void Construct(InputListener inputListener, LevelChargesHandler levelChargesHandler)
         {
+            _levelChargesHandler = levelChargesHandler;
             _inputListener = inputListener;
         }
         private void Start()
         {
             shopUI.SetActive(false);
             closeButton.onClick.AddListener(CloseShop);
+            _levelChargesHandler.OnStateChanged += SetCanBeOpen;
             playerCellsInShop.OnAbilityChanged += ChangeDialogue;
             _shopDialogue = new ShopDialogue(vetDialogueText, typeSpeedMilliseconds);
         }
         private void OnDestroy()
         {
+            _levelChargesHandler.OnStateChanged -= SetCanBeOpen;
             playerCellsInShop.OnAbilityChanged -= ChangeDialogue;
             _stopTypingCts?.Dispose();
         }
+        private void SetCanBeOpen(GameStates state)
+        {
+            _canBeOpen = state != GameStates.Fight;
+        }
         public void OpenShop()
         {
+            if (!_canBeOpen)
+            {
+                return;
+            }
+            
             if (!IsShopOpen())
             {
                 OpenShopAsync(_stopTypingCts.Token).Forget();
