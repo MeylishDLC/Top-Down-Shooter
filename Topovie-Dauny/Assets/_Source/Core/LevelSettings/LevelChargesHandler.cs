@@ -10,6 +10,7 @@ namespace Core.LevelSettings
 {
      public class LevelChargesHandler: MonoBehaviour
      {
+         public event Action OnChargePassed; 
          public event Action<GameStates> OnStateChanged;
          public event Action<float, float> OnTimeRemainingChanged;
          
@@ -159,6 +160,7 @@ namespace Core.LevelSettings
              ClearAllSpawnsImmediate();
              UnsubscribeOnChargeEvents(portalChargeTriggers[_currentChargeIndex].GetComponent<RangeDetector>());
              portalChargeTriggers[_currentChargeIndex].enabled = false;
+             OnChargePassed?.Invoke();
              try
              {
                  await UniTask.Delay(changeStateDelayMilliseconds, cancellationToken: token);
