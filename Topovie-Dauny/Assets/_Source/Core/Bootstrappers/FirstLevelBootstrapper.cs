@@ -9,6 +9,7 @@ using Core.LoadingSystem;
 using Core.PoolingSystem;
 using Core.SceneManagement;
 using Cysharp.Threading.Tasks;
+using DialogueSystem.LevelDialogue;
 using Enemies;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -38,27 +39,33 @@ namespace Core.Bootstrappers
         private ProjectilePool _enemyProjectilePool;
 
         private SceneLoader _sceneLoader;
+        private LevelDialogues _levelDialogues;
         private Spawner _spawner;
         private AssetLoader _environmentLoader = new();
+        [Inject]
+        public void Construct(Spawner spawner, SceneLoader sceneLoader, LevelDialogues levelDialogues)
+        {
+            _levelDialogues = levelDialogues;
+            _sceneLoader = sceneLoader;
+            _spawner = spawner;
+            _spawner.OnShootingEnemyInitialised += InitializeEnemyProjectilePool;
+        }
         private async void Awake()
         {
             await InstantiateAssets(CancellationToken.None);
             InitializePools();
             InitializeGuns();
         }
+        private void Start()
+        {
+            _levelDialogues.PlayStartDialogue();
+        }
         private void OnDestroy()
         {
             _environmentLoader.ReleaseStoredInstance();
             CleanUpPools();
             _spawner.OnShootingEnemyInitialised -= InitializeEnemyProjectilePool;
-        }
-
-        [Inject]
-        public void Construct(Spawner spawner, SceneLoader sceneLoader)
-        {
-            _sceneLoader = sceneLoader;
-            _spawner = spawner;
-            _spawner.OnShootingEnemyInitialised += InitializeEnemyProjectilePool;
+            _levelDialogues.Expose();
         }
         public async UniTask InstantiateAssets(CancellationToken token)
         {

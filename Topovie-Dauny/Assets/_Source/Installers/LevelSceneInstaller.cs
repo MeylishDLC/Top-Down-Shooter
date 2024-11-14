@@ -6,6 +6,7 @@ using Core.LevelSettings;
 using Core.PoolingSystem;
 using Core.SceneManagement;
 using DialogueSystem;
+using DialogueSystem.LevelDialogue;
 using Player.PlayerCombat;
 using Player.PlayerControl;
 using UI.Core;
@@ -26,7 +27,9 @@ namespace Installers
         [SerializeField] private CustomCursor customCursor;
         [SerializeField] private DialogueDisplay baseDialogueDisplay;
         [SerializeField] private Camera mainCamera;
-        
+        [SerializeField] private LevelDialogueConfig levelDialogueConfig;
+
+        private DialogueManager _dialogueManager;
         public override void InstallBindings()
         {
             BindMainCamera();
@@ -40,6 +43,7 @@ namespace Installers
             BindUIShopDisplay();
             BindPlayerWeaponsSetter();
             BindCustomCursor();
+            BindLevelDialogues();
         }
         private void BindInputListener()
         {
@@ -56,7 +60,8 @@ namespace Installers
         }
         private void BindDialogueManager()
         {
-            Container.Bind<DialogueManager>().AsSingle().WithArguments(inputListener, baseDialogueDisplay);
+            _dialogueManager = new DialogueManager(inputListener, baseDialogueDisplay);
+            Container.Bind<DialogueManager>().FromInstance(_dialogueManager).AsSingle();
         }
         private void BindPlayer()
         {
@@ -72,7 +77,7 @@ namespace Installers
         }
         private void BindUIShopDisplay()
         {
-            Container.Bind<UI.UIShop.Shop>().FromInstance(shop).AsSingle();
+            Container.Bind<Shop>().FromInstance(shop).AsSingle();
         } 
         private void BindPlayerWeaponsSetter()
         {
@@ -85,6 +90,11 @@ namespace Installers
         private void BindMainCamera()
         {
             Container.Bind<Camera>().FromInstance(mainCamera).AsSingle();
+        }
+        private void BindLevelDialogues()
+        {
+            Container.Bind<LevelDialogues>().AsSingle()
+                .WithArguments(levelChargesHandler, _dialogueManager, levelDialogueConfig);
         }
     }
 }

@@ -8,6 +8,7 @@ using Core.LoadingSystem;
 using Core.PoolingSystem;
 using Core.SceneManagement;
 using Cysharp.Threading.Tasks;
+using DialogueSystem.LevelDialogue;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using Weapons.Test_Gun;
@@ -28,23 +29,28 @@ namespace Core.Bootstrappers
         
         private BulletPool _pistolBulletPool;
 
+        private LevelDialogues _levelDialogues;
         private SceneLoader _sceneLoader;
         private AssetLoader _environmentLoader = new();
+        
+        [Inject]
+        public void Construct(SceneLoader sceneLoader, LevelDialogues levelDialogues)
+        {
+            _sceneLoader = sceneLoader;
+            _levelDialogues = levelDialogues;
+        }
         private async void Awake()
         {
             await InstantiateAssets(CancellationToken.None);
             InitializePools();
             InitializeGuns();
+            _levelDialogues.PlayStartDialogue();
         }
         private void OnDestroy()
         {
             _environmentLoader.ReleaseStoredInstance();
             CleanUpPools();
-        }
-        [Inject]
-        public void Construct(SceneLoader sceneLoader)
-        {
-            _sceneLoader = sceneLoader;
+            _levelDialogues.Expose();
         }
         public async UniTask InstantiateAssets(CancellationToken token)
         {

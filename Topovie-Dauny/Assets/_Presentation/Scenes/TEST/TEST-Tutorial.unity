@@ -538,7 +538,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectToFollowPlayer: {fileID: 119621988}
   canvas: {fileID: 13638339}
-  padding: {x: 0, y: 100}
+  padding: {x: 0, y: 140}
   smoothTime: 0.1
 --- !u!1 &134620113
 GameObject:
@@ -777,9 +777,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 6268379499708807505, guid: 79028eface50ed546868951a9acd3747, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2071173032}
-    - targetCorrespondingSourceObject: {fileID: 6268379499708807505, guid: 79028eface50ed546868951a9acd3747, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 2071173033}
   m_SourcePrefab: {fileID: 100100000, guid: 79028eface50ed546868951a9acd3747, type: 3}
 --- !u!4 &187232715 stripped
 Transform:
@@ -882,7 +879,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectToFollowPlayer: {fileID: 360441813}
   canvas: {fileID: 13638339}
-  padding: {x: 0, y: 100}
+  padding: {x: 0, y: 140}
   smoothTime: 0.1
 --- !u!1 &381449411
 GameObject:
@@ -2009,6 +2006,7 @@ MonoBehaviour:
   customCursor: {fileID: 704427450}
   baseDialogueDisplay: {fileID: 7961203719235848609}
   mainCamera: {fileID: 4081401207632641913}
+  levelDialogueConfig: {fileID: 11400000, guid: 8cf759aa29c0eb64d938bef452cd135c, type: 2}
 --- !u!114 &1541323202
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2508,6 +2506,63 @@ Transform:
   - {fileID: 696700939}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &1856515966
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 7706175414264198118, guid: 5fb17d422d6371b4cba1446c777663ca, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7706175414264198118, guid: 5fb17d422d6371b4cba1446c777663ca, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7706175414264198118, guid: 5fb17d422d6371b4cba1446c777663ca, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7706175414264198118, guid: 5fb17d422d6371b4cba1446c777663ca, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7706175414264198118, guid: 5fb17d422d6371b4cba1446c777663ca, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7706175414264198118, guid: 5fb17d422d6371b4cba1446c777663ca, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7706175414264198118, guid: 5fb17d422d6371b4cba1446c777663ca, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7706175414264198118, guid: 5fb17d422d6371b4cba1446c777663ca, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7706175414264198118, guid: 5fb17d422d6371b4cba1446c777663ca, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7706175414264198118, guid: 5fb17d422d6371b4cba1446c777663ca, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8818922851791141888, guid: 5fb17d422d6371b4cba1446c777663ca, type: 3}
+      propertyPath: m_Name
+      value: TestEnvironment
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 5fb17d422d6371b4cba1446c777663ca, type: 3}
 --- !u!1 &1945678544
 GameObject:
   m_ObjectHideFlags: 0
@@ -2645,22 +2700,6 @@ MonoBehaviour:
   attackIndicatorDisappearTime: 2
   timeBeforeAbilitiesIndicatorAppear: 2
   abilityIndicatorDisappearTime: 5
---- !u!114 &2071173033
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 187232716}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d9040819fa834c05b590278d56980732, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dialogueOnStart: {fileID: 0}
-  dialogues:
-  - {fileID: 4900000, guid: 2838786b90a061846b7e5a77f126213f, type: 3}
-  delayBeforeStartDialogue: 2
 --- !u!114 &2119330946 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2398676430258878253, guid: ba3f276fa16aec249a029d4ce9df78dd, type: 3}
@@ -4080,3 +4119,4 @@ SceneRoots:
   - {fileID: 1830432310}
   - {fileID: 535823487}
   - {fileID: 1149408284}
+  - {fileID: 1856515966}

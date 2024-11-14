@@ -667,11 +667,6 @@ Camera:
   m_CorrespondingSourceObject: {fileID: 4228559008295667183, guid: 3a94c96d59fd0304a9aa46ca3403118d, type: 3}
   m_PrefabInstance: {fileID: 369398953}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &370796866 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6268379499708807505, guid: 79028eface50ed546868951a9acd3747, type: 3}
-  m_PrefabInstance: {fileID: 4659633979194827391}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &456465365
 Transform:
   m_ObjectHideFlags: 0
@@ -2021,6 +2016,7 @@ MonoBehaviour:
   customCursor: {fileID: 704427450}
   baseDialogueDisplay: {fileID: 7961203719235848606}
   mainCamera: {fileID: 369398954}
+  levelDialogueConfig: {fileID: 11400000, guid: 6c6e5bff7c67e8842afbff30a19416d3, type: 2}
 --- !u!1 &1536201250
 GameObject:
   m_ObjectHideFlags: 0
@@ -2198,7 +2194,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1458607276898004957, guid: 79028eface50ed546868951a9acd3747, type: 3}
   m_PrefabInstance: {fileID: 4659633979194827391}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 370796866}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2fa505c01cc74761b66fa2ec60d87c47, type: 3}
@@ -3675,10 +3671,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 6268379499708807505, guid: 79028eface50ed546868951a9acd3747, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 9023241815803398302}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 79028eface50ed546868951a9acd3747, type: 3}
 --- !u!1 &4852689288085394241 stripped
 GameObject:
@@ -4405,23 +4398,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 504555564865825945, guid: 79028eface50ed546868951a9acd3747, type: 3}
   m_PrefabInstance: {fileID: 4659633979194827391}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &9023241815803398302
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 370796866}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d9040819fa834c05b590278d56980732, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dialogueOnStart: {fileID: 4900000, guid: 2838786b90a061846b7e5a77f126213f, type: 3}
-  dialogues:
-  - {fileID: 4900000, guid: 2838786b90a061846b7e5a77f126213f, type: 3}
-  - {fileID: 4900000, guid: 2838786b90a061846b7e5a77f126213f, type: 3}
-  delayBeforeStartDialogue: 2
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
