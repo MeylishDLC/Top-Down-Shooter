@@ -25,7 +25,6 @@ namespace Core.Bootstrappers
         
         [Header("POOLS")] 
         [SerializeField] private PoolConfigParentPair pistolBulletPoolDataPair;
-        [SerializeField] private PoolConfigParentPair enemyBulletPoolDataPair;
         
         private BulletPool _pistolBulletPool;
 

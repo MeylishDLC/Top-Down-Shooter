@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 3905909031242766267}
   - component: {fileID: 1458607276898004957}
   m_Layer: 0
-  m_Name: UIManager
+  m_Name: UIComponents
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -121,10 +121,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pauseMenu: {fileID: 0}
   optionsButton: {fileID: 0}
-  restartButton: {fileID: 0}
-  exitButton: {fileID: 0}
+  menuButton: {fileID: 0}
+  resumeButton: {fileID: 0}
   optionsScreen: {fileID: 0}
-  customCursor: {fileID: 0}
+  optionsReturnButton: {fileID: 0}
 --- !u!114 &1458607276898004957
 MonoBehaviour:
   m_ObjectHideFlags: 0

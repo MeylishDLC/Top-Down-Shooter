@@ -1,5 +1,6 @@
 ﻿using Core.InputSystem;
 using Core.LevelSettings;
+using DialogueSystem;
 using UI.UIShop;
 using UnityEngine;
 using Zenject;
@@ -17,10 +18,13 @@ namespace GameEnvironment
         private LevelChargesHandler _levelChargesHandler;
         private InputListener _inputListener;
         private Shop _shop;
+        private DialogueManager _dialogueManager;
         
         [Inject]
-        public void Construct(LevelChargesHandler levelChargesHandler, InputListener inputListener, Shop shop)
+        public void Construct(LevelChargesHandler levelChargesHandler, InputListener inputListener, Shop shop, 
+            DialogueManager dialogueManager)
         {
+            _dialogueManager = dialogueManager;
             _shop = shop;
             _levelChargesHandler = levelChargesHandler;
             _inputListener = inputListener;
@@ -40,6 +44,11 @@ namespace GameEnvironment
         }
         private void ShowShop()
         {
+            if (_dialogueManager.DialogueIsPlaying)
+            {
+                return;
+            }
+            
             if (_playerInRange)
             {
                 _shop.OpenShop();

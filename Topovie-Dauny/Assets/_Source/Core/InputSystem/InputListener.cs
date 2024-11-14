@@ -91,6 +91,17 @@ namespace Core.InputSystem
                 }
             }
         }
+        public void SetInteract(bool enable)
+        {
+            if (enable)
+            {
+                _interactAction.Enable();
+            }
+            else
+            {
+                _interactAction.Disable();
+            }
+        }
         public void SetFiringAbility(bool enable)
         {
             if (enable)
