@@ -105,7 +105,15 @@ namespace GameEnvironment.LevelObjects
             _inputListener.SetInput(false);
             confirmationScreen.gameObject.SetActive(false);
             var nextSceneIndex = SceneManager.GetActiveScene().buildIndex + 1;
-            _sceneLoader.LoadSceneAsync(nextSceneIndex).Forget();
+
+            if (SceneManager.sceneCountInBuildSettings <= nextSceneIndex)
+            {
+                _sceneLoader.LoadSceneAsync(0).Forget();
+            }
+            else
+            {
+                _sceneLoader.LoadSceneAsync(nextSceneIndex).Forget();
+            }
         }
     }
 }

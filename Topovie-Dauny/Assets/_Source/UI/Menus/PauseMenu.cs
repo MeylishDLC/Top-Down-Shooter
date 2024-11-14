@@ -6,6 +6,7 @@ using Cysharp.Threading.Tasks;
 using UI.Core;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 using Zenject;
 
@@ -17,9 +18,12 @@ namespace UI.Menus
 
         [SerializeField] private GameObject pauseMenu; 
         [SerializeField] private Button optionsButton;
-        [SerializeField] private Button restartButton;
-        [SerializeField] private Button exitButton;
+        [SerializeField] private Button menuButton;
+        [SerializeField] private Button resumeButton;
+        
+        [Header("Options Screen")]
         [SerializeField] private GameObject optionsScreen;
+        [SerializeField] private Button optionsReturnButton;
         
         private CustomCursor _customCursor;
         private SceneLoader _sceneLoader;
@@ -35,9 +39,11 @@ namespace UI.Menus
         }
         private void Start()
         {
-            exitButton.onClick.AddListener(ExitGame);
+            resumeButton.onClick.AddListener(ResumeGame);
             optionsButton.onClick.AddListener(OpenOptionsPanel);
-            restartButton.onClick.AddListener(RestartLevel);
+            menuButton.onClick.AddListener(GoToMainMenu);
+            optionsReturnButton.onClick.AddListener(ReturnToPause);
+            
             _inputListener.OnPausePressed += HandlePausePressed;
         }
         private void OnDestroy()
@@ -80,19 +86,12 @@ namespace UI.Menus
             pauseMenu.SetActive(false);
             Time.timeScale = 1f;
         }
-        private void RestartLevel()
+        private void GoToMainMenu()
         {
             _inputListener.SetInput(false);
-            RestartLevelAsync().Forget();
-        }
-        private async UniTask RestartLevelAsync()
-        {
-            optionsButton.interactable = false;
-            restartButton.interactable = false;
-            exitButton.interactable = false;
-
             Time.timeScale = 1f;
-            await _sceneLoader.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex);
+            
+            _sceneLoader.LoadSceneAsync(0).Forget();
         }
         private void OpenOptionsPanel()
         {
@@ -105,11 +104,6 @@ namespace UI.Menus
             _optionsMenuActive = false;
             optionsScreen.SetActive(false);
             pauseMenu.SetActive(true);
-        }
-        private void ExitGame()
-        {
-            Debug.Log("Quitting game");
-            Application.Quit();
         }
     }
 }

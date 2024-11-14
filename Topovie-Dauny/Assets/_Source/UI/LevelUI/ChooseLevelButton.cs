@@ -4,6 +4,7 @@ using Core.SceneManagement;
 using Cysharp.Threading.Tasks;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Zenject;
 
@@ -87,6 +88,10 @@ namespace UI.LevelUI
         private void LoadLevel()
         {
             confirmationScreen.gameObject.SetActive(false);
+            if (SceneManager.sceneCountInBuildSettings <= levelBuildIndex)
+            {
+                return;
+            }
             _sceneLoader.LoadSceneAsync(levelBuildIndex).Forget();
         }
     }
