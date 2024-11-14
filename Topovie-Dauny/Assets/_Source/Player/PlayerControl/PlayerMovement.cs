@@ -50,6 +50,15 @@ namespace Player.PlayerControl
         }
         private void Update()
         {
+            if (_dialogueManager.DialogueIsPlaying)
+            {
+                DisableMovement();
+            }
+            else
+            {
+                EnableMovement();
+            }
+            
             if (!_dialogueManager.DialogueIsPlaying && !playerHealth.KnockBack.GettingKnockedBack &&
                 !_shop.IsShopOpen())
             {
@@ -120,6 +129,14 @@ namespace Player.PlayerControl
             _dodgeRoll = true;
             await UniTask.Delay(dodgeTimeMilliseconds, cancellationToken: token);
             _dodgeRoll = false;
+        }
+        private void DisableMovement()
+        {
+            _rb.bodyType = RigidbodyType2D.Static;
+        }
+        private void EnableMovement()
+        {
+            _rb.bodyType = RigidbodyType2D.Dynamic;
         }
     }
 }
