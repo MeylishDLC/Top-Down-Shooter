@@ -26,6 +26,10 @@ namespace UI.Menus
         {
             _sceneLoader = sceneLoader;
         }
+        private void Awake()
+        {
+            Cursor.visible = true;
+        }
         private void Start()
         {
             settingsScreen.gameObject.SetActive(false);
@@ -38,7 +42,7 @@ namespace UI.Menus
         private void LoadChooseLevelScreen()
         {
             SetButtonsInteractable(false);
-            //todo load scene with level choose
+            
             _sceneLoader.LoadSceneAsync(1).Forget();
         }
         private void ExitGame()
