@@ -7,6 +7,7 @@ using Player.PlayerControl.GunMovement;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Serialization;
+using UnityEngine.UI;
 using Zenject;
 using Random = UnityEngine.Random;
 
@@ -19,7 +20,7 @@ namespace Weapons.Test_Gun
         
         [Header("Components")]
         [SerializeField] private Animator firingPointAnimator;
-        [SerializeField] private TMP_Text reloadingText;
+        [SerializeField] private Image reloadingImage;
 
         [Header("Kickback And Dispersion")] 
         [SerializeField] private Transform kickbackTransform;
@@ -31,6 +32,7 @@ namespace Weapons.Test_Gun
         
         private PlayerKickback _playerKickback;
         private BulletPool _bulletPool;
+        private float _remainingTime;
         public void Initialize(BulletPool bulletPool)
         {
             _playerKickback = new PlayerKickback(kickbackDistance, kickbackDuration,transform, kickbackTransform);
@@ -54,7 +56,7 @@ namespace Weapons.Test_Gun
         }
         public override void StopReload()
         {
-            reloadingText.gameObject.SetActive(false);
+            HideReloadingImage();
             CurrentBulletsAmount = 0;
             IsReloading = false;   
         }
@@ -85,13 +87,37 @@ namespace Weapons.Test_Gun
         }
         private async UniTask ReloadAsync(CancellationToken token)
         {
-            reloadingText.gameObject.SetActive(true);
-            await UniTask.Delay(TimeSpan.FromSeconds(ReloadTime), cancellationToken: token);
-            reloadingText.gameObject.SetActive(false);
+            ShowReloadingImage();
+            await UpdateReloadingImageAsync(token);
+            if (!token.IsCancellationRequested)
+            {
+                HideReloadingImage();
 
-            CurrentBulletsAmount = BulletsAmount;
-            OnBulletsAmountChange?.Invoke(CurrentBulletsAmount);
-            IsReloading = false;
+                CurrentBulletsAmount = BulletsAmount;
+                OnBulletsAmountChange?.Invoke(CurrentBulletsAmount);
+                IsReloading = false;
+            }
+        }
+        private void ShowReloadingImage()
+        {
+            reloadingImage.gameObject.SetActive(true);
+            reloadingImage.fillAmount = 1;
+            _remainingTime = ReloadTime;
+        }
+        private void HideReloadingImage()
+        {
+            reloadingImage.gameObject.SetActive(false);
+            reloadingImage.fillAmount = 0;
+            _remainingTime = 0;
+        }
+        private async UniTask UpdateReloadingImageAsync(CancellationToken token)
+        {
+            while (_remainingTime > 0 && !token.IsCancellationRequested)
+            {
+                _remainingTime -= Time.deltaTime;
+                reloadingImage.fillAmount = Mathf.Clamp01(_remainingTime / ReloadTime);
+                await UniTask.Yield(PlayerLoopTiming.Update);
+            }
         }
     }
 }

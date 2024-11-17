@@ -18,7 +18,6 @@ namespace Player.PlayerAbilities
         public override void Construct(PlayerMovement playerMovement)
         {
             _playerTransform = playerMovement.transform;
-            AbilityType = AbilityTypes.HoldButton;
         }
         public override void UseAbility()
         {

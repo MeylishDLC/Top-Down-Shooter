@@ -18,7 +18,7 @@ namespace Player.PlayerAbilities
         
         [field:TextArea]
         [field:SerializeField] public string VetReactionText { get; private set; }
-        public AbilityTypes AbilityType { get; protected set; } = AbilityTypes.TapButton;
+        [field:SerializeField] public AbilityTypes AbilityType { get; protected set; } = AbilityTypes.TapButton;
         public abstract void Construct(PlayerMovement playerMovement);
         public abstract void UseAbility();
     }
