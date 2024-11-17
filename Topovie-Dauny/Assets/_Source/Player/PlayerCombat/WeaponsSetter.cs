@@ -18,8 +18,8 @@ namespace Player.PlayerCombat
         public IEnumerable<Gun> Guns => _guns.Values;
 
         private readonly Image _gunUIImage;
-        private readonly Color _keyImageEnabledColor;
-        private readonly Color _keyImageDisabledColor;
+        private readonly Sprite _keySpriteEnabled;
+        private readonly Sprite _keySpriteDisabled;
         private readonly GunRotation _gunRotation;
         private readonly SerializedDictionary<int, Gun> _guns;
         
@@ -41,8 +41,10 @@ namespace Player.PlayerCombat
         {
             _guns = config.Guns;
             _gunUIImage = config.GunUIImage;
-            _keyImageDisabledColor = config.GunKeyColorDisabled;
-            _keyImageEnabledColor = config.GunKeyColorEnabled;
+            
+            _keySpriteDisabled = config.GunKeyDisabled;
+            _keySpriteEnabled = config.GunKeyEnabled;
+            
             _gunRotation = config.GunRotation;
             
             CurrentActiveGunIndex = GetActiveWeaponIndex();
@@ -50,7 +52,8 @@ namespace Player.PlayerCombat
             
             _gunRotation.CurrentGun = currentGun.GetComponent<SpriteRenderer>();
             _gunUIImage.sprite = currentGun.GunIconSprite;
-            currentGun.GunKeyImage.color = _keyImageEnabledColor;
+
+            currentGun.GunKeyImage.sprite = _keySpriteEnabled;
         }
         private void HandleShooting()
         {
@@ -124,8 +127,7 @@ namespace Player.PlayerCombat
                 InterruptReload(currentGun);
             }
 
-            currentGun.GunKeyImage.color = _keyImageDisabledColor;
-            
+            currentGun.GunKeyImage.sprite = _keySpriteDisabled;
             CurrentActiveGunIndex = weaponIndex;
             
             gunArray[CurrentActiveGunIndex].gameObject.SetActive(true);
@@ -138,7 +140,7 @@ namespace Player.PlayerCombat
             gun.OnBulletsAmountChange
                 .Invoke(gun.CurrentBulletsAmount);
             _gunUIImage.sprite = gun.GunIconSprite;
-            gun.GunKeyImage.color = _keyImageEnabledColor;
+            gun.GunKeyImage.sprite = _keySpriteEnabled;
         }
         private int GetActiveWeaponIndex()
         {

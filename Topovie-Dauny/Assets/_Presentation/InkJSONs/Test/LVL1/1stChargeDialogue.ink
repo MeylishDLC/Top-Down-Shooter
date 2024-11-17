@@ -1,5 +1,5 @@
 -> main
 
 === main ===
-[здесь должен быть диалог] #speaker:Лео #sprite:leo_default #layout:left
+Ты меня правда поражаешь, в хорошем смысле. Возможно, мы как раз сыграем с тобой во что-нибудь связанное с боем? #speaker:Лео #sprite:leo_default #layout:left
 -> END

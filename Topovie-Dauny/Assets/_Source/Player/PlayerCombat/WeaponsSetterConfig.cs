@@ -11,7 +11,7 @@ namespace Player.PlayerCombat
         [field: SerializeField] public SerializedDictionary<int, Gun> Guns {get; private set;}
         [field: SerializeField] public GunRotation GunRotation  {get; private set;}
         [field: SerializeField] public Image GunUIImage  {get; private set;}
-        [field: SerializeField] public Color GunKeyColorEnabled  {get; private set;}
-        [field: SerializeField] public Color GunKeyColorDisabled  {get; private set;}
+        [field: SerializeField] public Sprite GunKeyEnabled  {get; private set;}
+        [field: SerializeField] public Sprite GunKeyDisabled  {get; private set;}
     }
 }
