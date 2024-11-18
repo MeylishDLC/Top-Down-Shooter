@@ -40,7 +40,7 @@ namespace Installers
             BindPlayer();
             BindSpawner();
             BindLevelSetter();
-            BindUIShopDisplay();
+            BindShop();
             BindPlayerWeaponsSetter();
             BindCustomCursor();
             BindLevelDialogues();
@@ -75,7 +75,7 @@ namespace Installers
         {
             Container.Bind<LevelChargesHandler>().FromInstance(levelChargesHandler).AsSingle();
         }
-        private void BindUIShopDisplay()
+        private void BindShop()
         {
             Container.Bind<Shop>().FromInstance(shop).AsSingle();
         } 

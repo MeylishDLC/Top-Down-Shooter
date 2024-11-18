@@ -3,6 +3,7 @@ using System.Threading;
 using Core.InputSystem;
 using Core.LevelSettings;
 using Cysharp.Threading.Tasks;
+using DialogueSystem;
 using Player.PlayerAbilities;
 using TMPro;
 using UnityEngine;
@@ -50,6 +51,7 @@ namespace UI.UIShop
             playerCellsInShop.OnAbilityChanged += ChangeDialogue;
             _shopDialogue = new ShopDialogue(vetDialogueText, typeSpeedMilliseconds);
         }
+        //todo fix shooting in shop after dialogue
         private void OnDestroy()
         {
             _levelChargesHandler.OnStateChanged -= SetCanBeOpen;
@@ -86,7 +88,6 @@ namespace UI.UIShop
         private async UniTask OpenShopAsync(CancellationToken token)
         {
             DisableInput();
-            _inputListener.SetFiringAbility(false);
             shopUI.SetActive(true);
             playerGUI.SetActive(false);
             vetDialogueText.text = "";
