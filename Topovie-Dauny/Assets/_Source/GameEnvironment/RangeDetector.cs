@@ -10,21 +10,21 @@ namespace GameEnvironment
         public event Action OnPlayerEnterRange;
         public event Action OnPlayerExitRange;
 
-        private LevelChargesHandler _levelChargesHandler;
+        private StatesChanger _statesChanger;
         
         [Inject]
-        public void Construct(LevelChargesHandler levelChargesHandler)
+        public void Construct(StatesChanger statesChanger)
         {
-            _levelChargesHandler = levelChargesHandler;
+            _statesChanger = statesChanger;
         }
         private void Awake()
         {
-            _levelChargesHandler.OnStateChanged += EnableOnChangeState;
+            _statesChanger.OnStateChanged += EnableOnChangeState;
             EnableOnChangeState(GameStates.Chill);
         }
         private void OnDestroy()
         {
-            _levelChargesHandler.OnStateChanged -= EnableOnChangeState;
+            _statesChanger.OnStateChanged -= EnableOnChangeState;
         }
         private void EnableOnChangeState(GameStates gameState)
         {

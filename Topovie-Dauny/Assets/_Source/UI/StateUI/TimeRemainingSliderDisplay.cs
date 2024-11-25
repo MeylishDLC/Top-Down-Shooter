@@ -1,61 +1,45 @@
 ﻿using System;
 using System.Threading;
-using Core;
 using Core.LevelSettings;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
 
-namespace UI.PlayerGUI
+namespace UI.StateUI
 {
-    public class UIStateDisplay: MonoBehaviour
+    public class TimeRemainingSliderDisplay: MonoBehaviour
     {
-        [SerializeField] private TMP_Text stateText;
-        
-        [Header("Slider Settings")]
         [SerializeField] private Slider timeRemainingSlider;
-        [SerializeField] private float sliderMoveYOnDisappear;
-        [SerializeField] private float sliderMoveYOnAppear;
-        [SerializeField] private float sliderDisappearDuration;
-
-        [Header("Text Settings")] 
-        [SerializeField] private string chillStateText;
-        [SerializeField] private Color chillStateTextColor;
+        [SerializeField] private float sliderMoveYOnDisappear = 1f;
+        [SerializeField] private float sliderMoveYOnAppear = -60f;
+        [SerializeField] private float sliderDisappearDuration = 0.5f;
         
-        [SerializeField] private string attackStateText;
-        [SerializeField] private Color attackStateTextColor; 
-        
-        [SerializeField] private string portalChargedStateText;
-        [SerializeField] private Color portalChargedTextColor;
-
         private LevelChargesHandler _levelChargesHandler;
-        
+        private StatesChanger _statesChanger;
+
         [Inject]
-        public void Construct(LevelChargesHandler levelChargesHandler)
+        public void Construct(LevelChargesHandler levelChargesHandler, StatesChanger statesChanger)
         {
             _levelChargesHandler = levelChargesHandler;
+            _statesChanger = statesChanger;
         }
         private void Awake()
         {
-            _levelChargesHandler.OnStateChanged += ChangeStateText;
-            _levelChargesHandler.OnStateChanged += EnableSliderOnChangeState;
             _levelChargesHandler.OnTimeRemainingChanged += UpdateSliderValue;
+            _statesChanger.OnStateChanged += EnableSliderOnChangeStateChanger;
         }
         private void Start()
         {
-            ChangeStateText(GameStates.Chill);
             timeRemainingSlider.transform.DOMoveY(sliderMoveYOnDisappear, 0f);
             timeRemainingSlider.value = 1f;
             timeRemainingSlider.gameObject.SetActive(false);
         }
         private void OnDestroy()
         {
-            _levelChargesHandler.OnStateChanged -= ChangeStateText;
-            _levelChargesHandler.OnStateChanged -= EnableSliderOnChangeState;
             _levelChargesHandler.OnTimeRemainingChanged -= UpdateSliderValue;
+            _statesChanger.OnStateChanged -= EnableSliderOnChangeStateChanger;
         }
         private void UpdateSliderValue(float remainingTime, float duration)
         {
@@ -64,27 +48,7 @@ namespace UI.PlayerGUI
                 timeRemainingSlider.value = remainingTime / duration;
             }
         }
-        private void ChangeStateText(GameStates gameState)
-        {
-            switch (gameState)
-            {
-                case GameStates.Chill:
-                    stateText.text = chillStateText;
-                    stateText.color = chillStateTextColor;
-                    break;
-                case GameStates.PortalCharged:
-                    stateText.text = portalChargedStateText;
-                    stateText.color = portalChargedTextColor;
-                    break;
-                case GameStates.Fight:
-                    stateText.text = attackStateText;
-                    stateText.color = attackStateTextColor;
-                    break;
-                default:
-                    throw new Exception("Game state not supported");
-            }
-        }
-        private void EnableSliderOnChangeState(GameStates gameState)
+        private void EnableSliderOnChangeStateChanger(GameStates gameState)
         {
             if(gameState == GameStates.Fight)
             {
@@ -111,6 +75,5 @@ namespace UI.PlayerGUI
             await timeRemainingSlider.gameObject.transform.DOLocalMoveY(sliderMoveYOnDisappear, sliderDisappearDuration).ToUniTask(cancellationToken: token);
             timeRemainingSlider.gameObject.SetActive(false);
         }
-
     }
 }

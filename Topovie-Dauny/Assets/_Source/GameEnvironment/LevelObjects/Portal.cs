@@ -19,28 +19,28 @@ namespace GameEnvironment.LevelObjects
         [SerializeField] private Collider2D rangeTrigger;
         [SerializeField] private SpriteRenderer textBubble;
         
-        private LevelChargesHandler _levelChargesHandler;
+        private StatesChanger _statesChanger;
         private SceneLoader _sceneLoader;
         private InputListener _inputListener;
         private LevelSave _levelSave;
         private bool _isInRange;
         
         [Inject]
-        public void Construct(LevelChargesHandler levelChargesHandler, SceneLoader sceneLoader, 
+        public void Construct(StatesChanger statesChanger, SceneLoader sceneLoader, 
             InputListener inputListener, LevelSave levelSave)
         {
             _levelSave = levelSave;
             _inputListener = inputListener;
             _sceneLoader = sceneLoader;
-            _levelChargesHandler = levelChargesHandler;
+            _statesChanger = statesChanger;
             
-            _levelChargesHandler.OnStateChanged += ActivateOnChangeState;
+            _statesChanger.OnStateChanged += ActivateOnChangeState;
             confirmationScreen.OnConfirmed += GoToNextLevel;
             _inputListener.OnInteractPressed += ShowConfirmationScreen;
         }
         private void OnDestroy()
         {
-            _levelChargesHandler.OnStateChanged -= ActivateOnChangeState;
+            _statesChanger.OnStateChanged -= ActivateOnChangeState;
             confirmationScreen.OnConfirmed -= GoToNextLevel;
             _inputListener.OnInteractPressed -= ShowConfirmationScreen;
         }

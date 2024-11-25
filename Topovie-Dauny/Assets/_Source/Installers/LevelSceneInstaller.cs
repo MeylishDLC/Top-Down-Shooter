@@ -39,6 +39,7 @@ namespace Installers
             BindProjectContext();
             BindPlayer();
             BindSpawner();
+            BindStatesChanger();
             BindLevelSetter();
             BindShop();
             BindPlayerWeaponsSetter();
@@ -74,6 +75,10 @@ namespace Installers
         private void BindLevelSetter()
         {
             Container.Bind<LevelChargesHandler>().FromInstance(levelChargesHandler).AsSingle();
+        }
+        private void BindStatesChanger()
+        {
+            Container.Bind<StatesChanger>().AsSingle();
         }
         private void BindShop()
         {

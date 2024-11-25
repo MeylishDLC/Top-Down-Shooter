@@ -717,17 +717,9 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 4158270258604421952}
     - target: {fileID: 3905909031242766267, guid: 79028eface50ed546868951a9acd3747, type: 3}
-      propertyPath: exitButton
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 3905909031242766267, guid: 79028eface50ed546868951a9acd3747, type: 3}
       propertyPath: menuButton
       value: 
       objectReference: {fileID: 1191043673286081137}
-    - target: {fileID: 3905909031242766267, guid: 79028eface50ed546868951a9acd3747, type: 3}
-      propertyPath: customCursor
-      value: 
-      objectReference: {fileID: 704427450}
     - target: {fileID: 3905909031242766267, guid: 79028eface50ed546868951a9acd3747, type: 3}
       propertyPath: resumeButton
       value: 
@@ -741,13 +733,13 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 4852689288085394241}
     - target: {fileID: 3905909031242766267, guid: 79028eface50ed546868951a9acd3747, type: 3}
-      propertyPath: restartButton
-      value: 
-      objectReference: {fileID: 1127234014}
-    - target: {fileID: 3905909031242766267, guid: 79028eface50ed546868951a9acd3747, type: 3}
       propertyPath: optionsReturnButton
       value: 
       objectReference: {fileID: 1191043673286081136}
+    - target: {fileID: 5141776223088164638, guid: 79028eface50ed546868951a9acd3747, type: 3}
+      propertyPath: timeRemainingSlider
+      value: 
+      objectReference: {fileID: 2770184408392176917}
     - target: {fileID: 5454541357032840345, guid: 79028eface50ed546868951a9acd3747, type: 3}
       propertyPath: restartButton
       value: 
@@ -776,17 +768,13 @@ PrefabInstance:
       propertyPath: stateText
       value: 
       objectReference: {fileID: 6153260058158397645}
-    - target: {fileID: 8194082548119618455, guid: 79028eface50ed546868951a9acd3747, type: 3}
-      propertyPath: timeRemainingSlider
-      value: 
-      objectReference: {fileID: 2770184408392176917}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 6268379499708807505, guid: 79028eface50ed546868951a9acd3747, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 2071173032}
+      addedObject: {fileID: 2071173034}
   m_SourcePrefab: {fileID: 100100000, guid: 79028eface50ed546868951a9acd3747, type: 3}
 --- !u!4 &187232715 stripped
 Transform:
@@ -2048,7 +2036,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2fa505c01cc74761b66fa2ec60d87c47, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &2071173032
+--- !u!114 &2071173034
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

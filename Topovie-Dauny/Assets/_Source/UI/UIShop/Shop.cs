@@ -30,7 +30,7 @@ namespace UI.UIShop
         [SerializeField] private int delayBeforeShopClosingMillisecons;
         [SerializeField] private PlayerCellsInShop playerCellsInShop;
 
-        private LevelChargesHandler _levelChargesHandler;
+        private StatesChanger _statesChanger;
         private InputListener _inputListener;
         private ShopDialogue _shopDialogue;
         private bool _canBeOpen = true;
@@ -38,23 +38,23 @@ namespace UI.UIShop
         private CancellationTokenSource _stopTypingCts = new();
 
         [Inject]
-        public void Construct(InputListener inputListener, LevelChargesHandler levelChargesHandler)
+        public void Construct(InputListener inputListener, StatesChanger statesChanger)
         {
-            _levelChargesHandler = levelChargesHandler;
+            _statesChanger = statesChanger;
             _inputListener = inputListener;
         }
         private void Start()
         {
             shopUI.SetActive(false);
             closeButton.onClick.AddListener(CloseShop);
-            _levelChargesHandler.OnStateChanged += SetCanBeOpen;
+            _statesChanger.OnStateChanged += SetCanBeOpen;
             playerCellsInShop.OnAbilityChanged += ChangeDialogue;
             _shopDialogue = new ShopDialogue(vetDialogueText, typeSpeedMilliseconds);
         }
         //todo fix shooting in shop after dialogue
         private void OnDestroy()
         {
-            _levelChargesHandler.OnStateChanged -= SetCanBeOpen;
+            _statesChanger.OnStateChanged -= SetCanBeOpen;
             playerCellsInShop.OnAbilityChanged -= ChangeDialogue;
             _stopTypingCts?.Dispose();
         }

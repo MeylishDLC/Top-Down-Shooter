@@ -19,28 +19,29 @@ namespace GameEnvironment
         private bool _isHoldingButton;
         private float _holdStartTime;
         private bool _playerInRange;
-        private LevelChargesHandler _levelChargesHandler;
         private InputListener _inputListener;
+        private StatesChanger _statesChanger;
         
         [Inject]
-        public void Construct(LevelChargesHandler levelChargesHandler, InputListener inputListener)
+        public void Construct(StatesChanger statesChanger, InputListener inputListener)
         {
             _inputListener = inputListener;
-            _levelChargesHandler = levelChargesHandler;
-            _levelChargesHandler.OnStateChanged += EnableOnChangeState;
+            _statesChanger = statesChanger;
+            
+            _statesChanger.OnStateChanged += EnableOnChangeStatesChanger;
             _inputListener.OnInteractPressed += StartHoldingChargeButton;
             _inputListener.OnInteractReleased += ReleaseChargeButton;
         }
         private void OnDestroy()
         {
-            _levelChargesHandler.OnStateChanged -= EnableOnChangeState;
+            _statesChanger.OnStateChanged -= EnableOnChangeStatesChanger;
             _inputListener.OnInteractPressed -= StartHoldingChargeButton;
             _inputListener.OnInteractReleased -= ReleaseChargeButton;
         }
         private void Start()
         {
             visualQue.gameObject.SetActive(false);
-            EnableOnChangeState(GameStates.Chill);
+            EnableOnChangeStatesChanger(GameStates.Chill);
         }
         private void Update()
         {
@@ -73,6 +74,11 @@ namespace GameEnvironment
             {
                 return;
             }
+
+            if (_statesChanger.CurrentGameState != GameStates.Chill)
+            {
+                return;
+            }
             
             StartHoldingChargeButtonAsync(CancellationToken.None).Forget();
         }
@@ -83,10 +89,15 @@ namespace GameEnvironment
 
             while (_isHoldingButton)
             {
+                if (_statesChanger.CurrentGameState != GameStates.Chill)
+                {
+                    break;
+                }
+                
                 if (Time.time - _holdStartTime >= holdChargePortalButtonDuration)
                 {
                     OnChargePortalPressed?.Invoke(chargeIndex);
-                    _levelChargesHandler.OnStateChanged -= EnableOnChangeState;
+                    _statesChanger.OnStateChanged -= EnableOnChangeStatesChanger;
                     Debug.Log("F held");
                     
                     visualQue.gameObject.SetActive(false);
@@ -101,7 +112,7 @@ namespace GameEnvironment
         {
             _isHoldingButton = false;
         }
-        private void EnableOnChangeState(GameStates state)
+        private void EnableOnChangeStatesChanger(GameStates state)
         {
             if (state != GameStates.Fight)
             {

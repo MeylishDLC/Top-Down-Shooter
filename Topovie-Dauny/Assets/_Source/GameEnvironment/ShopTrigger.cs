@@ -15,23 +15,23 @@ namespace GameEnvironment
         private float _holdStartTime;
         private bool _playerInRange;
 
-        private LevelChargesHandler _levelChargesHandler;
+        private StatesChanger _statesChanger;
         private InputListener _inputListener;
         private Shop _shop;
         private DialogueManager _dialogueManager;
         
         [Inject]
-        public void Construct(LevelChargesHandler levelChargesHandler, InputListener inputListener, Shop shop, 
+        public void Construct(StatesChanger statesChanger, InputListener inputListener, Shop shop, 
             DialogueManager dialogueManager)
         {
+            _statesChanger = statesChanger;
             _dialogueManager = dialogueManager;
             _shop = shop;
-            _levelChargesHandler = levelChargesHandler;
             _inputListener = inputListener;
         }
         private void Awake()
         {
-            _levelChargesHandler.OnStateChanged += EnableOnChangeState;
+            _statesChanger.OnStateChanged += EnableOnChangeState;
             _inputListener.OnInteractPressed += ShowShop;
             
             visualQue.gameObject.SetActive(false);
@@ -39,7 +39,7 @@ namespace GameEnvironment
         }
         private void OnDestroy()
         {
-            _levelChargesHandler.OnStateChanged -= EnableOnChangeState;
+            _statesChanger.OnStateChanged -= EnableOnChangeState;
             _inputListener.OnInteractPressed -= ShowShop;
         }
         private void ShowShop()

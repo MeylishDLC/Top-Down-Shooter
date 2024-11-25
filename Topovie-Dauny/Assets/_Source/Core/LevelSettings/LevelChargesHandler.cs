@@ -11,7 +11,6 @@ namespace Core.LevelSettings
      public class LevelChargesHandler: MonoBehaviour
      {
          public event Action OnChargePassed; 
-         public event Action<GameStates> OnStateChanged;
          public event Action<float, float> OnTimeRemainingChanged;
          
          [Header("Main")]
@@ -24,7 +23,7 @@ namespace Core.LevelSettings
          [SerializeField] private int changeStateDelayMilliseconds;
          
          private Spawner _spawner;
-         private GameStates _currentGameState = GameStates.Chill;
+         private StatesChanger _statesChanger;
          
          private CancellationTokenSource _chargingPauseCts = new();
          private CancellationTokenSource _chargingFinishCts = new();
@@ -34,8 +33,9 @@ namespace Core.LevelSettings
          private int _currentChargeIndex;
 
          [Inject]
-         public void Construct(Spawner spawner)
+         public void Construct(Spawner spawner, StatesChanger statesChanger)
          {
+             _statesChanger = statesChanger;
              _spawner = spawner;
          }
          private void Start()
@@ -80,7 +80,7 @@ namespace Core.LevelSettings
          }
          private void StartChargingPortal(int chargeIndex)
          {
-             if (_currentGameState == GameStates.Fight)
+             if (_statesChanger.CurrentGameState == GameStates.Fight)
              {
                  return;
              }
@@ -90,12 +90,11 @@ namespace Core.LevelSettings
                  return;
              }
              
-             _currentGameState = GameStates.Fight;
              _currentChargeIndex = chargeIndex;
              UnsubscribeOnStartCharging(portalChargeTriggers[_currentChargeIndex]);
              SubscribeOnChargeEvents(portalChargeTriggers[_currentChargeIndex].GetComponent<RangeDetector>());
                  
-             OnStateChanged?.Invoke(_currentGameState);
+             _statesChanger.ChangeState(GameStates.Fight);
                  
              var enemyWave = portalCharges[chargeIndex];
              StartSpawningEnemies(enemyWave);
@@ -169,14 +168,12 @@ namespace Core.LevelSettings
 
                  if (_chargesPassed >= portalCharges.Length)
                  {
-                     _currentGameState = GameStates.PortalCharged;
+                     _statesChanger.ChangeState(GameStates.PortalCharged);
                  }
                  else
                  {
-                     _currentGameState = GameStates.Chill;
+                     _statesChanger.ChangeState(GameStates.Chill);
                  }
-                 
-                 OnStateChanged?.Invoke(_currentGameState);
              }
              catch
              {
