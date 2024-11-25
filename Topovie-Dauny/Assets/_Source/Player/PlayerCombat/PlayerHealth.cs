@@ -25,7 +25,7 @@ namespace Player.PlayerCombat
         private void Awake()
         {
             KnockBack = new KnockBack
-                (GetComponent<Rigidbody2D>(), knockbackTimeMilliseconds, knockbackThrust);
+                (this,GetComponent<Rigidbody2D>(), knockbackTimeMilliseconds, knockbackThrust);
         }
         private void Start()
         {

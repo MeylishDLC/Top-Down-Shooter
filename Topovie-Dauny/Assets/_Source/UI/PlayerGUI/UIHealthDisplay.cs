@@ -6,6 +6,7 @@ using Player.PlayerCombat;
 using Player.PlayerControl;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 using Zenject;
 
@@ -16,7 +17,7 @@ namespace UI.PlayerGUI
         [SerializeField] private Slider healthSlider;
         
         [Header("Heart Pounding")]
-        [SerializeField] private Image heartImage;
+        [SerializeField] private RectTransform heartTransform;
         [SerializeField] private float minScale;
         [SerializeField] private float scaleDuration;
         
@@ -25,6 +26,7 @@ namespace UI.PlayerGUI
         [SerializeField] private GameObject healTextPrefab;
         [SerializeField] private Canvas gameCanvas;
 
+        private CancellationToken _deathCancellationToken;
         private PlayerHealth _playerHealth;
         private bool _heartIsAnimated;
         
@@ -35,6 +37,7 @@ namespace UI.PlayerGUI
         }
         private void Awake()
         {
+            _deathCancellationToken = _playerHealth.GetCancellationTokenOnDestroy();
             _playerHealth.OnDamageTaken += InstantiateDamageText;
             _playerHealth.OnHeal += InstantiateHealText;
             _playerHealth.OnDamageTaken += AnimateHeart;
@@ -87,14 +90,13 @@ namespace UI.PlayerGUI
         {
             if (!_heartIsAnimated)
             {
-                AnimateHeartAsync(CancellationToken.None).Forget();
+                AnimateHeartAsync(_deathCancellationToken).Forget();
             }
-        }
-        //todo: refactor (cts too)
+        } 
         private async UniTask AnimateHeartAsync(CancellationToken token)
         {
             _heartIsAnimated = true;
-            await heartImage.transform.DOScale(minScale, scaleDuration).SetLoops(2, LoopType.Yoyo).ToUniTask(cancellationToken: token);
+            await heartTransform.DOScale(minScale, scaleDuration).SetLoops(2, LoopType.Yoyo).ToUniTask(cancellationToken: token);
             _heartIsAnimated = false;
         }
     }

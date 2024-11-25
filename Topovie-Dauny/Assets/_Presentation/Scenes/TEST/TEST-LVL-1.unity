@@ -754,6 +754,7 @@ MonoBehaviour:
     <MaxTimeBetweenSpawn>k__BackingField: 5
     <MinTimeBetweenSpawn>k__BackingField: 2
     <TimeToActivatePencil>k__BackingField: 60
+  gameOverScreen: {fileID: 9023241815803398298}
   changeStateDelayMilliseconds: 300
 --- !u!1 &488117871
 GameObject:
@@ -2379,6 +2380,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1902102307}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!224 &1989349831 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 4508696309148119881, guid: e0ed0d935843ac54d9b21f07401a0fbe, type: 3}
+  m_PrefabInstance: {fileID: 7961203719235848605}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &2016319255 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3013561302775763610, guid: e0ed0d935843ac54d9b21f07401a0fbe, type: 3}
@@ -3496,6 +3502,10 @@ PrefabInstance:
       propertyPath: healthSlider
       value: 
       objectReference: {fileID: 3394924164195448655}
+    - target: {fileID: 6128425514495852552, guid: 79028eface50ed546868951a9acd3747, type: 3}
+      propertyPath: heartTransform
+      value: 
+      objectReference: {fileID: 1989349831}
     - target: {fileID: 6268379499708807505, guid: 79028eface50ed546868951a9acd3747, type: 3}
       propertyPath: m_Name
       value: UIManager
@@ -4171,6 +4181,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 504555564865825945, guid: 79028eface50ed546868951a9acd3747, type: 3}
   m_PrefabInstance: {fileID: 4659633979194827391}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &9023241815803398298 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5454541357032840345, guid: 79028eface50ed546868951a9acd3747, type: 3}
+  m_PrefabInstance: {fileID: 4659633979194827391}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c44c64d29fa44f2b1a07e66667632ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

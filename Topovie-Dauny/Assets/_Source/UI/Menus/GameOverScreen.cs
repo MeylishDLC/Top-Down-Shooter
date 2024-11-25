@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading;
 using _Support.Demigiant.DOTween.Modules;
 using Core.InputSystem;
@@ -18,6 +19,9 @@ namespace UI.Menus
 {
     public class GameOverScreen: MonoBehaviour
     {
+        public event Action OnGameOver;
+        public event Action OnScreenFaded;
+        
         [SerializeField] private Image gameOverScreen;
         [SerializeField] private Button restartButton;
         [SerializeField] private float fadeInTime;
@@ -25,16 +29,13 @@ namespace UI.Menus
         private PlayerHealth _playerHealth;
         private SceneLoader _sceneLoader;
         private InputListener _inputListener;
-        private LevelChargesHandler _levelChargesHandler;
         
         [Inject]
-        public void Construct(PlayerMovement playerMovement, SceneLoader sceneLoader, InputListener inputListener, 
-            LevelChargesHandler levelChargesHandler)
+        public void Construct(PlayerMovement playerMovement, SceneLoader sceneLoader, InputListener inputListener)
         {
             _playerHealth = playerMovement.gameObject.GetComponent<PlayerHealth>();
             _sceneLoader = sceneLoader;
             _inputListener = inputListener;
-            _levelChargesHandler = levelChargesHandler;
         }
         private void Awake()
         {
@@ -52,12 +53,13 @@ namespace UI.Menus
         }
         private async UniTask ShowGameOverScreenAsync(CancellationToken token)
         {
-            _levelChargesHandler.StopSpawning();
+            OnGameOver?.Invoke();
+            
             DisableInput();
             gameOverScreen.gameObject.SetActive(true);
             await FadeDeathScreen(0f, 0f, token);
             await FadeDeathScreen(1f, fadeInTime, token);
-            _levelChargesHandler.ClearAllSpawns();
+            OnScreenFaded?.Invoke();
             Destroy(_playerHealth.gameObject);
         }
         private void RestartLevel()

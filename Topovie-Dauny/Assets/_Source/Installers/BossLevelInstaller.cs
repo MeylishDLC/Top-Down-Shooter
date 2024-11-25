@@ -1,9 +1,5 @@
-using System;
-using Bullets;
-using Core;
-using Core.InputSystem;
+﻿using Core.InputSystem;
 using Core.LevelSettings;
-using Core.PoolingSystem;
 using Core.SceneManagement;
 using DialogueSystem;
 using DialogueSystem.LevelDialogue;
@@ -16,10 +12,9 @@ using Zenject;
 
 namespace Installers
 {
-    public class LevelSceneInstaller : MonoInstaller
+    public class BossLevelInstaller: MonoInstaller
     {
         [SerializeField] private InputListener inputListener;
-        [SerializeField] private LevelChargesHandler levelChargesHandler;
         [SerializeField] private GameObject playerObject;
         [SerializeField] private Shop shop;
         [SerializeField] private SceneLoader sceneLoader;
@@ -27,7 +22,6 @@ namespace Installers
         [SerializeField] private CustomCursor customCursor;
         [SerializeField] private DialogueDisplay baseDialogueDisplay;
         [SerializeField] private Camera mainCamera;
-        [SerializeField] private LevelDialogueConfig levelDialogueConfig;
 
         private DialogueManager _dialogueManager;
         public override void InstallBindings()
@@ -38,13 +32,10 @@ namespace Installers
             BindDialogueManager();
             BindProjectContext();
             BindPlayer();
-            BindSpawner();
             BindStatesChanger();
-            BindLevelSetter();
             BindShop();
             BindPlayerWeaponsSetter();
             BindCustomCursor();
-            BindLevelDialogues();
         }
         private void BindInputListener()
         {
@@ -68,14 +59,6 @@ namespace Installers
         {
             Container.Bind<PlayerMovement>().FromComponentOn(playerObject).AsSingle();
         }
-        private void BindSpawner()
-        {
-            Container.Bind<Spawner>().AsSingle();
-        }
-        private void BindLevelSetter()
-        {
-            Container.Bind<LevelChargesHandler>().FromInstance(levelChargesHandler).AsSingle();
-        }
         private void BindStatesChanger()
         {
             Container.Bind<StatesChanger>().AsSingle();
@@ -95,11 +78,6 @@ namespace Installers
         private void BindMainCamera()
         {
             Container.Bind<Camera>().FromInstance(mainCamera).AsSingle();
-        }
-        private void BindLevelDialogues()
-        {
-            Container.Bind<LevelDialogues>().AsSingle()
-                .WithArguments(levelChargesHandler, _dialogueManager, levelDialogueConfig);
         }
     }
 }

@@ -491,8 +491,13 @@ PrefabInstance:
     - target: {fileID: 8194082548119618455, guid: 79028eface50ed546868951a9acd3747, type: 3}
       propertyPath: timeRemainingSlider
       value: 
-      objectReference: {fileID: 2770184408392176917}
-    m_RemovedComponents: []
+      objectReference: {fileID: 0}
+    - target: {fileID: 8194082548119618455, guid: 79028eface50ed546868951a9acd3747, type: 3}
+      propertyPath: portalChargedStateText
+      value: '   '
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 5141776223088164638, guid: 79028eface50ed546868951a9acd3747, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -502,76 +507,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 504555564865825945, guid: 79028eface50ed546868951a9acd3747, type: 3}
   m_PrefabInstance: {fileID: 187232714}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &456465364
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 456465365}
-  - component: {fileID: 456465366}
-  m_Layer: 0
-  m_Name: LevelSetter (1)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &456465365
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 456465364}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1037799472}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &456465366
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 456465364}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8e1d410abaa34f1291df47ee071ae256, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  portalChargeTriggers:
-  - {fileID: 0}
-  shopTrigger: {fileID: 78815747}
-  allSpawns:
-  - {fileID: 815121855}
-  - {fileID: 488117872}
-  - {fileID: 909216461}
-  - {fileID: 4262219}
-  portalCharges:
-  - <EnemySpawnsPairs>k__BackingField:
-    - <EnemiesAssets>k__BackingField:
-      - m_AssetGUID: 23b9ff02b0de4e24e9ab088bacd9e9c6
-        m_SubObjectName: 
-        m_SubObjectType: 
-        m_EditorAssetChanged: 0
-      <SpawnPoints>k__BackingField:
-      - {fileID: 815121855}
-      - {fileID: 488117872}
-      - {fileID: 909216461}
-      - {fileID: 4262219}
-    <MaxEnemySpawnAtOnce>k__BackingField: 1
-    <MinEnemySpawnAtOnce>k__BackingField: 1
-    <MaxTimeBetweenSpawn>k__BackingField: 60
-    <MinTimeBetweenSpawn>k__BackingField: 60
-    <TimeToActivatePencil>k__BackingField: 60
-  changeStateDelayMilliseconds: 300
 --- !u!1 &488117871
 GameObject:
   m_ObjectHideFlags: 0
@@ -987,7 +922,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 456465365}
   - {fileID: 187232715}
   - {fileID: 4782610329963665305}
   - {fileID: 1023462139}
@@ -1058,7 +992,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1489755106}
   - component: {fileID: 1489755105}
-  - component: {fileID: 1489755107}
+  - component: {fileID: 1489755108}
   m_Layer: 0
   m_Name: SceneContext
   m_TagString: Untagged
@@ -1080,7 +1014,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _scriptableObjectInstallers: []
   _monoInstallers:
-  - {fileID: 1489755107}
+  - {fileID: 1489755108}
   _installerPrefabs: []
   _autoRun: 1
   OnPreInstall:
@@ -1113,7 +1047,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1489755107
+--- !u!114 &1489755108
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1122,11 +1056,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1489755104}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7f2fd2c88a5866143a85455d76106b92, type: 3}
+  m_Script: {fileID: 11500000, guid: d60b82955bc9443a99ffcb6eabc947e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   inputListener: {fileID: 841108369}
-  levelChargesHandler: {fileID: 456465366}
   playerObject: {fileID: 1612465535}
   shop: {fileID: 2071173030}
   sceneLoader: {fileID: 1023462140}
@@ -1145,7 +1078,6 @@ MonoBehaviour:
   customCursor: {fileID: 704427450}
   baseDialogueDisplay: {fileID: 7961203719235848609}
   mainCamera: {fileID: 4081401207632641913}
-  levelDialogueConfig: {fileID: 11400000, guid: 8cf759aa29c0eb64d938bef452cd135c, type: 2}
 --- !u!1 &1610764013
 GameObject:
   m_ObjectHideFlags: 0
@@ -2077,17 +2009,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &2770184408392176917 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6217642954907233955, guid: e0ed0d935843ac54d9b21f07401a0fbe, type: 3}
-  m_PrefabInstance: {fileID: 7961203719235848605}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!223 &3208557574387478291 stripped
 Canvas:
   m_CorrespondingSourceObject: {fileID: 5178277821012123820, guid: e0ed0d935843ac54d9b21f07401a0fbe, type: 3}
@@ -2325,6 +2246,10 @@ PrefabInstance:
     - target: {fileID: 694201836638773437, guid: 88f94ed5513e48c4a9d7c4818e07abec, type: 3}
       propertyPath: m_Name
       value: BossEnvironment
+      objectReference: {fileID: 0}
+    - target: {fileID: 694201836638773437, guid: 88f94ed5513e48c4a9d7c4818e07abec, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2414893298648739581, guid: 88f94ed5513e48c4a9d7c4818e07abec, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2823,7 +2748,8 @@ PrefabInstance:
       value: -4.5218964
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 6826085935364595012, guid: e0ed0d935843ac54d9b21f07401a0fbe, type: 3}
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 1757431462736609919, guid: e0ed0d935843ac54d9b21f07401a0fbe, type: 3}
       insertIndex: -1

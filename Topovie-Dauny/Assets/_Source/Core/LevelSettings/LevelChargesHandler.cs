@@ -3,6 +3,7 @@ using System.Threading;
 using Core.EnemyWaveData;
 using Cysharp.Threading.Tasks;
 using GameEnvironment;
+using UI.Menus;
 using UnityEngine;
 using Zenject;
 
@@ -18,6 +19,7 @@ namespace Core.LevelSettings
          [SerializeField] private ShopTrigger shopTrigger;
          [SerializeField] private Transform[] allSpawns;
          [SerializeField] private EnemyWave[] portalCharges;
+         [SerializeField] private GameOverScreen gameOverScreen;
 
          [Header("Time Settings")] 
          [SerializeField] private int changeStateDelayMilliseconds;
@@ -38,6 +40,11 @@ namespace Core.LevelSettings
              _statesChanger = statesChanger;
              _spawner = spawner;
          }
+         private void Awake()
+         {
+             gameOverScreen.OnGameOver += StopSpawning;
+             gameOverScreen.OnScreenFaded += ClearAllSpawns;
+         }
          private void Start()
          {
              SubscribeOnStartCharging();
@@ -50,28 +57,8 @@ namespace Core.LevelSettings
                  UnsubscribeOnStartCharging(trigger);
              }
              UnloadAllEnemyAssetsAsync();
-         }
-         public void ClearAllSpawnsImmediate()
-         {
-             foreach (var spawn in allSpawns)
-             {
-                 var childCount = spawn.childCount;
-                 for (int i = childCount - 1; i >= 0; i--)
-                 {
-                     DestroyImmediate(spawn.GetChild(i).gameObject);
-                 }
-             }
-         }
-         public void ClearAllSpawns()
-         {
-             foreach (var spawn in allSpawns)
-             {
-                 var childCount = spawn.childCount;
-                 for (int i = childCount - 1; i >= 0; i--)
-                 {
-                     Destroy(spawn.GetChild(i).gameObject);
-                 }
-             }
+             gameOverScreen.OnGameOver -= StopSpawning;
+             gameOverScreen.OnScreenFaded -= ClearAllSpawns;
          }
          public void StopSpawning()
          {
@@ -178,6 +165,29 @@ namespace Core.LevelSettings
              catch
              {
                  //ignored
+             }
+         }
+         private void ClearAllSpawnsImmediate()
+         {
+             foreach (var spawn in allSpawns)
+             {
+                 var childCount = spawn.childCount;
+                 for (int i = childCount - 1; i >= 0; i--)
+                 {
+                     DestroyImmediate(spawn.GetChild(i).gameObject);
+                 }
+             }
+         }
+
+         private void ClearAllSpawns()
+         {
+             foreach (var spawn in allSpawns)
+             {
+                 var childCount = spawn.childCount;
+                 for (int i = childCount - 1; i >= 0; i--)
+                 {
+                     Destroy(spawn.GetChild(i).gameObject);
+                 }
              }
          }
          private void SubscribeOnChargeEvents(RangeDetector rangeDetector)
