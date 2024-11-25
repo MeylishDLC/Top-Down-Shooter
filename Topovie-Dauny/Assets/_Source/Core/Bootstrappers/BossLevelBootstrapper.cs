@@ -30,28 +30,24 @@ namespace Core.Bootstrappers
         private BulletPool _pistolBulletPool;
         private BulletPool _ppBulletPool;
 
-        private LevelDialogues _levelDialogues;
         private SceneLoader _sceneLoader;
         private AssetLoader _environmentLoader = new();
         
         [Inject]
-        public void Construct(SceneLoader sceneLoader, LevelDialogues levelDialogues)
+        public void Construct(SceneLoader sceneLoader)
         {
             _sceneLoader = sceneLoader;
-            _levelDialogues = levelDialogues;
         }
         private async void Awake()
         {
             await InstantiateAssets(CancellationToken.None);
             InitializePools();
             InitializeGuns();
-            _levelDialogues.PlayStartDialogue();
         }
         private void OnDestroy()
         {
             _environmentLoader.ReleaseStoredInstance();
             CleanUpPools();
-            _levelDialogues.Expose();
         }
         public async UniTask InstantiateAssets(CancellationToken token)
         {

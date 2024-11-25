@@ -19,7 +19,6 @@ namespace Enemies.Combat
             _knockbackThrust = knockbackThrust;
             _destroyCancellationToken = objectToKnockback.GetCancellationTokenOnDestroy();
         }
-
         public void GetKnockedBack(Transform damageSource)
         {
             GettingKnockedBack = true;

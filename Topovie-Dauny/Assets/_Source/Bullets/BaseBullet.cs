@@ -35,7 +35,7 @@ namespace Bullets
         {
             if (other.gameObject.layer == LayerMask.NameToLayer("Environment"))
             {
-                CancelDisableRecreateCts();
+                CancelRecreateCts();
                 gameObject.SetActive(false);
             }
         }
@@ -45,7 +45,7 @@ namespace Bullets
             speed = newSpeed;
             damageAmount = newDamageAmount;
         }
-        protected void CancelDisableRecreateCts()
+        protected void CancelRecreateCts()
         {
             _cancelDisableCts?.Cancel();
             _cancelDisableCts?.Dispose();

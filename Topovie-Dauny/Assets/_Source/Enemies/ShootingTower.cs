@@ -2,47 +2,93 @@
 using System.Threading;
 using Bullets.BulletPatterns;
 using Cysharp.Threading.Tasks;
+using DG.Tweening;
 using UnityEngine;
 
 namespace Enemies
 {
     public class ShootingTower: MonoBehaviour
     {
-        [SerializeField] private BulletSpawner bulletSpawner;
+        [SerializeField] private BulletSpawner[] bulletSpawners;
         [SerializeField] private float shootTime;
         [SerializeField] private float delayBetweenShooting;
+
+        [Header("Move Animation")] 
+        [SerializeField] private Transform towerJawTransform;
+        [SerializeField] private Animator jawAnimator;
+        [SerializeField] private float animationSpeed;
+        [SerializeField] private float maxAngle;
+        [SerializeField] private float minAngle;
+        [SerializeField] private float waitTimeOnAngleReached;
+        
+        private static readonly int Open = Animator.StringToHash("open");
+        private static readonly int Close = Animator.StringToHash("close");
         
         private float _remainingTime;
+        private CancellationToken _destroyCancellationToken;
         private void Start()
         {
-            bulletSpawner.enabled = false;
-            StartShootingCycle(CancellationToken.None).Forget();
+            _destroyCancellationToken = this.GetCancellationTokenOnDestroy();
+            SetBulletSpawnersEnabled(false);
+            StartAnimatingCycleAsync(_destroyCancellationToken).Forget();
         }
-        private async UniTask StartShootingCycle(CancellationToken token)
+        private async UniTask StartAnimatingCycleAsync(CancellationToken token)
         {
-            while (!token.IsCancellationRequested)
+            try
             {
-                await ShootDuringTime(token);
-                await DisableShootingForTime(token);
+                while (true)
+                {
+                    await AnimateAsync(token);
+                    await UniTask.Yield();
+                }
+            }
+            catch (OperationCanceledException)
+            {
+                //
             }
         }
-        private async UniTask ShootDuringTime(CancellationToken token)
+        private async UniTask AnimateAsync(CancellationToken token)
         {
-            bulletSpawner.enabled = true;
-            _remainingTime = shootTime;
-            while (_remainingTime > 0 || token.IsCancellationRequested)
+            try
             {
-                _remainingTime -= Time.deltaTime;
-                await UniTask.Yield(PlayerLoopTiming.Update);
+                await towerJawTransform.DORotate(new Vector3(0, 0, maxAngle), animationSpeed)
+                    .ToUniTask(cancellationToken: token);
+            
+                SetTowerShooting(true);
+                await UniTask.Delay(TimeSpan.FromSeconds(waitTimeOnAngleReached), cancellationToken: token);
+                SetTowerShooting(false);
+                
+                await towerJawTransform.DORotate(new Vector3(0, 0, minAngle), animationSpeed)
+                    .ToUniTask(cancellationToken: token);
+            
+                SetTowerShooting(true);
+                await UniTask.Delay(TimeSpan.FromSeconds(waitTimeOnAngleReached),  cancellationToken: token);
+                SetTowerShooting(false);
             }
-            _remainingTime = 0;
+            catch (OperationCanceledException)
+            {
+                //
+            }
         }
-
-        private async UniTask DisableShootingForTime(CancellationToken token)
+        private void SetTowerShooting(bool isShooting)
         {
-            bulletSpawner.enabled = false;
-            await UniTask.Delay(TimeSpan.FromSeconds(delayBetweenShooting), cancellationToken: token);
-            bulletSpawner.enabled = true;
+            if (isShooting)
+            {
+                jawAnimator.SetTrigger(Open);
+                SetBulletSpawnersEnabled(true);
+            }
+            else
+            {
+                jawAnimator.SetTrigger(Close);
+                SetBulletSpawnersEnabled(false);
+            }
+        }
+        private void SetBulletSpawnersEnabled(bool isEnabled)
+        {
+            foreach (var spawner in bulletSpawners)
+            {
+                spawner.enabled = isEnabled;
+            }
         }
     }
 }

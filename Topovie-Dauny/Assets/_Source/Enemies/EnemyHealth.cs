@@ -43,7 +43,7 @@ namespace Enemies
             var destinationSetter = GetComponent<AIDestinationSetter>();
             destinationSetter.target = _playerTransform;
             
-            _knockBack = new(this,GetComponent<Rigidbody2D>(), knockBackTimeMilliseconds, knockbackThrust);
+            _knockBack = new KnockBack(this,GetComponent<Rigidbody2D>(), knockBackTimeMilliseconds, knockbackThrust);
         }
 
         private void Update()

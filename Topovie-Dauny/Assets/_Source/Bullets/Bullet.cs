@@ -14,6 +14,7 @@ namespace Bullets
         private void OnDisable()
         {
             OnObjectDisabled?.Invoke(this);
+            CancelRecreateCts();
         }
         protected override void OnTriggerEnter2D(Collider2D other)
         {
@@ -24,7 +25,7 @@ namespace Bullets
                 var enemyHealth = other.gameObject.GetComponentInParent<EnemyHealth>();
                 enemyHealth.TakeDamage(damageAmount);
                 
-                CancelDisableRecreateCts();
+                CancelRecreateCts();
                 gameObject.SetActive(false);
             }
         }
