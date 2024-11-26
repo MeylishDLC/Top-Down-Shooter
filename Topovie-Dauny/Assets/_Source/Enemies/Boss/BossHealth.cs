@@ -1,12 +1,16 @@
-﻿using UnityEngine;
+﻿using System.Threading;
+using Cysharp.Threading.Tasks;
+using Enemies.Boss.BossAttacks;
+using UnityEngine;
 
 namespace Enemies.Boss
 {
     public class BossHealth: MonoBehaviour, IEnemyHealth
     {
+        [SerializeField] private ChessboardAttack attacker;
         public void TakeDamage(int damage)
         {
-            Debug.Log("Boss Health Damage");
+            attacker.TriggerAttack(CancellationToken.None).Forget();
         }
     }
 }
