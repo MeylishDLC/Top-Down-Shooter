@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 859ce4f07b3c4e9b896eeefb434d4553, type: 3}
+  m_Name: Chessboard Config
+  m_EditorClassIdentifier: 
+  <WarningTileColor>k__BackingField: {r: 1, g: 0.5137255, b: 0.43921572, a: 1}
+  <AttackingTileColor>k__BackingField: {r: 1, g: 1, b: 1, a: 1}
+  <FadeInDuration>k__BackingField: 0.3
+  <WarningDuration>k__BackingField: 1
+  <WarningBlinkAmount>k__BackingField: 2
+  <AttackDuration>k__BackingField: 2.5
+  <DelayBeforeAttack>k__BackingField: 0.1
+  <AttackRate>k__BackingField: 0.1
+  <FadeOutDuration>k__BackingField: 0.15

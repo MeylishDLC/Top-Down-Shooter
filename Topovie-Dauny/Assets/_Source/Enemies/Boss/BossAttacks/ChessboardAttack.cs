@@ -8,81 +8,41 @@ namespace Enemies.Boss.BossAttacks
 {
     public class ChessboardAttack : MonoBehaviour
     {
-        [Header("Visuals")] 
         [SerializeField] private SpriteRenderer chessboardSprite;
         [SerializeField] private Collider2D hitCollider;
-        
-        [Header("Colors")]
-        [SerializeField] private Color warningTileColor;
-        [SerializeField] private Color attackingTileColor = Color.white;
+        [SerializeField] private ChessboardConfig config;
 
-        [Header("Warning Time Settings")] 
-        [SerializeField] private float fadeInDuration;
-        [SerializeField] private float warningDuration;
-        [SerializeField] private int warningBlinkAmount;
-        
-        [Header("Attack Time Settings")]
-        [SerializeField] private float attackDuration;
-        [SerializeField] private float delayBeforeAttack;
-        [SerializeField] private float attackRate;
-        [SerializeField] private float disappearTime;
-
-        private float _blinkDuration;
         private CancellationToken _destroyCancellationToken;
         private ChessboardVisual _chessboardVisual;
         
         private void Awake()
         {
-            _blinkDuration = warningDuration/warningBlinkAmount;
-            
             _destroyCancellationToken = this.GetCancellationTokenOnDestroy();
+            _chessboardVisual = new ChessboardVisual(chessboardSprite, config);
+            _chessboardVisual.OnAttackStarted += EnableHitCollider;
+            _chessboardVisual.OnAttackEnded += DisableHitCollider;
+            
             hitCollider.enabled = false;
-            chessboardSprite.color = warningTileColor;
+            chessboardSprite.color = config.WarningTileColor;
             chessboardSprite.gameObject.SetActive(false);
         }
-
+        private void OnDestroy()
+        {
+            _chessboardVisual.OnAttackStarted -= EnableHitCollider;
+            _chessboardVisual.OnAttackEnded -= DisableHitCollider;
+        }
         public UniTask TriggerAttack(CancellationToken token)
         {
-            return ShowAttackWarningAsync(_destroyCancellationToken).ContinueWith(() => AttackAsync(_destroyCancellationToken));
+            return _chessboardVisual.ShowAttackWarningAsync(_destroyCancellationToken)
+                .ContinueWith(() => _chessboardVisual.StartAttackAsync(_destroyCancellationToken));
         }
-        private async UniTask AttackAsync(CancellationToken token)
+        private void EnableHitCollider()
         {
-            chessboardSprite.gameObject.SetActive(false);
-            chessboardSprite.color = attackingTileColor;
-            
-            await UniTask.Delay(TimeSpan.FromSeconds(delayBeforeAttack), cancellationToken: token);
-            chessboardSprite.gameObject.SetActive(true);
             hitCollider.enabled = true;
-            await StopAttackAsync(token);
         }
-        private async UniTask StopAttackAsync(CancellationToken token)
+        private void DisableHitCollider()
         {
-            await UniTask.Delay(TimeSpan.FromSeconds(attackDuration), cancellationToken: token);
             hitCollider.enabled = false;
-            await chessboardSprite.DOFade(0f, disappearTime).ToUniTask(cancellationToken: token);
-            chessboardSprite.gameObject.SetActive(false);
-            await chessboardSprite.DOFade(1f, 0f).ToUniTask(cancellationToken: token);
-            chessboardSprite.color = warningTileColor;
-        }
-        private async UniTask ShowAttackWarningAsync(CancellationToken token)
-        {
-            await FadeInAsync(token);
-            await BlinkAsync(token);
-        }
-        private async UniTask FadeInAsync(CancellationToken token)
-        {
-            chessboardSprite.gameObject.SetActive(true);
-            await chessboardSprite.DOFade(0f, 0f).ToUniTask(cancellationToken: token);
-            await chessboardSprite.DOFade(1f, fadeInDuration).ToUniTask(cancellationToken: token);
-        }
-        private async UniTask BlinkAsync(CancellationToken token)
-        {
-            var halfBlinkDuration = _blinkDuration / 2;
-            for (var i = 0; i < warningBlinkAmount; i++)
-            {
-                await chessboardSprite.DOFade(0f, halfBlinkDuration).ToUniTask(cancellationToken: token);
-                await chessboardSprite.DOFade(1f, halfBlinkDuration).ToUniTask(cancellationToken: token);
-            }
         }
     }
 }
