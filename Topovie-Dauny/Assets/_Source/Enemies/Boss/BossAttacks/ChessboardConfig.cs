@@ -14,10 +14,11 @@ namespace Enemies.Boss.BossAttacks
         [field:SerializeField] public float WarningDuration {get; private set;}
         [field:SerializeField] public int WarningBlinkAmount {get; private set;}
         
-        [field:Header("Attack Time Settings")]
+        [field:Header("Attack Settings")]
+        [field:SerializeField] public int AttackDamage {get; private set;}
+        [field:SerializeField] public float AttackRate {get; private set;}
         [field:SerializeField] public float AttackDuration {get; private set;}
         [field:SerializeField] public float DelayBeforeAttack {get; private set;}
-        [field:SerializeField] public float AttackRate {get; private set;}
         [field:SerializeField] public float FadeOutDuration {get; private set;}
     }
 }
