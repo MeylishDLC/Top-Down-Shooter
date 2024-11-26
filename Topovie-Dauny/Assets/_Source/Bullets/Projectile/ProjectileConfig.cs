@@ -3,7 +3,7 @@ using UnityEngine.Serialization;
 
 namespace Bullets.Projectile
 {
-    [CreateAssetMenu(fileName = "New Projectile Config", menuName = "Projectile/New Projectile Config")]
+    [CreateAssetMenu(fileName = "Projectile Config", menuName = "Combat/Projectile/Projectile Config")]
     public class ProjectileConfig: ScriptableObject
     {
         [field:SerializeField] public GameObject Prefab { get; private set; }

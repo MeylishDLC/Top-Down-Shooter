@@ -7,7 +7,7 @@ using Zenject;
 
 namespace Player.PlayerAbilities
 {    
-    [CreateAssetMenu(fileName = "Stun", menuName = "Abilities/Stun")]
+    [CreateAssetMenu(fileName = "Stun", menuName = "Combat/Abilities/Stun")]
     public class Stun: Ability
     {
         [SerializeField] private StunZone stunZonePrefab;

@@ -8,7 +8,7 @@ using Zenject;
 
 namespace Player.PlayerAbilities
 {
-    [CreateAssetMenu(fileName = "Knife", menuName = "Abilities/Knife")]
+    [CreateAssetMenu(fileName = "Knife", menuName = "Combat/Abilities/Knife")]
     public class Knife: Ability
     {
         [SerializeField] private KnifeObject knifePrefab;

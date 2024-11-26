@@ -9,7 +9,7 @@ using Zenject;
 
 namespace Player.PlayerAbilities
 {
-    [CreateAssetMenu(fileName = "Aid", menuName = "Abilities/Aid")]
+    [CreateAssetMenu(fileName = "Aid", menuName = "Combat/Abilities/Aid")]
     public class Aid: Ability
     {
         [Header("Specific Settings")]

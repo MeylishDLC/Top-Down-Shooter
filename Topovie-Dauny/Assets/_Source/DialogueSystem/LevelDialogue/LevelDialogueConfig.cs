@@ -2,7 +2,7 @@
 
 namespace DialogueSystem.LevelDialogue
 {
-    [CreateAssetMenu (fileName = "Level Dialogue Config", menuName = "Level Dialogue/Level Dialogue Config")]
+    [CreateAssetMenu (fileName = "Level Dialogue Config", menuName = "Core/Level Dialogue/Level Dialogue Config")]
     public class LevelDialogueConfig: ScriptableObject
     {
         [field:SerializeField] public TextAsset DialogueOnStart {get; private set;}

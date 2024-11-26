@@ -7,7 +7,7 @@ using Zenject;
 
 namespace Player.PlayerAbilities
 {
-    [CreateAssetMenu(fileName = "CatFood", menuName = "Abilities/CatFood")]
+    [CreateAssetMenu(fileName = "CatFood", menuName = "Combat/Abilities/CatFood")]
     public class CatFood: Ability
     {
         [SerializeField] private float newPlayerSpeed;

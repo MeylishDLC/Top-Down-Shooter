@@ -11,7 +11,7 @@ using Zenject;
 
 namespace Player.PlayerAbilities
 {
-    [CreateAssetMenu(fileName = "Shield", menuName = "Abilities/Shield")]
+    [CreateAssetMenu(fileName = "Shield", menuName = "Combat/Abilities/Shield")]
     public class Shield: Ability
     {
         [SerializeField] private float shieldDuration; 

@@ -2,7 +2,7 @@
 
 namespace Core.PoolingSystem
 {
-    [CreateAssetMenu(fileName = "New Pool Config", menuName = "Pools/New Pool Config")]
+    [CreateAssetMenu(fileName = "New Pool Config", menuName = "Core/Pools/New Pool Config")]
     public class PoolConfig: ScriptableObject
     {
         [field: SerializeField] public int InitialPoolSize { get; private set; }

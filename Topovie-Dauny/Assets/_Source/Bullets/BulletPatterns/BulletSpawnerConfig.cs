@@ -2,7 +2,7 @@
 
 namespace Bullets.BulletPatterns
 {
-    [CreateAssetMenu(fileName = "Bullet Spawner Config", menuName = "Bullet Spawners/Bullet Spawner Config")]
+    [CreateAssetMenu(fileName = "Bullet Spawner Config", menuName = "Combat/Bullet Spawners/Bullet Spawner Config")]
     public class BulletSpawnerConfig: ScriptableObject
     {
         [field: Header("Bullet Attributes")] 

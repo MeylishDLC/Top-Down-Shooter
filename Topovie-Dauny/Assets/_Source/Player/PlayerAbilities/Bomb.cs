@@ -9,7 +9,7 @@ using Zenject;
 
 namespace Player.PlayerAbilities
 {
-    [CreateAssetMenu(fileName = "Bomb", menuName = "Abilities/Bomb")]
+    [CreateAssetMenu(fileName = "Bomb", menuName = "Combat/Abilities/Bomb")]
     public class Bomb: Ability
     {
         [SerializeField] private GameObject bombPrefab;

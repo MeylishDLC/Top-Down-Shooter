@@ -2,9 +2,7 @@ using System;
 using System.Threading;
 using _Support.Demigiant.DOTween.Modules;
 using Cysharp.Threading.Tasks;
-using DG.Tweening;
 using UnityEngine;
-using UnityEngine.Rendering.Universal;
 
 namespace Enemies.Boss.BossAttacks
 {
@@ -31,6 +29,7 @@ namespace Enemies.Boss.BossAttacks
 
         private float _blinkDuration;
         private CancellationToken _destroyCancellationToken;
+        private ChessboardVisual _chessboardVisual;
         
         private void Awake()
         {
