@@ -367,6 +367,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2350c9c7e2c9484294533b1811782c1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pathfinder: {fileID: 3507204203854159203}
   environmentPrefab:
     m_AssetGUID: 9106a44d6dece3f4daa8e01004e8c523
     m_SubObjectName: 
@@ -745,7 +746,7 @@ MonoBehaviour:
       - {fileID: 488117872}
       - {fileID: 909216461}
       - {fileID: 4262219}
-    <MaxEnemySpawnAtOnce>k__BackingField: 2
+    <MaxEnemySpawnAtOnce>k__BackingField: 4
     <MinEnemySpawnAtOnce>k__BackingField: 1
     <MaxTimeBetweenSpawn>k__BackingField: 7
     <MinTimeBetweenSpawn>k__BackingField: 3
@@ -761,7 +762,7 @@ MonoBehaviour:
       - {fileID: 1968617055}
       - {fileID: 2021274873}
       - {fileID: 262724726}
-    <MaxEnemySpawnAtOnce>k__BackingField: 3
+    <MaxEnemySpawnAtOnce>k__BackingField: 4
     <MinEnemySpawnAtOnce>k__BackingField: 1
     <MaxTimeBetweenSpawn>k__BackingField: 5
     <MinTimeBetweenSpawn>k__BackingField: 2
@@ -3377,6 +3378,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 2221232130911802252, guid: c6a250a527255e6469bb66117addd5ee, type: 3}
+      propertyPath: showGraphs
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2221232130911802252, guid: c6a250a527255e6469bb66117addd5ee, type: 3}
       propertyPath: data.dataString
       value: UEsDBBQAAAgIAAAYIewT52sGbQIAACUFAAALACQAZ3JhcGgwLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQFlVE1z2jAQ/SuMzg1jM+CE3lpCSA9JmNBMLr4Ia401yJJHHwGS4b93JcvYoVyQ3+7bffu09hfh0jRQWKVXmrMnxYD8HBF/Jj9GffARjnSn5IZ/QpfzzpmtfBINOa/UcoV46mlG1WA1L37JnfDJCYJO8lLpesl2sFDGGoRLKgxgSCvr2RKhrxE54t/N3FNOeJrc+tMnnubJ6IzHAqQFPUhNxlk2x18WGfg8jZSW4WQhaN0A8/J7YjodT2aRk6bj2TwkSxwv5iXjdO4bKiG4ifKIPTVh/E1TgQY/P+MUpw2S/PAV8F1lvfIh96UsDdhohaane67RtLYo+a1aJ2tq9q2+Dyqcb5NNg6i25tN/4Zs0hEut6seubZr4Frbixf6Vngpq7MDpIXz/XbeTByr2dCvgvQL5rFZaOckwaLXzVGdgct8/XiZbVFDse7yVegW6pre9u9juWv0M5zD8cSF4vQ3GT1tgI1RwO2wDaLyaPyg47IqJJRD1Kt4M/KW74VLFwAPXxmIoTim9vK1y2qeSZfDMT+PsQmkJAY6iG5BU2NMay9jrG7yKDdpeRR6of31i8xjr3oorSoD7/CS5Cq3V4XJZplKHJzDVi7OCS+hF+8Az+rRQUrYLNvSko22cLmkxoO0cZ99Xi8wyCpO7aZJlGZ2wLdzclSwtktsUZhmb0BklYfe4xDmpWLdCoz14a7IvLnHPuq/KaKVpE5adaXpY8c9aDSznslSbQgPIl7bCRThobIKvJVsyjgZtwFouw32Tr5wIVeyB5ZdCeZh0ebSa5n2VnDT8Q1mP5GQRPiM58fBll9caPjgcfPOu2Jmc/wFQSwMEFAAACAgAABgh7H2CUU5tAAAAeAAAAAkAJABtZXRhLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQGrVipLLSrOzM9TslIw0TPSMzTXUVBKL0osyCgGihiCOKWZKSB2tJKpWWKqkYWJgZmZWaJRSlKqrkVaimGygblhqqlZilGiaaJSLFB9SWVBql9ibipET0BiSUZaZl5KZl66nntRZoo7yGil2FoAUEsBAi0AFAAACAgAABgh7BPnawZtAgAAJQUAAAsAJAAAAAAAAAAAAAAAAAAAAGdyYXBoMC5qc29uCgAgAAAAAAABABgAAIA+1d6xnQEAgD7V3rGdAQCAPtXesZ0BUEsBAi0AFAAACAgAABgh7H2CUU5tAAAAeAAAAAkAJAAAAAAAAAAAAAAAugIAAG1ldGEuanNvbgoAIAAAAAAAAQAYAACAPtXesZ0BAIA+1d6xnQEAgD7V3rGdAVBLBQYAAAAAAgACALgAAAByAwAAAAA=
       objectReference: {fileID: 0}
@@ -3429,6 +3434,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c6a250a527255e6469bb66117addd5ee, type: 3}
+--- !u!114 &3507204203854159203 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2221232130911802252, guid: c6a250a527255e6469bb66117addd5ee, type: 3}
+  m_PrefabInstance: {fileID: 3507204203854159202}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78396926cbbfc4ac3b48fc5fc34a87d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &3954421619298279763
 Transform:
   m_ObjectHideFlags: 0
@@ -3575,10 +3591,6 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 3208557574387478291}
     - target: {fileID: 6128425514495852552, guid: 79028eface50ed546868951a9acd3747, type: 3}
-      propertyPath: heartImage
-      value: 
-      objectReference: {fileID: 7022333499571938884}
-    - target: {fileID: 6128425514495852552, guid: 79028eface50ed546868951a9acd3747, type: 3}
       propertyPath: healthSlider
       value: 
       objectReference: {fileID: 3394924164195448655}
@@ -3594,10 +3606,6 @@ PrefabInstance:
       propertyPath: stateText
       value: 
       objectReference: {fileID: 6153260058158397645}
-    - target: {fileID: 8194082548119618455, guid: 79028eface50ed546868951a9acd3747, type: 3}
-      propertyPath: timeRemainingSlider
-      value: 
-      objectReference: {fileID: 2770184408392176917}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3901,17 +3909,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &7022333499571938884 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2837948421460949380, guid: e0ed0d935843ac54d9b21f07401a0fbe, type: 3}
-  m_PrefabInstance: {fileID: 7961203719235848605}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &7183957717168236081 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4734028642163087123, guid: ba3f276fa16aec249a029d4ce9df78dd, type: 3}

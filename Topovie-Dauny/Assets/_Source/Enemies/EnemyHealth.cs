@@ -9,7 +9,7 @@ using Zenject;
 
 namespace Enemies
 {
-    public class EnemyHealth: MonoBehaviour
+    public class EnemyHealth: MonoBehaviour, IEnemyHealth
     {
         [SerializeField] private int maxHealth;
         
@@ -21,11 +21,13 @@ namespace Enemies
         [SerializeField] private int knockBackTimeMilliseconds = 200;
         [SerializeField] private float knockbackThrust = 15f;
 
+        private CancellationToken _deathCancellationToken;
         private Transform _playerTransform;
         private AIPath _aiPathComponent;
         private SpriteRenderer _spriteRenderer;
         private KnockBack _knockBack;
         private PlayerMovement _playerMovement;
+        
         private int _currentHealth;
         private bool _isDead;
         
@@ -36,6 +38,7 @@ namespace Enemies
         }
         private void Start()
         {
+            _deathCancellationToken = this.GetCancellationTokenOnDestroy();
             _currentHealth = maxHealth;
             _aiPathComponent = GetComponent<AIPath>();
             _spriteRenderer = GetComponent<SpriteRenderer>();
@@ -48,7 +51,7 @@ namespace Enemies
 
         private void Update()
         {
-            DisableMovementOnKnockback();
+            SetMovementOnKnockback();
         }
 
         public void TakeDamage(int damage)
@@ -57,15 +60,14 @@ namespace Enemies
             {
                 _currentHealth -= damage;
                 
-                //todo: check this one?
-                ChangeColor(CancellationToken.None).Forget();
+                ChangeColor(_deathCancellationToken).Forget();
                 _knockBack.GetKnockedBack(_playerMovement.transform);
                 
-                CheckIfDeadAsync(CancellationToken.None).Forget();
+                CheckIfDeadAsync(_deathCancellationToken).Forget();
             }
         }
 
-        private void DisableMovementOnKnockback()
+        private void SetMovementOnKnockback()
         {
             if (_knockBack.GettingKnockedBack && !_isDead)
             {

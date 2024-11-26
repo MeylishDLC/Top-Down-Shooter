@@ -19,6 +19,7 @@ namespace Core.Bootstrappers
     public class TutorialLevelBootstrapper: MonoBehaviour, ILevelBootstrapper
     {
         [Header("Scene Load Stuff")] 
+        [SerializeField] private AstarPath pathfinder;
         [SerializeField] private AssetReferenceGameObject environmentPrefab;
         
         [Header("GUNS")] 
@@ -52,10 +53,15 @@ namespace Core.Bootstrappers
             CleanUpPools();
             _levelDialogues.Expose();
         }
+        public void ScanPaths()
+        {
+            pathfinder.Scan();
+        }
         public async UniTask InstantiateAssets(CancellationToken token)
         {
             _sceneLoader.SetLoadingScreenActive(true);
             await InstantiateEnvironment(token);
+            ScanPaths();
             _sceneLoader.SetLoadingScreenActive(false);
         }
         private async UniTask InstantiateEnvironment(CancellationToken token)

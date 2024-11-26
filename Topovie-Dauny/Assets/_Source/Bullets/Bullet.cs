@@ -22,7 +22,7 @@ namespace Bullets
 
             if (other.gameObject.layer == LayerMask.NameToLayer("Enemy"))
             {
-                var enemyHealth = other.gameObject.GetComponentInParent<EnemyHealth>();
+                var enemyHealth = other.gameObject.GetComponentInParent<IEnemyHealth>();
                 enemyHealth.TakeDamage(damageAmount);
                 
                 CancelRecreateCts();

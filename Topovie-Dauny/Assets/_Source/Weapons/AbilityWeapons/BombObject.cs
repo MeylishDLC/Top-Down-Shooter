@@ -45,7 +45,7 @@ namespace Weapons.AbilityWeapons
             {
                 if (hitCollider.gameObject.layer == LayerMask.NameToLayer("Enemy"))
                 {
-                    if (hitCollider.gameObject.TryGetComponent(out EnemyHealth enemyHealth))
+                    if (hitCollider.gameObject.TryGetComponent(out IEnemyHealth enemyHealth))
                     {
                         enemyHealth.TakeDamage(damage);
                     }
