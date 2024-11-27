@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Enemies.Boss.BossAttacks
+namespace Enemies.Boss.BossAttacks.Chessboard
 {
     [CreateAssetMenu(fileName = "Chessboard Config", menuName = "Combat/BossAttacks/Chessboard Config")]
     public class ChessboardConfig: ScriptableObject

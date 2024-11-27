@@ -1,13 +1,12 @@
 using System;
 using System.Threading;
-using _Support.Demigiant.DOTween.Modules;
 using Cysharp.Threading.Tasks;
 using Player.PlayerCombat;
 using Player.PlayerControl;
 using UnityEngine;
 using Zenject;
 
-namespace Enemies.Boss.BossAttacks
+namespace Enemies.Boss.BossAttacks.Chessboard
 {
     public class ChessboardAttack : MonoBehaviour
     {
