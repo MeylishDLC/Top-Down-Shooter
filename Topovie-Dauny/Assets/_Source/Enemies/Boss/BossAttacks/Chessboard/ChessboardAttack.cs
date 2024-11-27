@@ -8,7 +8,7 @@ using Zenject;
 
 namespace Enemies.Boss.BossAttacks.Chessboard
 {
-    public class ChessboardAttack : MonoBehaviour
+    public class ChessboardAttack : MonoBehaviour, IBossAttack
     {
         [SerializeField] private SpriteRenderer chessboardSprite;
         [SerializeField] private Collider2D hitCollider;
