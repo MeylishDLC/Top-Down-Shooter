@@ -20,17 +20,25 @@ namespace Enemies.Boss.BossAttacks.Lines
         [SerializeField] private float delayBetweenAttacks;
 
         private bool _isAttackingOpposite;
-        private SpriteRenderer[] _linesRenderers;
         private CancellationToken _destroyCancellationToken;
+        private LinesAttackVisual _linesAttackVisual;
         private void Awake()
         {
             _destroyCancellationToken = this.GetCancellationTokenOnDestroy();
-            SetAttackEnabled(false);
-            _linesRenderers = GetRenderers();
-            foreach (var line in _linesRenderers)
+            foreach (var line in lines)
             {
-                DoLineFade(line, 0,0,_destroyCancellationToken);
+                line.enabled = false;
             }
+            
+            _linesAttackVisual = new LinesAttackVisual(config, lines, transparencyOnWarn, transparencyOnAttack);
+            _linesAttackVisual.SetAllLinesTransparency(0);
+            _linesAttackVisual.OnLineAttackStarted += EnableAttack;
+            _linesAttackVisual.OnLineAttackEnded += DisableAttack;
+        }
+        private void OnDestroy()
+        {
+            _linesAttackVisual.OnLineAttackStarted -= EnableAttack;
+            _linesAttackVisual.OnLineAttackEnded -= DisableAttack;
         }
         public async UniTask TriggerAttack(CancellationToken token)
         {
@@ -45,49 +53,23 @@ namespace Enemies.Boss.BossAttacks.Lines
                 await UniTask.Delay(TimeSpan.FromSeconds(delayBetweenAttacks), cancellationToken: _destroyCancellationToken);
             }
         }
-
         private void SetRandomAttackDirection()
         {
             _isAttackingOpposite = Random.Range(0, 2) == 0;
         }
         private UniTask TriggerLineAttack(int lineIndex, CancellationToken token)
         {
-            return ShowWarnLineAsync(lineIndex, token)
-                .ContinueWith(() => DoLineAttack(lineIndex, token))
-                .ContinueWith(() => StopLineAttack(lineIndex, token));
+            return _linesAttackVisual.ShowLineWarnAsync(lineIndex, token)
+                .ContinueWith(() => _linesAttackVisual.ShowLineAttack(lineIndex, token))
+                .ContinueWith(() => _linesAttackVisual.ShowLineStopAttack(lineIndex, token));
         }
-        private async UniTask ShowWarnLineAsync(int lineIndex, CancellationToken token)
+        private void EnableAttack(int index)
         {
-            await DoLineFade(_linesRenderers[lineIndex], transparencyOnWarn, config.FadeInTime, token);
-            await UniTask.Delay(TimeSpan.FromSeconds(config.WarningDuration), cancellationToken: token);
+            lines[index].enabled = true;
         }
-
-        private async UniTask DoLineAttack(int lineIndex, CancellationToken token)
+        private void DisableAttack(int index)
         {
-            await DoLineFade(_linesRenderers[lineIndex], transparencyOnAttack, config.TransitionDuration, token);
-            lines[lineIndex].enabled = true;
-            await UniTask.Delay(TimeSpan.FromSeconds(config.AttackDuration), cancellationToken: token);
-        }
-
-        private async UniTask StopLineAttack(int lineIndex, CancellationToken token)
-        {
-            lines[lineIndex].enabled = false;
-            await DoLineFade(_linesRenderers[lineIndex], 0, config.FadeOutTime, token);
-        }
-        private void SetAttackEnabled(bool enable)
-        {
-            foreach (var lineAttack in lines)
-            {
-                lineAttack.enabled = enable;
-            }
-        }
-        private UniTask DoLineFade(SpriteRenderer line, float endValue, float duration, CancellationToken token)
-        {
-            return line.DOFade(endValue, duration).ToUniTask(cancellationToken: token);
-        }
-        private SpriteRenderer[] GetRenderers()
-        {
-            return lines.Select(line => line.gameObject.GetComponent<SpriteRenderer>()).ToArray();
+            lines[index].enabled = false;
         }
     }
 }

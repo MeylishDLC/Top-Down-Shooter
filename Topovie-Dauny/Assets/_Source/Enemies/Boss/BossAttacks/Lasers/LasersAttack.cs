@@ -16,54 +16,41 @@ namespace Enemies.Boss.BossAttacks.Lasers
         [SerializeField] private BaseBossAttackConfig config;
 
         private CancellationToken _destroyCancellationToken;
-        private static readonly int LaserIntensity = Shader.PropertyToID("_LaserIntensity");
+        private LasersVisual _lasersVisual;
         private void Awake()
         {
             _destroyCancellationToken = this.GetCancellationTokenOnDestroy();
-            SetAttackEnabled(false);
-            DoLasersFade(0, 0, _destroyCancellationToken);
+            DisableAttack();
+            _lasersVisual = new LasersVisual(config, laserMaterial, intensityOnWarn, intensityOnAttack);
+            _lasersVisual.DoLasersFade(0,0, _destroyCancellationToken);
+
+            _lasersVisual.OnAttackEnded += DisableAttack;
+            _lasersVisual.OnAttackStarted += EnableAttack;
+        }
+        private void OnDestroy()
+        {
+            _lasersVisual.OnAttackEnded -= DisableAttack;
+            _lasersVisual.OnAttackStarted -= EnableAttack;
         }
         public UniTask TriggerAttack(CancellationToken token)
         {
-            return ShowWarningAsync(_destroyCancellationToken)
-                .ContinueWith(() => StartAttackAsync(_destroyCancellationToken))
-                .ContinueWith(() => StopAttack(_destroyCancellationToken));
+            return _lasersVisual.ShowWarningAsync(_destroyCancellationToken)
+                .ContinueWith(() => _lasersVisual.ShowStartAttackAsync(_destroyCancellationToken))
+                .ContinueWith(() => _lasersVisual.ShowStopAttack(_destroyCancellationToken));
         }
-        private async UniTask ShowWarningAsync(CancellationToken token)
+        private void EnableAttack()
         {
-            await DoLasersFade(intensityOnWarn, config.FadeInTime,token);
-            await UniTask.Delay(TimeSpan.FromSeconds(config.WarningDuration), cancellationToken: token);
-        }
-
-        private async UniTask StartAttackAsync(CancellationToken token)
-        {
-            await DoLasersFade(intensityOnAttack, config.TransitionDuration, token);
-            SetAttackEnabled(true);
-            await UniTask.Delay(TimeSpan.FromSeconds(config.AttackDuration), cancellationToken: token);
-        }
-
-        private UniTask StopAttack(CancellationToken token)
-        {
-            SetAttackEnabled(false);
-            return DoLasersFade(0, config.FadeOutTime, token);
-        }
-        private void SetAttackEnabled(bool enable)
-        {
-            foreach (var attack in lasers)
+            foreach (var laserAttack in lasers)
             {
-                attack.enabled = enable;
+                laserAttack.enabled = true;
             }
         }
-        private UniTask DoLasersFade(float endIntensity, float duration, CancellationToken token)
+        private void DisableAttack()
         {
-            return DOTween.To
-            (() => laserMaterial.GetFloat(LaserIntensity), SetLightIntensity, 
-                endIntensity, duration).ToUniTask(cancellationToken: token);
-        }
-        
-        private void SetLightIntensity(float intensity)
-        {
-            laserMaterial.SetFloat(LaserIntensity, intensity);
+            foreach (var laserAttack in lasers)
+            {
+                laserAttack.enabled = false;
+            }
         }
     }
 }
