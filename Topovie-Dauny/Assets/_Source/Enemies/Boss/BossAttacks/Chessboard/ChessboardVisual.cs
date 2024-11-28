@@ -30,8 +30,8 @@ namespace Enemies.Boss.BossAttacks.Chessboard
 
             _delayBeforeAttack = config.DelayBeforeAttack;
             _attackDuration = config.AttackDuration;
-            _fadeOutDuration = config.FadeOutDuration;
-            _fadeInDuration = config.FadeInDuration;
+            _fadeOutDuration = config.FadeOutTime;
+            _fadeInDuration = config.FadeInTime;
             
             _warningBlinkAmount = config.WarningBlinkAmount;
             _blinkDuration = config.WarningDuration/config.WarningBlinkAmount;

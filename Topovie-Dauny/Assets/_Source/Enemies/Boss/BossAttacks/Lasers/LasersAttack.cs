@@ -13,20 +13,14 @@ namespace Enemies.Boss.BossAttacks.Lasers
         [SerializeField] private Material laserMaterial;
         [SerializeField] private float intensityOnWarn;
         [SerializeField] private float intensityOnAttack;
-        
-        [Header("Timing Settings")]
-        [SerializeField] private float fadeInDuration;
-        [SerializeField] private float warningDuration;
-        [SerializeField] private float transitionDuration;
-        [SerializeField] private float attackDuration;
-        [SerializeField] private float fadeOutDuration;
+        [SerializeField] private BaseBossAttackConfig config;
 
         private CancellationToken _destroyCancellationToken;
         private static readonly int LaserIntensity = Shader.PropertyToID("_LaserIntensity");
         private void Awake()
         {
             _destroyCancellationToken = this.GetCancellationTokenOnDestroy();
-            SetLasersAttack(false);
+            SetAttackEnabled(false);
             DoLasersFade(0, 0, _destroyCancellationToken);
         }
         public UniTask TriggerAttack(CancellationToken token)
@@ -37,23 +31,23 @@ namespace Enemies.Boss.BossAttacks.Lasers
         }
         private async UniTask ShowWarningAsync(CancellationToken token)
         {
-            await DoLasersFade(intensityOnWarn, fadeInDuration,token);
-            await UniTask.Delay(TimeSpan.FromSeconds(warningDuration), cancellationToken: token);
+            await DoLasersFade(intensityOnWarn, config.FadeInTime,token);
+            await UniTask.Delay(TimeSpan.FromSeconds(config.WarningDuration), cancellationToken: token);
         }
 
         private async UniTask StartAttackAsync(CancellationToken token)
         {
-            await DoLasersFade(intensityOnAttack, transitionDuration, token);
-            SetLasersAttack(true);
-            await UniTask.Delay(TimeSpan.FromSeconds(attackDuration), cancellationToken: token);
+            await DoLasersFade(intensityOnAttack, config.TransitionDuration, token);
+            SetAttackEnabled(true);
+            await UniTask.Delay(TimeSpan.FromSeconds(config.AttackDuration), cancellationToken: token);
         }
 
         private UniTask StopAttack(CancellationToken token)
         {
-            SetLasersAttack(false);
-            return DoLasersFade(0, fadeOutDuration, token);
+            SetAttackEnabled(false);
+            return DoLasersFade(0, config.FadeOutTime, token);
         }
-        private void SetLasersAttack(bool enable)
+        private void SetAttackEnabled(bool enable)
         {
             foreach (var attack in lasers)
             {

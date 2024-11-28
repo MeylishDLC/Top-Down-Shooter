@@ -12,13 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 859ce4f07b3c4e9b896eeefb434d4553, type: 3}
   m_Name: Chessboard Config
   m_EditorClassIdentifier: 
+  <FadeInTime>k__BackingField: 0.3
+  <WarningDuration>k__BackingField: 1
+  <AttackDuration>k__BackingField: 2.5
+  <TransitionDuration>k__BackingField: 0
+  <FadeOutTime>k__BackingField: 0.15
   <WarningTileColor>k__BackingField: {r: 1, g: 0.5137255, b: 0.43921572, a: 1}
   <AttackingTileColor>k__BackingField: {r: 1, g: 1, b: 1, a: 1}
-  <FadeInDuration>k__BackingField: 0.3
-  <WarningDuration>k__BackingField: 1
   <WarningBlinkAmount>k__BackingField: 2
-  <AttackDamage>k__BackingField: 30
-  <AttackRate>k__BackingField: 0
-  <AttackDuration>k__BackingField: 2.5
   <DelayBeforeAttack>k__BackingField: 0.1
-  <FadeOutDuration>k__BackingField: 0.15
