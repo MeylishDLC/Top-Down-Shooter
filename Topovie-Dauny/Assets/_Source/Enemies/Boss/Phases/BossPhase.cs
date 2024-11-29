@@ -1,40 +1,89 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+using Cysharp.Threading.Tasks;
 using Enemies.Boss.BossAttacks;
 using UnityEngine;
+using Random = UnityEngine.Random;
+
 
 namespace Enemies.Boss.Phases
 {
     public class BossPhase: MonoBehaviour
-    { 
-        public enum PhaseType
-        {
-            SingleAttackPhase,
-            AttackCombinationPhase
-        }
-        public IBossPhase BossPhaseInstance {get; private set;}
-
-        [SerializeField] private PhaseType phaseType;
-        [SerializeField] private BasePhaseConfig config;
+    {
+        public event Action<PhaseState> OnPhaseStateChanged;
+        [field:SerializeField] public BasePhaseConfig PhaseConfig {get; private set;}
         
+        [BossAttack] [SerializeField] public List<MonoBehaviour> attacks;
         
-        [SerializeField] private int a;
-        [SerializeField] private int b;
+        private List<IBossAttack> _bossAttacks;
         
-        [BossAttack]
-        [SerializeField] private List<MonoBehaviour> bossAttacks;
+        private PhaseState _currentState = PhaseState.Attack;
+        private int _currentAttackIndex;
+        private readonly CancellationTokenSource _stopPhaseCts = new();
+        
         private void Awake()
         {
-            if (phaseType == PhaseType.SingleAttackPhase)
+            _bossAttacks = GetCastedBossAttacksList();
+        }
+        public void StartPhase()
+        {
+            StartPhaseAsync(_stopPhaseCts.Token).Forget();
+        }
+        public void FinishPhase()
+        {
+            Debug.Log("Finish Phase");
+            _stopPhaseCts.Cancel();
+            _stopPhaseCts.Dispose();
+        }
+        private async UniTask StartPhaseAsync(CancellationToken token)
+        {
+            try
             {
-                BossPhaseInstance = new SingleAttackPhase(config, GetCastedBossAttacksList());
+                while (true)
+                {
+                    await MoveToAttackStateAsync(token);
+                    await MoveToVulnerabilityStateAsync(token);
+                }  
+            }
+            catch (TaskCanceledException)
+            {
+                //
             }
         }
+        private async UniTask MoveToAttackStateAsync(CancellationToken token)
+        {
+            Debug.Log("Attack");
+            _currentState = PhaseState.Attack;
+            OnPhaseStateChanged?.Invoke(_currentState);
 
+            if (_currentAttackIndex >= _bossAttacks.Count)
+            {
+                _currentAttackIndex = 0;
+            }
+            await _bossAttacks[_currentAttackIndex].TriggerAttack(token);
+            _currentAttackIndex++;
+        }
+
+        private async UniTask MoveToVulnerabilityStateAsync(CancellationToken token)
+        {
+            _currentState = PhaseState.Vulnerability;
+            OnPhaseStateChanged?.Invoke(_currentState);
+            Debug.Log("Vulnerability");
+  
+            var duration = GetRandomVulnerabilityDuration();
+            await UniTask.Delay(TimeSpan.FromSeconds(duration), cancellationToken: token);
+        }
+
+        private float GetRandomVulnerabilityDuration()
+        {
+            return Random.Range(PhaseConfig.MinVulnerabilityDuration, PhaseConfig.MaxVulnerabilityDuration);
+        }
         private List<IBossAttack> GetCastedBossAttacksList()
         {
-            return bossAttacks.Select(x => x.GetComponent<IBossAttack>()).ToList();
+            return attacks.Select(x => x.GetComponent<IBossAttack>()).ToList();
         }
     }
 }

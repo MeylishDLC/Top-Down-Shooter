@@ -3,6 +3,7 @@ using Core.LevelSettings;
 using Core.SceneManagement;
 using DialogueSystem;
 using DialogueSystem.LevelDialogue;
+using Enemies;
 using Player.PlayerCombat;
 using Player.PlayerControl;
 using UI.Core;

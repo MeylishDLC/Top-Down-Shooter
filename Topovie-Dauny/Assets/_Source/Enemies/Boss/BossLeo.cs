@@ -5,10 +5,10 @@ using System.Threading;
 using Cysharp.Threading.Tasks;
 using Enemies.Boss.Phases;
 using UnityEngine;
+using Zenject;
 
 namespace Enemies.Boss
 {
-    //todo make non mb???
     public class BossLeo : MonoBehaviour
     {
         [SerializeField] private SerializedDictionary<BossPhase, TextAsset> phaseDialoguePair;
@@ -16,7 +16,7 @@ namespace Enemies.Boss
         
         private int _currentPhaseIndex = -1;
         private CancellationToken _destroyCancellationToken;
-
+        
         private void Start()
         {
             _destroyCancellationToken = this.GetCancellationTokenOnDestroy();
@@ -46,7 +46,7 @@ namespace Enemies.Boss
         }
         private async UniTask StartPhaseAsync(CancellationToken token)
         {
-            var phase = phaseDialoguePair.Keys.ElementAt(_currentPhaseIndex).BossPhaseInstance;
+            var phase = phaseDialoguePair.Keys.ElementAt(_currentPhaseIndex);
 
             if (_currentPhaseIndex > 0)
             {

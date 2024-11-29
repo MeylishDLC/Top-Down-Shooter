@@ -134,7 +134,6 @@ GameObject:
   - component: {fileID: 43678792}
   - component: {fileID: 43678793}
   - component: {fileID: 43678794}
-  - component: {fileID: 43678795}
   - component: {fileID: 43678796}
   m_Layer: 8
   m_Name: LeoBoss
@@ -159,6 +158,7 @@ Transform:
   - {fileID: 1823563906}
   - {fileID: 1756499746}
   - {fileID: 1389364791}
+  - {fileID: 1719688344}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!60 &43678793
@@ -254,30 +254,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e5c67c3051046f2926380fe6ecd7d34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &43678795
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 43678790}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a1b9b74d5dee4f2092ab566f14da9f8b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  phaseType: 0
-  config: {fileID: 11400000, guid: a9f3647e1f015c247b52dcedf37afaea, type: 2}
-  a: 0
-  b: 0
-  bossAttacks:
-  - {fileID: 1926940746}
-  - {fileID: 1886304200}
-  - {fileID: 1551346475}
-  - {fileID: 96567651}
-  - {fileID: 111097475}
-  - {fileID: 1465392563}
-  - {fileID: 2012629871}
 --- !u!114 &43678796
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -292,7 +268,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   phaseDialoguePair:
     pairs:
-    - key: {fileID: 43678795}
+    - key: {fileID: 495760578}
       value: {fileID: 0}
     error: 0
   bossHealth: {fileID: 43678794}
@@ -700,6 +676,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 96224495}
+  - component: {fileID: 96224496}
   m_Layer: 8
   m_Name: CHESSBOARD
   m_TagString: Untagged
@@ -724,6 +701,23 @@ Transform:
   - {fileID: 1551346473}
   m_Father: {fileID: 1389364791}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &96224496
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 96224494}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e7241a1b3194ada8a51d290beb02320, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attacks:
+  - {fileID: 1886304200}
+  - {fileID: 1551346475}
+  delayBetweenAttacks: 0.5
+  randomiseAttacksDirection: 1
 --- !u!1 &96567649
 GameObject:
   m_ObjectHideFlags: 0
@@ -2211,6 +2205,62 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &495760576
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 495760577}
+  - component: {fileID: 495760578}
+  m_Layer: 8
+  m_Name: Phase1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &495760577
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 495760576}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1719688344}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &495760578
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 495760576}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a1b9b74d5dee4f2092ab566f14da9f8b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <PhaseConfig>k__BackingField: {fileID: 11400000, guid: a9f3647e1f015c247b52dcedf37afaea, type: 2}
+  attacks:
+  - {fileID: 1926940746}
+  - {fileID: 1886304200}
+  - {fileID: 1551346475}
+  - {fileID: 96567651}
+  - {fileID: 111097475}
+  - {fileID: 1465392563}
+  - {fileID: 2012629871}
+  - {fileID: 96224496}
+  - {fileID: 976616739}
+  - {fileID: 624717729}
 --- !u!1 &511137382
 GameObject:
   m_ObjectHideFlags: 0
@@ -2742,6 +2792,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 624717728}
+  - component: {fileID: 624717729}
   m_Layer: 8
   m_Name: LINES
   m_TagString: Untagged
@@ -2766,6 +2817,23 @@ Transform:
   - {fileID: 2012629872}
   m_Father: {fileID: 1389364791}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &624717729
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 624717727}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e7241a1b3194ada8a51d290beb02320, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attacks:
+  - {fileID: 1465392563}
+  - {fileID: 2012629871}
+  delayBetweenAttacks: 0.5
+  randomiseAttacksDirection: 1
 --- !u!1 &659143171
 GameObject:
   m_ObjectHideFlags: 0
@@ -4186,6 +4254,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 976616738}
+  - component: {fileID: 976616739}
   m_Layer: 8
   m_Name: LASERS
   m_TagString: Untagged
@@ -4210,6 +4279,23 @@ Transform:
   - {fileID: 111097474}
   m_Father: {fileID: 1389364791}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &976616739
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 976616737}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e7241a1b3194ada8a51d290beb02320, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attacks:
+  - {fileID: 96567651}
+  - {fileID: 111097475}
+  delayBetweenAttacks: 0.5
+  randomiseAttacksDirection: 1
 --- !u!1 &1011503755
 GameObject:
   m_ObjectHideFlags: 0
@@ -5027,7 +5113,7 @@ GameObject:
   - component: {fileID: 1487045275}
   - component: {fileID: 1487045277}
   m_Layer: 0
-  m_Name: FireBalls (2)
+  m_Name: FireBallsMEDIUM
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5943,7 +6029,7 @@ GameObject:
   - component: {fileID: 1690919632}
   - component: {fileID: 1690919634}
   m_Layer: 0
-  m_Name: FireBalls
+  m_Name: FireBallsFAST
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5979,6 +6065,38 @@ MonoBehaviour:
   config: {fileID: 11400000, guid: 942af84248466d942bd731a9835c037d, type: 2}
   minAttackDuration: 5
   maxAttackDuration: 10
+--- !u!1 &1719688343
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1719688344}
+  m_Layer: 8
+  m_Name: PHASES
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1719688344
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1719688343}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 495760577}
+  m_Father: {fileID: 43678792}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1721127402 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6727960017420303033, guid: bdbab601254792449a873aad0160044b, type: 3}
@@ -6957,7 +7075,7 @@ GameObject:
   - component: {fileID: 1926940744}
   - component: {fileID: 1926940746}
   m_Layer: 0
-  m_Name: FireBalls (1)
+  m_Name: FireBallsSLOW
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

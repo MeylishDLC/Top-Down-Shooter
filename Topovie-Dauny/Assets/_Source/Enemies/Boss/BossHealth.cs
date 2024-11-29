@@ -12,10 +12,10 @@ namespace Enemies.Boss
         private int _maxHealth;
         private int _currentHealth;
         
-        private IBossPhase _currentPhase;
+        private BossPhase _currentPhase;
         private bool _isVulnerable;
 
-        public void ChangePhase(IBossPhase phase)
+        public void ChangePhase(BossPhase phase)
         {
             _currentPhase = phase;
             _currentPhase.OnPhaseStateChanged += SetVulnerability;
@@ -39,7 +39,6 @@ namespace Enemies.Boss
                 }
             }
         }
-        
         private void OnHealthWasted()
         {
             _currentPhase.FinishPhase();
