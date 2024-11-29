@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using Core.LevelSettings;
 using Cysharp.Threading.Tasks;
 using Enemies.Boss.Phases;
 using UnityEngine;
@@ -16,7 +17,13 @@ namespace Enemies.Boss
         
         private int _currentPhaseIndex = -1;
         private CancellationToken _destroyCancellationToken;
+        private StatesChanger _statesChanger;
         
+        [Inject]
+        public void Construct(StatesChanger statesChanger)
+        {
+            _statesChanger = statesChanger;
+        }
         private void Start()
         {
             _destroyCancellationToken = this.GetCancellationTokenOnDestroy();
@@ -31,7 +38,8 @@ namespace Enemies.Boss
 
         private void StartFight()
         {
-           StartPhase();
+            _statesChanger.ChangeState(GameStates.Fight);
+            StartPhase();
         }
         private void StartPhase()
         {

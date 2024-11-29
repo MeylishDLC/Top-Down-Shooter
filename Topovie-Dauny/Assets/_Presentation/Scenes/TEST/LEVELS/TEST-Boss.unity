@@ -254,6 +254,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e5c67c3051046f2926380fe6ecd7d34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  healthSlider: {fileID: 1983544023}
+  ySlideValueOnShow: 450
+  ySlideValueOnHide: 900
+  scaleValueOnBounce: 1.1
+  yAnimationDuration: 0.4
+  scaleAnimationDuration: 0.2
 --- !u!114 &43678796
 MonoBehaviour:
   m_ObjectHideFlags: 0

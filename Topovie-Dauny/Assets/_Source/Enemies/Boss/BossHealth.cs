@@ -1,7 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Threading;
 using Cysharp.Threading.Tasks;
+using DG.Tweening;
 using Enemies.Boss.Phases;
 using UnityEngine;
+using UnityEngine.Serialization;
+using UnityEngine.UI;
 
 namespace Enemies.Boss
 {
@@ -9,12 +14,30 @@ namespace Enemies.Boss
     {
         public event Action OnPhaseFinished;
 
+        [Header("Health Bar Settings")]
+        [SerializeField] private Slider healthSlider;
+        [SerializeField] private float ySlideValueOnShow;
+        [SerializeField] private float ySlideValueOnHide;
+        [SerializeField] private float scaleValueOnBounce;
+        [SerializeField] private float yAnimationDuration;
+        [SerializeField] private float scaleAnimationDuration;
+        
         private int _maxHealth;
         private int _currentHealth;
         
+        private RectTransform _sliderRectTransform;
         private BossPhase _currentPhase;
         private bool _isVulnerable;
+        private CancellationToken _destroyCancellationToken;
 
+        private void Start()
+        {
+            _destroyCancellationToken = this.GetCancellationTokenOnDestroy();
+            _sliderRectTransform = healthSlider.GetComponent<RectTransform>();
+
+            _sliderRectTransform.DOLocalMoveY(ySlideValueOnHide, 0f)
+                .ToUniTask(cancellationToken: _destroyCancellationToken);
+        }
         public void ChangePhase(BossPhase phase)
         {
             _currentPhase = phase;
@@ -22,6 +45,7 @@ namespace Enemies.Boss
             
             _maxHealth = _currentPhase.PhaseConfig.BossHealth;
             _currentHealth = _maxHealth;
+            UpdateSliderValue();
         }
         public void TakeDamage(int damage)
         {
@@ -30,6 +54,7 @@ namespace Enemies.Boss
                 return;
             }
             _currentHealth -= damage;
+            UpdateSliderValue();
             if (_currentHealth <= 0)
             {
                 _currentHealth = 0;
@@ -38,6 +63,10 @@ namespace Enemies.Boss
                     OnHealthWasted();
                 }
             }
+        }
+        private void UpdateSliderValue()
+        {
+            healthSlider.value = _currentHealth / (float)_maxHealth;
         }
         private void OnHealthWasted()
         {
@@ -51,21 +80,31 @@ namespace Enemies.Boss
             if (phaseState == PhaseState.Vulnerability)
             {
                 _isVulnerable = true;
-                ShowHealthBar();
+                ShowHealthBar(_destroyCancellationToken).Forget();
             }
             else
             {
                 _isVulnerable = false;
-                HideHealthBar();
+                HideHealthBar(_destroyCancellationToken).Forget();
             }
         }
-        private void ShowHealthBar()
+        private UniTask ShowHealthBar(CancellationToken token)
         {
-            Debug.Log("Showing health bar");
+            return AnimateSliderYMove(ySlideValueOnShow, token).ContinueWith(() => AnimateSliderScale(token));
         }
-        private void HideHealthBar()
+        private UniTask HideHealthBar(CancellationToken token)
         {
-            Debug.Log("Hiding health bar");
+            return AnimateSliderScale(token).ContinueWith(() => AnimateSliderYMove(ySlideValueOnHide, token));
+        }
+        private UniTask AnimateSliderYMove(float moveValue, CancellationToken token)
+        {
+            return _sliderRectTransform.DOLocalMoveY(moveValue, yAnimationDuration)
+                .ToUniTask(cancellationToken: token);
+        }
+        private UniTask AnimateSliderScale(CancellationToken token)
+        {
+            return _sliderRectTransform.DOScale(scaleValueOnBounce, scaleAnimationDuration).SetLoops(2, LoopType.Yoyo)
+                .ToUniTask(cancellationToken: token);
         }
     }
 }
