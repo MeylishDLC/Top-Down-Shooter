@@ -28,6 +28,11 @@ namespace Enemies.Boss
         {
             ShowLeoHurtAsync(_ct).Forget();
         }
+
+        public void SetLeoHurt()
+        {
+            _headRenderer.sprite = _vulnerableSprite;
+        }
         private async UniTask ShowLeoHurtAsync(CancellationToken token)
         {
             _headRenderer.sprite = _vulnerableSprite;

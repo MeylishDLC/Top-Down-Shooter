@@ -13,6 +13,7 @@ namespace Enemies.Boss
 {
     public class BossLeo : MonoBehaviour
     {
+        [SerializeField] private BossFightTrigger bossFightTrigger;
         [SerializeField] private SerializedDictionary<BossPhase, TextAsset> phaseDialoguePair;
         [SerializeField] private BossHealth bossHealth;
         
@@ -41,7 +42,8 @@ namespace Enemies.Boss
             
             _destroyCancellationToken = this.GetCancellationTokenOnDestroy();
             bossHealth.OnPhaseFinished += EndPhase;
-            StartFight();
+
+            bossFightTrigger.OnBossFightStarted += StartFight;
         }
         private void OnDestroy()
         {
@@ -50,6 +52,7 @@ namespace Enemies.Boss
         }
         private void StartFight()
         {
+            bossFightTrigger.OnBossFightStarted -= StartFight;
             _statesChanger.ChangeState(GameStates.Fight);
             StartPhase();
         }
@@ -72,6 +75,7 @@ namespace Enemies.Boss
             {
                 Debug.Log("Phases passed");
                 _statesChanger.ChangeState(GameStates.PortalCharged);
+                _bossLeoVisual.SetLeoHurt();
                 return;
             }
 
