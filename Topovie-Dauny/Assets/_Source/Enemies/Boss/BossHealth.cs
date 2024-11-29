@@ -70,7 +70,6 @@ namespace Enemies.Boss
         }
         private void OnHealthWasted()
         {
-            _currentPhase.FinishPhase();
             _currentPhase.OnPhaseStateChanged -= SetVulnerability;
             _currentPhase = null;
             OnPhaseFinished?.Invoke();
