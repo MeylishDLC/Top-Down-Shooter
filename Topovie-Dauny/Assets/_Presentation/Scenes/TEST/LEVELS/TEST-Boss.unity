@@ -282,6 +282,10 @@ MonoBehaviour:
       value: {fileID: 4900000, guid: 15449d3b3963d7741bd38a3b6f77f619, type: 3}
     error: 0
   bossHealth: {fileID: 43678794}
+  headRenderer: {fileID: 1756499747}
+  attackSprite: {fileID: 21300000, guid: c2b81e3a0fb77214197e23e2dc4de25c, type: 3}
+  vulnerableSprite: {fileID: 21300000, guid: 188aed181e242674d9cecdb08a9dc66d, type: 3}
+  hurtDuration: 0.5
 --- !u!4 &55932255 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2414893298648739581, guid: 88f94ed5513e48c4a9d7c4818e07abec, type: 3}

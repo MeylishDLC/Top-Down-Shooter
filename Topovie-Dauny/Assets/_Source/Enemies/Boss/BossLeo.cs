@@ -16,10 +16,17 @@ namespace Enemies.Boss
         [SerializeField] private SerializedDictionary<BossPhase, TextAsset> phaseDialoguePair;
         [SerializeField] private BossHealth bossHealth;
         
+        [Header("Visual")]
+        [SerializeField] private SpriteRenderer headRenderer;
+        [SerializeField] private Sprite attackSprite;
+        [SerializeField] private Sprite vulnerableSprite;
+        [SerializeField] private float hurtDuration;
+        
         private int _currentPhaseIndex;
         private CancellationToken _destroyCancellationToken;
         private StatesChanger _statesChanger;
         private DialogueManager _dialogueManager;
+        private BossLeoVisual _bossLeoVisual;
         
         [Inject]
         public void Construct(StatesChanger statesChanger, DialogueManager dialogueManager)
@@ -29,16 +36,18 @@ namespace Enemies.Boss
         }
         private void Start()
         {
+            _bossLeoVisual = new BossLeoVisual(headRenderer, attackSprite, vulnerableSprite, hurtDuration, _destroyCancellationToken);
+            bossHealth.OnDamageTaken += _bossLeoVisual.ShowLeoHurt;
+            
             _destroyCancellationToken = this.GetCancellationTokenOnDestroy();
             bossHealth.OnPhaseFinished += EndPhase;
             StartFight();
         }
-
         private void OnDestroy()
         {
             bossHealth.OnPhaseFinished -= EndPhase;
+            bossHealth.OnDamageTaken -= _bossLeoVisual.ShowLeoHurt;
         }
-
         private void StartFight()
         {
             _statesChanger.ChangeState(GameStates.Fight);
@@ -62,6 +71,7 @@ namespace Enemies.Boss
             if (_currentPhaseIndex >= phaseDialoguePair.Count)
             {
                 Debug.Log("Phases passed");
+                _statesChanger.ChangeState(GameStates.PortalCharged);
                 return;
             }
 
@@ -90,5 +100,6 @@ namespace Enemies.Boss
             
             _dialogueManager.EnterDialogueMode(dialogue);
         }
+        
     }
 }

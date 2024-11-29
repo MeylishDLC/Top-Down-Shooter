@@ -13,7 +13,8 @@ namespace Enemies.Boss
     public class BossHealth: MonoBehaviour, IEnemyHealth
     {
         public event Action OnPhaseFinished;
-
+        public event Action OnDamageTaken;
+        
         [Header("Health Bar Settings")]
         [SerializeField] private Slider healthSlider;
         [SerializeField] private float ySlideValueOnShow;
@@ -54,6 +55,7 @@ namespace Enemies.Boss
                 return;
             }
             _currentHealth -= damage;
+            OnDamageTaken?.Invoke();
             UpdateSliderValue();
             if (_currentHealth <= 0)
             {
@@ -105,5 +107,6 @@ namespace Enemies.Boss
             return _sliderRectTransform.DOScale(scaleValueOnBounce, scaleAnimationDuration).SetLoops(2, LoopType.Yoyo)
                 .ToUniTask(cancellationToken: token);
         }
+        
     }
 }
