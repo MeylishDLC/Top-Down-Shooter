@@ -15,7 +15,8 @@ namespace Enemies.Boss.Phases
     {
         public event Action<PhaseState> OnPhaseStateChanged;
         [field:SerializeField] public BasePhaseConfig PhaseConfig {get; private set;}
-        
+
+        [SerializeField] private bool randomiseAttacks;
         [BossAttack] [SerializeField] public List<MonoBehaviour> attacks;
         
         private List<IBossAttack> _bossAttacks;
@@ -55,10 +56,16 @@ namespace Enemies.Boss.Phases
         }
         private async UniTask MoveToAttackStateAsync(CancellationToken token)
         {
-            Debug.Log("Attack");
             _currentState = PhaseState.Attack;
             OnPhaseStateChanged?.Invoke(_currentState);
 
+            if (randomiseAttacks)
+            {
+                var randomAttackIndex = Random.Range(0, attacks.Count);
+                await _bossAttacks[randomAttackIndex].TriggerAttack(token);
+                return;
+            }
+            
             if (_currentAttackIndex >= _bossAttacks.Count)
             {
                 _currentAttackIndex = 0;

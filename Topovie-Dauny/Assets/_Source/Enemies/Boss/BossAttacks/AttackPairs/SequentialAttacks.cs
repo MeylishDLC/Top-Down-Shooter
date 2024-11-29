@@ -12,8 +12,8 @@ namespace Enemies.Boss.BossAttacks.AttackPairs
     {
         [BossAttack]
         [SerializeField] private List<MonoBehaviour> attacks;
-        [SerializeField] private float delayBetweenAttacks;
-        [SerializeField] private bool randomiseAttacksDirection;
+        [SerializeField] private float delayBetweenAttacks = 0.5f;
+        [SerializeField] private bool randomiseAttacksDirection = true;
         
         private List<IBossAttack> _bossAttacks;
         private bool _isAttackingOpposite;
