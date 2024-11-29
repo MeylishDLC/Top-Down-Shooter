@@ -134,6 +134,8 @@ GameObject:
   - component: {fileID: 43678792}
   - component: {fileID: 43678793}
   - component: {fileID: 43678794}
+  - component: {fileID: 43678795}
+  - component: {fileID: 43678796}
   m_Layer: 8
   m_Name: LeoBoss
   m_TagString: Untagged
@@ -252,16 +254,48 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e5c67c3051046f2926380fe6ecd7d34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  phases: []
-  attackers:
+--- !u!114 &43678795
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 43678790}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a1b9b74d5dee4f2092ab566f14da9f8b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  phaseType: 0
+  config: {fileID: 11400000, guid: a9f3647e1f015c247b52dcedf37afaea, type: 2}
+  a: 0
+  b: 0
+  bossAttacks:
+  - {fileID: 1926940746}
   - {fileID: 1886304200}
   - {fileID: 1551346475}
-  lasers:
   - {fileID: 96567651}
   - {fileID: 111097475}
-  lines:
   - {fileID: 1465392563}
   - {fileID: 2012629871}
+--- !u!114 &43678796
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 43678790}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9463ebe751557b478d5714643d5c7fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  phaseDialoguePair:
+    pairs:
+    - key: {fileID: 43678795}
+      value: {fileID: 0}
+    error: 0
+  bossHealth: {fileID: 43678794}
 --- !u!4 &55932255 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2414893298648739581, guid: 88f94ed5513e48c4a9d7c4818e07abec, type: 3}
@@ -4998,7 +5032,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1487045275
 Transform:
   m_ObjectHideFlags: 0
@@ -5914,7 +5948,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1690919632
 Transform:
   m_ObjectHideFlags: 0
@@ -6928,7 +6962,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1926940744
 Transform:
   m_ObjectHideFlags: 0
@@ -14192,9 +14226,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bulletSpawners:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 1690919634}
+  - {fileID: 1926940746}
+  - {fileID: 1487045277}
   enemyBulletPoolDataPair:
     <PoolConfig>k__BackingField: {fileID: 11400000, guid: d45500dbfb5a1ef4388ad8e37bed6fab, type: 2}
     <PoolParent>k__BackingField: {fileID: 78663876}

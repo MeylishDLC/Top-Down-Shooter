@@ -9,7 +9,6 @@ namespace Editor
     {
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
-            // Draw the field as an Object Field
             EditorGUI.LabelField(position, label);
 
             position.x += EditorGUIUtility.labelWidth;
@@ -22,7 +21,6 @@ namespace Editor
                 true
             );
 
-            // Validate the assigned object
             if (property.objectReferenceValue != null &&
                 !(property.objectReferenceValue is IBossAttack))
             {

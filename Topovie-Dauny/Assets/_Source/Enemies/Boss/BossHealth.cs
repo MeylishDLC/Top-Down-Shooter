@@ -1,9 +1,5 @@
-﻿using System.Threading;
+﻿using System;
 using Cysharp.Threading.Tasks;
-using Enemies.Boss.BossAttacks;
-using Enemies.Boss.BossAttacks.Chessboard;
-using Enemies.Boss.BossAttacks.Lasers;
-using Enemies.Boss.BossAttacks.Lines;
 using Enemies.Boss.Phases;
 using UnityEngine;
 
@@ -11,34 +7,66 @@ namespace Enemies.Boss
 {
     public class BossHealth: MonoBehaviour, IEnemyHealth
     {
-        [SerializeField] private BossPhase[] phases;
+        public event Action OnPhaseFinished;
+
+        private int _maxHealth;
+        private int _currentHealth;
         
-        [SerializeField] private ChessboardAttack[] attackers;
-        [SerializeField] private LasersAttack[] lasers;
-        [SerializeField] private LinesAttack[] lines;
-        
+        private IBossPhase _currentPhase;
+        private bool _isVulnerable;
+
+        public void ChangePhase(IBossPhase phase)
+        {
+            _currentPhase = phase;
+            _currentPhase.OnPhaseStateChanged += SetVulnerability;
+            
+            _maxHealth = _currentPhase.PhaseConfig.BossHealth;
+            _currentHealth = _maxHealth;
+        }
         public void TakeDamage(int damage)
         {
-            Test().Forget();
+            if (!_isVulnerable)
+            {
+                return;
+            }
+            _currentHealth -= damage;
+            if (_currentHealth <= 0)
+            {
+                _currentHealth = 0;
+                if (_currentPhase != null)
+                {
+                    OnHealthWasted();
+                }
+            }
         }
-
-        private async UniTask Test()
+        
+        private void OnHealthWasted()
         {
-            foreach (var line in lines)
+            _currentPhase.FinishPhase();
+            _currentPhase.OnPhaseStateChanged -= SetVulnerability;
+            _currentPhase = null;
+            OnPhaseFinished?.Invoke();
+        }
+        private void SetVulnerability(PhaseState phaseState)
+        {
+            if (phaseState == PhaseState.Vulnerability)
             {
-                await line.TriggerAttack(CancellationToken.None);
+                _isVulnerable = true;
+                ShowHealthBar();
             }
-            foreach (var laser in lasers)
+            else
             {
-                await laser.TriggerAttack(CancellationToken.None);
+                _isVulnerable = false;
+                HideHealthBar();
             }
-
-            await UniTask.Delay(1000);
-
-            foreach (var attacker in attackers)
-            {
-                await attacker.TriggerAttack(CancellationToken.None);
-            }
+        }
+        private void ShowHealthBar()
+        {
+            Debug.Log("Showing health bar");
+        }
+        private void HideHealthBar()
+        {
+            Debug.Log("Hiding health bar");
         }
     }
 }

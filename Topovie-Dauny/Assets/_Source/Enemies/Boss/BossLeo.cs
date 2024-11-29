@@ -1,37 +1,60 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
+using Cysharp.Threading.Tasks;
+using Enemies.Boss.Phases;
 using UnityEngine;
 
 namespace Enemies.Boss
 {
+    //todo make non mb???
     public class BossLeo : MonoBehaviour
     {
+        [SerializeField] private SerializedDictionary<BossPhase, TextAsset> phaseDialoguePair;
+        [SerializeField] private BossHealth bossHealth;
         
-        private void StartTutorPhase()
+        private int _currentPhaseIndex = -1;
+        private CancellationToken _destroyCancellationToken;
+
+        private void Start()
         {
-            
+            _destroyCancellationToken = this.GetCancellationTokenOnDestroy();
+            bossHealth.OnPhaseFinished += StartPhase;
+            StartFight();
         }
-        private void SwitchToAttackPhase()
+
+        private void OnDestroy()
         {
-            
+            bossHealth.OnPhaseFinished -= StartPhase;
         }
-        private void SwitchToVulnerableState()
+
+        private void StartFight()
         {
-            
+           StartPhase();
         }
-        private void CastKillboxLines()
+        private void StartPhase()
         {
-            
+            _currentPhaseIndex++;
+
+            if (_currentPhaseIndex >= phaseDialoguePair.Count)
+            {
+                Debug.Log("Phases passed");
+                return;
+            }
+            StartPhaseAsync(_destroyCancellationToken).Forget();
         }
-        private void CastSpinningFireBalls()
+        private async UniTask StartPhaseAsync(CancellationToken token)
         {
-            
-        }
-        private void CastDeathRays()
-        {
-            
-        }
-        private void CastChessboard()
-        {
-            
+            var phase = phaseDialoguePair.Keys.ElementAt(_currentPhaseIndex).BossPhaseInstance;
+
+            if (_currentPhaseIndex > 0)
+            {
+                await UniTask.Delay(TimeSpan.FromSeconds(phase.PhaseConfig.AttackTransitionDuration),
+                    cancellationToken: token);
+            }
+            bossHealth.ChangePhase(phase);
+            phase.StartPhase();
         }
     }
 }
