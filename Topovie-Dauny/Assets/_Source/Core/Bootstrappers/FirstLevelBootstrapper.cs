@@ -15,7 +15,7 @@ using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.Rendering.Universal;
 using UnityEngine.Serialization;
-using Weapons.Test_Gun;
+using Weapons.Guns;
 using Zenject;
 
 namespace Core.Bootstrappers
@@ -68,7 +68,7 @@ namespace Core.Bootstrappers
             _spawner.OnShootingEnemyInitialised -= InitializeEnemyProjectilePool;
             _levelDialogues.Expose();
         }
-        public void ScanPaths()
+        private void ScanPaths()
         {
             pathfinder.Scan();
         }

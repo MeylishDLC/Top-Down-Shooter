@@ -11,7 +11,7 @@ using Cysharp.Threading.Tasks;
 using DialogueSystem.LevelDialogue;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
-using Weapons.Test_Gun;
+using Weapons.Guns;
 using Zenject;
 
 namespace Core.Bootstrappers

@@ -1,22 +1,20 @@
 ﻿using System;
 using System.Threading;
-using Bullets;
 using Bullets.BulletPools;
 using Cysharp.Threading.Tasks;
 using Player.PlayerControl.GunMovement;
-using TMPro;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
-using Zenject;
 using Random = UnityEngine.Random;
 
-namespace Weapons.Test_Gun
+namespace Weapons.Guns
 {
-    public class BasicGun: Gun
+    public class Shotgun: Gun
     {
         [field:Header("Main Settings")]
-        [SerializeField] private GameObject bulletPrefab;
+        [SerializeField] private Transform firingPoint;
+        [SerializeField] private int bulletsPerShot = 5;
+        [SerializeField] private float spreadAngle = 45f;
         
         [Header("Components")]
         [SerializeField] private Animator firingPointAnimator;
@@ -26,13 +24,14 @@ namespace Weapons.Test_Gun
         [SerializeField] private Transform kickbackTransform;
         [SerializeField] private float kickbackDistance;
         [SerializeField] private float kickbackDuration;
-        [SerializeField] private float dispersionAngle;
    
         private static readonly int shoot = Animator.StringToHash("shoot");
         
         private PlayerKickback _playerKickback;
         private BulletPool _bulletPool;
         private float _remainingTime;
+        private bool _canShoot = true;
+        
         public void Initialize(BulletPool bulletPool)
         {
             _playerKickback = new PlayerKickback(kickbackDistance, kickbackDuration,transform, kickbackTransform);
@@ -41,6 +40,11 @@ namespace Weapons.Test_Gun
         }
         public override void Shoot()
         {
+            if (!_canShoot)
+            {
+                return;
+            }
+            
             if (!IsReloading && CurrentBulletsAmount > 0)
             {
                 HandleShooting();
@@ -69,21 +73,32 @@ namespace Weapons.Test_Gun
             firingPointAnimator.SetTrigger(shoot);
             var firingPointTransform = firingPointAnimator.transform;
 
-            if (_bulletPool.TryGetFromPool(out var bullet))
+            for (var i = 0; i < bulletsPerShot; i++)
             {
-                bullet.transform.position = firingPointTransform.position;
-                bullet.transform.rotation = firingPointTransform.rotation;
-                bullet.transform.right = GetBulletDirectionWithDispersion();
-                _playerKickback.ApplyKickback(CancellationToken.None).Forget();
-            } 
-        }
-        private Vector3 GetBulletDirectionWithDispersion()
-        {
-            var randomAngle = Random.Range(-dispersionAngle, dispersionAngle);
+                if (_bulletPool.TryGetFromPool(out var bullet))
+                {
+                    bullet.transform.position = firingPointTransform.position;
 
-            var dispersionRotation = Quaternion.Euler(0, 0, randomAngle);
-            var bulletDirection = dispersionRotation * transform.right;
-            return bulletDirection;
+                    var direction = GetBulletDirectionWithSpread(firingPointTransform.right);
+                    bullet.transform.right = direction;
+                }
+            }
+            _playerKickback.ApplyKickback(CancellationToken.None).Forget();
+            WaitDelayBetweenShots(CancellationToken.None).Forget();
+        }
+        private Vector2 GetBulletDirectionWithSpread(Vector2 forward)
+        {
+            var halfSpread = spreadAngle / 2f;
+            var randomAngle = Random.Range(-halfSpread, halfSpread);
+
+            return Quaternion.Euler(0, 0, randomAngle) * forward;
+        }
+
+        private async UniTask WaitDelayBetweenShots(CancellationToken token)
+        {
+            _canShoot = false;
+            await UniTask.Delay(TimeSpan.FromSeconds(FireRate), cancellationToken: token);
+            _canShoot = true;
         }
         private async UniTask ReloadAsync(CancellationToken token)
         {
@@ -118,6 +133,23 @@ namespace Weapons.Test_Gun
                 reloadingImage.fillAmount = Mathf.Clamp01(_remainingTime / ReloadTime);
                 await UniTask.Yield(PlayerLoopTiming.Update);
             }
+        }
+        
+        private void OnDrawGizmos()
+        {
+            if (firingPoint == null) return;
+
+            Gizmos.color = Color.red;
+
+            var forward = firingPoint.right;
+            var leftBoundary = Quaternion.Euler(0, 0, -spreadAngle / 2) * forward;
+            var rightBoundary = Quaternion.Euler(0, 0, spreadAngle / 2) * forward;
+
+            Gizmos.DrawRay(firingPoint.position, leftBoundary * 2f);
+            Gizmos.DrawRay(firingPoint.position, rightBoundary * 2f);
+
+            Gizmos.color = Color.green;
+            Gizmos.DrawRay(firingPoint.position, forward * 2f);
         }
     }
 }

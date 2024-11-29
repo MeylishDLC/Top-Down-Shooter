@@ -9,6 +9,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using Weapons;
+using Weapons.Guns;
 
 namespace Player.PlayerCombat
 {
