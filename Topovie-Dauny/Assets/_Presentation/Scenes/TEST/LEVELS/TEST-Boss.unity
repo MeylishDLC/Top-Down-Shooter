@@ -4990,7 +4990,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1487045275}
-  - component: {fileID: 1487045276}
+  - component: {fileID: 1487045277}
   m_Layer: 0
   m_Name: FireBalls (2)
   m_TagString: Untagged
@@ -5013,7 +5013,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2035347448}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1487045276
+--- !u!114 &1487045277
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -5022,10 +5022,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1487045274}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fec11dddd10946ae99b5b41e18031072, type: 3}
+  m_Script: {fileID: 11500000, guid: 7aad0e1c4b544123887754586104a9eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   config: {fileID: 11400000, guid: a05fe63122b7ce94db660679581d1984, type: 2}
+  minAttackDuration: 5
+  maxAttackDuration: 10
 --- !u!1 &1489755104
 GameObject:
   m_ObjectHideFlags: 0
@@ -5904,7 +5906,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1690919632}
-  - component: {fileID: 1690919633}
+  - component: {fileID: 1690919634}
   m_Layer: 0
   m_Name: FireBalls
   m_TagString: Untagged
@@ -5927,7 +5929,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2035347448}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1690919633
+--- !u!114 &1690919634
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -5936,10 +5938,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1690919631}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fec11dddd10946ae99b5b41e18031072, type: 3}
+  m_Script: {fileID: 11500000, guid: 7aad0e1c4b544123887754586104a9eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   config: {fileID: 11400000, guid: 942af84248466d942bd731a9835c037d, type: 2}
+  minAttackDuration: 5
+  maxAttackDuration: 10
 --- !u!114 &1721127402 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6727960017420303033, guid: bdbab601254792449a873aad0160044b, type: 3}
@@ -6916,7 +6920,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1926940744}
-  - component: {fileID: 1926940745}
+  - component: {fileID: 1926940746}
   m_Layer: 0
   m_Name: FireBalls (1)
   m_TagString: Untagged
@@ -6939,7 +6943,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2035347448}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1926940745
+--- !u!114 &1926940746
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -6948,10 +6952,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1926940743}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fec11dddd10946ae99b5b41e18031072, type: 3}
+  m_Script: {fileID: 11500000, guid: 7aad0e1c4b544123887754586104a9eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   config: {fileID: 11400000, guid: 843d239cb1f3ef44ea87201a6702a342, type: 2}
+  minAttackDuration: 5
+  maxAttackDuration: 10
 --- !u!224 &1931849496 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1757431462736609919, guid: e0ed0d935843ac54d9b21f07401a0fbe, type: 3}
@@ -14185,9 +14191,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bulletSpawners:
-  - {fileID: 1690919633}
-  - {fileID: 1926940745}
-  - {fileID: 1487045276}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   enemyBulletPoolDataPair:
     <PoolConfig>k__BackingField: {fileID: 11400000, guid: d45500dbfb5a1ef4388ad8e37bed6fab, type: 2}
     <PoolParent>k__BackingField: {fileID: 78663876}
