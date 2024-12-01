@@ -1,4 +1,5 @@
-﻿using Bullets.BulletPools;
+﻿using System;
+using Bullets.BulletPools;
 using Bullets.Projectile;
 using Player.PlayerControl;
 using UnityEngine;
@@ -13,9 +14,10 @@ namespace Enemies.EnemyTypes
         private float _shootTimer;
         private Transform _target;
         private ProjectilePool _projectilePool;
-        public void Construct(PlayerMovement playerMovement)
+        private void Awake()
         {
-            _target = playerMovement.transform;
+            var health = GetComponent<EnemyHealth>();
+            _target = health.PlayerMovement.transform;
         }
         public void InitializePool(ProjectilePool projectilePool)
         {

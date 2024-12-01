@@ -84,7 +84,6 @@ namespace Core.LevelSettings
 
             if (enemy.TryGetComponent<Shooter>(out var shooter))
             {
-                shooter.Construct(_playerMovement);
                 OnShootingEnemyInitialised?.Invoke(shooter);
             }
         }
