@@ -1,12 +1,13 @@
 ﻿using System;
 using Bullets.BulletPools;
 using Bullets.Projectile;
+using Core.PoolingSystem;
 using Player.PlayerControl;
 using UnityEngine;
 
 namespace Enemies.EnemyTypes
 {
-    public class Shooter: MonoBehaviour
+    public class Shooter: MonoBehaviour, IPoolUser
     {
         [SerializeField] private float shootRate;
         [SerializeField] private ProjectileConfig projectileConfig;
@@ -14,14 +15,14 @@ namespace Enemies.EnemyTypes
         private float _shootTimer;
         private Transform _target;
         private ProjectilePool _projectilePool;
-        private void Awake()
+        private void Start()
         {
             var health = GetComponent<EnemyHealth>();
             _target = health.PlayerMovement.transform;
         }
-        public void InitializePool(ProjectilePool projectilePool)
+        public void InjectPool(ProjectilePool pool)
         {
-            _projectilePool = projectilePool;
+            _projectilePool = pool;
         }
         private void Update()
         {
@@ -36,5 +37,6 @@ namespace Enemies.EnemyTypes
                 }
             }
         }
+        
     }
 }

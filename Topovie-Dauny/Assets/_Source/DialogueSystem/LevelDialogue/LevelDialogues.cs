@@ -28,7 +28,7 @@ namespace DialogueSystem.LevelDialogue
                 _dialogueManager.EnterDialogueMode(_config.DialogueOnStart);
             }
         }
-        public void Expose()
+        public void CleanUp()
         {
             _chargesHandler.OnChargePassed -= PlayDialogue;
         }

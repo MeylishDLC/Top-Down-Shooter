@@ -15,13 +15,11 @@ namespace Core.LevelSettings
 {
     public class Spawner
     {
-        public event Action<Shooter> OnShootingEnemyInitialised;
-        
+        public event Action<IPoolUser> OnPoolUserSpawned;
         private EnemyWave _currentEnemyWave;
         private PlayerMovement _playerMovement;
-        
-        [Inject]
-        public void Construct(PlayerMovement playerMovement)
+
+        public Spawner(PlayerMovement playerMovement)
         {
             _playerMovement = playerMovement;
         }
@@ -82,9 +80,9 @@ namespace Core.LevelSettings
             var enemyComponent = enemy.GetComponent<EnemyHealth>();
             enemyComponent.Construct(_playerMovement);
 
-            if (enemy.TryGetComponent<Shooter>(out var shooter))
+            if (enemy.TryGetComponent<IPoolUser>(out var poolUser))
             {
-                OnShootingEnemyInitialised?.Invoke(shooter);
+                OnPoolUserSpawned?.Invoke(poolUser);
             }
         }
         private Vector3 GetRandomPositionWithinSpawnRange(Transform spawn, float spawnRange)

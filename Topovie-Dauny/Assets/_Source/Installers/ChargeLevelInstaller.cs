@@ -13,6 +13,7 @@ using UI.Core;
 using UI.UIShop;
 using UnityEngine;
 using Zenject;
+using Object = UnityEngine.Object;
 
 namespace Installers
 {
@@ -20,7 +21,7 @@ namespace Installers
     {
         [SerializeField] private InputListener inputListener;
         [SerializeField] private LevelChargesHandler levelChargesHandler;
-        [SerializeField] private GameObject playerObject;
+        [SerializeField] private PlayerMovement playerMovement;
         [SerializeField] private Shop shop;
         [SerializeField] private SceneLoader sceneLoader;
         [SerializeField] private WeaponsSetterConfig weaponsSetterConfig;
@@ -66,11 +67,11 @@ namespace Installers
         }
         private void BindPlayer()
         {
-            Container.Bind<PlayerMovement>().FromComponentOn(playerObject).AsSingle();
+            Container.Bind<PlayerMovement>().FromInstance(playerMovement).AsSingle();
         }
         private void BindSpawner()
         {
-            Container.Bind<Spawner>().AsSingle();
+            Container.Bind<Spawner>().AsSingle().WithArguments(playerMovement);
         }
         private void BindLevelSetter()
         {

@@ -1,4 +1,5 @@
 ﻿using System.Threading;
+using Bullets.BulletPatterns;
 using Bullets.BulletPools;
 using Core.LoadingSystem;
 using Core.PoolingSystem;
@@ -22,13 +23,18 @@ namespace Core.Bootstrappers
         [SerializeField] private BasicGun ppGun;
         //todo add other guns
         
+        [Header("FIREBALL SPAWNERS")]
+        [SerializeField] private BulletSpawner[] spawners;
+        
         [Header("POOLS")] 
         [SerializeField] private PoolConfigParentPair pistolBulletPoolDataPair;
         [SerializeField] private PoolConfigParentPair ppBulletPoolDataPair;
+        [SerializeField] private PoolConfigParentPair enemyBulletPoolDataPair;
         //todo add other pools
         
         private BulletPool _pistolBulletPool;
         private BulletPool _ppBulletPool;
+        private EnemyBulletPool _enemyBulletPool;
 
         private SceneLoader _sceneLoader;
         private AssetLoader _environmentLoader = new();
@@ -43,6 +49,7 @@ namespace Core.Bootstrappers
             await InstantiateAssets(CancellationToken.None);
             InitializePools();
             InitializeGuns();
+            InitializeFireballSpawners();
         }
         private void OnDestroy()
         {
@@ -55,14 +62,12 @@ namespace Core.Bootstrappers
             await InstantiateEnvironment(token);
             _sceneLoader.SetLoadingScreenActive(false);
         }
-        private async UniTask InstantiateEnvironment(CancellationToken token)
-        {
-            await _environmentLoader.LoadGameObject(environmentPrefab, token).ContinueWith(Instantiate);
-        }
+       
         public void InitializePools()
         {
             _pistolBulletPool = new BulletPool(pistolBulletPoolDataPair.PoolConfig, pistolBulletPoolDataPair.PoolParent);
             _ppBulletPool = new BulletPool(ppBulletPoolDataPair.PoolConfig, ppBulletPoolDataPair.PoolParent);
+            _enemyBulletPool = new EnemyBulletPool(enemyBulletPoolDataPair.PoolConfig, enemyBulletPoolDataPair.PoolParent);
         }
         public void InitializeGuns()
         {
@@ -73,6 +78,18 @@ namespace Core.Bootstrappers
         {
             _pistolBulletPool.CleanUp();
             _ppBulletPool.CleanUp();
+            _enemyBulletPool.CleanUp();
+        }
+        private void InitializeFireballSpawners()
+        {
+            foreach (var spawner in spawners)
+            {
+                spawner.InjectPool(_enemyBulletPool);
+            }
+        }
+        private async UniTask InstantiateEnvironment(CancellationToken token)
+        {
+            await _environmentLoader.LoadGameObject(environmentPrefab, token).ContinueWith(Instantiate);
         }
     }
 }

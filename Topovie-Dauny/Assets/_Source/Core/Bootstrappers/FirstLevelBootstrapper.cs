@@ -39,6 +39,7 @@ namespace Core.Bootstrappers
         private BulletPool _pistolBulletPool;
         private BulletPool _ppBulletPool;
         private ProjectilePool _enemyProjectilePool;
+        private EnemyPoolInjector _enemyPoolInjector;
 
         private SceneLoader _sceneLoader;
         private LevelDialogues _levelDialogues;
@@ -50,7 +51,6 @@ namespace Core.Bootstrappers
             _levelDialogues = levelDialogues;
             _sceneLoader = sceneLoader;
             _spawner = spawner;
-            _spawner.OnShootingEnemyInitialised += InitializeEnemyProjectilePool;
         }
         private async void Awake()
         {
@@ -66,8 +66,7 @@ namespace Core.Bootstrappers
         {
             _environmentLoader.ReleaseStoredInstance();
             CleanUpPools();
-            _spawner.OnShootingEnemyInitialised -= InitializeEnemyProjectilePool;
-            _levelDialogues.Expose();
+            _levelDialogues.CleanUp();
         }
         private void ScanPaths()
         {
@@ -89,6 +88,8 @@ namespace Core.Bootstrappers
             _pistolBulletPool = new BulletPool(pistolBulletPoolDataPair.PoolConfig, pistolBulletPoolDataPair.PoolParent);
             _ppBulletPool = new BulletPool(pistolBulletPoolDataPair.PoolConfig, ppBulletPoolDataPair.PoolParent);
             _enemyProjectilePool = new ProjectilePool(enemyProjectileDataPair.PoolConfig, enemyProjectileDataPair.PoolParent);
+
+            _enemyPoolInjector = new EnemyPoolInjector(_spawner, _enemyProjectilePool, null);
         }
         public void InitializeGuns()
         {
@@ -99,10 +100,8 @@ namespace Core.Bootstrappers
         {
             _pistolBulletPool.CleanUp();
             _ppBulletPool.CleanUp();
-        }
-        private void InitializeEnemyProjectilePool(Shooter shooter)
-        {
-            shooter.InitializePool(_enemyProjectilePool);
+            _enemyProjectilePool.CleanUp();
+            _enemyPoolInjector.CleanUp();
         }
     }
 }

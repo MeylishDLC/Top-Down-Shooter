@@ -6051,7 +6051,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inputListener: {fileID: 841108369}
-  playerObject: {fileID: 1612465535}
+  playerMovement: {fileID: 620779489402787804}
   shop: {fileID: 2071173030}
   sceneLoader: {fileID: 1023462140}
   weaponsSetterConfig:
@@ -6620,11 +6620,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1830432310}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1612465535 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2887786508248968974, guid: af35db23b32508c4ab8e46f098395935, type: 3}
-  m_PrefabInstance: {fileID: 620779489402787803}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1612465537 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5448661762863528021, guid: af35db23b32508c4ab8e46f098395935, type: 3}
@@ -8935,6 +8930,17 @@ PrefabInstance:
       addedObject: {fileID: 2087668937}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: af35db23b32508c4ab8e46f098395935, type: 3}
+--- !u!114 &620779489402787804 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 9163859558213474833, guid: af35db23b32508c4ab8e46f098395935, type: 3}
+  m_PrefabInstance: {fileID: 620779489402787803}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16d2afcb2a498c042a3706ecb92a5aef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &620779489402787810 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8977385445484882098, guid: af35db23b32508c4ab8e46f098395935, type: 3}
@@ -15389,7 +15395,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4782610329963665305}
   - component: {fileID: 4782610329963665306}
-  - component: {fileID: 4782610329963665307}
   m_Layer: 0
   m_Name: Bootstrapper
   m_TagString: Untagged
@@ -15579,28 +15584,16 @@ MonoBehaviour:
     m_EditorAssetChanged: 0
   pistolGun: {fileID: 696262010}
   ppGun: {fileID: 2087668938}
+  spawners:
+  - {fileID: 1690919634}
+  - {fileID: 1926940746}
+  - {fileID: 1487045277}
   pistolBulletPoolDataPair:
     <PoolConfig>k__BackingField: {fileID: 11400000, guid: f6eab5df3f4956547bdad8f63f772cf0, type: 2}
     <PoolParent>k__BackingField: {fileID: 1610764014}
   ppBulletPoolDataPair:
     <PoolConfig>k__BackingField: {fileID: 11400000, guid: 8806b3b773324c84eb5c513514b49dca, type: 2}
     <PoolParent>k__BackingField: {fileID: 804008033}
---- !u!114 &4782610329963665307
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2185695681908027189}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: de9f20c8a1564ca181ceabf84908be76, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bulletSpawners:
-  - {fileID: 1690919634}
-  - {fileID: 1926940746}
-  - {fileID: 1487045277}
   enemyBulletPoolDataPair:
     <PoolConfig>k__BackingField: {fileID: 11400000, guid: d45500dbfb5a1ef4388ad8e37bed6fab, type: 2}
     <PoolParent>k__BackingField: {fileID: 78663876}

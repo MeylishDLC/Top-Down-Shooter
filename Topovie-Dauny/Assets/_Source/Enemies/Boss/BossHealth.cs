@@ -74,6 +74,7 @@ namespace Enemies.Boss
         {
             _currentPhase.OnPhaseStateChanged -= SetVulnerability;
             _currentPhase = null;
+            HideHealthBar(_destroyCancellationToken).Forget();
             OnPhaseFinished?.Invoke();
         }
         private void SetVulnerability(PhaseState phaseState)

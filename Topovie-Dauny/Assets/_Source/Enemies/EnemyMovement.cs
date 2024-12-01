@@ -67,7 +67,7 @@ namespace Enemies
         }
         private async UniTask ShowEnemyDeathAsync(CancellationToken token)
         {
-            _aiPath.enabled = false;
+            DisableMovement();
             await gameObject.transform.DOScaleX(0f, deathAnimationDuration).ToUniTask(cancellationToken: token);
             Destroy(gameObject);
         }

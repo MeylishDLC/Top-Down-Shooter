@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Threading;
 using Bullets.BulletPatterns;
+using Bullets.BulletPools;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using UnityEngine;
 
 namespace Enemies.EnemyTypes
 {
-    public class ShootingTower: MonoBehaviour
+    public class ShootingTower: MonoBehaviour, IPoolUser
     {
         [SerializeField] private BulletSpawner[] bulletSpawners;
         [SerializeField] private float shootTime;
@@ -31,6 +32,14 @@ namespace Enemies.EnemyTypes
             _destroyCancellationToken = this.GetCancellationTokenOnDestroy();
             SetBulletSpawnersEnabled(false);
             StartAnimatingCycleAsync(_destroyCancellationToken).Forget();
+        }
+
+        public void InjectPool(EnemyBulletPool pool)
+        {
+            foreach (var bulletSpawner in bulletSpawners)
+            {
+                bulletSpawner.InjectPool(pool);
+            }
         }
         private async UniTask StartAnimatingCycleAsync(CancellationToken token)
         {

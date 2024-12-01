@@ -1,17 +1,19 @@
 ﻿using Bullets.BulletPools;
+using Core.PoolingSystem;
+using Enemies;
 using UnityEngine;
 
 namespace Bullets.BulletPatterns
 {
-    public class BulletSpawner: MonoBehaviour
+    public class BulletSpawner: MonoBehaviour, IPoolUser
     {
         [SerializeField] private BulletSpawnerConfig config;
 
         private EnemyBulletPool _enemyBulletPool;
         private float _timer;
-        public void Construct(EnemyBulletPool enemyBulletPool)
+        public void InjectPool(EnemyBulletPool pool)
         {
-            _enemyBulletPool = enemyBulletPool;
+            _enemyBulletPool = pool;
         }
         private void Update()
         {
@@ -35,5 +37,6 @@ namespace Bullets.BulletPatterns
                 bullet.transform.rotation = transform.rotation;
             } 
         }
+        
     }
 }

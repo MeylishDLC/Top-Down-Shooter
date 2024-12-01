@@ -51,9 +51,9 @@ namespace Core.Bootstrappers
         {
             _environmentLoader.ReleaseStoredInstance();
             CleanUpPools();
-            _levelDialogues.Expose();
+            _levelDialogues.CleanUp();
         }
-        public void ScanPaths()
+        private void ScanPaths()
         {
             pathfinder.Scan();
         }

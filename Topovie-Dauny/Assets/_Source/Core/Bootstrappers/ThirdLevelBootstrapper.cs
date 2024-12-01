@@ -40,14 +40,14 @@ namespace Core.Bootstrappers
         private SceneLoader _sceneLoader;
         private LevelDialogues _levelDialogues;
         private Spawner _spawner;
-        private AssetLoader _environmentLoader = new();
+        private EnemyPoolInjector _enemyPoolInjector;
+        private readonly AssetLoader _environmentLoader = new();
         [Inject]
         public void Construct(Spawner spawner, SceneLoader sceneLoader, LevelDialogues levelDialogues)
         {
             _levelDialogues = levelDialogues;
             _sceneLoader = sceneLoader;
             _spawner = spawner;
-            _spawner.OnShootingEnemyInitialised += InitializeEnemyProjectilePool;
         }
         private async void Awake()
         {
@@ -63,8 +63,7 @@ namespace Core.Bootstrappers
         {
             _environmentLoader.ReleaseStoredInstance();
             CleanUpPools();
-            _spawner.OnShootingEnemyInitialised -= InitializeEnemyProjectilePool;
-            _levelDialogues.Expose();
+            _levelDialogues.CleanUp();
         }
         private void ScanPaths()
         {
@@ -87,6 +86,8 @@ namespace Core.Bootstrappers
             _ppBulletPool = new BulletPool(pistolBulletPoolDataPair.PoolConfig, ppBulletPoolDataPair.PoolParent);
             _shotgunBulletPool = new BulletPool(shotgunBulletPoolDataPair.PoolConfig, shotgunBulletPoolDataPair.PoolParent);
             _enemyProjectilePool = new ProjectilePool(enemyProjectileDataPair.PoolConfig, enemyProjectileDataPair.PoolParent);
+
+            _enemyPoolInjector = new EnemyPoolInjector(_spawner, _enemyProjectilePool, null);
         }
         public void InitializeGuns()
         {
@@ -99,10 +100,7 @@ namespace Core.Bootstrappers
             _pistolBulletPool.CleanUp();
             _ppBulletPool.CleanUp();
             _shotgunBulletPool.CleanUp();
-        }
-        private void InitializeEnemyProjectilePool(Shooter shooter)
-        {
-            shooter.InitializePool(_enemyProjectilePool);
+            _enemyPoolInjector.CleanUp();
         }
     }
 }
