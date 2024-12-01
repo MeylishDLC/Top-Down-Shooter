@@ -2,11 +2,13 @@
 using System.Threading;
 using System.Threading.Tasks;
 using _Support.Demigiant.DOTween.Modules;
+using Cinemachine;
 using Cysharp.Threading.Tasks;
 using Pathfinding;
 using Player.PlayerCombat;
 using Player.PlayerControl;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Zenject;
 
 namespace Enemies.EnemyTypes
@@ -15,11 +17,13 @@ namespace Enemies.EnemyTypes
     {
         [SerializeField] private AIPath aiPath;
         [SerializeField] private EnemyHealth enemyHealth;
+        [SerializeField] private ParticleSystem impactParticlesPrefab;
         
         [Header("Attack Settings")]
+        [SerializeField] private float impulseStrength;
+        [SerializeField] private CinemachineImpulseSource impulseSource;
         [SerializeField] private int attackDamage;
         [SerializeField] private float attackDuration;
-        [SerializeField] private Animator blowAnimator;
         [SerializeField] private Color attackColor = Color.red;
         [SerializeField] private float colorTransitionDuration;
         
@@ -30,7 +34,6 @@ namespace Enemies.EnemyTypes
         [SerializeField] private float fadeInDuration;
         [SerializeField] private float fadeOutDuration;
 
-        private static readonly int AttackTrigger = Animator.StringToHash("attack");
         private CancellationTokenSource _cancelAttackCts = new();
         private CancellationToken _destroyCancellationToken;
 
@@ -51,28 +54,46 @@ namespace Enemies.EnemyTypes
             _cancelAttackCts?.Cancel();
             _cancelAttackCts?.Dispose();
         }
-        private void OnTriggerEnter2D(Collider2D other)
+
+        private void Update()
         {
-            if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
+            if (_isPlayerInRange)
             {
-                _isPlayerInRange = true;
                 if (!_isWarning)
                 {
                     WarnAsync(_cancelAttackCts.Token).Forget();
                 }
             }
-        }
-        private async void OnTriggerExit2D(Collider2D other)
-        {
-            if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
+            else
             {
-                _isPlayerInRange = false;
                 if (_isWarning && aiPath.enabled)
                 {
                     _isWarning = false;
                     CancelRecreateCts();
-                    await FadeArea(0f, fadeOutDuration, _destroyCancellationToken);
+                    FadeArea(0f, fadeOutDuration, _destroyCancellationToken);
                 }
+            }
+        }
+
+        private void OnTriggerEnter2D(Collider2D other)
+        {
+            if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
+            {
+                _isPlayerInRange = true;
+            }
+        }
+        private void OnTriggerExit2D(Collider2D other)
+        {
+            if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
+            {
+                _isPlayerInRange = false;
+            }
+        }
+        private void OnTriggerStay2D(Collider2D other)
+        {
+            if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
+            {
+                _isPlayerInRange = true;
             }
         }
 
@@ -110,8 +131,9 @@ namespace Enemies.EnemyTypes
 
         private async UniTask ShowStartAttackAsync(CancellationToken token)
         {
-            blowAnimator.SetTrigger(AttackTrigger);
             await rangeSprite.DOColor(attackColor, colorTransitionDuration).ToUniTask(cancellationToken: token);
+            impulseSource.GenerateImpulse(impulseStrength);
+            Instantiate(impactParticlesPrefab, transform);
         }
 
         private async UniTask ShowEndAttackAsync(CancellationToken token)
