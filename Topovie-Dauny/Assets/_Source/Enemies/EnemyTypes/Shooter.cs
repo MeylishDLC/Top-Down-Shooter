@@ -3,7 +3,7 @@ using Bullets.Projectile;
 using Player.PlayerControl;
 using UnityEngine;
 
-namespace Enemies
+namespace Enemies.EnemyTypes
 {
     public class Shooter: MonoBehaviour
     {

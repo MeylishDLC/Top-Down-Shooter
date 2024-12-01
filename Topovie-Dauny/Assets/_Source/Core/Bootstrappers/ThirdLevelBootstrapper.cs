@@ -7,6 +7,7 @@ using Core.SceneManagement;
 using Cysharp.Threading.Tasks;
 using DialogueSystem.LevelDialogue;
 using Enemies;
+using Enemies.EnemyTypes;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using Weapons.Guns;

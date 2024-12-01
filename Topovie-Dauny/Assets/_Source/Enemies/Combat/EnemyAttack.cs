@@ -18,9 +18,7 @@ namespace Enemies.Combat
                 {
                     _playerHealth = other.GetComponent<PlayerHealth>();
                 }
-                
-                _playerHealth.TakeDamage(Attack);
-                _playerHealth.KnockBack.GetKnockedBack(transform);
+                _playerHealth.TakeDamageWithKnockback(Attack, transform);
             }
         }
         protected virtual void OnTriggerStay2D(Collider2D other)
@@ -31,9 +29,7 @@ namespace Enemies.Combat
                 {
                     _playerHealth = other.GetComponent<PlayerHealth>();
                 }
-                
-                _playerHealth.TakeDamage(Attack);
-                _playerHealth.KnockBack.GetKnockedBack(transform);
+                _playerHealth.TakeDamageWithKnockback(Attack, transform);
             }
         }
     }

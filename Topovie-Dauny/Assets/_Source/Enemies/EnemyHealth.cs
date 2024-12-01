@@ -1,101 +1,61 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using Enemies.Combat;
 using Pathfinding;
 using Player.PlayerControl;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Zenject;
 
 namespace Enemies
 {
     public class EnemyHealth: MonoBehaviour, IEnemyHealth
     {
-        [SerializeField] private int maxHealth;
+        public event Action OnEnemyDied;
+        public event Action OnDamageTaken;
+        public KnockBack KnockBack { get; private set; }
+        public PlayerMovement PlayerMovement {get; private set;}
         
-        [Header("Color Changing")]
-        [SerializeField] private Color colorOnDamageTaken;
-        [SerializeField] private int stayTimeMilliseconds;
+        [SerializeField] private int maxHealth;
         
         [Header("Knockback Settings")]
         [SerializeField] private int knockBackTimeMilliseconds = 200;
         [SerializeField] private float knockbackThrust = 15f;
-
-        private CancellationToken _deathCancellationToken;
-        private Transform _playerTransform;
-        private AIPath _aiPathComponent;
-        private SpriteRenderer _spriteRenderer;
-        private KnockBack _knockBack;
-        private PlayerMovement _playerMovement;
         
         private int _currentHealth;
         private bool _isDead;
-        
         public void Construct(PlayerMovement playerMovement)
         {
-            _playerMovement = playerMovement;
-            _playerTransform = playerMovement.gameObject.transform;
+            PlayerMovement = playerMovement;
         }
-        private void Start()
+        private void Awake()
         {
-            _deathCancellationToken = this.GetCancellationTokenOnDestroy();
             _currentHealth = maxHealth;
-            _aiPathComponent = GetComponent<AIPath>();
-            _spriteRenderer = GetComponent<SpriteRenderer>();
-
-            var destinationSetter = GetComponent<AIDestinationSetter>();
-            destinationSetter.target = _playerTransform;
-            
-            _knockBack = new KnockBack(this,GetComponent<Rigidbody2D>(), knockBackTimeMilliseconds, knockbackThrust);
+            KnockBack = new KnockBack(this,GetComponent<Rigidbody2D>(), knockBackTimeMilliseconds, knockbackThrust);
         }
-
-        private void Update()
-        {
-            SetMovementOnKnockback();
-        }
-
         public void TakeDamage(int damage)
         {
-            if (!_isDead)
+            if (_isDead)
             {
-                _currentHealth -= damage;
-                
-                ChangeColor(_deathCancellationToken).Forget();
-                _knockBack.GetKnockedBack(_playerMovement.transform);
-                
-                CheckIfDeadAsync(_deathCancellationToken).Forget();
+                return;
             }
-        }
+            
+            _currentHealth -= damage;
+            OnDamageTaken?.Invoke();
+            KnockBack.GetKnockedBack(PlayerMovement.transform);
 
-        private void SetMovementOnKnockback()
-        {
-            if (_knockBack.GettingKnockedBack && !_isDead)
-            {
-                _aiPathComponent.enabled = false;
-            }
-
-            if (!_knockBack.GettingKnockedBack && !_isDead && !_aiPathComponent.enabled)
-            {
-                _aiPathComponent.enabled = true;
-            }
-        }
-        private async UniTask ChangeColor(CancellationToken token)
-        {
-            _spriteRenderer.color = colorOnDamageTaken;
-            await UniTask.Delay(stayTimeMilliseconds, cancellationToken: token);
-            _spriteRenderer.color = Color.white;
-        }
-        private async UniTask CheckIfDeadAsync(CancellationToken token)
-        {
             if (_currentHealth <= 0)
             {
-                _isDead = true;
-                _aiPathComponent.enabled = false;
-                await gameObject.transform.DOScaleX(0f, 0.5f).ToUniTask(cancellationToken: token);
-                
-                Destroy(gameObject);
+                _currentHealth = 0;
+                Die();
             }
         }
-        
+        private void Die()
+        {
+            _isDead = true;
+            OnEnemyDied?.Invoke();
+        }
     }
 }

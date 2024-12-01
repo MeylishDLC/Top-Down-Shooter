@@ -142,6 +142,7 @@ GameObject:
   - component: {fileID: 3137967374545118281}
   - component: {fileID: 745394447864189545}
   - component: {fileID: 6619848632396508895}
+  - component: {fileID: 8875516636895227797}
   - component: {fileID: 3686213671687945947}
   m_Layer: 8
   m_Name: Leo
@@ -206,7 +207,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 386728817
-  m_SortingLayer: 6
+  m_SortingLayer: 7
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: b3ad1200b0712944fbbdf1729329adb5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -322,7 +323,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   version: 5
-  radius: 6.97
+  radius: 12
   height: 0.01
   canMove: 1
   maxSpeed: 2.5
@@ -345,8 +346,8 @@ MonoBehaviour:
   maxAcceleration: -2.5
   rotationSpeed: 360
   slowdownDistance: 0.31
-  pickNextWaypointDist: 0.05
-  endReachedDistance: 0.07
+  pickNextWaypointDist: 0.08
+  endReachedDistance: 0.05
   alwaysDrawGizmos: 1
   slowWhenNotFacingTarget: 1
   whenCloseToDestination: 1
@@ -365,6 +366,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   version: 1
   target: {fileID: 0}
+--- !u!114 &8875516636895227797
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3739623183934700978}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c65c7eacc9d43a3885c0f295081d4b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyHealth: {fileID: 3686213671687945947}
+  colorOnDamageTaken: {r: 0.9725491, g: 0.38823533, b: 0.38823533, a: 1}
+  colorStayDuration: 0.1
+  deathAnimationDuration: 0.5
 --- !u!114 &3686213671687945947
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -378,8 +395,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 20
-  colorOnDamageTaken: {r: 0.9725491, g: 0.38823533, b: 0.38823533, a: 1}
-  stayTimeMilliseconds: 100
   knockBackTimeMilliseconds: 0
   knockbackThrust: 0
 --- !u!1 &8879187081392620469

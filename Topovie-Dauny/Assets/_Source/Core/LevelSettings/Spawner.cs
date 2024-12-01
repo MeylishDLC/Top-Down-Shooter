@@ -4,6 +4,7 @@ using Bullets.Projectile;
 using Core.EnemyWaveData;
 using Cysharp.Threading.Tasks;
 using Enemies;
+using Enemies.EnemyTypes;
 using Player.PlayerControl;
 using UnityEngine;
 using Zenject;

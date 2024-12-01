@@ -59,7 +59,7 @@ namespace Player.PlayerControl
                 EnableMovement();
             }
             
-            if (!_dialogueManager.DialogueIsPlaying && !playerHealth.KnockBack.GettingKnockedBack &&
+            if (!_dialogueManager.DialogueIsPlaying && !playerHealth.IsKnockedBack &&
                 !_shop.IsShopOpen())
             {
                 if (_dodgeRoll)
@@ -71,7 +71,7 @@ namespace Player.PlayerControl
         }
         private void FixedUpdate()
         {
-            if (!_dialogueManager.DialogueIsPlaying && !playerHealth.KnockBack.GettingKnockedBack &&
+            if (!_dialogueManager.DialogueIsPlaying && !playerHealth.IsKnockedBack &&
                 !_shop.IsShopOpen())
             {
                 _rb.velocity = new Vector2(_horizontal, _vertical).normalized * MovementSpeed;

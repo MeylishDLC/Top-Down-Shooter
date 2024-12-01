@@ -1,12 +1,15 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 namespace Enemies.Combat
 {
     public class KnockBack
-    {
-        public bool GettingKnockedBack { get; private set; }
+    { 
+        public event Action OnKnockBackStarted;
+        public event Action OnKnockBackEnded;
+        public bool GettingKnockedBack {get; private set;}
 
         private readonly int _knockbackTime;
         private readonly float _knockbackThrust;
@@ -21,7 +24,9 @@ namespace Enemies.Combat
         }
         public void GetKnockedBack(Transform damageSource)
         {
+            OnKnockBackStarted?.Invoke();
             GettingKnockedBack = true;
+            
             var difference = (_rb.transform.position - damageSource.position).normalized * _knockbackThrust * _rb.mass;
             _rb.AddForce(difference, ForceMode2D.Impulse);
             
@@ -31,6 +36,8 @@ namespace Enemies.Combat
         {
             await UniTask.Delay(_knockbackTime, cancellationToken: token);
             _rb.velocity = Vector2.zero;
+            
+            OnKnockBackEnded?.Invoke();
             GettingKnockedBack = false;
         }
     }

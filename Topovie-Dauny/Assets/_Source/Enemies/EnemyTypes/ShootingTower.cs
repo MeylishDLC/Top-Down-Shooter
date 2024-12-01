@@ -5,7 +5,7 @@ using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using UnityEngine;
 
-namespace Enemies
+namespace Enemies.EnemyTypes
 {
     public class ShootingTower: MonoBehaviour
     {
