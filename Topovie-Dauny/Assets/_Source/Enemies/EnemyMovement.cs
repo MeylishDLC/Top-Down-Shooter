@@ -19,13 +19,16 @@ namespace Enemies
         [SerializeField] private Color colorOnDamageTaken;
         [SerializeField] private float colorStayDuration = 0.1f;
         [SerializeField] private float deathAnimationDuration = 0.5f;
-
+        
         private AIPath _aiPath;
         private SpriteRenderer _enemyRenderer;
         private KnockBack _knockBack;
         private CancellationToken _deathCancellationToken;
         private Transform _playerTransform;
-        
+
+        private float _initScale;
+        private Vector3 _previousPosition;
+        private bool _isFacingRight;
         private void Start()
         {
             _playerTransform = enemyHealth.PlayerMovement.transform;
@@ -36,12 +39,33 @@ namespace Enemies
             _enemyRenderer = GetComponent<SpriteRenderer>();
             _deathCancellationToken = this.GetCancellationTokenOnDestroy();
             
+            _previousPosition = transform.position;
             _knockBack = enemyHealth.KnockBack;
+            _initScale = transform.localScale.x;
             SubscribeOnEvents();
         }
         private void OnDestroy()
         {
             UnsubscribeOnEvents();
+        }
+        private void Update()
+        {
+            var directionToTarget = _playerTransform.position.x - transform.position.x;
+
+            if (directionToTarget > 0 && !_isFacingRight)
+            {
+                Flip(); 
+            }
+            else if (directionToTarget < 0 && _isFacingRight)
+            {
+                Flip(); 
+            }
+        }
+        private void Flip()
+        {
+            _isFacingRight = !_isFacingRight; 
+            var newScaleX = _isFacingRight ? -_initScale : _initScale;
+            transform.DOScaleX(newScaleX, 0f);
         }
         private void EnableMovement()
         {
