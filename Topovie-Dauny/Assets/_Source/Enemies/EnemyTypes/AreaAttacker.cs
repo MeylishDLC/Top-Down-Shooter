@@ -107,7 +107,7 @@ namespace Enemies.EnemyTypes
                 _isWarning = false;
                 await AttackAsync(_destroyCancellationToken);
             }
-            catch (TaskCanceledException)
+            catch (OperationCanceledException)
             {
                 //
             }

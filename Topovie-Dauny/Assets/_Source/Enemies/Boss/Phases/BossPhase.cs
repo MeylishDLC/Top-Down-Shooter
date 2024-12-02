@@ -49,7 +49,7 @@ namespace Enemies.Boss.Phases
                     await MoveToVulnerabilityStateAsync(token);
                 }  
             }
-            catch (TaskCanceledException)
+            catch (OperationCanceledException)
             {
                 //
             }

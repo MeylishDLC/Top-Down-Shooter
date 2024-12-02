@@ -131,7 +131,7 @@ namespace DialogueSystem
                     }
                 }
             }
-            catch
+            catch (OperationCanceledException)
             {
                 //
             }
