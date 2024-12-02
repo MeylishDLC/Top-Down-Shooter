@@ -8,17 +8,18 @@ namespace Bullets
     [RequireComponent(typeof(Rigidbody2D))]
     public abstract class BaseBullet: MonoBehaviour
     {
+        protected Rigidbody2D Rb;
+
         [SerializeField] protected int damageAmount;
         [SerializeField] private float lifetime;
         [Range(1, 10)] [SerializeField] private float speed;
 
-        private Rigidbody2D _rb;
         private CancellationTokenSource _cancelDisableCts = new();
         protected virtual void Start()
         {
-            _rb = GetComponent<Rigidbody2D>();
+            Rb = GetComponent<Rigidbody2D>();
         }
-        private void OnEnable()
+        protected virtual void OnEnable()
         {
             DisableAfterTime(_cancelDisableCts.Token).Forget();
         }
@@ -29,7 +30,7 @@ namespace Bullets
         }
         protected virtual void FixedUpdate()
         {
-            _rb.velocity = transform.right * speed;
+            Rb.velocity = transform.right * speed;
         }
         protected virtual void OnTriggerEnter2D(Collider2D other)
         {

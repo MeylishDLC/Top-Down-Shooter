@@ -21,7 +21,8 @@ namespace Core.Bootstrappers
         [Header("GUNS")] 
         [SerializeField] private BasicGun pistolGun;
         [SerializeField] private BasicGun ppGun;
-        //todo add other guns
+        [SerializeField] private Shotgun shotgun;
+        [SerializeField] private BasicGun rpgGun;
         
         [Header("FIREBALL SPAWNERS")]
         [SerializeField] private BulletSpawner[] spawners;
@@ -29,11 +30,15 @@ namespace Core.Bootstrappers
         [Header("POOLS")] 
         [SerializeField] private PoolConfigParentPair pistolBulletPoolDataPair;
         [SerializeField] private PoolConfigParentPair ppBulletPoolDataPair;
+        [SerializeField] private PoolConfigParentPair shotgunBulletPoolDataPair;
+        [SerializeField] private PoolConfigParentPair rpgBulletPoolDataPair;
         [SerializeField] private PoolConfigParentPair enemyBulletPoolDataPair;
-        //todo add other pools
+
         
         private BulletPool _pistolBulletPool;
         private BulletPool _ppBulletPool;
+        private BulletPool _shotgunBulletPool;
+        private BulletPool _rpgBulletPool;
         private EnemyBulletPool _enemyBulletPool;
 
         private SceneLoader _sceneLoader;
@@ -67,17 +72,23 @@ namespace Core.Bootstrappers
         {
             _pistolBulletPool = new BulletPool(pistolBulletPoolDataPair.PoolConfig, pistolBulletPoolDataPair.PoolParent);
             _ppBulletPool = new BulletPool(ppBulletPoolDataPair.PoolConfig, ppBulletPoolDataPair.PoolParent);
+            _shotgunBulletPool = new BulletPool(shotgunBulletPoolDataPair.PoolConfig, shotgunBulletPoolDataPair.PoolParent);
+            _rpgBulletPool = new BulletPool(rpgBulletPoolDataPair.PoolConfig, rpgBulletPoolDataPair.PoolParent);
             _enemyBulletPool = new EnemyBulletPool(enemyBulletPoolDataPair.PoolConfig, enemyBulletPoolDataPair.PoolParent);
         }
         public void InitializeGuns()
         {
             pistolGun.Initialize(_pistolBulletPool);
             ppGun.Initialize(_ppBulletPool);
+            shotgun.Initialize(_shotgunBulletPool);
+            rpgGun.Initialize(_rpgBulletPool);
         }
         public void CleanUpPools()
         {
             _pistolBulletPool.CleanUp();
             _ppBulletPool.CleanUp();
+            _shotgunBulletPool.CleanUp();
+            _rpgBulletPool.CleanUp();
             _enemyBulletPool.CleanUp();
         }
         private void InitializeFireballSpawners()

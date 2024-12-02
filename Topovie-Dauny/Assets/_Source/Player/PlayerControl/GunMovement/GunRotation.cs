@@ -6,53 +6,70 @@ using Zenject;
 
 namespace Player.PlayerControl.GunMovement
 {
-    public class GunRotation: MonoBehaviour
-    { 
+    public class GunRotation : MonoBehaviour
+    {
         public SpriteRenderer CurrentGun { get; set; }
-        
-        [SerializeField] private GameObject front; 
-        [SerializeField] private GameObject left; 
+
+        [SerializeField] private GameObject front;
+        [SerializeField] private GameObject left;
         [SerializeField] private GameObject right;
         [SerializeField] private GameObject back;
-        
+
         private Shop _shop;
         private DialogueManager _dialogueManager;
-        
+
         [Inject]
         public void Construct(DialogueManager dialogueManager, Shop shop)
         {
             _dialogueManager = dialogueManager;
             _shop = shop;
         }
+
         private void FixedUpdate()
         {
             if (_shop.IsShopOpen() || _dialogueManager.DialogueIsPlaying)
             {
                 return;
             }
-            
+
             var difference = CountDifference();
             var rotationZ = Mathf.Atan2(difference.y, difference.x) * Mathf.Rad2Deg;
             transform.rotation = Quaternion.Euler(0f, 0f, rotationZ);
-            
-            if (CheckRolling.IsRolling == false)
+
+            if (!CheckRolling.IsRolling)
             {
                 if (transform.eulerAngles.z >= 0 && transform.eulerAngles.z <= 44)
                 {
                     SetOneSideActive(Sides.Right);
                 }
-                if (transform.eulerAngles.z >= 130 && transform.eulerAngles.z <= 180)
+                else if (transform.eulerAngles.z >= 130 && transform.eulerAngles.z <= 180)
                 {
                     SetOneSideActive(Sides.Left);
                 }
-                if (transform.eulerAngles.z >= 44 && transform.eulerAngles.z <= 130)
+                else if (transform.eulerAngles.z >= 44 && transform.eulerAngles.z <= 130)
                 {
                     SetOneSideActive(Sides.Back);
                 }
-                if (transform.eulerAngles.z >= 220 && transform.eulerAngles.z <= 340)
+                else if (transform.eulerAngles.z >= 220 && transform.eulerAngles.z <= 340)
                 {
                     SetOneSideActive(Sides.Front);
                 }
+
+                FlipGunBasedOnAngle(rotationZ);
+            }
+        }
+
+        private void FlipGunBasedOnAngle(float rotationZ)
+        {
+            rotationZ = (rotationZ + 360f) % 360f;
+
+            if (rotationZ > 90 && rotationZ < 270)
+            {
+                FlipGameObject(CurrentGun.gameObject, true);
+            }
+            else
+            {
+                FlipGameObject(CurrentGun.gameObject, false);
             }
         }
 
@@ -66,39 +83,32 @@ namespace Player.PlayerControl.GunMovement
                     right.SetActive(false);
                     back.SetActive(false);
                     CurrentGun.sortingOrder = 1;
-                    
                     break;
-                
+
                 case Sides.Right:
                     front.SetActive(false);
                     left.SetActive(false);
                     right.SetActive(true);
                     back.SetActive(false);
-                    
-                    FlipGameObject(CurrentGun.gameObject, false);
                     CurrentGun.sortingOrder = 1;
-                    
                     break;
-                
+
                 case Sides.Left:
                     front.SetActive(false);
                     left.SetActive(true);
                     right.SetActive(false);
                     back.SetActive(false);
-                    FlipGameObject(CurrentGun.gameObject, true); 
                     CurrentGun.sortingOrder = 1;
-                    
                     break;
-                
+
                 case Sides.Back:
                     front.SetActive(false);
                     left.SetActive(false);
                     right.SetActive(false);
                     back.SetActive(true);
                     CurrentGun.sortingOrder = -1;
-                    
                     break;
-                
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(side), side, null);
             }
@@ -115,7 +125,7 @@ namespace Player.PlayerControl.GunMovement
             scale.y = flipY ? -Mathf.Abs(scale.y) : Mathf.Abs(scale.y);
             obj.transform.localScale = scale;
         }
-        
+
         private enum Sides
         {
             Front,

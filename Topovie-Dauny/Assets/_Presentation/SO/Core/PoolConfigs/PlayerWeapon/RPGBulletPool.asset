@@ -9,10 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 51e61cce9df14271be97e6ba6a4ef5da, type: 3}
-  m_Name: 2nd Phase
+  m_Script: {fileID: 11500000, guid: 7069f733d8644202a0e57c19e732dab3, type: 3}
+  m_Name: RPGBulletPool
   m_EditorClassIdentifier: 
-  <BossHealth>k__BackingField: 2000
-  <MinVulnerabilityDuration>k__BackingField: 5
-  <MaxVulnerabilityDuration>k__BackingField: 10
-  <AttackTransitionDuration>k__BackingField: 0.2
+  <InitialPoolSize>k__BackingField: 5
+  <MaxPoolSize>k__BackingField: 10
+  <Prefab>k__BackingField: {fileID: 553695123358261265, guid: c390fb597dbd6e34f81de38a6a9510fe, type: 3}
