@@ -465,18 +465,11 @@ MonoBehaviour:
     m_EditorAssetChanged: 0
   playerRespawnPoint: {fileID: 1700621646}
   playerObject: {fileID: 620779489402787807}
-  loadDelay: 0.5
   pistolGun: {fileID: 696262010}
   ppGun: {fileID: 620779489402787806}
-  pistolBulletPoolDataPair:
-    <PoolConfig>k__BackingField: {fileID: 11400000, guid: f6eab5df3f4956547bdad8f63f772cf0, type: 2}
-    <PoolParent>k__BackingField: {fileID: 497614941}
-  ppBulletPoolDataPair:
-    <PoolConfig>k__BackingField: {fileID: 11400000, guid: 8806b3b773324c84eb5c513514b49dca, type: 2}
-    <PoolParent>k__BackingField: {fileID: 918359733}
-  enemyProjectileDataPair:
-    <PoolConfig>k__BackingField: {fileID: 11400000, guid: c7129e8709523924ab94d5f193d11fd1, type: 2}
-    <PoolParent>k__BackingField: {fileID: 1983918562}
+  containers:
+  - {fileID: 216725094}
+  - {fileID: 162743283}
 --- !u!114 &114847100
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -588,6 +581,51 @@ CapsuleCollider2D:
   m_Offset: {x: -0.7457221, y: 0.3385039}
   m_Size: {x: 2.6584349, y: 1.7760535}
   m_Direction: 1
+--- !u!1 &162743281
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 162743282}
+  - component: {fileID: 162743283}
+  m_Layer: 0
+  m_Name: Muzhiki
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &162743282
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 162743281}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1646545030}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &162743283
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 162743281}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0dbc8b90140d43868fe0dd348f29b554, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <EnemyPrefabAssetName>k__BackingField: MuzhikShooter
 --- !u!1 &176860843
 GameObject:
   m_ObjectHideFlags: 0
@@ -650,6 +688,51 @@ Transform:
   m_Children: []
   m_Father: {fileID: 793877249}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &216725092
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 216725093}
+  - component: {fileID: 216725094}
+  m_Layer: 0
+  m_Name: Leos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &216725093
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 216725092}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1646545030}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &216725094
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 216725092}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0dbc8b90140d43868fe0dd348f29b554, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <EnemyPrefabAssetName>k__BackingField: Leo
 --- !u!1 &262724725
 GameObject:
   m_ObjectHideFlags: 0
@@ -846,22 +929,16 @@ MonoBehaviour:
   - {fileID: 2021274873}
   - {fileID: 262724726}
   portalCharges:
-  - <EnemySpawnsPairs>k__BackingField:
-    - <EnemiesAssets>k__BackingField:
-      - m_AssetGUID: 23b9ff02b0de4e24e9ab088bacd9e9c6
-        m_SubObjectName: 
-        m_SubObjectType: 
-        m_EditorAssetChanged: 1
+  - <Pairs>k__BackingField:
+    - <Enemies>k__BackingField:
+      - {fileID: 216725094}
       <SpawnPoints>k__BackingField:
       - {fileID: 66727800}
       - {fileID: 1170188024}
       - {fileID: 185168844}
       - {fileID: 1017038700}
-    - <EnemiesAssets>k__BackingField:
-      - m_AssetGUID: e06d826ac0f653b458e6765d59944e1f
-        m_SubObjectName: 
-        m_SubObjectType: 
-        m_EditorAssetChanged: 1
+    - <Enemies>k__BackingField:
+      - {fileID: 162743283}
       <SpawnPoints>k__BackingField:
       - {fileID: 815121855}
       - {fileID: 488117872}
@@ -872,12 +949,9 @@ MonoBehaviour:
     <MaxTimeBetweenSpawn>k__BackingField: 7
     <MinTimeBetweenSpawn>k__BackingField: 3
     <TimeToActivatePencil>k__BackingField: 60
-  - <EnemySpawnsPairs>k__BackingField:
-    - <EnemiesAssets>k__BackingField:
-      - m_AssetGUID: 23b9ff02b0de4e24e9ab088bacd9e9c6
-        m_SubObjectName: 
-        m_SubObjectType: 
-        m_EditorAssetChanged: 1
+  - <Pairs>k__BackingField:
+    - <Enemies>k__BackingField:
+      - {fileID: 216725094}
       <SpawnPoints>k__BackingField:
       - {fileID: 176860844}
       - {fileID: 1968617055}
@@ -1998,7 +2072,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1277161175}
   m_Layer: 0
-  m_Name: MenNotShooting
+  m_Name: Men
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2369,6 +2443,7 @@ MonoBehaviour:
   baseDialogueDisplay: {fileID: 7961203719235848606}
   mainCamera: {fileID: 369398954}
   levelDialogueConfig: {fileID: 11400000, guid: 6c6e5bff7c67e8842afbff30a19416d3, type: 2}
+  poolInitializerConfig: {fileID: 11400000, guid: 6ada42aa105b1e7479acc01941118ba6, type: 2}
 --- !u!114 &1572920359
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2426,6 +2501,39 @@ Transform:
   - {fileID: 104703906}
   - {fileID: 148295271}
   m_Father: {fileID: 517727411}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1646545029
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1646545030}
+  m_Layer: 0
+  m_Name: Containers
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1646545030
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1646545029}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 216725093}
+  - {fileID: 162743282}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1700621645
 GameObject:
@@ -4439,3 +4547,4 @@ SceneRoots:
   - {fileID: 535823487}
   - {fileID: 1902102307}
   - {fileID: 1700621646}
+  - {fileID: 1646545030}

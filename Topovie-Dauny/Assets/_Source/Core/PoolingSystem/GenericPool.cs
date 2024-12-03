@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading;
 using Core.LoadingSystem;
+using Core.PoolingSystem.Configs;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AddressableAssets;

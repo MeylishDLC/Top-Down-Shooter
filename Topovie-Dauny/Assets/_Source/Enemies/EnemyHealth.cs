@@ -39,6 +39,10 @@ namespace Enemies
         {
             _currentHealth = maxHealth;
         }
+        private void OnEnable()
+        {
+            _isDead = false;
+        }
         private void OnDisable()
         {
             OnObjectDisabled?.Invoke(this);

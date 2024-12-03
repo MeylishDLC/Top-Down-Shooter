@@ -41,9 +41,6 @@ namespace Core.Bootstrappers
         protected override void Awake()
         {
             InstantiateAssets(CancellationToken.None).Forget();
-        }
-        private void Start()
-        {
             _poolInitializer.InitAll();
             InitializeGuns();
             InitializeEnemyContainers();

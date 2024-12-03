@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Bullets.BulletPools;
+using Core.PoolingSystem.Configs;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.ResourceLocations;
@@ -18,5 +19,6 @@ namespace Core.PoolingSystem
         
         [field:Header("ENEMIES")]
         [field:SerializeField] public PoolConfig[] EnemiesPoolsConfigs {get; private set;}
+        [field:SerializeField] public PoolUserPoolConfig[] PoolUserEnemiesPoolsConfigs {get; private set;}
     }
 }

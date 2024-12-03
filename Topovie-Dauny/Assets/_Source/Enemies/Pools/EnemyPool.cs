@@ -1,16 +1,16 @@
 ﻿using Core.PoolingSystem;
-using Player.PlayerControl;
+using Core.PoolingSystem.Configs;
 using UnityEngine;
 using Zenject;
 
-namespace Enemies
+namespace Enemies.Pools
 {
     public class EnemyPool: GenericPool<EnemyHealth>
     {
-        private readonly SceneContext _projectContext;
+        protected readonly SceneContext ProjectContext;
         public EnemyPool(PoolConfig poolConfig, Transform parentTransform) : base(poolConfig, parentTransform)
         {
-            _projectContext = Object.FindFirstObjectByType<SceneContext>();
+            ProjectContext = Object.FindFirstObjectByType<SceneContext>();
         }
         public override bool TryGetFromPool(out EnemyHealth instance)
         {
@@ -32,7 +32,7 @@ namespace Enemies
         }
         protected override EnemyHealth InstantiateNewObject()
         {
-            var instance = _projectContext.Container.InstantiatePrefabForComponent<EnemyHealth>(ObjectPrefab, ParentTransform);
+            var instance = ProjectContext.Container.InstantiatePrefabForComponent<EnemyHealth>(ObjectPrefab, ParentTransform);
             instance.gameObject.SetActive(false);
             instance.OnObjectDisabled += ReturnToPool;
             AllObjects.Add(instance);

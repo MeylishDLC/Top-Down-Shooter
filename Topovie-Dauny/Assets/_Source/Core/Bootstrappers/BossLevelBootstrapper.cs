@@ -35,8 +35,14 @@ namespace Core.Bootstrappers
         protected override void Awake()
         {
             base.Awake();
+            _poolInitializer.InitAll();
             InitializeGuns();
             InitializeFireballSpawners();
+        }
+        protected override void OnDestroy()
+        {
+            base.OnDestroy();
+            _poolInitializer.CleanUp();
         }
         private void InitializeGuns()
         {

@@ -1,11 +1,7 @@
-﻿using System;
-using System.Threading;
-using Core.LoadingSystem;
-using Cysharp.Threading.Tasks;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.AddressableAssets;
 
-namespace Core.PoolingSystem
+namespace Core.PoolingSystem.Configs
 {
     [CreateAssetMenu(fileName = "New Pool Config", menuName = "Core/Pools/New Pool Config")]
     public class PoolConfig: ScriptableObject

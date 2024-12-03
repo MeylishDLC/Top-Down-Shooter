@@ -48,9 +48,9 @@ namespace Enemies
         }
         private void Update()
         {
-            if (_aiPath.enabled)
+            if (_aiPath.canMove)
             {
-                HandleFlipping();
+               HandleFlipping();
             }
         }
         private void HandleFlipping()
@@ -73,11 +73,11 @@ namespace Enemies
         }
         private void EnableMovement()
         {
-            _aiPath.enabled = true;
+            _aiPath.canMove = true;
         }
         private void DisableMovement()
         {
-            _aiPath.enabled = false;
+            _aiPath.canMove = false;
         }
         private void ShowEnemyDeath()
         {
@@ -98,6 +98,7 @@ namespace Enemies
             DisableMovement();
             await gameObject.transform.DOScaleX(0f, deathAnimationDuration).ToUniTask(cancellationToken: token);
             gameObject.SetActive(false);
+            await gameObject.transform.DOScaleX(_initScale, 0f);
         }
         private void SubscribeOnEvents()
         {
@@ -108,6 +109,10 @@ namespace Enemies
         }
         private void UnsubscribeOnEvents()
         {
+            if (_knockBack is null)
+            {
+                return;
+            }
             _knockBack.OnKnockBackStarted -= DisableMovement;
             _knockBack.OnKnockBackEnded -= EnableMovement;
             enemyHealth.OnDamageTaken -= ChangeColorOnDamageTaken;

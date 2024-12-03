@@ -42,6 +42,7 @@ namespace Core.Bootstrappers
         protected override void Awake()
         {
             base.Awake();
+            _poolInitializer.InitAll();
             InitializeGuns();
             InitializeEnemyContainers();
         }
@@ -53,6 +54,7 @@ namespace Core.Bootstrappers
         {
             base.OnDestroy();
             _levelDialogues.CleanUp();
+            _poolInitializer.CleanUp();
         }
         private void InitializeGuns()
         {

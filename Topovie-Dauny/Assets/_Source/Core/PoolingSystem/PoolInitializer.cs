@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using Bullets.BulletPools;
+using Core.PoolingSystem.Configs;
 using Enemies;
+using Enemies.Pools;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using Object = UnityEngine.Object;
@@ -20,6 +22,7 @@ namespace Core.PoolingSystem
         private readonly PoolConfig[] _bulletsForEnemiesConfigs;
         private readonly PoolConfig[] _projectilesForEnemiesConfigs;
         private readonly PoolConfig[] _enemiesPoolsConfigs;
+        private readonly PoolUserPoolConfig[] _poolUserEnemiesPoolsConfigs;
 
         public PoolInitializer(PoolInitializerConfig poolInitializerConfig)
         {
@@ -27,6 +30,7 @@ namespace Core.PoolingSystem
             _bulletsForEnemiesConfigs = poolInitializerConfig.BulletsForEnemiesConfigs;
             _projectilesForEnemiesConfigs = poolInitializerConfig.ProjectilesForEnemiesConfigs;
             _enemiesPoolsConfigs = poolInitializerConfig.EnemiesPoolsConfigs;
+            _poolUserEnemiesPoolsConfigs = poolInitializerConfig.PoolUserEnemiesPoolsConfigs;
         }
         public BulletPool GetBulletPoolForPlayerWeapon(int weaponNumber)
         {
@@ -38,7 +42,7 @@ namespace Core.PoolingSystem
             if (weaponNumber > _bulletPoolsForPlayerWeapon.Count)
             {
                 throw new Exception(
-                    $"Pool fow weapon number {weaponNumber} was not initialized. Initialize it in config.");
+                    $"Pool for weapon number {weaponNumber} was not initialized. Initialize it in config.");
             }
 
             return _bulletPoolsForPlayerWeapon.ElementAt(weaponNumber-1);
@@ -72,21 +76,25 @@ namespace Core.PoolingSystem
         }
         public void InitAll()
         {
-            if (_bulletsForPlayerWeaponConfigs.Any())
+            if (_bulletsForPlayerWeaponConfigs.Length > 0)
             {
                 InitPlayerBulletPools();
             }
-            if (_bulletsForEnemiesConfigs.Any())
+            if (_bulletsForEnemiesConfigs.Length > 0)
             {
                 InitEnemyBulletPools();
             }
-            if (_projectilesForEnemiesConfigs.Any())
+            if (_projectilesForEnemiesConfigs.Length > 0)
             {
                 InitEnemyProjectilePools();
             }
-            if (_enemiesPoolsConfigs.Any())
+            if (_enemiesPoolsConfigs.Length > 0)
             {
                 InitEnemyPools();
+            }
+            if (_poolUserEnemiesPoolsConfigs.Length > 0)
+            {
+                InitPoolUserEnemyPools();
             }
         }
         public void CleanUp()
@@ -164,6 +172,17 @@ namespace Core.PoolingSystem
                 var prefabAssetName = config.PrefabAssetSimplifiedName;
                 var parent = new GameObject($"Enemies-{prefabAssetName}");
                 var pool = new EnemyPool(config, parent.transform);
+                _enemyPools.Add(prefabAssetName, pool);
+            }
+        }
+        private void InitPoolUserEnemyPools()
+        {
+            foreach (var config in _poolUserEnemiesPoolsConfigs)
+            {
+                var prefabAssetName = config.PrefabAssetSimplifiedName;
+                var parent = new GameObject($"Enemies-{prefabAssetName}");
+                var projectilePool = GetProjectilePoolForEnemy(config.BulletPrefabAssetSimplifiedName);
+                var pool = new ShooterPool(config, parent.transform, projectilePool);
                 _enemyPools.Add(prefabAssetName, pool);
             }
         }

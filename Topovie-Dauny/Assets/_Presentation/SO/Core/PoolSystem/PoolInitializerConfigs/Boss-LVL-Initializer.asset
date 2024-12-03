@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c200d3ccb8840e1924a45413732ba3f, type: 3}
+  m_Name: Boss-LVL-Initializer
+  m_EditorClassIdentifier: 
+  <BulletsForPlayerWeaponConfigs>k__BackingField:
+  - {fileID: 11400000, guid: f6eab5df3f4956547bdad8f63f772cf0, type: 2}
+  - {fileID: 11400000, guid: 8806b3b773324c84eb5c513514b49dca, type: 2}
+  - {fileID: 11400000, guid: 5a70a7e6ac1feab468263b0d191a72ef, type: 2}
+  - {fileID: 11400000, guid: 17424ce29c9e94d478d3f93b2b9520cf, type: 2}
+  <BulletsForEnemiesConfigs>k__BackingField:
+  - {fileID: 11400000, guid: d45500dbfb5a1ef4388ad8e37bed6fab, type: 2}
+  <ProjectilesForEnemiesConfigs>k__BackingField: []
+  <EnemiesPoolsConfigs>k__BackingField: []

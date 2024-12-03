@@ -1,5 +1,6 @@
 ﻿using Bullets.Projectile;
 using Core.PoolingSystem;
+using Core.PoolingSystem.Configs;
 using UnityEngine;
 
 namespace Bullets.BulletPools
