@@ -16,12 +16,8 @@ using Zenject;
 
 namespace Core.Bootstrappers
 {
-    public class TutorialLevelBootstrapper: MonoBehaviour, ILevelBootstrapper
+    public class TutorialLevelBootstrapper: BaseLevelBootstrapper
     {
-        [Header("Scene Load Stuff")] 
-        [SerializeField] private AstarPath pathfinder;
-        [SerializeField] private AssetReferenceGameObject environmentPrefab;
-        
         [Header("GUNS")] 
         [SerializeField] private BasicGun pistolGun;
         
@@ -29,54 +25,35 @@ namespace Core.Bootstrappers
         [SerializeField] private PoolConfigParentPair pistolBulletPoolDataPair;
         
         private BulletPool _pistolBulletPool;
-
         private LevelDialogues _levelDialogues;
-        private SceneLoader _sceneLoader;
-        private AssetLoader _environmentLoader = new();
         
         [Inject]
         public void Construct(SceneLoader sceneLoader, LevelDialogues levelDialogues)
         {
-            _sceneLoader = sceneLoader;
             _levelDialogues = levelDialogues;
         }
-        private async void Awake()
+        protected override void Awake()
         {
-            await InstantiateAssets(CancellationToken.None);
+            base.Awake();
             InitializePools();
             InitializeGuns();
             _levelDialogues.PlayStartDialogue();
         }
-        private void OnDestroy()
+        protected override void OnDestroy()
         {
-            _environmentLoader.ReleaseStoredInstance();
+            base.OnDestroy();
             CleanUpPools();
             _levelDialogues.CleanUp();
         }
-        private void ScanPaths()
-        {
-            pathfinder.Scan();
-        }
-        public async UniTask InstantiateAssets(CancellationToken token)
-        {
-            _sceneLoader.SetLoadingScreenActive(true);
-            await InstantiateEnvironment(token);
-            ScanPaths();
-            _sceneLoader.SetLoadingScreenActive(false);
-        }
-        private async UniTask InstantiateEnvironment(CancellationToken token)
-        {
-            await _environmentLoader.LoadGameObject(environmentPrefab, token).ContinueWith(Instantiate);
-        }
-        public void InitializePools()
+        private void InitializePools()
         {
             _pistolBulletPool = new BulletPool(pistolBulletPoolDataPair.PoolConfig, pistolBulletPoolDataPair.PoolParent);
         }
-        public void InitializeGuns()
+        private void InitializeGuns()
         {
             pistolGun.Initialize(_pistolBulletPool);
         }
-        public void CleanUpPools()
+        private void CleanUpPools()
         {
             _pistolBulletPool.CleanUp();
         }

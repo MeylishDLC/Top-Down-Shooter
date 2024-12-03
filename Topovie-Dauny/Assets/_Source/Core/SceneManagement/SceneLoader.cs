@@ -4,6 +4,7 @@ using Core.InputSystem;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 using Zenject;
 
@@ -13,6 +14,8 @@ namespace Core.SceneManagement
     {
         private RectTransform _loadingScreen;
         private Slider _loadingSlider;
+        public int LastSceneIndex {get; private set;}
+        public int CurrentSceneIndex {get; private set;}
         public void Construct(RectTransform loadingScreen, Slider loadingSlider)
         {
             _loadingScreen = loadingScreen;
@@ -20,6 +23,7 @@ namespace Core.SceneManagement
         }
         public async UniTask LoadSceneAsync(int index, bool disableScreenOnLoad = true)
         {
+            LastSceneIndex = SceneManager.GetActiveScene().buildIndex; 
             _loadingSlider.value = 0;
             _loadingScreen.gameObject.SetActive(true);
             
@@ -45,6 +49,7 @@ namespace Core.SceneManagement
             {
                 _loadingScreen.gameObject.SetActive(false);
             }
+            CurrentSceneIndex = index;
         }
         public void SetLoadingScreenActive(bool active)
         {

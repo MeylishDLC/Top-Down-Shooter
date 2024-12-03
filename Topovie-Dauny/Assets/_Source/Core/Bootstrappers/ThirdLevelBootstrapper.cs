@@ -15,12 +15,8 @@ using Zenject;
 
 namespace Core.Bootstrappers
 {
-    public class ThirdLevelBootstrapper: MonoBehaviour, ILevelBootstrapper
+    public class ThirdLevelBootstrapper: BaseLevelBootstrapper
     {
-         [Header("Scene Load Stuff")] 
-        [SerializeField] private AstarPath pathfinder;
-        [SerializeField] private AssetReferenceGameObject environmentPrefab;
-        
         [Header("GUNS")] 
         [SerializeField] private BasicGun pistolGun;
         [SerializeField] private BasicGun ppGun;
@@ -37,21 +33,19 @@ namespace Core.Bootstrappers
         private BulletPool _shotgunBulletPool;
         private ProjectilePool _enemyProjectilePool;
 
-        private SceneLoader _sceneLoader;
         private LevelDialogues _levelDialogues;
         private Spawner _spawner;
         private EnemyPoolInjector _enemyPoolInjector;
-        private readonly AssetLoader _environmentLoader = new();
+        
         [Inject]
         public void Construct(Spawner spawner, SceneLoader sceneLoader, LevelDialogues levelDialogues)
         {
             _levelDialogues = levelDialogues;
-            _sceneLoader = sceneLoader;
             _spawner = spawner;
         }
-        private async void Awake()
+        protected override void Awake()
         {
-            await InstantiateAssets(CancellationToken.None);
+            base.Awake();
             InitializePools();
             InitializeGuns();
         }
@@ -59,28 +53,13 @@ namespace Core.Bootstrappers
         {
             _levelDialogues.PlayStartDialogue();
         }
-        private void OnDestroy()
+        protected override void OnDestroy()
         {
-            _environmentLoader.ReleaseStoredInstance();
+            base.OnDestroy();
             CleanUpPools();
             _levelDialogues.CleanUp();
         }
-        private void ScanPaths()
-        {
-            pathfinder.Scan();
-        }
-        public async UniTask InstantiateAssets(CancellationToken token)
-        {
-            _sceneLoader.SetLoadingScreenActive(true);
-            await InstantiateEnvironment(token);
-            ScanPaths();
-            _sceneLoader.SetLoadingScreenActive(false);
-        }
-        private async UniTask InstantiateEnvironment(CancellationToken token)
-        {
-            await _environmentLoader.LoadGameObject(environmentPrefab, token).ContinueWith(Instantiate);
-        }
-        public void InitializePools()
+        private void InitializePools()
         {
             _pistolBulletPool = new BulletPool(pistolBulletPoolDataPair.PoolConfig, pistolBulletPoolDataPair.PoolParent);
             _ppBulletPool = new BulletPool(pistolBulletPoolDataPair.PoolConfig, ppBulletPoolDataPair.PoolParent);
@@ -89,13 +68,13 @@ namespace Core.Bootstrappers
 
             _enemyPoolInjector = new EnemyPoolInjector(_spawner, _enemyProjectilePool, null);
         }
-        public void InitializeGuns()
+        private void InitializeGuns()
         {
             pistolGun.Initialize(_pistolBulletPool);
             ppGun.Initialize(_ppBulletPool);
             shotgun.Initialize(_shotgunBulletPool);
         }
-        public void CleanUpPools()
+        private void CleanUpPools()
         {
             _pistolBulletPool.CleanUp();
             _ppBulletPool.CleanUp();

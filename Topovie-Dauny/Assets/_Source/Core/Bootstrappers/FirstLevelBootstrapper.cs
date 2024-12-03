@@ -21,12 +21,8 @@ using Zenject;
 
 namespace Core.Bootstrappers
 {
-    public class FirstLevelBootstrapper: MonoBehaviour, ILevelBootstrapper
+    public class FirstLevelBootstrapper: BaseLevelBootstrapper
     {
-        [Header("Scene Load Stuff")] 
-        [SerializeField] private AstarPath pathfinder;
-        [SerializeField] private AssetReferenceGameObject environmentPrefab;
-        
         [Header("GUNS")] 
         [SerializeField] private BasicGun pistolGun;
         [SerializeField] private BasicGun ppGun;
@@ -41,20 +37,18 @@ namespace Core.Bootstrappers
         private ProjectilePool _enemyProjectilePool;
         private EnemyPoolInjector _enemyPoolInjector;
 
-        private SceneLoader _sceneLoader;
         private LevelDialogues _levelDialogues;
         private Spawner _spawner;
-        private AssetLoader _environmentLoader = new();
+        
         [Inject]
         public void Construct(Spawner spawner, SceneLoader sceneLoader, LevelDialogues levelDialogues)
         {
             _levelDialogues = levelDialogues;
-            _sceneLoader = sceneLoader;
             _spawner = spawner;
         }
-        private async void Awake()
+        protected override void Awake()
         {
-            await InstantiateAssets(CancellationToken.None);
+            base.Awake();
             InitializePools();
             InitializeGuns();
         }
@@ -62,26 +56,11 @@ namespace Core.Bootstrappers
         {
             _levelDialogues.PlayStartDialogue();
         }
-        private void OnDestroy()
+        protected override void OnDestroy()
         {
-            _environmentLoader.ReleaseStoredInstance();
+            base.OnDestroy();
             CleanUpPools();
             _levelDialogues.CleanUp();
-        }
-        private void ScanPaths()
-        {
-            pathfinder.Scan();
-        }
-        public async UniTask InstantiateAssets(CancellationToken token)
-        {
-            _sceneLoader.SetLoadingScreenActive(true);
-            await InstantiateEnvironment(token);
-            ScanPaths();
-            _sceneLoader.SetLoadingScreenActive(false);
-        }
-        private async UniTask InstantiateEnvironment(CancellationToken token)
-        {
-            await _environmentLoader.LoadGameObject(environmentPrefab, token).ContinueWith(Instantiate);
         }
         public void InitializePools()
         {
