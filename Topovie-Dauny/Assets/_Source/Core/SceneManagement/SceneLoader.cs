@@ -11,12 +11,17 @@ namespace Core.SceneManagement
 {
     public class SceneLoader: MonoBehaviour
     {
-        [SerializeField] private RectTransform loadingScreen;
-        [SerializeField] private Slider loadingSlider;
-        public async UniTask LoadSceneAsync(int index)
+        private RectTransform _loadingScreen;
+        private Slider _loadingSlider;
+        public void Construct(RectTransform loadingScreen, Slider loadingSlider)
         {
-            loadingSlider.value = 0;
-            loadingScreen.gameObject.SetActive(true);
+            _loadingScreen = loadingScreen;
+            _loadingSlider = loadingSlider;
+        }
+        public async UniTask LoadSceneAsync(int index, bool disableScreenOnLoad = true)
+        {
+            _loadingSlider.value = 0;
+            _loadingScreen.gameObject.SetActive(true);
             
             var asyncOperation = SceneManager.LoadSceneAsync(index);
             if (asyncOperation is null)
@@ -28,19 +33,22 @@ namespace Core.SceneManagement
             while (!asyncOperation.isDone)
             {
                 progress = Mathf.MoveTowards(progress, asyncOperation.progress, Time.deltaTime);
-                loadingSlider.value = progress;
+                _loadingSlider.value = progress;
                 if (progress >= 0.9f)
                 {
-                    loadingSlider.value = 1;
+                    _loadingSlider.value = 1;
                     asyncOperation.allowSceneActivation = true;
                 }
                 await UniTask.Yield();
+            } 
+            if (disableScreenOnLoad)
+            {
+                _loadingScreen.gameObject.SetActive(false);
             }
         }
-
         public void SetLoadingScreenActive(bool active)
         {
-            loadingScreen.gameObject.SetActive(active);
+            _loadingScreen.gameObject.SetActive(active);
         }
     }
 }

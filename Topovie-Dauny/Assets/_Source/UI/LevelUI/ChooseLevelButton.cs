@@ -92,7 +92,7 @@ namespace UI.LevelUI
             {
                 return;
             }
-            _sceneLoader.LoadSceneAsync(levelBuildIndex).Forget();
+            _sceneLoader.LoadSceneAsync(levelBuildIndex, false).Forget();
         }
     }
 }

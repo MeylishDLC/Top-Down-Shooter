@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using _Support.Demigiant.DOTween.Modules;
@@ -77,18 +78,17 @@ namespace UI.Menus
             var texts = gameOverScreen.GetComponentsInChildren<TMP_Text>();
             var buttonsImages = gameOverScreen.GetComponentsInChildren<Button>()
                 .Select(i => i.GetComponent<Image>());
-            
-            gameOverScreen.DOFade(fadeValue, duration).ToUniTask(cancellationToken: token);
-            foreach (var text in texts)
-            {
-                text.DOFade(fadeValue, duration).ToUniTask(cancellationToken: token);
-            }
-            foreach (var image in buttonsImages)
-            {
-                image.DOFade(fadeValue, duration).ToUniTask(cancellationToken: token);
-            }
 
-            return UniTask.CompletedTask;
+            var tasks = new List<UniTask>
+            {
+                gameOverScreen.DOFade(fadeValue, duration).ToUniTask(cancellationToken: token)
+            };
+            tasks.AddRange(Enumerable.Select(texts, text => text.DOFade(fadeValue, duration)
+                .ToUniTask(cancellationToken: token)));
+            tasks.AddRange(Enumerable.Select(buttonsImages, image => image.DOFade(fadeValue, duration)
+                .ToUniTask(cancellationToken: token)));
+
+            return UniTask.WhenAll(tasks);
         }
     }
 }

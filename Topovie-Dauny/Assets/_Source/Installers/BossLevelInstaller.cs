@@ -18,7 +18,6 @@ namespace Installers
         [SerializeField] private InputListener inputListener;
         [SerializeField] private PlayerMovement playerMovement;
         [SerializeField] private Shop shop;
-        [SerializeField] private SceneLoader sceneLoader;
         [SerializeField] private WeaponsSetterConfig weaponsSetterConfig;
         [SerializeField] private CustomCursor customCursor;
         [SerializeField] private DialogueDisplay baseDialogueDisplay;
@@ -29,7 +28,6 @@ namespace Installers
         {
             BindMainCamera();
             BindInputListener();
-            BindSceneLoader();
             BindDialogueManager();
             BindProjectContext();
             BindPlayer();
@@ -41,10 +39,6 @@ namespace Installers
         private void BindInputListener()
         {
             Container.Bind<InputListener>().FromInstance(inputListener).AsSingle();
-        }
-        private void BindSceneLoader()
-        {
-            Container.Bind<SceneLoader>().FromInstance(sceneLoader).AsSingle();
         }
         private void BindProjectContext()
         {
