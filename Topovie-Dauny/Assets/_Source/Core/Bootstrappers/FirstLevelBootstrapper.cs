@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading;
 using Bullets;
 using Bullets.BulletPools;
 using Bullets.Projectile;
+using Core.Data;
 using Core.LevelSettings;
 using Core.LoadingSystem;
 using Core.PoolingSystem;
@@ -27,30 +27,23 @@ namespace Core.Bootstrappers
         [SerializeField] private BasicGun pistolGun;
         [SerializeField] private BasicGun ppGun;
         
-        [Header("POOLS")] 
-        [SerializeField] private PoolConfigParentPair pistolBulletPoolDataPair; 
-        [SerializeField] private PoolConfigParentPair ppBulletPoolDataPair;
-        [SerializeField] private PoolConfigParentPair enemyProjectileDataPair;
+        [Header("ENEMIES")] 
+        [SerializeField] private EnemyContainer[] containers;
         
-        private BulletPool _pistolBulletPool;
-        private BulletPool _ppBulletPool;
-        private ProjectilePool _enemyProjectilePool;
-        private EnemyPoolInjector _enemyPoolInjector;
-
         private LevelDialogues _levelDialogues;
-        private Spawner _spawner;
+        private PoolInitializer _poolInitializer;
         
         [Inject]
-        public void Construct(Spawner spawner, SceneLoader sceneLoader, LevelDialogues levelDialogues)
+        public void Construct(SceneLoader sceneLoader, LevelDialogues levelDialogues, PoolInitializer poolInitializer)
         {
+            _poolInitializer = poolInitializer;
             _levelDialogues = levelDialogues;
-            _spawner = spawner;
         }
         protected override void Awake()
         {
             base.Awake();
-            InitializePools();
             InitializeGuns();
+            InitializeEnemyContainers();
         }
         private void Start()
         {
@@ -59,28 +52,20 @@ namespace Core.Bootstrappers
         protected override void OnDestroy()
         {
             base.OnDestroy();
-            CleanUpPools();
             _levelDialogues.CleanUp();
         }
-        public void InitializePools()
+        private void InitializeGuns()
         {
-            _pistolBulletPool = new BulletPool(pistolBulletPoolDataPair.PoolConfig, pistolBulletPoolDataPair.PoolParent);
-            _ppBulletPool = new BulletPool(pistolBulletPoolDataPair.PoolConfig, ppBulletPoolDataPair.PoolParent);
-            _enemyProjectilePool = new ProjectilePool(enemyProjectileDataPair.PoolConfig, enemyProjectileDataPair.PoolParent);
-
-            _enemyPoolInjector = new EnemyPoolInjector(_spawner, _enemyProjectilePool, null);
+            pistolGun.Initialize(_poolInitializer.GetBulletPoolForPlayerWeapon(1));
+            ppGun.Initialize(_poolInitializer.GetBulletPoolForPlayerWeapon(2));
         }
-        public void InitializeGuns()
+        private void InitializeEnemyContainers()
         {
-            pistolGun.Initialize(_pistolBulletPool);
-            ppGun.Initialize(_ppBulletPool);
-        }
-        public void CleanUpPools()
-        {
-            _pistolBulletPool.CleanUp();
-            _ppBulletPool.CleanUp();
-            _enemyProjectilePool.CleanUp();
-            _enemyPoolInjector.CleanUp();
+            foreach (var container in containers)
+            {
+                var pool = _poolInitializer.GetEnemyPool(container.EnemyPrefabAssetName);
+                container.InjectPool(pool);
+            }
         }
     }
 }

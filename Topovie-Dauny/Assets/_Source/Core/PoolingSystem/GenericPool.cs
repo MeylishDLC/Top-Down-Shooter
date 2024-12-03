@@ -1,5 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading;
+using Core.LoadingSystem;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 using Object = UnityEngine.Object;
 
 namespace Core.PoolingSystem
@@ -9,25 +14,25 @@ namespace Core.PoolingSystem
         protected readonly List<T> AllObjects = new();
         protected readonly Queue<T> Pool = new();
         protected readonly int MaxPoolSize;
-        protected readonly T ObjectPrefab;
         protected readonly Transform ParentTransform;
+        protected T ObjectPrefab;
         
         private readonly int _startPoolSize;
+        private AssetLoader _assetLoader;
         protected GenericPool(PoolConfig poolConfig, Transform parentTransform)
         {
             _startPoolSize = poolConfig.InitialPoolSize;
-            MaxPoolSize = poolConfig.MaxPoolSize;
-            ObjectPrefab = poolConfig.Prefab.GetComponent<T>();
             ParentTransform = parentTransform;
-
-            InitPool(ObjectPrefab);
+            MaxPoolSize = poolConfig.MaxPoolSize;
+            LoadPrefabAsset(poolConfig.PrefabAsset, CancellationToken.None)
+                .ContinueWith(() => InitPool(ObjectPrefab)).Forget(); 
         }
         public void InitPool(T prefab)
         {
             for (int i = 0; i < _startPoolSize; i++)
             {
-                var bulletInstance = InstantiateNewObject();
-                Pool.Enqueue(bulletInstance);
+                var instance = InstantiateNewObject();
+                Pool.Enqueue(instance);
             }
         }
         public abstract bool TryGetFromPool(out T instance);
@@ -37,11 +42,28 @@ namespace Core.PoolingSystem
         }
         public void CleanUp()
         {
+            _assetLoader.ReleaseStoredInstance();
             foreach (var instance in AllObjects)
             {
                 instance.OnObjectDisabled -= ReturnToPool;
             }
         }
         protected abstract T InstantiateNewObject();
+        private async UniTask LoadPrefabAsset(AssetReferenceGameObject prefabAsset, CancellationToken token)
+        {
+            var handle = prefabAsset.Asset as GameObject;
+                
+            if (handle == null)
+            {
+                _assetLoader = new AssetLoader();
+                var gameObject = await _assetLoader.LoadGameObject(prefabAsset, token);
+                ObjectPrefab = gameObject.GetComponent<T>();
+            }
+            else
+            {
+                ObjectPrefab = handle.GetComponent<T>();
+            }
+        }
+       
     }
 }

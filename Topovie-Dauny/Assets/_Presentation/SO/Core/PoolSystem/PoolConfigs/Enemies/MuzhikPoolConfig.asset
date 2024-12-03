@@ -10,8 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7069f733d8644202a0e57c19e732dab3, type: 3}
-  m_Name: EnemyProjectile
+  m_Name: MuzhikPoolConfig
   m_EditorClassIdentifier: 
-  <InitialPoolSize>k__BackingField: 100
-  <MaxPoolSize>k__BackingField: 600
-  <Prefab>k__BackingField: {fileID: 4854327939033642716, guid: 2518c1703936253469dad07f815c2dd3, type: 3}
+  <InitialPoolSize>k__BackingField: 15
+  <MaxPoolSize>k__BackingField: 30
+  <PrefabAsset>k__BackingField:
+    m_AssetGUID: e36f904e3debbd0428bb44a0192723c1
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0
+  <PrefabAssetSimplifiedName>k__BackingField: Muzhik

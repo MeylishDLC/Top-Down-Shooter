@@ -27,16 +27,28 @@ namespace Enemies.Boss.BossAttacks.AttackPairs
         }
         private async UniTask TriggerAllAttacksAsync(CancellationToken token)
         {
-            SetRandomAttackDirection();
-            var start = _isAttackingOpposite ? attacks.Count - 1 : 0;
-            var end = _isAttackingOpposite ? -1 : attacks.Count;
-            var step = _isAttackingOpposite ? -1 : 1;
-
-            for (int i = start; i != end; i += step)
+            if (randomiseAttacksDirection)
             {
-                await _bossAttacks[i].TriggerAttack(token);
-                await UniTask.Delay(TimeSpan.FromSeconds(delayBetweenAttacks), cancellationToken: token);
+                SetRandomAttackDirection();
+                var start = _isAttackingOpposite ? attacks.Count - 1 : 0;
+                var end = _isAttackingOpposite ? -1 : attacks.Count;
+                var step = _isAttackingOpposite ? -1 : 1;
+
+                for (int i = start; i != end; i += step)
+                {
+                    await _bossAttacks[i].TriggerAttack(token);
+                    await UniTask.Delay(TimeSpan.FromSeconds(delayBetweenAttacks), cancellationToken: token);
+                }
             }
+            else
+            {
+                for (int i = 0; i < attacks.Count; i++)
+                {
+                    await _bossAttacks[i].TriggerAttack(token);
+                    await UniTask.Delay(TimeSpan.FromSeconds(delayBetweenAttacks), cancellationToken: token);
+                }
+            }
+            
         }
         private List<IBossAttack> GetCastedBossAttacksList()
         {

@@ -4,12 +4,14 @@ using Bullets;
 using Bullets.BulletPatterns;
 using Bullets.BulletPools;
 using Bullets.Projectile;
+using Core.Data;
 using Core.LevelSettings;
 using Core.LoadingSystem;
 using Core.PoolingSystem;
 using Core.SceneManagement;
 using Cysharp.Threading.Tasks;
 using DialogueSystem.LevelDialogue;
+using Enemies;
 using UI.Tutorial;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -24,41 +26,45 @@ namespace Core.Bootstrappers
         [Header("GUNS")] 
         [SerializeField] private BasicGun pistolGun;
         
-        [Header("POOLS")] 
-        [SerializeField] private PoolConfigParentPair pistolBulletPoolDataPair;
+        [Header("ENEMIES")] 
+        [SerializeField] private EnemyContainer[] containers;
         
-        private BulletPool _pistolBulletPool;
+        private PoolInitializer _poolInitializer;
         private LevelDialogues _levelDialogues;
         
         [Inject]
-        public void Construct(SceneLoader sceneLoader, LevelDialogues levelDialogues)
+        public void Construct(SceneLoader sceneLoader, LevelDialogues levelDialogues, PoolInitializer poolInitializer)
         {
+            _poolInitializer = poolInitializer;
             _levelDialogues = levelDialogues;
         }
         protected override void Awake()
         {
             InstantiateAssets(CancellationToken.None).Forget();
-           
-            InitializePools();
+        }
+        private void Start()
+        {
+            _poolInitializer.InitAll();
             InitializeGuns();
+            InitializeEnemyContainers();
         }
         protected override void OnDestroy()
         {
             base.OnDestroy();
-            CleanUpPools();
             _levelDialogues.CleanUp();
-        }
-        private void InitializePools()
-        {
-            _pistolBulletPool = new BulletPool(pistolBulletPoolDataPair.PoolConfig, pistolBulletPoolDataPair.PoolParent);
+            _poolInitializer.CleanUp();
         }
         private void InitializeGuns()
         {
-            pistolGun.Initialize(_pistolBulletPool);
+            pistolGun.Initialize(_poolInitializer.GetBulletPoolForPlayerWeapon(1));
         }
-        private void CleanUpPools()
+        private void InitializeEnemyContainers()
         {
-            _pistolBulletPool.CleanUp();
+            foreach (var container in containers)
+            {
+                var pool = _poolInitializer.GetEnemyPool(container.EnemyPrefabAssetName);
+                container.InjectPool(pool);
+            }
         }
         protected override async UniTask InstantiateAssets(CancellationToken token)
         {

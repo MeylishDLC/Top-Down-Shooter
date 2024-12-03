@@ -1,4 +1,9 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Threading;
+using Core.LoadingSystem;
+using Cysharp.Threading.Tasks;
+using UnityEngine;
+using UnityEngine.AddressableAssets;
 
 namespace Core.PoolingSystem
 {
@@ -7,6 +12,7 @@ namespace Core.PoolingSystem
     {
         [field: SerializeField] public int InitialPoolSize { get; private set; }
         [field: SerializeField] public int MaxPoolSize { get; private set; }
-        [field: SerializeField] public GameObject Prefab { get; private set; }
+        [field: SerializeField] public AssetReferenceGameObject PrefabAsset { get; private set; }
+        [field: SerializeField] public string PrefabAssetSimplifiedName { get; private set; }
     }
 }

@@ -92,7 +92,7 @@ namespace Bullets
             await UniTask.Delay(TimeSpan.FromSeconds(blowupDuration), cancellationToken: token);
             _isBlowingUp = false;
             gameObject.SetActive(false);
-            _spriteRenderer.DOFade(1f, 0f);
+            await _spriteRenderer.DOFade(1f, 0f);
         }
         private void OnDrawGizmosSelected()
         {

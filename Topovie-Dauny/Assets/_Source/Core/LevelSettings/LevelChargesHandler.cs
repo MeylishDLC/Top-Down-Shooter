@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Threading;
-using Core.EnemyWaveData;
+using Core.Data;
 using Cysharp.Threading.Tasks;
 using GameEnvironment;
 using UI.Menus;
@@ -48,7 +48,6 @@ namespace Core.LevelSettings
          private void Start()
          {
              SubscribeOnStartCharging();
-             LoadAllEnemyAssetsAsync().Forget();
          }
          private void OnDestroy()
          {
@@ -56,7 +55,6 @@ namespace Core.LevelSettings
              {
                  UnsubscribeOnStartCharging(trigger);
              }
-             UnloadAllEnemyAssetsAsync();
              gameOverScreen.OnGameOver -= StopSpawning;
              gameOverScreen.OnScreenFaded -= ClearAllSpawns;
          }
@@ -211,25 +209,6 @@ namespace Core.LevelSettings
          {
              trigger.OnChargePortalPressed -= StartChargingPortal;
          }
-         private async UniTask LoadAllEnemyAssetsAsync()
-         {
-             foreach (var enemyWave in portalCharges)
-             {
-                 foreach (var enemySpawnsPair in enemyWave.EnemySpawnsPairs)
-                 {
-                     await enemySpawnsPair.LoadAssets(CancellationToken.None);
-                 }
-             }
-         }
-         private void UnloadAllEnemyAssetsAsync()
-         {
-             foreach (var enemyWave in portalCharges)
-             {
-                 foreach (var enemySpawnsPair in enemyWave.EnemySpawnsPairs)
-                 {
-                     enemySpawnsPair.UnloadAssets();
-                 }
-             }
-         }
+        
      }
 }

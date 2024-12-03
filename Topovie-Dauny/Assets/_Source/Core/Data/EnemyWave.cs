@@ -1,11 +1,11 @@
 ﻿using UnityEngine;
 
-namespace Core.EnemyWaveData
+namespace Core.Data
 {
     [System.Serializable]
     public class EnemyWave
     {
-        [field:SerializeField] public EnemySpawnsPair[] EnemySpawnsPairs { get; private set; }
+        [field:SerializeField] public EnemySpawnsPair[] Pairs { get; private set; }
         [field:SerializeField] public int MaxEnemySpawnAtOnce { get; private set; }
         [field:SerializeField] public int MinEnemySpawnAtOnce { get; private set; }
         

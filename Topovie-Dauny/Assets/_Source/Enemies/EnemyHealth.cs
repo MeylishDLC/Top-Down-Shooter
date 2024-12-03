@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading;
+using Core.PoolingSystem;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using Enemies.Combat;
@@ -11,8 +12,9 @@ using Zenject;
 
 namespace Enemies
 {
-    public class EnemyHealth: MonoBehaviour, IEnemyHealth
+    public class EnemyHealth: MonoBehaviour, IEnemyHealth, IPoolObject<EnemyHealth>
     {
+        public event Action<EnemyHealth> OnObjectDisabled;
         public event Action OnEnemyDied;
         public event Action OnDamageTaken;
         public KnockBack KnockBack { get; private set; }
@@ -26,14 +28,20 @@ namespace Enemies
         
         private int _currentHealth;
         private bool _isDead;
+        
+        [Inject]
         public void Construct(PlayerMovement playerMovement)
         {
             PlayerMovement = playerMovement;
+            KnockBack = new KnockBack(this,GetComponent<Rigidbody2D>(), knockBackTimeMilliseconds, knockbackThrust);
         }
         private void Awake()
         {
             _currentHealth = maxHealth;
-            KnockBack = new KnockBack(this,GetComponent<Rigidbody2D>(), knockBackTimeMilliseconds, knockbackThrust);
+        }
+        private void OnDisable()
+        {
+            OnObjectDisabled?.Invoke(this);
         }
         public void TakeDamage(int damage)
         {

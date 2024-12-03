@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading;
 using Bullets.Projectile;
-using Core.EnemyWaveData;
+using Core.Data;
 using Core.PoolingSystem;
 using Cysharp.Threading.Tasks;
 using Enemies;
@@ -16,14 +16,7 @@ namespace Core.LevelSettings
 {
     public class Spawner
     {
-        public event Action<IPoolUser> OnPoolUserSpawned;
         private EnemyWave _currentEnemyWave;
-        private PlayerMovement _playerMovement;
-
-        public Spawner(PlayerMovement playerMovement)
-        {
-            _playerMovement = playerMovement;
-        }
         public void InitializeEnemyWave(EnemyWave enemyWave)
         {
             _currentEnemyWave = enemyWave;
@@ -55,15 +48,16 @@ namespace Core.LevelSettings
             var randomPair = GetRandomEnemySpawnsPair();
             var randomEnemy = GetRandomEnemy(randomPair);
             var randomSpawn = GetRandomSpawnPoint(randomPair);
-            
-            var enemy = Object.Instantiate(randomEnemy, randomSpawn.position, Quaternion.identity);
-            enemy.transform.SetParent(randomSpawn);
-            InitializeEnemy(enemy);
+
+            if (randomEnemy)
+            {
+                randomEnemy.transform.position = randomSpawn.position;
+            }
         }
         private EnemySpawnsPair GetRandomEnemySpawnsPair()
         {
             //todo add chance?
-            var randomPair = _currentEnemyWave.EnemySpawnsPairs[Random.Range(0, _currentEnemyWave.EnemySpawnsPairs.Length)];
+            var randomPair = _currentEnemyWave.Pairs[Random.Range(0, _currentEnemyWave.Pairs.Length)];
             return randomPair;
         }
         private Transform GetRandomSpawnPoint(EnemySpawnsPair enemySpawnsPair)
@@ -71,20 +65,11 @@ namespace Core.LevelSettings
             var randomSpawn = enemySpawnsPair.SpawnPoints[Random.Range(0, enemySpawnsPair.SpawnPoints.Length)];
             return randomSpawn;
         }
-        private GameObject GetRandomEnemy(EnemySpawnsPair enemySpawnsPair)
+        private EnemyHealth GetRandomEnemy(EnemySpawnsPair enemySpawnsPair)
         {
-            var randomEnemy = enemySpawnsPair.EnemiesPrefabs[Random.Range(0, enemySpawnsPair.EnemiesPrefabs.Count)];
-            return randomEnemy;
-        }
-        private void InitializeEnemy(GameObject enemy)
-        {
-            var enemyComponent = enemy.GetComponent<EnemyHealth>();
-            enemyComponent.Construct(_playerMovement);
-
-            if (enemy.TryGetComponent<IPoolUser>(out var poolUser))
-            {
-                OnPoolUserSpawned?.Invoke(poolUser);
-            }
+            var container = enemySpawnsPair.Enemies[Random.Range(0, enemySpawnsPair.Enemies.Length)];
+            container.Pool.TryGetFromPool(out var enemy);
+            return enemy;
         }
         private Vector3 GetRandomPositionWithinSpawnRange(Transform spawn, float spawnRange)
         {

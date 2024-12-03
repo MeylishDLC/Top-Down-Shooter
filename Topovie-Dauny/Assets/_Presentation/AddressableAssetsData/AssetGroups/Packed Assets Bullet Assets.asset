@@ -1,0 +1,65 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Packed Assets Bullet Assets
+  m_EditorClassIdentifier: 
+  m_GroupName: Packed Assets Bullet Assets
+  m_Data:
+    m_SerializedData: []
+  m_GUID: b4d2994f9d3890a47a8256014e019264
+  m_SerializeEntries:
+  - m_GUID: 9656b8ecce96a58488867c5d43f4177d
+    m_Address: EnemyBracket(tower)
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2bdeaabf2a0928a469ce5afd87739396
+    m_Address: EnemyBullet
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: bb34913cc68a22248be7da513e4779dd
+    m_Address: Fireball
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2518c1703936253469dad07f815c2dd3
+    m_Address: EnemyProjectile
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ab3184001d669df459f90e8f257dd1f5
+    m_Address: PistolBullet
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7cd42f4056a103942b84e2d6e5021c49
+    m_Address: PPBullet
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c390fb597dbd6e34f81de38a6a9510fe
+    m_Address: RPGBullet
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 21884403f89a81a4a983c25b5f5be590
+    m_Address: ShotgunBullet
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 1567954be7496e641961d7efd8f9655f, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: a290a07c83a051b49a068f6812046e99, type: 2}
+    - {fileID: 11400000, guid: 1fb81a0378fbe68429983dd892a3e17e, type: 2}

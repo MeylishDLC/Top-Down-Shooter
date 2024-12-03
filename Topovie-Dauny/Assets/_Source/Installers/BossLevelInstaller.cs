@@ -1,6 +1,7 @@
 ﻿using System;
 using Core.InputSystem;
 using Core.LevelSettings;
+using Core.PoolingSystem;
 using Core.SceneManagement;
 using DialogueSystem;
 using DialogueSystem.LevelDialogue;
@@ -23,7 +24,9 @@ namespace Installers
         [SerializeField] private CustomCursor customCursor;
         [SerializeField] private DialogueDisplay baseDialogueDisplay;
         [SerializeField] private Camera mainCamera;
-
+        [SerializeField] private PoolInitializerConfig poolInitializerConfig;
+        
+        private PoolInitializer _poolInitializer;
         private DialogueManager _dialogueManager;
         public override void InstallBindings()
         {
@@ -36,6 +39,7 @@ namespace Installers
             BindShop();
             BindPlayerWeaponsSetter();
             BindCustomCursor();
+            BindPoolInitializer();
         }
         private void OnDestroy()
         {
@@ -78,6 +82,11 @@ namespace Installers
         private void BindMainCamera()
         {
             Container.Bind<Camera>().FromInstance(mainCamera).AsSingle();
+        }
+        private void BindPoolInitializer()
+        {
+            _poolInitializer = new PoolInitializer(poolInitializerConfig);
+            Container.Bind<PoolInitializer>().FromInstance(_poolInitializer).AsSingle();
         }
     }
 }

@@ -10,9 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7069f733d8644202a0e57c19e732dab3, type: 3}
-  m_Name: PPBulletPool
+  m_Name: RPGBulletPool
   m_EditorClassIdentifier: 
-  <InitialPoolSize>k__BackingField: 90
-  <MaxPoolSize>k__BackingField: 300
-  <Prefab>k__BackingField: {fileID: 553695123358261265, guid: 7cd42f4056a103942b84e2d6e5021c49, type: 3}
-  <PoolName>k__BackingField: PPBulletsPool
+  <InitialPoolSize>k__BackingField: 5
+  <MaxPoolSize>k__BackingField: 10
+  <PrefabAsset>k__BackingField:
+    m_AssetGUID: c390fb597dbd6e34f81de38a6a9510fe
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 1
+  <PrefabAssetSimplifiedName>k__BackingField: RPGBullet
