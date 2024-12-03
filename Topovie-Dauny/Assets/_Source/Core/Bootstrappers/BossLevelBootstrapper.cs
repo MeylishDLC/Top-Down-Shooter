@@ -37,9 +37,6 @@ namespace Core.Bootstrappers
         private BulletPool _shotgunBulletPool;
         private BulletPool _rpgBulletPool;
         private EnemyBulletPool _enemyBulletPool;
-        
-        [Inject]
-        public void Construct(SceneLoader sceneLoader) { }
         protected override void Awake()
         {
             base.Awake();

@@ -27,14 +27,16 @@ namespace UI.PlayerGUI
         {
             _uiRectTransform = objectToFollowPlayer.GetComponent<RectTransform>();
         }
-
         private void OnEnable()
         {
             MoveToPlayerInstantly();
         }
         private void Update()
         {
-            FollowPlayerSmoothly();
+            if (_playerTransform)
+            {
+                FollowPlayerSmoothly();
+            }
         }
         private void FollowPlayerSmoothly()
         {

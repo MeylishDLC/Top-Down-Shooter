@@ -49,16 +49,18 @@ namespace UI.Tutorial
         }
         private void Start()
         {
-            portalTrigger.enabled = false;
-            shopTrigger.enabled = false;
-            
             wasdIndicator.gameObject.SetActive(false);
             abilitiesIndicator.gameObject.SetActive(false);
             abilitiesIndicator.gameObject.SetActive(false);
+        }
+        public void EnableTutorial()
+        {
+            portalTrigger.enabled = false;
+            shopTrigger.enabled = false;
             
             _inputListener.SetInput(false, true);
             _dialogueManager.EnterDialogueMode(dialogueOnTutorialStart);
-            _dialogueManager.OnDialogueEnded += StartTutorial;
+            _dialogueManager.OnDialogueEnded += StartTutorial; 
         }
         private void StartTutorial()
         {

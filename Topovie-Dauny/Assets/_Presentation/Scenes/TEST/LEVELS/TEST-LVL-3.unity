@@ -401,6 +401,9 @@ MonoBehaviour:
     m_SubObjectName: 
     m_SubObjectType: 
     m_EditorAssetChanged: 0
+  playerRespawnPoint: {fileID: 815094285}
+  playerObject: {fileID: 492257494}
+  loadDelay: 0.5
   pistolGun: {fileID: 696262010}
   ppGun: {fileID: 620779489402787806}
   shotgun: {fileID: 403026804}
@@ -1021,6 +1024,11 @@ MonoBehaviour:
     <TimeToActivatePencil>k__BackingField: 0
   gameOverScreen: {fileID: 9023241815803398298}
   changeStateDelayMilliseconds: 300
+--- !u!1 &492257494 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4250440572906355449, guid: af35db23b32508c4ab8e46f098395935, type: 3}
+  m_PrefabInstance: {fileID: 620779489402787803}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &497614940
 GameObject:
   m_ObjectHideFlags: 0
@@ -1584,6 +1592,37 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1e9c9824dd7028044b0eb888110131c9, type: 3}
+--- !u!1 &815094284
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 815094285}
+  m_Layer: 0
+  m_Name: RespawnPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &815094285
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 815094284}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.19, y: 5.9, z: -0.71928686}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &829343088 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8701980609285775855, guid: ba3f276fa16aec249a029d4ce9df78dd, type: 3}
@@ -4691,3 +4730,4 @@ SceneRoots:
   - {fileID: 535823487}
   - {fileID: 1902102307}
   - {fileID: 180543404295265332}
+  - {fileID: 815094285}

@@ -60,7 +60,7 @@ namespace Core.LevelSettings
              gameOverScreen.OnGameOver -= StopSpawning;
              gameOverScreen.OnScreenFaded -= ClearAllSpawns;
          }
-         public void StopSpawning()
+         private void StopSpawning()
          {
              _chargingFinishCts?.Cancel();
              _chargingFinishCts?.Dispose();

@@ -463,6 +463,9 @@ MonoBehaviour:
     m_SubObjectName: 
     m_SubObjectType: 
     m_EditorAssetChanged: 0
+  playerRespawnPoint: {fileID: 1700621646}
+  playerObject: {fileID: 620779489402787807}
+  loadDelay: 0.5
   pistolGun: {fileID: 696262010}
   ppGun: {fileID: 620779489402787806}
   pistolBulletPoolDataPair:
@@ -2424,6 +2427,37 @@ Transform:
   - {fileID: 148295271}
   m_Father: {fileID: 517727411}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1700621645
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1700621646}
+  m_Layer: 0
+  m_Name: RespawnPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1700621646
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1700621645}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -2.4, y: 4.751, z: 3.7923865}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1823975785 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8579498307197003589, guid: 27ea05da5590c004682eb92a73cbc65f, type: 3}
@@ -3205,6 +3239,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0884d62387a464c8e2ef1b583d6d33f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &620779489402787807 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4250440572906355449, guid: af35db23b32508c4ab8e46f098395935, type: 3}
+  m_PrefabInstance: {fileID: 620779489402787803}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &620779489402787808 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5448661762863528021, guid: af35db23b32508c4ab8e46f098395935, type: 3}
@@ -4399,3 +4438,4 @@ SceneRoots:
   - {fileID: 517727411}
   - {fileID: 535823487}
   - {fileID: 1902102307}
+  - {fileID: 1700621646}

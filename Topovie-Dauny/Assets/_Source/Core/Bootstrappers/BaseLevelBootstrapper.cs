@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using Bullets.BulletPools;
 using Core.LevelSettings;
 using Core.LoadingSystem;
@@ -14,17 +15,22 @@ namespace Core.Bootstrappers
 {
     public class BaseLevelBootstrapper: MonoBehaviour
     {
+        protected SceneLoader SceneLoader {get; private set;}
+        
         [Header("Scene Load Stuff")] 
         [SerializeField] private AstarPath pathfinder;
         [SerializeField] private AssetReferenceGameObject environmentPrefab;
+        [SerializeField] private Transform playerRespawnPoint;
+        [SerializeField] private GameObject playerObject;
+        
+        private const float LoadDelay = 0.7f;
 
-        private SceneLoader _sceneLoader;
         private readonly AssetLoader _environmentLoader = new();
         
         [Inject]
         public void Construct(SceneLoader sceneLoader)
         {
-            _sceneLoader = sceneLoader;
+            SceneLoader = sceneLoader;
         }
         protected virtual async void Awake()
         {
@@ -41,16 +47,25 @@ namespace Core.Bootstrappers
                 pathfinder.Scan();
             }
         }
-        private async UniTask InstantiateAssets(CancellationToken token)
+        protected virtual async UniTask InstantiateAssets(CancellationToken token)
         {
-            _sceneLoader.SetLoadingScreenActive(true);
+            SceneLoader.SetLoadingScreenActive(true);
             await InstantiateEnvironment(token);
+            if (SceneLoader.LastSceneIndex == SceneLoader.CurrentSceneIndex)
+            {
+                PutPlayerInRespawn();
+            }
             ScanPaths();
-            _sceneLoader.SetLoadingScreenActive(false);
+            await UniTask.Delay(TimeSpan.FromSeconds(LoadDelay), cancellationToken: token);
+            SceneLoader.SetLoadingScreenActive(false);
         }
         private async UniTask InstantiateEnvironment(CancellationToken token)
         {
             await _environmentLoader.LoadGameObject(environmentPrefab, token).ContinueWith(Instantiate);
+        }
+        private void PutPlayerInRespawn()
+        {
+            playerObject.transform.position = playerRespawnPoint.position;
         }
     }
 }

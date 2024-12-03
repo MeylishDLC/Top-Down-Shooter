@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using Bullets;
 using Bullets.BulletPatterns;
 using Bullets.BulletPools;
@@ -9,6 +10,7 @@ using Core.PoolingSystem;
 using Core.SceneManagement;
 using Cysharp.Threading.Tasks;
 using DialogueSystem.LevelDialogue;
+using UI.Tutorial;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using Weapons.Guns;
@@ -18,6 +20,7 @@ namespace Core.Bootstrappers
 {
     public class TutorialLevelBootstrapper: BaseLevelBootstrapper
     {
+        [SerializeField] private BasicTutorial tutorial;
         [Header("GUNS")] 
         [SerializeField] private BasicGun pistolGun;
         
@@ -34,10 +37,10 @@ namespace Core.Bootstrappers
         }
         protected override void Awake()
         {
-            base.Awake();
+            InstantiateAssets(CancellationToken.None).Forget();
+           
             InitializePools();
             InitializeGuns();
-            _levelDialogues.PlayStartDialogue();
         }
         protected override void OnDestroy()
         {
@@ -56,6 +59,18 @@ namespace Core.Bootstrappers
         private void CleanUpPools()
         {
             _pistolBulletPool.CleanUp();
+        }
+        protected override async UniTask InstantiateAssets(CancellationToken token)
+        {
+            await base.InstantiateAssets(token);
+            if (SceneLoader.CurrentSceneIndex != SceneLoader.LastSceneIndex)
+            {
+                tutorial.EnableTutorial();
+            }
+            else
+            {
+                _levelDialogues.PlayStartDialogue();
+            }
         }
     }
 }
