@@ -24,7 +24,6 @@ namespace Core.Bootstrappers
         [SerializeField] private GameObject playerObject;
         
         private const float LoadDelay = 0.7f;
-
         private readonly AssetLoader _environmentLoader = new();
         
         [Inject]

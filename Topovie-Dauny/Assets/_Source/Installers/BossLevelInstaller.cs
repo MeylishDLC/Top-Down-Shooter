@@ -1,4 +1,5 @@
-﻿using Core.InputSystem;
+﻿using System;
+using Core.InputSystem;
 using Core.LevelSettings;
 using Core.SceneManagement;
 using DialogueSystem;
@@ -35,6 +36,10 @@ namespace Installers
             BindShop();
             BindPlayerWeaponsSetter();
             BindCustomCursor();
+        }
+        private void OnDestroy()
+        {
+            _dialogueManager.CleanUp();
         }
         private void BindInputListener()
         {

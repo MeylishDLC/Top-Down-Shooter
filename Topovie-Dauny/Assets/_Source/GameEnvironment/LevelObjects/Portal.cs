@@ -112,7 +112,7 @@ namespace GameEnvironment.LevelObjects
             }
             else
             {
-                _sceneLoader.LoadSceneAsync(nextSceneIndex).Forget();
+                _sceneLoader.LoadSceneAsync(nextSceneIndex, false).Forget();
             }
         }
     }

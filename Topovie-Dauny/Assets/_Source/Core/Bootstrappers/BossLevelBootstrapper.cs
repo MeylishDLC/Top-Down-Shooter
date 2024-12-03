@@ -30,7 +30,6 @@ namespace Core.Bootstrappers
         [SerializeField] private PoolConfigParentPair shotgunBulletPoolDataPair;
         [SerializeField] private PoolConfigParentPair rpgBulletPoolDataPair;
         [SerializeField] private PoolConfigParentPair enemyBulletPoolDataPair;
-
         
         private BulletPool _pistolBulletPool;
         private BulletPool _ppBulletPool;

@@ -25,13 +25,12 @@ namespace DialogueSystem
         private Story _currentStory;
         private bool _hasChosen;
         private bool _canContinueLine;
-
-        private CancellationTokenSource _cancelDialogueTypingCts = new();
         
         private const string SpeakerTag = "speaker";
         private const string SpriteTag = "sprite";
         private const string LayoutTag = "layout";
         private readonly InputListener _inputListener;
+        private CancellationTokenSource _skipLineCts = new();
         
         public DialogueManager(InputListener inputListener, DialogueDisplay dialogueDisplay)
         {
@@ -42,10 +41,10 @@ namespace DialogueSystem
             _inputListener.OnInteractPressed += HandleInput;
             SubscribeChoices();
         }
-        //todo call it on scene unload
-        public void Expose()
+        public void CleanUp()
         {
-            _cancelDialogueTypingCts?.Dispose();
+            _skipLineCts?.Cancel();
+            _skipLineCts?.Dispose();
             _inputListener.OnInteractPressed -= HandleInput;
             UnsubscribeChoices();
         }
@@ -63,31 +62,35 @@ namespace DialogueSystem
 
             ContinueStory();
         }
-        private void MakeChoice(int choiceIndex)
-        {
-            _currentStory.ChooseChoiceIndex(choiceIndex);
-            ContinueStory();
-        }
         private void HandleInput()
         {
             if (!DialogueIsPlaying)
             {
                 return;
             }
+            
             if (_canContinueLine && _currentStory.currentChoices.IsEmpty())
             {
                 ContinueStory();
             }
+            else if (!_canContinueLine && _currentStory.currentChoices.IsEmpty())
+            {
+                CancelRecreateCts();
+            }
         }
+        private void MakeChoice(int choiceIndex)
+        {
+            _currentStory.ChooseChoiceIndex(choiceIndex);
+            ContinueStory();
+        }
+     
         private void ContinueStory()
         {
             if (_currentStory.canContinue)
             {
-                CancelRecreateCts();
-                
                 var nextLine = _currentStory.Continue();
                 HandleTags(_currentStory.currentTags);
-                DisplayLineAsync(nextLine, _cancelDialogueTypingCts.Token).Forget();
+                DisplayLine(nextLine);
             }
             else
             {
@@ -95,25 +98,24 @@ namespace DialogueSystem
             }
             HandleTags(_currentStory.currentTags);
         }
-        private async UniTask DisplayLineAsync(string line, CancellationToken token)
+
+        private void DisplayLine(string line)
         {
             _dialogueDisplay.DialogueText.text = line;
             _dialogueDisplay.DialogueText.maxVisibleCharacters = 0;
-
-            _canContinueLine = false;
             HideChoices();
-
-            var addingTextTagChanges = false;
+            
+            TypeLineAsync(line, _skipLineCts.Token).Forget();
+        }
+        private async UniTask TypeLineAsync(string line, CancellationToken token)
+        {
             try
             {
+                _canContinueLine = false;
+                var addingTextTagChanges = false;
+
                 foreach (var letter in line.ToCharArray())
                 {
-                    if (token.IsCancellationRequested)
-                    {
-                        _dialogueDisplay.DialogueText.maxVisibleCharacters = line.Length;
-                        break;
-                    }
-
                     //check for ink tags
                     if (letter == '<' || addingTextTagChanges)
                     {
@@ -133,7 +135,7 @@ namespace DialogueSystem
             }
             catch (OperationCanceledException)
             {
-                //
+                _dialogueDisplay.DialogueText.maxVisibleCharacters = line.Length;
             }
             finally
             {
@@ -220,12 +222,9 @@ namespace DialogueSystem
         }
         private void CancelRecreateCts()
         {
-            if (_cancelDialogueTypingCts != null)
-            {
-                _cancelDialogueTypingCts.Cancel();
-                _cancelDialogueTypingCts.Dispose();
-            }
-            _cancelDialogueTypingCts = new CancellationTokenSource();
+            _skipLineCts?.Cancel();
+            _skipLineCts?.Dispose();
+            _skipLineCts = new CancellationTokenSource();
         }
         private void SelectFirstChoice()
         {

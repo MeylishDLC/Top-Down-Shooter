@@ -45,6 +45,10 @@ namespace Installers
             BindCustomCursor();
             BindLevelDialogues();
         }
+        private void OnDestroy()
+        {
+            _dialogueManager.CleanUp();
+        }
         private void BindInputListener()
         {
             Container.Bind<InputListener>().FromInstance(inputListener).AsSingle();
