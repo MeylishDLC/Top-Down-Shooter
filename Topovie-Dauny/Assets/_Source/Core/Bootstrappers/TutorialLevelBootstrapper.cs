@@ -1,12 +1,4 @@
-﻿using System;
-using System.Threading;
-using Bullets;
-using Bullets.BulletPatterns;
-using Bullets.BulletPools;
-using Bullets.Projectile;
-using Core.Data;
-using Core.LevelSettings;
-using Core.LoadingSystem;
+﻿using System.Threading;
 using Core.PoolingSystem;
 using Core.SceneManagement;
 using Cysharp.Threading.Tasks;
@@ -42,14 +34,19 @@ namespace Core.Bootstrappers
         {
             InstantiateAssets(CancellationToken.None).Forget();
             _poolInitializer.InitAll();
-            InitializeGuns();
-            InitializeEnemyContainers();
+            InitializeAddressables(CancellationToken.None).Forget();
         }
         protected override void OnDestroy()
         {
             base.OnDestroy();
             _levelDialogues.CleanUp();
             _poolInitializer.CleanUp();
+        }
+        private async UniTask InitializeAddressables(CancellationToken cancellationToken)
+        {
+            await Addressables.InitializeAsync().ToUniTask(cancellationToken: cancellationToken);
+            InitializeGuns();
+            InitializeEnemyContainers();
         }
         private void InitializeGuns()
         {

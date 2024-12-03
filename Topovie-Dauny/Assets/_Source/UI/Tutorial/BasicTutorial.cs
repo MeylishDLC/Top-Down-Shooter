@@ -5,7 +5,6 @@ using Cysharp.Threading.Tasks;
 using DialogueSystem;
 using GameEnvironment;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using Zenject;
 

@@ -2,12 +2,9 @@
 using DialogueSystem;
 using Player.PlayerAbilities;
 using Player.PlayerControl;
-using Player.PlayerControl.GunMovement;
 using UI.PlayerGUI;
 using UI.UIShop;
 using UnityEngine;
-using UnityEngine.UI;
-using Weapons;
 using Zenject;
 
 namespace Player.PlayerCombat

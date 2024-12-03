@@ -3,11 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using Bullets.BulletPools;
 using Core.PoolingSystem.Configs;
-using Enemies;
 using Enemies.Pools;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
-using Object = UnityEngine.Object;
 
 namespace Core.PoolingSystem
 {
@@ -30,7 +28,7 @@ namespace Core.PoolingSystem
             _bulletsForEnemiesConfigs = poolInitializerConfig.BulletsForEnemiesConfigs;
             _projectilesForEnemiesConfigs = poolInitializerConfig.ProjectilesForEnemiesConfigs;
             _enemiesPoolsConfigs = poolInitializerConfig.EnemiesPoolsConfigs;
-            _poolUserEnemiesPoolsConfigs = poolInitializerConfig.PoolUserEnemiesPoolsConfigs;
+            _poolUserEnemiesPoolsConfigs = poolInitializerConfig.PoolUserEnemiesPoolsConfigs.ToArray();
         }
         public BulletPool GetBulletPoolForPlayerWeapon(int weaponNumber)
         {

@@ -1,14 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using Bullets.Projectile;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using Enemies;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Weapons.AbilityWeapons
 {

@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Threading;
-using Core.PoolingSystem;
 using Cysharp.Threading.Tasks;
-using Enemies.Combat;
-using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Bullets.Projectile

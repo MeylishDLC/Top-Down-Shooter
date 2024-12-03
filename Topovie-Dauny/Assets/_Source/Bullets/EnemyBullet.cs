@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Threading;
 using Core.PoolingSystem;
-using Cysharp.Threading.Tasks;
-using Enemies;
 using Player.PlayerCombat;
 using UnityEngine;
 

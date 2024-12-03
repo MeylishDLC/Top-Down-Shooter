@@ -2,8 +2,6 @@
 using System.Threading;
 using Core.LevelSettings;
 using Cysharp.Threading.Tasks;
-using UnityEngine;
-using Zenject;
 
 namespace DialogueSystem.LevelDialogue
 {

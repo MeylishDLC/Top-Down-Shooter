@@ -1,15 +1,9 @@
 ﻿using System;
 using System.Threading;
-using Bullets.Projectile;
 using Core.Data;
-using Core.PoolingSystem;
 using Cysharp.Threading.Tasks;
 using Enemies;
-using Enemies.EnemyTypes;
-using Player.PlayerControl;
 using UnityEngine;
-using Zenject;
-using Object = UnityEngine.Object;
 using Random = UnityEngine.Random;
 
 namespace Core.LevelSettings

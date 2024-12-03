@@ -1,7 +1,5 @@
-using System;
 using Cinemachine;
 using UnityEngine;
-using UnityEngine.Serialization;
 using Zenject;
 
 namespace UI.Core

@@ -3,7 +3,6 @@ using System.Threading;
 using Cysharp.Threading.Tasks;
 using Player.PlayerControl;
 using UnityEngine;
-using Zenject;
 
 namespace Player.PlayerAbilities
 {

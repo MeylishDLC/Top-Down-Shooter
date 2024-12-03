@@ -1,10 +1,6 @@
-using System;
 using System.Threading;
 using Cysharp.Threading.Tasks;
-using Player.PlayerCombat;
-using Player.PlayerControl;
 using UnityEngine;
-using Zenject;
 
 namespace Enemies.Boss.BossAttacks.Chessboard
 {

@@ -1,14 +1,9 @@
 ﻿using System.Threading;
-using Bullets.BulletPools;
-using Core.Data;
-using Core.LevelSettings;
-using Core.LoadingSystem;
 using Core.PoolingSystem;
 using Core.SceneManagement;
 using Cysharp.Threading.Tasks;
 using DialogueSystem.LevelDialogue;
 using Enemies;
-using Enemies.EnemyTypes;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using Weapons.Guns;
@@ -39,8 +34,7 @@ namespace Core.Bootstrappers
         {
             base.Awake();
             _poolInitializer.InitAll();
-            InitializeGuns();
-            InitializeEnemyContainers();
+            InitializeAddressables(CancellationToken.None).Forget();
         }
         private void Start()
         {
@@ -51,6 +45,12 @@ namespace Core.Bootstrappers
             base.OnDestroy();
             _levelDialogues.CleanUp();
             _poolInitializer.CleanUp();
+        }
+        private async UniTask InitializeAddressables(CancellationToken cancellationToken)
+        {
+            await Addressables.InitializeAsync().ToUniTask(cancellationToken: cancellationToken);
+            InitializeGuns();
+            InitializeEnemyContainers();
         }
         private void InitializeGuns()
         {

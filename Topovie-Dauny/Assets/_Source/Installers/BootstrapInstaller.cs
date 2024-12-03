@@ -1,6 +1,4 @@
-using System;
 using Core.LevelSettings;
-using Core.SceneManagement;
 using UnityEngine;
 using UnityEngine.UI;
 using Zenject;

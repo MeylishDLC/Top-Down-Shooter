@@ -1,4 +1,3 @@
-using System;
 using System.Threading;
 using Core.InputSystem;
 using Cysharp.Threading.Tasks;

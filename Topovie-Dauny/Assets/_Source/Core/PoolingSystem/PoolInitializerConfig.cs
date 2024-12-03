@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Bullets.BulletPools;
+﻿using System.Collections.Generic;
 using Core.PoolingSystem.Configs;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
-using UnityEngine.ResourceManagement.ResourceLocations;
 
 namespace Core.PoolingSystem
 {
@@ -15,10 +10,10 @@ namespace Core.PoolingSystem
         [field:Header("BULLETS")] 
         [field:SerializeField] public PoolConfig[] BulletsForPlayerWeaponConfigs {get; private set;}
         [field:SerializeField] public PoolConfig[] BulletsForEnemiesConfigs {get; private set;}
-        [field:SerializeField] public PoolConfig[] ProjectilesForEnemiesConfigs {get; private set;}
+        [field: SerializeField] public PoolConfig[] ProjectilesForEnemiesConfigs { get; private set; }
         
         [field:Header("ENEMIES")]
         [field:SerializeField] public PoolConfig[] EnemiesPoolsConfigs {get; private set;}
-        [field:SerializeField] public PoolUserPoolConfig[] PoolUserEnemiesPoolsConfigs {get; private set;}
+        [field: SerializeField] public List<PoolUserPoolConfig> PoolUserEnemiesPoolsConfigs { get; private set; } = new();
     }
 }

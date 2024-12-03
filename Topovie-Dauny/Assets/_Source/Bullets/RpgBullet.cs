@@ -3,9 +3,7 @@ using System.Linq;
 using System.Threading;
 using _Support.Demigiant.DOTween.Modules;
 using Cinemachine;
-using Core.PoolingSystem;
 using Cysharp.Threading.Tasks;
-using DG.Tweening;
 using Enemies;
 using UnityEngine;
 

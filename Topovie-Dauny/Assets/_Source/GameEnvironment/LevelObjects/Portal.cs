@@ -1,6 +1,4 @@
-﻿using System;
-using System.Threading;
-using Core.InputSystem;
+﻿using Core.InputSystem;
 using Core.LevelSettings;
 using Core.SceneManagement;
 using Cysharp.Threading.Tasks;

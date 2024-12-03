@@ -1,15 +1,11 @@
 ﻿using System;
 using System.Threading;
-using System.Threading.Tasks;
 using _Support.Demigiant.DOTween.Modules;
 using Cinemachine;
 using Cysharp.Threading.Tasks;
 using Pathfinding;
 using Player.PlayerCombat;
-using Player.PlayerControl;
 using UnityEngine;
-using UnityEngine.Serialization;
-using Zenject;
 
 namespace Enemies.EnemyTypes
 {

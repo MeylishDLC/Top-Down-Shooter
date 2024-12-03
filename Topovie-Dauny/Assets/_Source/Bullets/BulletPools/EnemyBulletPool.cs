@@ -1,7 +1,6 @@
 ﻿using Core.PoolingSystem;
 using Core.PoolingSystem.Configs;
 using UnityEngine;
-using Zenject;
 
 namespace Bullets.BulletPools
 {

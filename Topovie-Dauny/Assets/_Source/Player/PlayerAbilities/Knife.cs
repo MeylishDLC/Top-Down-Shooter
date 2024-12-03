@@ -1,10 +1,8 @@
 ﻿using System.Threading;
-using Bullets;
 using Cysharp.Threading.Tasks;
 using Player.PlayerControl;
 using UnityEngine;
 using Weapons.AbilityWeapons;
-using Zenject;
 
 namespace Player.PlayerAbilities
 {

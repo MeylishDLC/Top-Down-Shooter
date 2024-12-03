@@ -1,7 +1,6 @@
 ﻿using System;
 using Player.PlayerControl;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace Player.PlayerAbilities
 {

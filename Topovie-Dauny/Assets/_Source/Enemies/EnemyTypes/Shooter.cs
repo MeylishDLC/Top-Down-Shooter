@@ -1,8 +1,6 @@
-﻿using System;
-using Bullets.BulletPools;
+﻿using Bullets.BulletPools;
 using Bullets.Projectile;
 using Core.PoolingSystem;
-using Player.PlayerControl;
 using UnityEngine;
 
 namespace Enemies.EnemyTypes

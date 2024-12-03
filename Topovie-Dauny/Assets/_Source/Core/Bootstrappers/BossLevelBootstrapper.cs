@@ -1,12 +1,8 @@
 ﻿using System.Threading;
 using Bullets.BulletPatterns;
-using Bullets.BulletPools;
 using Core.Data;
-using Core.LoadingSystem;
 using Core.PoolingSystem;
-using Core.SceneManagement;
 using Cysharp.Threading.Tasks;
-using DialogueSystem.LevelDialogue;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using Weapons.Guns;
@@ -36,13 +32,18 @@ namespace Core.Bootstrappers
         {
             base.Awake();
             _poolInitializer.InitAll();
-            InitializeGuns();
-            InitializeFireballSpawners();
+            InitializeAddressables(CancellationToken.None).Forget();
         }
         protected override void OnDestroy()
         {
             base.OnDestroy();
             _poolInitializer.CleanUp();
+        }
+        private async UniTask InitializeAddressables(CancellationToken cancellationToken)
+        {
+            await Addressables.InitializeAsync().ToUniTask(cancellationToken: cancellationToken);
+            InitializeGuns();
+            InitializeFireballSpawners();
         }
         private void InitializeGuns()
         {

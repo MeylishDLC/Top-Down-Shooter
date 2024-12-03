@@ -1,10 +1,6 @@
-using System;
-using Bullets;
-using Core;
 using Core.InputSystem;
 using Core.LevelSettings;
 using Core.PoolingSystem;
-using Core.SceneManagement;
 using DialogueSystem;
 using DialogueSystem.LevelDialogue;
 using Player.PlayerCombat;
@@ -13,7 +9,6 @@ using UI.Core;
 using UI.UIShop;
 using UnityEngine;
 using Zenject;
-using Object = UnityEngine.Object;
 
 namespace Installers
 {
@@ -34,6 +29,7 @@ namespace Installers
         private PoolInitializer _poolInitializer;
         public override void InstallBindings()
         {
+            BindPoolInitializer();
             BindMainCamera();
             BindInputListener();
             BindDialogueManager();
@@ -46,7 +42,6 @@ namespace Installers
             BindPlayerWeaponsSetter();
             BindCustomCursor();
             BindLevelDialogues();
-            BindPoolInitializer();
         }
         private void OnDestroy()
         {
