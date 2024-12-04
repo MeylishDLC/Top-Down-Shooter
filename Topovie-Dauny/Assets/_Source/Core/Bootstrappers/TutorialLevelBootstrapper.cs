@@ -34,11 +34,10 @@ namespace Core.Bootstrappers
             _poolInitializer = poolInitializer;
             _levelDialogues = levelDialogues;
         }
-        protected override void Awake()
+        protected override async void Awake()
         {
-            InstantiateAssets(CancellationToken.None).Forget();
-            _poolInitializer.InitAll();
-            Initialize(CancellationToken.None).Forget();
+            base.Awake();
+            await Initialize(CancellationToken.None);
         }
         protected override void OnDestroy()
         {
@@ -49,6 +48,7 @@ namespace Core.Bootstrappers
         private async UniTask Initialize(CancellationToken cancellationToken)
         {
             await Addressables.InitializeAsync().ToUniTask(cancellationToken: cancellationToken);
+            _poolInitializer.InitAll();
             InitializeGuns();
             InitializeEnemyContainers();
             _levelChargesHandler.InitAllContainers(containers);

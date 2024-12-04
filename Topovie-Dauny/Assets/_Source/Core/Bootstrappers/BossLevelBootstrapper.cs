@@ -32,7 +32,6 @@ namespace Core.Bootstrappers
         protected override void Awake()
         {
             base.Awake();
-            _poolInitializer.InitAll();
             Initialize(CancellationToken.None).Forget();
         }
         protected override void OnDestroy()
@@ -43,6 +42,7 @@ namespace Core.Bootstrappers
         private async UniTask Initialize(CancellationToken cancellationToken)
         {
             await Addressables.InitializeAsync().ToUniTask(cancellationToken: cancellationToken);
+            _poolInitializer.InitAll();
             InitializeGuns();
             InitializeFireballSpawners();
         }

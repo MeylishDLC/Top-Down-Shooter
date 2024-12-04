@@ -356,7 +356,7 @@ MonoBehaviour:
   startEndModifier:
     addPoints: 0
     exactStartPoint: 3
-    exactEndPoint: 2
+    exactEndPoint: 3
     useRaycasting: 0
     mask:
       serializedVersion: 2
@@ -458,6 +458,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6f14e666d8a48a88fb19fab3b624f8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyMovement: {fileID: 193998306594204445}
   maxHealth: 300
   knockBackTimeMilliseconds: 300
   knockbackThrust: 0.1

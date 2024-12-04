@@ -25,12 +25,8 @@ namespace Enemies
 
         private float _initScale;
         private bool _isFacingRight;
-        private void Start()
+        private void Awake()
         {
-            _playerTransform = enemyHealth.PlayerMovement.transform;
-
-            var destinationSetter = GetComponent<AIDestinationSetter>();
-            destinationSetter.target = _playerTransform;
             _aiPath = GetComponent<AIPath>();
             _enemyRenderer = GetComponent<SpriteRenderer>();
             _deathCancellationToken = this.GetCancellationTokenOnDestroy();
@@ -49,6 +45,12 @@ namespace Enemies
             {
                HandleFlipping();
             }
+        }
+        public void SetDestination(Transform playerTransform)
+        {
+            _playerTransform = playerTransform;
+            var destinationSetter = GetComponent<AIDestinationSetter>();
+            destinationSetter.target = _playerTransform;
         }
         private void HandleFlipping()
         {

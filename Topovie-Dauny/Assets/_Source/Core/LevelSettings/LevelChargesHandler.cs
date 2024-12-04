@@ -51,10 +51,6 @@ namespace Core.LevelSettings
          private void Start()
          {
              SubscribeOnStartCharging();
-             if (_allEnemyContainers == null)
-             {
-                 Debug.LogError("Enemy containers weren't assigned. Make sure to initialize it in bootstrap.");
-             }
          }
          private void OnDestroy()
          {

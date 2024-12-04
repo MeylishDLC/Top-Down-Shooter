@@ -295,7 +295,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   version: 1073741824
-  drawGizmos: 0
+  drawGizmos: 1
   detailedGizmos: 0
   startEndModifier:
     addPoints: 0
@@ -347,12 +347,12 @@ MonoBehaviour:
   autoRepath:
     mode: 1
     period: 0.5
-    sensitivity: 5
+    sensitivity: 10
     maximumPeriod: 2
     visualizeSensitivity: 0
   targetCompatibility: {fileID: 0}
   maxAcceleration: 10
-  rotationSpeed: 360
+  rotationSpeed: 32400
   slowdownDistance: 0.1
   pickNextWaypointDist: 0.26
   alwaysDrawGizmos: 0
@@ -402,6 +402,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6f14e666d8a48a88fb19fab3b624f8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyMovement: {fileID: 8875516636895227797}
   maxHealth: 20
   knockBackTimeMilliseconds: 0
   knockbackThrust: 0

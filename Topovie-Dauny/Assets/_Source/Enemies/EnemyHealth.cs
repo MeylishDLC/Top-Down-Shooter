@@ -15,6 +15,7 @@ namespace Enemies
         public KnockBack KnockBack { get; private set; }
         public PlayerMovement PlayerMovement {get; private set;}
         
+        [SerializeField] private EnemyMovement enemyMovement;
         [SerializeField] private int maxHealth;
         
         [Header("Knockback Settings")]
@@ -30,6 +31,7 @@ namespace Enemies
             PlayerMovement = playerMovement;
             KnockBack = new KnockBack(this,GetComponent<Rigidbody2D>(), knockBackTimeMilliseconds, knockbackThrust);
             _currentHealth = maxHealth;
+            enemyMovement.SetDestination(playerMovement.transform);
         }
         private void OnEnable()
         {
