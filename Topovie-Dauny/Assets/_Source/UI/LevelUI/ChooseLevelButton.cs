@@ -1,5 +1,4 @@
-﻿using System;
-using Core.LevelSettings;
+﻿using Core.LevelSettings;
 using Core.SceneManagement;
 using Cysharp.Threading.Tasks;
 using TMPro;

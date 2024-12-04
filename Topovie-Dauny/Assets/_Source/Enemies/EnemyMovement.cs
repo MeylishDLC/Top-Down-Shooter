@@ -4,10 +4,7 @@ using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using Enemies.Combat;
 using Pathfinding;
-using Player.PlayerControl;
 using UnityEngine;
-using UnityEngine.Serialization;
-using Zenject;
 
 namespace Enemies
 {
@@ -27,7 +24,6 @@ namespace Enemies
         private Transform _playerTransform;
 
         private float _initScale;
-        private Vector3 _previousPosition;
         private bool _isFacingRight;
         private void Start()
         {
@@ -39,7 +35,6 @@ namespace Enemies
             _enemyRenderer = GetComponent<SpriteRenderer>();
             _deathCancellationToken = this.GetCancellationTokenOnDestroy();
             
-            _previousPosition = transform.position;
             _knockBack = enemyHealth.KnockBack;
             _initScale = transform.localScale.x;
             SubscribeOnEvents();
@@ -50,8 +45,14 @@ namespace Enemies
         }
         private void Update()
         {
+            if (_aiPath.canMove)
+            {
+               HandleFlipping();
+            }
+        }
+        private void HandleFlipping()
+        {
             var directionToTarget = _playerTransform.position.x - transform.position.x;
-
             if (directionToTarget > 0 && !_isFacingRight)
             {
                 Flip(); 
@@ -69,11 +70,11 @@ namespace Enemies
         }
         private void EnableMovement()
         {
-            _aiPath.enabled = true;
+            _aiPath.canMove = true;
         }
         private void DisableMovement()
         {
-            _aiPath.enabled = false;
+            _aiPath.canMove = false;
         }
         private void ShowEnemyDeath()
         {
@@ -93,7 +94,8 @@ namespace Enemies
         {
             DisableMovement();
             await gameObject.transform.DOScaleX(0f, deathAnimationDuration).ToUniTask(cancellationToken: token);
-            Destroy(gameObject);
+            gameObject.SetActive(false);
+            await gameObject.transform.DOScaleX(_initScale, 0f);
         }
         private void SubscribeOnEvents()
         {
@@ -104,6 +106,10 @@ namespace Enemies
         }
         private void UnsubscribeOnEvents()
         {
+            if (_knockBack is null)
+            {
+                return;
+            }
             _knockBack.OnKnockBackStarted -= DisableMovement;
             _knockBack.OnKnockBackEnded -= EnableMovement;
             enemyHealth.OnDamageTaken -= ChangeColorOnDamageTaken;

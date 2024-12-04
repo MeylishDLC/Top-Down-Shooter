@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
-using _Support.Demigiant.DOTween.Modules;
 using Cysharp.Threading.Tasks;
-using Enemies.Boss.BossAttacks.Lasers;
 using UnityEngine;
 using Random = UnityEngine.Random;
 

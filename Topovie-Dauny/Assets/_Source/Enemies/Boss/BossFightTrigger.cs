@@ -6,7 +6,6 @@ using Core.InputSystem;
 using Cysharp.Threading.Tasks;
 using DialogueSystem;
 using UnityEngine;
-using UnityEngine.Serialization;
 using Zenject;
 
 namespace Enemies.Boss

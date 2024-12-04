@@ -1,11 +1,8 @@
-﻿using System;
-using System.Threading;
+﻿using System.Threading;
 using Bullets.Projectile;
 using Cysharp.Threading.Tasks;
 using Player.PlayerControl;
 using UnityEngine;
-using UnityEngine.Serialization;
-using Zenject;
 
 namespace Player.PlayerAbilities
 {

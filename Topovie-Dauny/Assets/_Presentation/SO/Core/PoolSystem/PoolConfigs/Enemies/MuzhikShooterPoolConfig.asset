@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 688f97ab533c4e7bb384e3dd74217df3, type: 3}
+  m_Name: MuzhikShooterPoolConfig
+  m_EditorClassIdentifier: 
+  <InitialPoolSize>k__BackingField: 30
+  <MaxPoolSize>k__BackingField: 60
+  <PrefabAsset>k__BackingField:
+    m_AssetGUID: e06d826ac0f653b458e6765d59944e1f
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0
+  <PrefabAssetSimplifiedName>k__BackingField: MuzhikShooter
+  <BulletPrefabAssetSimplifiedName>k__BackingField: EnemyProjectile

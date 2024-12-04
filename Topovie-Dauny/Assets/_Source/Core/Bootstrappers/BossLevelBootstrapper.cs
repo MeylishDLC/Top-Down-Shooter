@@ -1,11 +1,9 @@
 ﻿using System.Threading;
 using Bullets.BulletPatterns;
-using Bullets.BulletPools;
-using Core.LoadingSystem;
+using Core.Data;
+using Core.LevelSettings;
 using Core.PoolingSystem;
-using Core.SceneManagement;
 using Cysharp.Threading.Tasks;
-using DialogueSystem.LevelDialogue;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using Weapons.Guns;
@@ -22,60 +20,45 @@ namespace Core.Bootstrappers
         [SerializeField] private BasicGun rpgGun;
         
         [Header("FIREBALL SPAWNERS")]
-        [SerializeField] private BulletSpawner[] spawners;
+        [SerializeField] private NameObjectPair<BulletSpawner>[] bulletSpawners;
         
-        [Header("POOLS")] 
-        [SerializeField] private PoolConfigParentPair pistolBulletPoolDataPair;
-        [SerializeField] private PoolConfigParentPair ppBulletPoolDataPair;
-        [SerializeField] private PoolConfigParentPair shotgunBulletPoolDataPair;
-        [SerializeField] private PoolConfigParentPair rpgBulletPoolDataPair;
-        [SerializeField] private PoolConfigParentPair enemyBulletPoolDataPair;
+        private PoolInitializer _poolInitializer;
         
-        private BulletPool _pistolBulletPool;
-        private BulletPool _ppBulletPool;
-        private BulletPool _shotgunBulletPool;
-        private BulletPool _rpgBulletPool;
-        private EnemyBulletPool _enemyBulletPool;
+        [Inject]
+        public void Construct(PoolInitializer poolInitializer)
+        {
+            _poolInitializer = poolInitializer;
+        }
         protected override void Awake()
         {
             base.Awake();
-            InitializePools();
-            InitializeGuns();
-            InitializeFireballSpawners();
+            _poolInitializer.InitAll();
+            Initialize(CancellationToken.None).Forget();
         }
         protected override void OnDestroy()
         {
             base.OnDestroy();
-            CleanUpPools();
+            _poolInitializer.CleanUp();
         }
-        private void InitializePools()
+        private async UniTask Initialize(CancellationToken cancellationToken)
         {
-            _pistolBulletPool = new BulletPool(pistolBulletPoolDataPair.PoolConfig, pistolBulletPoolDataPair.PoolParent);
-            _ppBulletPool = new BulletPool(ppBulletPoolDataPair.PoolConfig, ppBulletPoolDataPair.PoolParent);
-            _shotgunBulletPool = new BulletPool(shotgunBulletPoolDataPair.PoolConfig, shotgunBulletPoolDataPair.PoolParent);
-            _rpgBulletPool = new BulletPool(rpgBulletPoolDataPair.PoolConfig, rpgBulletPoolDataPair.PoolParent);
-            _enemyBulletPool = new EnemyBulletPool(enemyBulletPoolDataPair.PoolConfig, enemyBulletPoolDataPair.PoolParent);
+            await Addressables.InitializeAsync().ToUniTask(cancellationToken: cancellationToken);
+            InitializeGuns();
+            InitializeFireballSpawners();
         }
         private void InitializeGuns()
         {
-            pistolGun.Initialize(_pistolBulletPool);
-            ppGun.Initialize(_ppBulletPool);
-            shotgun.Initialize(_shotgunBulletPool);
-            rpgGun.Initialize(_rpgBulletPool);
-        }
-        private void CleanUpPools()
-        {
-            _pistolBulletPool.CleanUp();
-            _ppBulletPool.CleanUp();
-            _shotgunBulletPool.CleanUp();
-            _rpgBulletPool.CleanUp();
-            _enemyBulletPool.CleanUp();
+            pistolGun.Initialize(_poolInitializer.GetBulletPoolForPlayerWeapon(1));
+            ppGun.Initialize(_poolInitializer.GetBulletPoolForPlayerWeapon(2));
+            shotgun.Initialize(_poolInitializer.GetBulletPoolForPlayerWeapon(3));
+            rpgGun.Initialize(_poolInitializer.GetBulletPoolForPlayerWeapon(4));
         }
         private void InitializeFireballSpawners()
         {
-            foreach (var spawner in spawners)
+            foreach (var spawner in bulletSpawners)
             {
-                spawner.InjectPool(_enemyBulletPool);
+                var pool = _poolInitializer.GetBulletPoolForEnemy(spawner.EnemyAssetName);
+                spawner.Object.InjectPool(pool);
             }
         }
     }

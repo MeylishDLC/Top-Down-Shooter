@@ -1,6 +1,9 @@
-﻿using Core.PoolingSystem;
+﻿using System;
+using System.Linq;
+using Core.PoolingSystem;
+using Core.PoolingSystem.Configs;
 using UnityEngine;
-using Zenject;
+using Object = UnityEngine.Object;
 
 namespace Bullets.BulletPools
 {
@@ -25,6 +28,14 @@ namespace Bullets.BulletPools
 
             instance = null;
             return false;
+        }
+        public override void DisableAll()
+        {
+            foreach (var bullet in AllObjects.Where(b => b.gameObject.activeSelf))
+            {
+                bullet.gameObject.SetActive(false);
+                ReturnToPool(bullet);
+            }
         }
         protected override EnemyBullet InstantiateNewObject()
         {

@@ -1,18 +1,15 @@
 ﻿using System;
-using System.Threading;
-using Cysharp.Threading.Tasks;
-using DG.Tweening;
+using Core.PoolingSystem;
 using Enemies.Combat;
-using Pathfinding;
 using Player.PlayerControl;
 using UnityEngine;
-using UnityEngine.Serialization;
 using Zenject;
 
 namespace Enemies
 {
-    public class EnemyHealth: MonoBehaviour, IEnemyHealth
+    public class EnemyHealth: MonoBehaviour, IEnemyHealth, IPoolObject<EnemyHealth>
     {
+        public event Action<EnemyHealth> OnObjectDisabled;
         public event Action OnEnemyDied;
         public event Action OnDamageTaken;
         public KnockBack KnockBack { get; private set; }
@@ -26,14 +23,22 @@ namespace Enemies
         
         private int _currentHealth;
         private bool _isDead;
+        
+        [Inject]
         public void Construct(PlayerMovement playerMovement)
         {
             PlayerMovement = playerMovement;
-        }
-        private void Awake()
-        {
-            _currentHealth = maxHealth;
             KnockBack = new KnockBack(this,GetComponent<Rigidbody2D>(), knockBackTimeMilliseconds, knockbackThrust);
+            _currentHealth = maxHealth;
+        }
+        private void OnEnable()
+        {
+            _isDead = false;
+            _currentHealth = maxHealth;
+        }
+        private void OnDisable()
+        {
+            OnObjectDisabled?.Invoke(this);
         }
         public void TakeDamage(int damage)
         {

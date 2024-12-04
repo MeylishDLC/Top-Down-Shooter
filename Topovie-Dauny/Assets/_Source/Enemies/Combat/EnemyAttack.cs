@@ -1,7 +1,5 @@
-﻿using System;
-using Player.PlayerCombat;
+﻿using Player.PlayerCombat;
 using UnityEngine;
-using Zenject;
 
 namespace Enemies.Combat
 {

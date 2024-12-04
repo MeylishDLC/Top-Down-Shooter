@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using Enemies;
-using Ink.Parsed;
 using Pathfinding;
 using UnityEngine;
 
@@ -25,10 +24,10 @@ namespace Weapons.AbilityWeapons
         {
             if (other.gameObject.layer == LayerMask.NameToLayer("Enemy"))
             {
-                if (other.TryGetComponent(out AIPath aiPath))
+                if (other.gameObject.transform.parent.TryGetComponent(out AIPath aiPath))
                 {
                     aiPath.canMove = false;
-                    var enemyHealth = other.GetComponent<IEnemyHealth>();
+                    var enemyHealth = other.gameObject.transform.parent.GetComponent<IEnemyHealth>();
                     enemyHealth.TakeDamage(damage);
 
                     if (!_enemiesAffected.Contains(aiPath))
@@ -42,7 +41,7 @@ namespace Weapons.AbilityWeapons
         {
             if (other.gameObject.layer == LayerMask.NameToLayer("Enemy"))
             {
-                if (other.TryGetComponent(out AIPath aiPath))
+                if (other.gameObject.transform.parent.TryGetComponent(out AIPath aiPath))
                 {
                     aiPath.canMove = false;
                     

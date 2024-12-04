@@ -1,6 +1,4 @@
-﻿using Object = UnityEngine.Object;
-
-namespace Core.PoolingSystem
+﻿namespace Core.PoolingSystem
 {
     public interface IPool<T> where T : IPoolObject<T>
     {

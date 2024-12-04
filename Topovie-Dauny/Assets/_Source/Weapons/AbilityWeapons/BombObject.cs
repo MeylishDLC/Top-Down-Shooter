@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading;
 using Bullets.Projectile;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using Enemies;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Weapons.AbilityWeapons
 {
@@ -35,27 +34,25 @@ namespace Weapons.AbilityWeapons
         private async UniTask BlowUpAsync(CancellationToken token)
         {
             await UniTask.Delay(timeBeforeBlowMilliseconds, cancellationToken: token);
-
-            var colliders = new Collider2D[100];
-            Physics2D.OverlapCircleNonAlloc(transform.position, blowupRange, colliders);
-            
-            var filteredColliders = colliders.Where(c => c != null).ToArray();
-            
-            foreach (var hitCollider in filteredColliders)
-            {
-                if (hitCollider.gameObject.layer == LayerMask.NameToLayer("Enemy"))
-                {
-                    if (hitCollider.gameObject.TryGetComponent(out IEnemyHealth enemyHealth))
-                    {
-                        enemyHealth.TakeDamage(damage);
-                    }
-                }
-            }
+            DealDamageInRange();
             
             await gameObject.transform.DOScale(scaleIncreaseWhenBlowup, 0f);
             animator.SetTrigger(Blowup);
             await UniTask.Delay(TimeSpan.FromSeconds(blowupDuration), cancellationToken: token);
             gameObject.SetActive(false);
+        }
+        private void DealDamageInRange()
+        {
+            var hitColliders = Physics2D.OverlapCircleAll(transform.position, blowupRange);
+
+            foreach (var col in hitColliders)
+            {
+                if (col.gameObject.layer == LayerMask.NameToLayer("Enemy") &&
+                    col.gameObject.transform.parent.TryGetComponent<IEnemyHealth>(out var enemyHealth))
+                {
+                    enemyHealth.TakeDamage(damage);
+                }
+            }
         }
         private void OnDrawGizmosSelected()
         {

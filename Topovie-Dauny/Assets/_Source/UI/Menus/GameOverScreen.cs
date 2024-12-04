@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading;
 using _Support.Demigiant.DOTween.Modules;
 using Core.InputSystem;
-using Core.LevelSettings;
 using Core.SceneManagement;
 using Cysharp.Threading.Tasks;
 using Player.PlayerCombat;
@@ -12,7 +11,6 @@ using Player.PlayerControl;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 using Zenject;
 

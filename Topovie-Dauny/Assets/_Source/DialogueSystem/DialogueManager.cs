@@ -5,11 +5,8 @@ using Core.InputSystem;
 using Cysharp.Threading.Tasks;
 using Ink.Runtime;
 using ModestTree;
-using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.UI;
-using Zenject;
 
 namespace DialogueSystem
 {

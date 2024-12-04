@@ -1,13 +1,10 @@
 ﻿using System.Threading;
-using Bullets.BulletPools;
 using Core.LevelSettings;
-using Core.LoadingSystem;
 using Core.PoolingSystem;
 using Core.SceneManagement;
 using Cysharp.Threading.Tasks;
 using DialogueSystem.LevelDialogue;
 using Enemies;
-using Enemies.EnemyTypes;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using Weapons.Guns;
@@ -22,32 +19,26 @@ namespace Core.Bootstrappers
         [SerializeField] private BasicGun ppGun;
         [SerializeField] private Shotgun shotgun;
         
-        [Header("POOLS")] 
-        [SerializeField] private PoolConfigParentPair pistolBulletPoolDataPair; 
-        [SerializeField] private PoolConfigParentPair ppBulletPoolDataPair;
-        [SerializeField] private PoolConfigParentPair shotgunBulletPoolDataPair;
-        [SerializeField] private PoolConfigParentPair enemyProjectileDataPair;
+        [Header("ENEMIES")] 
+        [SerializeField] private EnemyContainer[] containers;
         
-        private BulletPool _pistolBulletPool;
-        private BulletPool _ppBulletPool;
-        private BulletPool _shotgunBulletPool;
-        private ProjectilePool _enemyProjectilePool;
-
+        private PoolInitializer _poolInitializer;
         private LevelDialogues _levelDialogues;
-        private Spawner _spawner;
-        private EnemyPoolInjector _enemyPoolInjector;
+        private LevelChargesHandler _levelChargesHandler;
         
         [Inject]
-        public void Construct(Spawner spawner, SceneLoader sceneLoader, LevelDialogues levelDialogues)
+        public void Construct(SceneLoader sceneLoader, LevelDialogues levelDialogues, PoolInitializer poolInitializer,
+            LevelChargesHandler levelChargesHandler)
         {
+            _poolInitializer = poolInitializer;
             _levelDialogues = levelDialogues;
-            _spawner = spawner;
+            _levelChargesHandler = levelChargesHandler;
         }
         protected override void Awake()
         {
             base.Awake();
-            InitializePools();
-            InitializeGuns();
+            _poolInitializer.InitAll();
+            Initialize(CancellationToken.None).Forget();
         }
         private void Start()
         {
@@ -56,30 +47,29 @@ namespace Core.Bootstrappers
         protected override void OnDestroy()
         {
             base.OnDestroy();
-            CleanUpPools();
             _levelDialogues.CleanUp();
+            _poolInitializer.CleanUp();
         }
-        private void InitializePools()
+        private async UniTask Initialize(CancellationToken cancellationToken)
         {
-            _pistolBulletPool = new BulletPool(pistolBulletPoolDataPair.PoolConfig, pistolBulletPoolDataPair.PoolParent);
-            _ppBulletPool = new BulletPool(pistolBulletPoolDataPair.PoolConfig, ppBulletPoolDataPair.PoolParent);
-            _shotgunBulletPool = new BulletPool(shotgunBulletPoolDataPair.PoolConfig, shotgunBulletPoolDataPair.PoolParent);
-            _enemyProjectilePool = new ProjectilePool(enemyProjectileDataPair.PoolConfig, enemyProjectileDataPair.PoolParent);
-
-            _enemyPoolInjector = new EnemyPoolInjector(_spawner, _enemyProjectilePool, null);
+            await Addressables.InitializeAsync().ToUniTask(cancellationToken: cancellationToken);
+            InitializeGuns();
+            InitializeEnemyContainers();
+            _levelChargesHandler.InitAllContainers(containers);
         }
         private void InitializeGuns()
         {
-            pistolGun.Initialize(_pistolBulletPool);
-            ppGun.Initialize(_ppBulletPool);
-            shotgun.Initialize(_shotgunBulletPool);
+            pistolGun.Initialize(_poolInitializer.GetBulletPoolForPlayerWeapon(1));
+            ppGun.Initialize(_poolInitializer.GetBulletPoolForPlayerWeapon(2));
+            shotgun.Initialize(_poolInitializer.GetBulletPoolForPlayerWeapon(3));
         }
-        private void CleanUpPools()
+        private void InitializeEnemyContainers()
         {
-            _pistolBulletPool.CleanUp();
-            _ppBulletPool.CleanUp();
-            _shotgunBulletPool.CleanUp();
-            _enemyPoolInjector.CleanUp();
+            foreach (var container in containers)
+            {
+                var pool = _poolInitializer.GetEnemyPool(container.EnemyPrefabAssetName);
+                container.InjectPool(pool);
+            }
         }
     }
 }

@@ -1,5 +1,4 @@
 using Core.InputSystem;
-using Core.SceneManagement;
 using UnityEngine;
 using Zenject;
 

@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
-using Core.EnemyWaveData;
+using Core.Data;
 using Cysharp.Threading.Tasks;
+using Enemies;
 using GameEnvironment;
 using UI.Menus;
 using UnityEngine;
@@ -17,13 +20,13 @@ namespace Core.LevelSettings
          [Header("Main")]
          [SerializeField] private PortalChargerTrigger[] portalChargeTriggers;
          [SerializeField] private ShopTrigger shopTrigger;
-         [SerializeField] private Transform[] allSpawns;
          [SerializeField] private EnemyWave[] portalCharges;
          [SerializeField] private GameOverScreen gameOverScreen;
 
          [Header("Time Settings")] 
          [SerializeField] private int changeStateDelayMilliseconds;
          
+         private EnemyContainer[] _allEnemyContainers;
          private Spawner _spawner;
          private StatesChanger _statesChanger;
          
@@ -43,12 +46,15 @@ namespace Core.LevelSettings
          private void Awake()
          {
              gameOverScreen.OnGameOver += StopSpawning;
-             gameOverScreen.OnScreenFaded += ClearAllSpawns;
+             gameOverScreen.OnScreenFaded += DisableAllEnemies;
          }
          private void Start()
          {
              SubscribeOnStartCharging();
-             LoadAllEnemyAssetsAsync().Forget();
+             if (_allEnemyContainers == null)
+             {
+                 Debug.LogError("Enemy containers weren't assigned. Make sure to initialize it in bootstrap.");
+             }
          }
          private void OnDestroy()
          {
@@ -56,9 +62,12 @@ namespace Core.LevelSettings
              {
                  UnsubscribeOnStartCharging(trigger);
              }
-             UnloadAllEnemyAssetsAsync();
              gameOverScreen.OnGameOver -= StopSpawning;
-             gameOverScreen.OnScreenFaded -= ClearAllSpawns;
+             gameOverScreen.OnScreenFaded -= DisableAllEnemies;
+         }
+         public void InitAllContainers(IEnumerable<EnemyContainer> containers)
+         {
+             _allEnemyContainers = containers.ToArray();
          }
          private void StopSpawning()
          {
@@ -102,9 +111,9 @@ namespace Core.LevelSettings
              
                  await EndWave(CancellationToken.None);
              }
-             catch
+             catch (OperationCanceledException)
              {
-                 //ignored
+                 //
              }
          }
          private void PauseChargingPortal()
@@ -143,7 +152,7 @@ namespace Core.LevelSettings
          }
          private async UniTask EndWave(CancellationToken token)
          {
-             ClearAllSpawnsImmediate();
+             DisableAllEnemies();
              UnsubscribeOnChargeEvents(portalChargeTriggers[_currentChargeIndex].GetComponent<RangeDetector>());
              portalChargeTriggers[_currentChargeIndex].enabled = false;
              OnChargePassed?.Invoke();
@@ -162,32 +171,16 @@ namespace Core.LevelSettings
                      _statesChanger.ChangeState(GameStates.Chill);
                  }
              }
-             catch
+             catch (OperationCanceledException)
              {
-                 //ignored
+                 //
              }
          }
-         private void ClearAllSpawnsImmediate()
+         private void DisableAllEnemies()
          {
-             foreach (var spawn in allSpawns)
+             foreach (var pool in _allEnemyContainers.Select(p => p.Pool))
              {
-                 var childCount = spawn.childCount;
-                 for (int i = childCount - 1; i >= 0; i--)
-                 {
-                     DestroyImmediate(spawn.GetChild(i).gameObject);
-                 }
-             }
-         }
-
-         private void ClearAllSpawns()
-         {
-             foreach (var spawn in allSpawns)
-             {
-                 var childCount = spawn.childCount;
-                 for (int i = childCount - 1; i >= 0; i--)
-                 {
-                     Destroy(spawn.GetChild(i).gameObject);
-                 }
+                 pool.DisableAll();
              }
          }
          private void SubscribeOnChargeEvents(RangeDetector rangeDetector)
@@ -211,25 +204,6 @@ namespace Core.LevelSettings
          {
              trigger.OnChargePortalPressed -= StartChargingPortal;
          }
-         private async UniTask LoadAllEnemyAssetsAsync()
-         {
-             foreach (var enemyWave in portalCharges)
-             {
-                 foreach (var enemySpawnsPair in enemyWave.EnemySpawnsPairs)
-                 {
-                     await enemySpawnsPair.LoadAssets(CancellationToken.None);
-                 }
-             }
-         }
-         private void UnloadAllEnemyAssetsAsync()
-         {
-             foreach (var enemyWave in portalCharges)
-             {
-                 foreach (var enemySpawnsPair in enemyWave.EnemySpawnsPairs)
-                 {
-                     enemySpawnsPair.UnloadAssets();
-                 }
-             }
-         }
+        
      }
 }

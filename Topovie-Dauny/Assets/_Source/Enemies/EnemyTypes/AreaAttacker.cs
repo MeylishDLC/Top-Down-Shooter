@@ -1,15 +1,11 @@
 ﻿using System;
 using System.Threading;
-using System.Threading.Tasks;
 using _Support.Demigiant.DOTween.Modules;
 using Cinemachine;
 using Cysharp.Threading.Tasks;
 using Pathfinding;
 using Player.PlayerCombat;
-using Player.PlayerControl;
 using UnityEngine;
-using UnityEngine.Serialization;
-using Zenject;
 
 namespace Enemies.EnemyTypes
 {
@@ -118,7 +114,7 @@ namespace Enemies.EnemyTypes
         }
         private async UniTask AttackAsync(CancellationToken token)
         {
-            aiPath.enabled = false;
+            aiPath.canMove = false;
             await ShowStartAttackAsync(token);
             if (_isPlayerInRange)
             {
@@ -126,7 +122,7 @@ namespace Enemies.EnemyTypes
             }
             await UniTask.Delay(TimeSpan.FromSeconds(attackDuration), cancellationToken: token);
             await ShowEndAttackAsync(token);
-            aiPath.enabled = true;
+            aiPath.canMove = true;
         }
 
         private async UniTask ShowStartAttackAsync(CancellationToken token)

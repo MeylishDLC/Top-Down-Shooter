@@ -6,8 +6,6 @@ using DG.Tweening;
 using Player.PlayerCombat;
 using Player.PlayerControl;
 using UnityEngine;
-using UnityEngine.Serialization;
-using Zenject;
 
 namespace Player.PlayerAbilities
 {

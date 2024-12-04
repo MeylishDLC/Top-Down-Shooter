@@ -1,10 +1,6 @@
-using System;
-using Bullets;
-using Core;
 using Core.InputSystem;
 using Core.LevelSettings;
 using Core.PoolingSystem;
-using Core.SceneManagement;
 using DialogueSystem;
 using DialogueSystem.LevelDialogue;
 using Player.PlayerCombat;
@@ -13,7 +9,6 @@ using UI.Core;
 using UI.UIShop;
 using UnityEngine;
 using Zenject;
-using Object = UnityEngine.Object;
 
 namespace Installers
 {
@@ -28,10 +23,13 @@ namespace Installers
         [SerializeField] private DialogueDisplay baseDialogueDisplay;
         [SerializeField] private Camera mainCamera;
         [SerializeField] private LevelDialogueConfig levelDialogueConfig;
+        [SerializeField] private PoolInitializerConfig poolInitializerConfig;
 
         private DialogueManager _dialogueManager;
+        private PoolInitializer _poolInitializer;
         public override void InstallBindings()
         {
+            BindPoolInitializer();
             BindMainCamera();
             BindInputListener();
             BindDialogueManager();
@@ -69,7 +67,7 @@ namespace Installers
         }
         private void BindSpawner()
         {
-            Container.Bind<Spawner>().AsSingle().WithArguments(playerMovement);
+            Container.Bind<Spawner>().AsSingle();
         }
         private void BindLevelSetter()
         {
@@ -99,6 +97,12 @@ namespace Installers
         {
             Container.Bind<LevelDialogues>().AsSingle()
                 .WithArguments(levelChargesHandler, _dialogueManager, levelDialogueConfig);
+        }
+
+        private void BindPoolInitializer()
+        {
+            _poolInitializer = new PoolInitializer(poolInitializerConfig);
+            Container.Bind<PoolInitializer>().FromInstance(_poolInitializer).AsSingle();
         }
     }
 }

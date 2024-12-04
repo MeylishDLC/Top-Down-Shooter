@@ -465,18 +465,11 @@ MonoBehaviour:
     m_EditorAssetChanged: 0
   playerRespawnPoint: {fileID: 1700621646}
   playerObject: {fileID: 620779489402787807}
-  loadDelay: 0.5
   pistolGun: {fileID: 696262010}
   ppGun: {fileID: 620779489402787806}
-  pistolBulletPoolDataPair:
-    <PoolConfig>k__BackingField: {fileID: 11400000, guid: f6eab5df3f4956547bdad8f63f772cf0, type: 2}
-    <PoolParent>k__BackingField: {fileID: 497614941}
-  ppBulletPoolDataPair:
-    <PoolConfig>k__BackingField: {fileID: 11400000, guid: 8806b3b773324c84eb5c513514b49dca, type: 2}
-    <PoolParent>k__BackingField: {fileID: 918359733}
-  enemyProjectileDataPair:
-    <PoolConfig>k__BackingField: {fileID: 11400000, guid: c7129e8709523924ab94d5f193d11fd1, type: 2}
-    <PoolParent>k__BackingField: {fileID: 1983918562}
+  containers:
+  - {fileID: 216725094}
+  - {fileID: 162743283}
 --- !u!114 &114847100
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -588,6 +581,51 @@ CapsuleCollider2D:
   m_Offset: {x: -0.7457221, y: 0.3385039}
   m_Size: {x: 2.6584349, y: 1.7760535}
   m_Direction: 1
+--- !u!1 &162743281
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 162743282}
+  - component: {fileID: 162743283}
+  m_Layer: 0
+  m_Name: Muzhiki
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &162743282
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 162743281}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1646545030}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &162743283
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 162743281}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0dbc8b90140d43868fe0dd348f29b554, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <EnemyPrefabAssetName>k__BackingField: MuzhikShooter
 --- !u!1 &176860843
 GameObject:
   m_ObjectHideFlags: 0
@@ -650,6 +688,51 @@ Transform:
   m_Children: []
   m_Father: {fileID: 793877249}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &216725092
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 216725093}
+  - component: {fileID: 216725094}
+  m_Layer: 0
+  m_Name: Leos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &216725093
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 216725092}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1646545030}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &216725094
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 216725092}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0dbc8b90140d43868fe0dd348f29b554, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <EnemyPrefabAssetName>k__BackingField: Leo
 --- !u!1 &262724725
 GameObject:
   m_ObjectHideFlags: 0
@@ -828,63 +911,44 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e1d410abaa34f1291df47ee071ae256, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  allEnemyContainers:
+  - {fileID: 216725094}
+  - {fileID: 162743283}
   portalChargeTriggers:
   - {fileID: 104703908}
   - {fileID: 148295273}
   shopTrigger: {fileID: 78815747}
-  allSpawns:
-  - {fileID: 66727800}
-  - {fileID: 1170188024}
-  - {fileID: 185168844}
-  - {fileID: 1017038700}
-  - {fileID: 815121855}
-  - {fileID: 488117872}
-  - {fileID: 909216461}
-  - {fileID: 4262219}
-  - {fileID: 176860844}
-  - {fileID: 1968617055}
-  - {fileID: 2021274873}
-  - {fileID: 262724726}
   portalCharges:
-  - <EnemySpawnsPairs>k__BackingField:
-    - <EnemiesAssets>k__BackingField:
-      - m_AssetGUID: 23b9ff02b0de4e24e9ab088bacd9e9c6
-        m_SubObjectName: 
-        m_SubObjectType: 
-        m_EditorAssetChanged: 1
+  - <Pairs>k__BackingField:
+    - <Enemies>k__BackingField:
+      - {fileID: 216725094}
       <SpawnPoints>k__BackingField:
       - {fileID: 66727800}
       - {fileID: 1170188024}
       - {fileID: 185168844}
       - {fileID: 1017038700}
-    - <EnemiesAssets>k__BackingField:
-      - m_AssetGUID: e06d826ac0f653b458e6765d59944e1f
-        m_SubObjectName: 
-        m_SubObjectType: 
-        m_EditorAssetChanged: 1
+    - <Enemies>k__BackingField:
+      - {fileID: 162743283}
       <SpawnPoints>k__BackingField:
       - {fileID: 815121855}
       - {fileID: 488117872}
       - {fileID: 909216461}
       - {fileID: 4262219}
-    <MaxEnemySpawnAtOnce>k__BackingField: 4
+    <MaxEnemySpawnAtOnce>k__BackingField: 3
     <MinEnemySpawnAtOnce>k__BackingField: 1
     <MaxTimeBetweenSpawn>k__BackingField: 7
     <MinTimeBetweenSpawn>k__BackingField: 3
     <TimeToActivatePencil>k__BackingField: 60
-  - <EnemySpawnsPairs>k__BackingField:
-    - <EnemiesAssets>k__BackingField:
-      - m_AssetGUID: 23b9ff02b0de4e24e9ab088bacd9e9c6
-        m_SubObjectName: 
-        m_SubObjectType: 
-        m_EditorAssetChanged: 1
+  - <Pairs>k__BackingField:
+    - <Enemies>k__BackingField:
+      - {fileID: 216725094}
       <SpawnPoints>k__BackingField:
       - {fileID: 176860844}
       - {fileID: 1968617055}
       - {fileID: 2021274873}
       - {fileID: 262724726}
-    <MaxEnemySpawnAtOnce>k__BackingField: 4
-    <MinEnemySpawnAtOnce>k__BackingField: 1
+    <MaxEnemySpawnAtOnce>k__BackingField: 3
+    <MinEnemySpawnAtOnce>k__BackingField: 2
     <MaxTimeBetweenSpawn>k__BackingField: 5
     <MinTimeBetweenSpawn>k__BackingField: 2
     <TimeToActivatePencil>k__BackingField: 60
@@ -920,37 +984,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1277161175}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &497614940
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 497614941}
-  m_Layer: 0
-  m_Name: PistolPool
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &497614941
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 497614940}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1902102307}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &505231906
 PrefabInstance:
@@ -1671,37 +1704,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Asset: {fileID: -944628639613478452, guid: 09cdc31676801aa4e89c24085965b999, type: 3}
   m_ActionId: 8e870d65-79d4-4fcf-80ef-98bea45b9101
---- !u!1 &918359732
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 918359733}
-  m_Layer: 0
-  m_Name: PPPool
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &918359733
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 918359732}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1902102307}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &931945768 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6043521087227523239, guid: ba3f276fa16aec249a029d4ce9df78dd, type: 3}
@@ -1998,7 +2000,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1277161175}
   m_Layer: 0
-  m_Name: MenNotShooting
+  m_Name: Men
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2369,6 +2371,7 @@ MonoBehaviour:
   baseDialogueDisplay: {fileID: 7961203719235848606}
   mainCamera: {fileID: 369398954}
   levelDialogueConfig: {fileID: 11400000, guid: 6c6e5bff7c67e8842afbff30a19416d3, type: 2}
+  poolInitializerConfig: {fileID: 11400000, guid: 6ada42aa105b1e7479acc01941118ba6, type: 2}
 --- !u!114 &1572920359
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2426,6 +2429,39 @@ Transform:
   - {fileID: 104703906}
   - {fileID: 148295271}
   m_Father: {fileID: 517727411}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1646545029
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1646545030}
+  m_Layer: 0
+  m_Name: Containers
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1646545030
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1646545029}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 216725093}
+  - {fileID: 162743282}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1700621645
 GameObject:
@@ -2498,40 +2534,6 @@ CapsuleCollider2D:
   m_Offset: {x: -1.9871111, y: 2.2238536}
   m_Size: {x: 2.6699033, y: 1.7611043}
   m_Direction: 1
---- !u!1 &1902102306
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1902102307}
-  m_Layer: 0
-  m_Name: Pools
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1902102307
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1902102306}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 497614941}
-  - {fileID: 918359733}
-  - {fileID: 1983918562}
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1964062517
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2576,37 +2578,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1104202065}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1983918561
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1983918562}
-  m_Layer: 0
-  m_Name: EnemyProjectilePool
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1983918562
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1983918561}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1902102307}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!224 &1989349831 stripped
 RectTransform:
@@ -2949,6 +2920,10 @@ PrefabInstance:
       value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 4250440572906355449, guid: af35db23b32508c4ab8e46f098395935, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4250440572906355449, guid: af35db23b32508c4ab8e46f098395935, type: 3}
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
@@ -3067,6 +3042,10 @@ PrefabInstance:
     - target: {fileID: 5332433347470275641, guid: af35db23b32508c4ab8e46f098395935, type: 3}
       propertyPath: weaponsObjects.pairs.Array.data[1].value
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5940541333584234523, guid: af35db23b32508c4ab8e46f098395935, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6201013786433417657, guid: af35db23b32508c4ab8e46f098395935, type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -3530,12 +3509,8 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 2221232130911802252, guid: c6a250a527255e6469bb66117addd5ee, type: 3}
-      propertyPath: showGraphs
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2221232130911802252, guid: c6a250a527255e6469bb66117addd5ee, type: 3}
       propertyPath: data.dataString
-      value: UEsDBBQAAAgIAAAYIewT52sGbQIAACUFAAALACQAZ3JhcGgwLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQFlVE1z2jAQ/SuMzg1jM+CE3lpCSA9JmNBMLr4Ia401yJJHHwGS4b93JcvYoVyQ3+7bffu09hfh0jRQWKVXmrMnxYD8HBF/Jj9GffARjnSn5IZ/QpfzzpmtfBINOa/UcoV46mlG1WA1L37JnfDJCYJO8lLpesl2sFDGGoRLKgxgSCvr2RKhrxE54t/N3FNOeJrc+tMnnubJ6IzHAqQFPUhNxlk2x18WGfg8jZSW4WQhaN0A8/J7YjodT2aRk6bj2TwkSxwv5iXjdO4bKiG4ifKIPTVh/E1TgQY/P+MUpw2S/PAV8F1lvfIh96UsDdhohaane67RtLYo+a1aJ2tq9q2+Dyqcb5NNg6i25tN/4Zs0hEut6seubZr4Frbixf6Vngpq7MDpIXz/XbeTByr2dCvgvQL5rFZaOckwaLXzVGdgct8/XiZbVFDse7yVegW6pre9u9juWv0M5zD8cSF4vQ3GT1tgI1RwO2wDaLyaPyg47IqJJRD1Kt4M/KW74VLFwAPXxmIoTim9vK1y2qeSZfDMT+PsQmkJAY6iG5BU2NMay9jrG7yKDdpeRR6of31i8xjr3oorSoD7/CS5Cq3V4XJZplKHJzDVi7OCS+hF+8Az+rRQUrYLNvSko22cLmkxoO0cZ99Xi8wyCpO7aZJlGZ2wLdzclSwtktsUZhmb0BklYfe4xDmpWLdCoz14a7IvLnHPuq/KaKVpE5adaXpY8c9aDSznslSbQgPIl7bCRThobIKvJVsyjgZtwFouw32Tr5wIVeyB5ZdCeZh0ebSa5n2VnDT8Q1mP5GQRPiM58fBll9caPjgcfPOu2Jmc/wFQSwMEFAAACAgAABgh7H2CUU5tAAAAeAAAAAkAJABtZXRhLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQGrVipLLSrOzM9TslIw0TPSMzTXUVBKL0osyCgGihiCOKWZKSB2tJKpWWKqkYWJgZmZWaJRSlKqrkVaimGygblhqqlZilGiaaJSLFB9SWVBql9ibipET0BiSUZaZl5KZl66nntRZoo7yGil2FoAUEsBAi0AFAAACAgAABgh7BPnawZtAgAAJQUAAAsAJAAAAAAAAAAAAAAAAAAAAGdyYXBoMC5qc29uCgAgAAAAAAABABgAAIA+1d6xnQEAgD7V3rGdAQCAPtXesZ0BUEsBAi0AFAAACAgAABgh7H2CUU5tAAAAeAAAAAkAJAAAAAAAAAAAAAAAugIAAG1ldGEuanNvbgoAIAAAAAAAAQAYAACAPtXesZ0BAIA+1d6xnQEAgD7V3rGdAVBLBQYAAAAAAgACALgAAAByAwAAAAA=
+      value: UEsDBBQAAAgIAAAYIezTgXNCzQIAAA8GAAALACQAZ3JhcGgwLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQFlVNty2jAQ/RVGz4WxKZekby0kpA9JmJBOHkoeFGuNNQjJo0uAZPLv3ZVtbKiHGYuz13N25U8mtSsh88YurBT3RgD70WN0Zt96rfEODnxj9Ep+QOPzIoUvyIlHnyfupUE8pTBnduCtzH7qjSLnBMGgZW7s7kZsYGacdwjnXDlAkzWeojVCnz12wFf/mkKOeBpO6fSBp+uk94XHDLQH23FNBtPpNT5XdUQyGA8TfCZ1XBUWdKb4rgRBHNrodDQYJY03RadpA8QwjWzriGTwncobpaSrm2X+WEYxnviRpBCSI/HYHelQgNwUnkh0Ax/z3IGvVbH8OJcW9asysl+mEnXH3bbq8p2rQDUmo9hQlfP+P3M/jebcmt1dUzZNqIQvZLbFBjPufEf0Ljw/7zvoPVdb/qbgpQD9YBbWBC3Q6G2g0OBgOG//npjNCsi2LV61egGGshW/mXEzYeLwFckfVh7KE49kMGrRPw7cSpmoe8OFTDUUFwcsju03Eopr5eoSiFKXmOCZb7r7VxtupXUeTbUKNUq+S5wQCNAZ1ML3yUFTf28mWMrFbvFAk8uCnxmrIaI16RI0V/64xIT+cgMubJ22Liy3nG5i3Vxtay7YRUiEW/8kuTAtzf40bBsUuLjMzenvKw3BFWZ/D654DF5JDS0ZMjygvjOjdbW4XS2bsFWwOc86YR4OPliYc89jNWwHF0x0Q1HBGKGDUrTLkUDsCAnQ75X0LTjWVRFmDwY7Q/DsHdvfBCnObwgbTzgMr0bJZDLhQ/EG/atcpFkyTWE8EUM+5ixeIalRbq6WlV71lHC5dMtF43VpvpO9heVlvLPC8v1CfuxMZ/JS52aVWQD9WGU4kQWLRfDLIm6ERJor8F7quJbsc82UybYg1qdE6yjszcFbvm6zrFkp340nZM1m8cO4ZgSfriRu7ruEPRU/SwYKRwfiWSrY8ZJMyRf7+gdQSwMEFAAACAgAABgh7EQZ/HdsAAAAdwAAAAkAJABtZXRhLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQGrVipLLSrOzM9TslIw1TPUM9JRUEovSizIKAYKGII4pZkpIHa0kqlZYqqRhYmBmZlZolFKUqquRVqKYbKBuWGqqVmKUaJpolIsUH1JZUGqX2JuKkRPQGJJRlpmXkpmXrqee1FmijvIaKXYWgBQSwECLQAUAAAICAAAGCHs04FzQs0CAAAPBgAACwAkAAAAAAAAAAAAAAAAAAAAZ3JhcGgwLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQFQSwECLQAUAAAICAAAGCHsRBn8d2wAAAB3AAAACQAkAAAAAAAAAAAAAAAaAwAAbWV0YS5qc29uCgAgAAAAAAABABgAAIA+1d6xnQEAgD7V3rGdAQCAPtXesZ0BUEsFBgAAAAACAAIAuAAAANEDAAAAAA==
       objectReference: {fileID: 0}
     - target: {fileID: 3355572311016342327, guid: c6a250a527255e6469bb66117addd5ee, type: 3}
       propertyPath: m_Name
@@ -4437,5 +4412,5 @@ SceneRoots:
   - {fileID: 620779489402787803}
   - {fileID: 517727411}
   - {fileID: 535823487}
-  - {fileID: 1902102307}
   - {fileID: 1700621646}
+  - {fileID: 1646545030}

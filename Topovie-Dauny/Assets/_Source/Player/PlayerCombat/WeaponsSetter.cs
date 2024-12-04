@@ -5,10 +5,8 @@ using System.Threading;
 using Core.InputSystem;
 using Cysharp.Threading.Tasks;
 using Player.PlayerControl.GunMovement;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using Weapons;
 using Weapons.Guns;
 
 namespace Player.PlayerCombat

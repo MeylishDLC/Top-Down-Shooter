@@ -1,12 +1,8 @@
-﻿using System;
-using System.Threading;
-using Core.InputSystem;
+﻿using Core.InputSystem;
 using Core.SceneManagement;
 using Cysharp.Threading.Tasks;
 using UI.Core;
 using UnityEngine;
-using UnityEngine.SceneManagement;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 using Zenject;
 

@@ -27,7 +27,7 @@ namespace Enemies.Combat
             OnKnockBackStarted?.Invoke();
             GettingKnockedBack = true;
             
-            var difference = (_rb.transform.position - damageSource.position).normalized * _knockbackThrust * _rb.mass;
+            var difference = (_rb.transform.position - damageSource.position).normalized * (_knockbackThrust * _rb.mass);
             _rb.AddForce(difference, ForceMode2D.Impulse);
             
             KnockAsync(_destroyCancellationToken).Forget();

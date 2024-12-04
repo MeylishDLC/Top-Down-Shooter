@@ -2,10 +2,7 @@
 using Cysharp.Threading.Tasks;
 using Player.PlayerCombat;
 using Player.PlayerControl;
-using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
-using Zenject;
 
 namespace Player.PlayerAbilities
 {

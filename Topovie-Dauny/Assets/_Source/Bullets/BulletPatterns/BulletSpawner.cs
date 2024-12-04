@@ -1,6 +1,5 @@
 ﻿using Bullets.BulletPools;
 using Core.PoolingSystem;
-using Enemies;
 using UnityEngine;
 
 namespace Bullets.BulletPatterns

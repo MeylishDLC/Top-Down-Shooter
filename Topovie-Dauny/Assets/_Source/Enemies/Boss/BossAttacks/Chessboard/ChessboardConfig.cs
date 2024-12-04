@@ -1,5 +1,4 @@
-﻿using Enemies.Boss.BossAttacks.Lasers;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Enemies.Boss.BossAttacks.Chessboard
 {

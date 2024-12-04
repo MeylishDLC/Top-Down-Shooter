@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Threading;
 using Core.LevelSettings;
-using Cysharp.Threading.Tasks;
-using DG.Tweening;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 using Zenject;
 
 namespace UI.StateUI

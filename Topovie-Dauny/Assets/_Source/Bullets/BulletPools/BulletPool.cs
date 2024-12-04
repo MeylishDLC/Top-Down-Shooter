@@ -1,4 +1,6 @@
-﻿using Core.PoolingSystem;
+﻿using System.Linq;
+using Core.PoolingSystem;
+using Core.PoolingSystem.Configs;
 using UnityEngine;
 
 namespace Bullets.BulletPools
@@ -24,6 +26,14 @@ namespace Bullets.BulletPools
 
             instance = null;
             return false;
+        }
+        public override void DisableAll()
+        {
+            foreach (var bullet in AllObjects.Where(bullet => bullet.gameObject.activeSelf))
+            {
+                bullet.gameObject.SetActive(false);
+                ReturnToPool(bullet);
+            }
         }
         protected override Bullet InstantiateNewObject()
         {

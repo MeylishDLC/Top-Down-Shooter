@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Globalization;
 using System.Threading;
 using Core.InputSystem;
 using Cysharp.Threading.Tasks;
@@ -8,7 +7,6 @@ using TMPro;
 using UI.Core;
 using UI.UIShop;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 using Zenject;
 

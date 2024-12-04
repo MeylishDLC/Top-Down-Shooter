@@ -1,5 +1,4 @@
-﻿using System;
-using Player.PlayerControl;
+﻿using Player.PlayerControl;
 using UnityEngine;
 using Zenject;
 

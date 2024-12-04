@@ -3,9 +3,7 @@ using System.Linq;
 using System.Threading;
 using _Support.Demigiant.DOTween.Modules;
 using Cinemachine;
-using Core.PoolingSystem;
 using Cysharp.Threading.Tasks;
-using DG.Tweening;
 using Enemies;
 using UnityEngine;
 
@@ -92,7 +90,7 @@ namespace Bullets
             await UniTask.Delay(TimeSpan.FromSeconds(blowupDuration), cancellationToken: token);
             _isBlowingUp = false;
             gameObject.SetActive(false);
-            _spriteRenderer.DOFade(1f, 0f);
+            await _spriteRenderer.DOFade(1f, 0f);
         }
         private void OnDrawGizmosSelected()
         {
