@@ -7,7 +7,8 @@ namespace Enemies.EnemyTypes
 {
     public class Shooter: MonoBehaviour, IPoolUser
     {
-        [SerializeField] private float shootRate;
+        [SerializeField] private float minShootRate;
+        [SerializeField] private float maxShootRate;
         [SerializeField] private ProjectileConfig projectileConfig;
         
         private float _shootTimer;
@@ -27,6 +28,7 @@ namespace Enemies.EnemyTypes
             _shootTimer -= Time.deltaTime;
             if (_shootTimer <= 0)
             {
+                var shootRate = Random.Range(minShootRate, maxShootRate);
                 _shootTimer = shootRate;
                 if (_projectilePool.TryGetFromPool(out var projectile))
                 {
