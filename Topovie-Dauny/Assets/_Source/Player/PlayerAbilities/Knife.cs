@@ -30,7 +30,8 @@ namespace Player.PlayerAbilities
             
             var knife = Instantiate(knifePrefab, _playerTransform.position, Quaternion.identity);
 
-            knife.transform.right = direction;
+            var angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+            knife.transform.rotation = Quaternion.Euler(0, 0, angle);
 
             knife.ShootInDirection(direction);
             OnAbilitySuccessfullyUsed?.Invoke();
