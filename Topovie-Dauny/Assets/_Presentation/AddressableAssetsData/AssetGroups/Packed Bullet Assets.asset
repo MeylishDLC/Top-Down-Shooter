@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
-  m_Name: Packed Assets Bullet Assets
+  m_Name: Packed Bullet Assets
   m_EditorClassIdentifier: 
-  m_GroupName: Packed Assets Bullet Assets
+  m_GroupName: Packed Bullet Assets
   m_Data:
     m_SerializedData: []
   m_GUID: b4d2994f9d3890a47a8256014e019264
@@ -54,6 +54,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 21884403f89a81a4a983c25b5f5be590
     m_Address: ShotgunBullet
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f884ef90eb52c2849953bd8e045c2b54
+    m_Address: OrbitingFireball
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

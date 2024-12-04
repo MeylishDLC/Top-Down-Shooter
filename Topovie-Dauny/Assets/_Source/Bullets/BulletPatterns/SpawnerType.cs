@@ -3,6 +3,7 @@
     public enum SpawnerType
     {
         Straight,
-        Spin
+        Spin,
+        RadialSpin
     }
 }

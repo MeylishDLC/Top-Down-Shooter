@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
-using Core.PoolingSystem.Configs;
 using UnityEngine;
 
-namespace Core.PoolingSystem
+namespace Core.PoolingSystem.Configs
 {
     [CreateAssetMenu(fileName = "New Pool Initializer Config", menuName = "Core/Pools/New Pool Initializer Config")]
     public class PoolInitializerConfig: ScriptableObject

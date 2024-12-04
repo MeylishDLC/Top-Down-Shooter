@@ -1,6 +1,7 @@
 ﻿using Core.InputSystem;
 using Core.LevelSettings;
 using Core.PoolingSystem;
+using Core.PoolingSystem.Configs;
 using DialogueSystem;
 using Player.PlayerCombat;
 using Player.PlayerControl;

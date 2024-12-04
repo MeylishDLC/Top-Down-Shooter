@@ -10,9 +10,9 @@ namespace Bullets
     {
         protected Rigidbody2D Rb;
 
+        [Range(1, 10)] [SerializeField] protected float speed;
         [SerializeField] protected int damageAmount;
         [SerializeField] private float lifetime;
-        [Range(1, 10)] [SerializeField] private float speed;
 
         private CancellationTokenSource _cancelDisableCts = new();
         protected virtual void Start()

@@ -148,7 +148,7 @@ namespace Core.PoolingSystem
             foreach (var config in _bulletsForEnemiesConfigs)
             {
                 var prefabAssetName = config.PrefabAssetSimplifiedName;
-                var parent = new GameObject($"EnemyProjectiles-{prefabAssetName}");
+                var parent = new GameObject($"EnemyBullets-{prefabAssetName}");
                 var pool = new EnemyBulletPool(config, parent.transform);
                 _bulletPoolsForEnemies.Add(prefabAssetName, pool);
             }

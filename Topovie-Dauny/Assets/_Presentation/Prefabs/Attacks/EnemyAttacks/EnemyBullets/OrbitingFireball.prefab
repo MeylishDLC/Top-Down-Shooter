@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 7475527601499489959}
   - component: {fileID: 1215112721287999863}
   - component: {fileID: 1622028230802330140}
-  - component: {fileID: 8619820173178986762}
+  - component: {fileID: 3798563746246048541}
   m_Layer: 10
-  m_Name: Fireball
+  m_Name: OrbitingFireball
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -97,7 +97,7 @@ CircleCollider2D:
   m_Offset: {x: 0.00027170777, y: 0.00089359283}
   serializedVersion: 2
   m_Radius: 0.06815004
---- !u!114 &8619820173178986762
+--- !u!114 &3798563746246048541
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -106,7 +106,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1613210419083963083}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 55abcb34790845c5a782f4f1e733a9b2, type: 3}
+  m_Script: {fileID: 11500000, guid: 8b990293418c49f2bea97c5191bdd3e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 6
