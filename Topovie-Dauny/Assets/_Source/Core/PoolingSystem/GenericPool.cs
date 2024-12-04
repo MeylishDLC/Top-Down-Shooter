@@ -40,6 +40,7 @@ namespace Core.PoolingSystem
         {
             Pool.Enqueue(instance);
         }
+        public abstract void DisableAll();
         public void CleanUp()
         {
             _assetLoader.ReleaseStoredInstance();

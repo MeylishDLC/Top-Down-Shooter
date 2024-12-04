@@ -1,4 +1,5 @@
-﻿using Core.PoolingSystem;
+﻿using System.Linq;
+using Core.PoolingSystem;
 using Core.PoolingSystem.Configs;
 using UnityEngine;
 using Zenject;
@@ -29,6 +30,14 @@ namespace Enemies.Pools
 
             instance = null;
             return false;
+        }
+        public override void DisableAll()
+        {
+            foreach (var enemy in AllObjects.Where(enemy => enemy.gameObject.activeSelf))
+            {
+                enemy.gameObject.SetActive(false);
+                ReturnToPool(enemy);
+            }
         }
         protected override EnemyHealth InstantiateNewObject()
         {

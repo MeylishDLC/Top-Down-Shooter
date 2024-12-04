@@ -29,14 +29,12 @@ namespace Enemies
         {
             PlayerMovement = playerMovement;
             KnockBack = new KnockBack(this,GetComponent<Rigidbody2D>(), knockBackTimeMilliseconds, knockbackThrust);
-        }
-        private void Awake()
-        {
             _currentHealth = maxHealth;
         }
         private void OnEnable()
         {
             _isDead = false;
+            _currentHealth = maxHealth;
         }
         private void OnDisable()
         {
