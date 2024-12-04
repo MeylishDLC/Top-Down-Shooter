@@ -2835,50 +2835,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2221232130911802252, guid: c6a250a527255e6469bb66117addd5ee, type: 3}
-      propertyPath: heuristic
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 2221232130911802252, guid: c6a250a527255e6469bb66117addd5ee, type: 3}
-      propertyPath: showGraphs
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2221232130911802252, guid: c6a250a527255e6469bb66117addd5ee, type: 3}
-      propertyPath: threadCount
-      value: -2
-      objectReference: {fileID: 0}
-    - target: {fileID: 2221232130911802252, guid: c6a250a527255e6469bb66117addd5ee, type: 3}
-      propertyPath: scanOnStartup
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2221232130911802252, guid: c6a250a527255e6469bb66117addd5ee, type: 3}
-      propertyPath: showNavGraphs
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2221232130911802252, guid: c6a250a527255e6469bb66117addd5ee, type: 3}
-      propertyPath: logPathResults
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 2221232130911802252, guid: c6a250a527255e6469bb66117addd5ee, type: 3}
-      propertyPath: showSearchTree
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2221232130911802252, guid: c6a250a527255e6469bb66117addd5ee, type: 3}
-      propertyPath: data.dataString
-      value: UEsDBBQAAAgIAAAYIexEK8leyAIAAAUGAAALACQAZ3JhcGgwLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQFlVE1z2jAQ/SuMziVjXCChtxYS0kMSJqSTQ8lBsdZYg5A8+giQDP+9u7KNDWUYLN5+vrcrfzGpXQmZN3ZupXgwAtiPHqMz+9Zrjfew52ujl/ITGp9XKXxBTjz6PHMvDeIDCnNmC97K7KdeK3JOEAxa5sZub8UapsZ5h3DOlQM0WeMpWiP01WN7fPQnFHLAU3pNp088TZLeEY8ZaA+245pcpekEP/hbxyA0IOhmeD2qg6vYoDPFtyUIItKmGKRX3+vQSfTTyLF2SaIpM0pJV7fI/KGMEjzzAwkgJEe6sSdiX4BcF55a7wY+5bkDX2th+WEmLapWZWS/TCXllrtN1dYHV4FqjIexoSrnw3/m/iCac2u2903ZQUIlfCGzDTaYcec7Unfh2XnfQe+42vB3Ba8F6EcztyZogUZvA4UGB+ms/XtiNi0g27R41eoFGMpW7WayzVyJwzGS3y89lCceydWwRf84cEtlou4NFzLVUFwXsDi230goLpOrSyBKXWKCF77ubl1tuJPWeTTVKtQo+S5wQiBAZ1AL3ycHTf29m2ApF7vDA00uC35qrIaI1qRL0Fz5wwIT+ssNuLB12rqw3HG6f3Vzta25VhchEW79k+TCtDC707BtUODiMjenv280BFeY3QO44il4JTW0ZMjwiPpOjdbV4na1bMKWweY864R52PtgYcY9j9WwHVww0Q1FBWOEDkrRLkcCsSMkQN830rfgWFdFmD0a7AzBs2dsfx2kOL8hbDTmkN4Mk/F4zFPxDv2bXAyy5HoAo7FI+YizeIWkRrm5WlR61VPC5dItF43XpXk79uaWl/HOCst3c/m5NZ3JS52bZWYB9FOV4UQWLBbBN4u4FRJpLsF7qeNasq8VUybbgFidEq2isLd7b/mqzbJipfwwnpAVm8bX4YoRfLqSuLkfEnZU/CwZKBwdiBepYMtLMiVHdvwHUEsDBBQAAAgIAAAYIexEGfx3bAAAAHcAAAAJACQAbWV0YS5qc29uCgAgAAAAAAABABgAAIA+1d6xnQEAgD7V3rGdAQCAPtXesZ0Bq1YqSy0qzszPU7JSMNUz1DPSUVBKL0osyCgGChiCOKWZKSB2tJKpWWKqkYWJgZmZWaJRSlKqrkVaimGygblhqqlZilGiaaJSLFB9SWVBql9ibipET0BiSUZaZl5KZl66nntRZoo7yGil2FoAUEsBAi0AFAAACAgAABgh7EQryV7IAgAABQYAAAsAJAAAAAAAAAAAAAAAAAAAAGdyYXBoMC5qc29uCgAgAAAAAAABABgAAIA+1d6xnQEAgD7V3rGdAQCAPtXesZ0BUEsBAi0AFAAACAgAABgh7EQZ/HdsAAAAdwAAAAkAJAAAAAAAAAAAAAAAFQMAAG1ldGEuanNvbgoAIAAAAAAAAQAYAACAPtXesZ0BAIA+1d6xnQEAgD7V3rGdAVBLBQYAAAAAAgACALgAAADMAwAAAAA=
-      objectReference: {fileID: 0}
-    - target: {fileID: 2221232130911802252, guid: c6a250a527255e6469bb66117addd5ee, type: 3}
-      propertyPath: showUnwalkableNodes
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2221232130911802252, guid: c6a250a527255e6469bb66117addd5ee, type: 3}
-      propertyPath: maxNearestNodeDistance
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 2221232130911802252, guid: c6a250a527255e6469bb66117addd5ee, type: 3}
-      propertyPath: euclideanEmbedding.mode
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 3355572311016342327, guid: c6a250a527255e6469bb66117addd5ee, type: 3}
       propertyPath: m_Name
       value: Pathfinding

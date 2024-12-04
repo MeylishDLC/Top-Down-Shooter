@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using Core.Data;
@@ -17,7 +18,6 @@ namespace Core.LevelSettings
          public event Action<float, float> OnTimeRemainingChanged;
          
          [Header("Main")]
-         [SerializeField] private EnemyContainer[] allEnemyContainers;
          [SerializeField] private PortalChargerTrigger[] portalChargeTriggers;
          [SerializeField] private ShopTrigger shopTrigger;
          [SerializeField] private EnemyWave[] portalCharges;
@@ -26,6 +26,7 @@ namespace Core.LevelSettings
          [Header("Time Settings")] 
          [SerializeField] private int changeStateDelayMilliseconds;
          
+         private EnemyContainer[] _allEnemyContainers;
          private Spawner _spawner;
          private StatesChanger _statesChanger;
          
@@ -44,16 +45,16 @@ namespace Core.LevelSettings
          }
          private void Awake()
          {
-             if (allEnemyContainers.Length == 0)
-             {
-                 Debug.LogError("Enemy containers weren't assigned. Please assign it in the inspector.");
-             }
              gameOverScreen.OnGameOver += StopSpawning;
              gameOverScreen.OnScreenFaded += DisableAllEnemies;
          }
          private void Start()
          {
              SubscribeOnStartCharging();
+             if (_allEnemyContainers == null)
+             {
+                 Debug.LogError("Enemy containers weren't assigned. Make sure to initialize it in bootstrap.");
+             }
          }
          private void OnDestroy()
          {
@@ -63,6 +64,10 @@ namespace Core.LevelSettings
              }
              gameOverScreen.OnGameOver -= StopSpawning;
              gameOverScreen.OnScreenFaded -= DisableAllEnemies;
+         }
+         public void InitAllContainers(IEnumerable<EnemyContainer> containers)
+         {
+             _allEnemyContainers = containers.ToArray();
          }
          private void StopSpawning()
          {
@@ -173,7 +178,7 @@ namespace Core.LevelSettings
          }
          private void DisableAllEnemies()
          {
-             foreach (var pool in allEnemyContainers.Select(p => p.Pool))
+             foreach (var pool in _allEnemyContainers.Select(p => p.Pool))
              {
                  pool.DisableAll();
              }

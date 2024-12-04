@@ -911,23 +911,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e1d410abaa34f1291df47ee071ae256, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  allEnemyContainers:
+  - {fileID: 216725094}
+  - {fileID: 162743283}
   portalChargeTriggers:
   - {fileID: 104703908}
   - {fileID: 148295273}
   shopTrigger: {fileID: 78815747}
-  allSpawns:
-  - {fileID: 66727800}
-  - {fileID: 1170188024}
-  - {fileID: 185168844}
-  - {fileID: 1017038700}
-  - {fileID: 815121855}
-  - {fileID: 488117872}
-  - {fileID: 909216461}
-  - {fileID: 4262219}
-  - {fileID: 176860844}
-  - {fileID: 1968617055}
-  - {fileID: 2021274873}
-  - {fileID: 262724726}
   portalCharges:
   - <Pairs>k__BackingField:
     - <Enemies>k__BackingField:
@@ -944,7 +934,7 @@ MonoBehaviour:
       - {fileID: 488117872}
       - {fileID: 909216461}
       - {fileID: 4262219}
-    <MaxEnemySpawnAtOnce>k__BackingField: 4
+    <MaxEnemySpawnAtOnce>k__BackingField: 3
     <MinEnemySpawnAtOnce>k__BackingField: 1
     <MaxTimeBetweenSpawn>k__BackingField: 7
     <MinTimeBetweenSpawn>k__BackingField: 3
@@ -957,8 +947,8 @@ MonoBehaviour:
       - {fileID: 1968617055}
       - {fileID: 2021274873}
       - {fileID: 262724726}
-    <MaxEnemySpawnAtOnce>k__BackingField: 4
-    <MinEnemySpawnAtOnce>k__BackingField: 1
+    <MaxEnemySpawnAtOnce>k__BackingField: 3
+    <MinEnemySpawnAtOnce>k__BackingField: 2
     <MaxTimeBetweenSpawn>k__BackingField: 5
     <MinTimeBetweenSpawn>k__BackingField: 2
     <TimeToActivatePencil>k__BackingField: 60
@@ -994,37 +984,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1277161175}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &497614940
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 497614941}
-  m_Layer: 0
-  m_Name: PistolPool
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &497614941
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 497614940}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1902102307}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &505231906
 PrefabInstance:
@@ -1745,37 +1704,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Asset: {fileID: -944628639613478452, guid: 09cdc31676801aa4e89c24085965b999, type: 3}
   m_ActionId: 8e870d65-79d4-4fcf-80ef-98bea45b9101
---- !u!1 &918359732
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 918359733}
-  m_Layer: 0
-  m_Name: PPPool
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &918359733
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 918359732}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1902102307}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &931945768 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6043521087227523239, guid: ba3f276fa16aec249a029d4ce9df78dd, type: 3}
@@ -2606,40 +2534,6 @@ CapsuleCollider2D:
   m_Offset: {x: -1.9871111, y: 2.2238536}
   m_Size: {x: 2.6699033, y: 1.7611043}
   m_Direction: 1
---- !u!1 &1902102306
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1902102307}
-  m_Layer: 0
-  m_Name: Pools
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1902102307
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1902102306}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 497614941}
-  - {fileID: 918359733}
-  - {fileID: 1983918562}
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1964062517
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2684,37 +2578,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1104202065}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1983918561
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1983918562}
-  m_Layer: 0
-  m_Name: EnemyProjectilePool
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1983918562
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1983918561}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1902102307}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!224 &1989349831 stripped
 RectTransform:
@@ -3057,6 +2920,10 @@ PrefabInstance:
       value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 4250440572906355449, guid: af35db23b32508c4ab8e46f098395935, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4250440572906355449, guid: af35db23b32508c4ab8e46f098395935, type: 3}
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
@@ -3175,6 +3042,10 @@ PrefabInstance:
     - target: {fileID: 5332433347470275641, guid: af35db23b32508c4ab8e46f098395935, type: 3}
       propertyPath: weaponsObjects.pairs.Array.data[1].value
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5940541333584234523, guid: af35db23b32508c4ab8e46f098395935, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6201013786433417657, guid: af35db23b32508c4ab8e46f098395935, type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -3638,12 +3509,8 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 2221232130911802252, guid: c6a250a527255e6469bb66117addd5ee, type: 3}
-      propertyPath: showGraphs
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2221232130911802252, guid: c6a250a527255e6469bb66117addd5ee, type: 3}
       propertyPath: data.dataString
-      value: UEsDBBQAAAgIAAAYIewT52sGbQIAACUFAAALACQAZ3JhcGgwLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQFlVE1z2jAQ/SuMzg1jM+CE3lpCSA9JmNBMLr4Ia401yJJHHwGS4b93JcvYoVyQ3+7bffu09hfh0jRQWKVXmrMnxYD8HBF/Jj9GffARjnSn5IZ/QpfzzpmtfBINOa/UcoV46mlG1WA1L37JnfDJCYJO8lLpesl2sFDGGoRLKgxgSCvr2RKhrxE54t/N3FNOeJrc+tMnnubJ6IzHAqQFPUhNxlk2x18WGfg8jZSW4WQhaN0A8/J7YjodT2aRk6bj2TwkSxwv5iXjdO4bKiG4ifKIPTVh/E1TgQY/P+MUpw2S/PAV8F1lvfIh96UsDdhohaane67RtLYo+a1aJ2tq9q2+Dyqcb5NNg6i25tN/4Zs0hEut6seubZr4Frbixf6Vngpq7MDpIXz/XbeTByr2dCvgvQL5rFZaOckwaLXzVGdgct8/XiZbVFDse7yVegW6pre9u9juWv0M5zD8cSF4vQ3GT1tgI1RwO2wDaLyaPyg47IqJJRD1Kt4M/KW74VLFwAPXxmIoTim9vK1y2qeSZfDMT+PsQmkJAY6iG5BU2NMay9jrG7yKDdpeRR6of31i8xjr3oorSoD7/CS5Cq3V4XJZplKHJzDVi7OCS+hF+8Az+rRQUrYLNvSko22cLmkxoO0cZ99Xi8wyCpO7aZJlGZ2wLdzclSwtktsUZhmb0BklYfe4xDmpWLdCoz14a7IvLnHPuq/KaKVpE5adaXpY8c9aDSznslSbQgPIl7bCRThobIKvJVsyjgZtwFouw32Tr5wIVeyB5ZdCeZh0ebSa5n2VnDT8Q1mP5GQRPiM58fBll9caPjgcfPOu2Jmc/wFQSwMEFAAACAgAABgh7H2CUU5tAAAAeAAAAAkAJABtZXRhLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQGrVipLLSrOzM9TslIw0TPSMzTXUVBKL0osyCgGihiCOKWZKSB2tJKpWWKqkYWJgZmZWaJRSlKqrkVaimGygblhqqlZilGiaaJSLFB9SWVBql9ibipET0BiSUZaZl5KZl66nntRZoo7yGil2FoAUEsBAi0AFAAACAgAABgh7BPnawZtAgAAJQUAAAsAJAAAAAAAAAAAAAAAAAAAAGdyYXBoMC5qc29uCgAgAAAAAAABABgAAIA+1d6xnQEAgD7V3rGdAQCAPtXesZ0BUEsBAi0AFAAACAgAABgh7H2CUU5tAAAAeAAAAAkAJAAAAAAAAAAAAAAAugIAAG1ldGEuanNvbgoAIAAAAAAAAQAYAACAPtXesZ0BAIA+1d6xnQEAgD7V3rGdAVBLBQYAAAAAAgACALgAAAByAwAAAAA=
+      value: UEsDBBQAAAgIAAAYIezTgXNCzQIAAA8GAAALACQAZ3JhcGgwLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQFlVNty2jAQ/RVGz4WxKZekby0kpA9JmJBOHkoeFGuNNQjJo0uAZPLv3ZVtbKiHGYuz13N25U8mtSsh88YurBT3RgD70WN0Zt96rfEODnxj9Ep+QOPzIoUvyIlHnyfupUE8pTBnduCtzH7qjSLnBMGgZW7s7kZsYGacdwjnXDlAkzWeojVCnz12wFf/mkKOeBpO6fSBp+uk94XHDLQH23FNBtPpNT5XdUQyGA8TfCZ1XBUWdKb4rgRBHNrodDQYJY03RadpA8QwjWzriGTwncobpaSrm2X+WEYxnviRpBCSI/HYHelQgNwUnkh0Ax/z3IGvVbH8OJcW9asysl+mEnXH3bbq8p2rQDUmo9hQlfP+P3M/jebcmt1dUzZNqIQvZLbFBjPufEf0Ljw/7zvoPVdb/qbgpQD9YBbWBC3Q6G2g0OBgOG//npjNCsi2LV61egGGshW/mXEzYeLwFckfVh7KE49kMGrRPw7cSpmoe8OFTDUUFwcsju03Eopr5eoSiFKXmOCZb7r7VxtupXUeTbUKNUq+S5wQCNAZ1ML3yUFTf28mWMrFbvFAk8uCnxmrIaI16RI0V/64xIT+cgMubJ22Liy3nG5i3Vxtay7YRUiEW/8kuTAtzf40bBsUuLjMzenvKw3BFWZ/D654DF5JDS0ZMjygvjOjdbW4XS2bsFWwOc86YR4OPliYc89jNWwHF0x0Q1HBGKGDUrTLkUDsCAnQ75X0LTjWVRFmDwY7Q/DsHdvfBCnObwgbTzgMr0bJZDLhQ/EG/atcpFkyTWE8EUM+5ixeIalRbq6WlV71lHC5dMtF43VpvpO9heVlvLPC8v1CfuxMZ/JS52aVWQD9WGU4kQWLRfDLIm6ERJor8F7quJbsc82UybYg1qdE6yjszcFbvm6zrFkp340nZM1m8cO4ZgSfriRu7ruEPRU/SwYKRwfiWSrY8ZJMyRf7+gdQSwMEFAAACAgAABgh7EQZ/HdsAAAAdwAAAAkAJABtZXRhLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQGrVipLLSrOzM9TslIw1TPUM9JRUEovSizIKAYKGII4pZkpIHa0kqlZYqqRhYmBmZlZolFKUqquRVqKYbKBuWGqqVmKUaJpolIsUH1JZUGqX2JuKkRPQGJJRlpmXkpmXrqee1FmijvIaKXYWgBQSwECLQAUAAAICAAAGCHs04FzQs0CAAAPBgAACwAkAAAAAAAAAAAAAAAAAAAAZ3JhcGgwLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQFQSwECLQAUAAAICAAAGCHsRBn8d2wAAAB3AAAACQAkAAAAAAAAAAAAAAAaAwAAbWV0YS5qc29uCgAgAAAAAAABABgAAIA+1d6xnQEAgD7V3rGdAQCAPtXesZ0BUEsFBgAAAAACAAIAuAAAANEDAAAAAA==
       objectReference: {fileID: 0}
     - target: {fileID: 3355572311016342327, guid: c6a250a527255e6469bb66117addd5ee, type: 3}
       propertyPath: m_Name
@@ -4545,6 +4412,5 @@ SceneRoots:
   - {fileID: 620779489402787803}
   - {fileID: 517727411}
   - {fileID: 535823487}
-  - {fileID: 1902102307}
   - {fileID: 1700621646}
   - {fileID: 1646545030}

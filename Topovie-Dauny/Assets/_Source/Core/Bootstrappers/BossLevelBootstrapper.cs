@@ -1,6 +1,7 @@
 ﻿using System.Threading;
 using Bullets.BulletPatterns;
 using Core.Data;
+using Core.LevelSettings;
 using Core.PoolingSystem;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
@@ -32,14 +33,14 @@ namespace Core.Bootstrappers
         {
             base.Awake();
             _poolInitializer.InitAll();
-            InitializeAddressables(CancellationToken.None).Forget();
+            Initialize(CancellationToken.None).Forget();
         }
         protected override void OnDestroy()
         {
             base.OnDestroy();
             _poolInitializer.CleanUp();
         }
-        private async UniTask InitializeAddressables(CancellationToken cancellationToken)
+        private async UniTask Initialize(CancellationToken cancellationToken)
         {
             await Addressables.InitializeAsync().ToUniTask(cancellationToken: cancellationToken);
             InitializeGuns();

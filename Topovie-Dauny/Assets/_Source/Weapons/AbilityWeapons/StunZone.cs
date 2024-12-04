@@ -27,7 +27,7 @@ namespace Weapons.AbilityWeapons
                 if (other.gameObject.transform.parent.TryGetComponent(out AIPath aiPath))
                 {
                     aiPath.canMove = false;
-                    var enemyHealth = other.GetComponent<IEnemyHealth>();
+                    var enemyHealth = other.gameObject.transform.parent.GetComponent<IEnemyHealth>();
                     enemyHealth.TakeDamage(damage);
 
                     if (!_enemiesAffected.Contains(aiPath))

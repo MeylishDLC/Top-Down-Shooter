@@ -1,4 +1,5 @@
 ﻿using System.Threading;
+using Core.LevelSettings;
 using Core.PoolingSystem;
 using Core.SceneManagement;
 using Cysharp.Threading.Tasks;
@@ -23,10 +24,13 @@ namespace Core.Bootstrappers
         
         private PoolInitializer _poolInitializer;
         private LevelDialogues _levelDialogues;
+        private LevelChargesHandler _levelChargesHandler;
         
         [Inject]
-        public void Construct(SceneLoader sceneLoader, LevelDialogues levelDialogues, PoolInitializer poolInitializer)
+        public void Construct(SceneLoader sceneLoader, LevelDialogues levelDialogues, PoolInitializer poolInitializer,
+            LevelChargesHandler levelChargesHandler)
         {
+            _levelChargesHandler = levelChargesHandler;
             _poolInitializer = poolInitializer;
             _levelDialogues = levelDialogues;
         }
@@ -34,7 +38,7 @@ namespace Core.Bootstrappers
         {
             InstantiateAssets(CancellationToken.None).Forget();
             _poolInitializer.InitAll();
-            InitializeAddressables(CancellationToken.None).Forget();
+            Initialize(CancellationToken.None).Forget();
         }
         protected override void OnDestroy()
         {
@@ -42,11 +46,12 @@ namespace Core.Bootstrappers
             _levelDialogues.CleanUp();
             _poolInitializer.CleanUp();
         }
-        private async UniTask InitializeAddressables(CancellationToken cancellationToken)
+        private async UniTask Initialize(CancellationToken cancellationToken)
         {
             await Addressables.InitializeAsync().ToUniTask(cancellationToken: cancellationToken);
             InitializeGuns();
             InitializeEnemyContainers();
+            _levelChargesHandler.InitAllContainers(containers);
         }
         private void InitializeGuns()
         {
