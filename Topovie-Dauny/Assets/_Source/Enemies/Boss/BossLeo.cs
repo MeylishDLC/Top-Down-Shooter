@@ -12,6 +12,8 @@ namespace Enemies.Boss
 {
     public class BossLeo : MonoBehaviour
     {
+        public event Action OnBossDefeated;
+        
         [SerializeField] private BossFightTrigger bossFightTrigger;
         [SerializeField] private SerializedDictionary<BossPhase, TextAsset> phaseDialoguePair;
         [SerializeField] private BossHealth bossHealth;
@@ -75,6 +77,7 @@ namespace Enemies.Boss
                 Debug.Log("Phases passed");
                 _statesChanger.ChangeState(GameStates.PortalCharged);
                 _bossLeoVisual.SetLeoHurt();
+                OnBossDefeated?.Invoke();
                 return;
             }
 
