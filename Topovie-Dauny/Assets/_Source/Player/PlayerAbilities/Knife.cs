@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using Cysharp.Threading.Tasks;
 using Player.PlayerControl;
 using UnityEngine;
@@ -9,10 +10,10 @@ namespace Player.PlayerAbilities
     [CreateAssetMenu(fileName = "Knife", menuName = "Combat/Abilities/Knife")]
     public class Knife: Ability
     {
+        public override event Action OnAbilitySuccessfullyUsed;
+        
         [SerializeField] private KnifeObject knifePrefab;
-
         private Transform _playerTransform;
-
         public override void Construct(PlayerMovement playerMovement)
         {
             _playerTransform = playerMovement.transform;

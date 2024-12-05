@@ -9,12 +9,13 @@ namespace Player.PlayerAbilities
     [CreateAssetMenu(fileName = "CatFood", menuName = "Combat/Abilities/CatFood")]
     public class CatFood: Ability
     {
+        public override event Action OnAbilitySuccessfullyUsed;
+        
         [SerializeField] private float newPlayerSpeed;
         [SerializeField] private float boostDuration;
 
         private float _initSpeed;
         private PlayerMovement _playerMovement;
-        
         public override void Construct(PlayerMovement playerMovement)
         {
             _playerMovement = playerMovement;

@@ -16,7 +16,8 @@ namespace Core.LevelSettings
      {
          public event Action OnChargePassed; 
          public event Action<float, float> OnTimeRemainingChanged;
-         
+         public int ChargesPassed { get; private set; }
+
          [Header("Main")]
          [SerializeField] private PortalChargerTrigger[] portalChargeTriggers;
          [SerializeField] private ShopTrigger shopTrigger;
@@ -33,8 +34,6 @@ namespace Core.LevelSettings
          private CancellationTokenSource _chargingPauseCts = new();
          private CancellationTokenSource _chargingFinishCts = new();
          private float _timeRemaining;
-         
-         private int _chargesPassed;
          private int _currentChargeIndex;
 
          [Inject]
@@ -77,7 +76,7 @@ namespace Core.LevelSettings
                  return;
              }
                  
-             if (_chargesPassed >= portalCharges.Length)
+             if (ChargesPassed >= portalCharges.Length)
              {
                  return;
              }
@@ -156,9 +155,9 @@ namespace Core.LevelSettings
              {
                  await UniTask.Delay(changeStateDelayMilliseconds, cancellationToken: token);
                  _currentChargeIndex = -1;
-                 _chargesPassed += 1;
+                 ChargesPassed += 1;
 
-                 if (_chargesPassed >= portalCharges.Length)
+                 if (ChargesPassed >= portalCharges.Length)
                  {
                      _statesChanger.ChangeState(GameStates.PortalCharged);
                  }

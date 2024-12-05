@@ -1,9 +1,12 @@
-﻿using System.Threading;
+﻿using System;
+using System.Linq;
+using System.Threading;
 using Core.InputSystem;
 using Core.LevelSettings;
 using Cysharp.Threading.Tasks;
 using Player.PlayerAbilities;
 using TMPro;
+using UI.UIShop.Dialogue;
 using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
@@ -19,8 +22,8 @@ namespace UI.UIShop
         [SerializeField] private Button closeButton;
 
         [Header("Vet Dialogue")] 
-        [TextArea] [SerializeField] private string speechOnEnterShop;
-        [TextArea] [SerializeField] private string speechOnExitShop;
+        [SerializeField] private LevelChargesHandler levelChargesHandler;
+        [SerializeField] private VetDialogueConfig dialogueConfig;
         [SerializeField] private TMP_Text vetDialogueText;
         [SerializeField] private int typeSpeedMilliseconds;
         [SerializeField] private int delayBeforeDialogueChangeMilliseconds;
@@ -32,6 +35,7 @@ namespace UI.UIShop
         private ShopDialogue _shopDialogue;
         private bool _canBeOpen = true;
         private bool _isTyping;
+        private bool _isClosing;
         private CancellationTokenSource _stopTypingCts = new();
 
         [Inject]
@@ -77,8 +81,9 @@ namespace UI.UIShop
         }
         private void CloseShop()
         {
-            if (IsShopOpen())
+            if (IsShopOpen() && !_isClosing)
             {
+                _isClosing = true;
                 CloseShopAsync(_stopTypingCts.Token).Forget();
             }
         }
@@ -90,7 +95,8 @@ namespace UI.UIShop
             vetDialogueText.text = "";
 
             _isTyping = true;
-            await _shopDialogue.TypeDialogueAsync(speechOnEnterShop, token);
+            var currentDialoguePack = GetCurrentDialoguePack();
+            await _shopDialogue.TypeDialogueAsync(currentDialoguePack.Greeting, token);
             _isTyping = false;
         }
 
@@ -98,12 +104,14 @@ namespace UI.UIShop
         {
             EnableInput();
             _isTyping = true;
-            await _shopDialogue.TypeDialogueAsync(speechOnExitShop, token);
+            var currentDialoguePack = GetCurrentDialoguePack();
+            await _shopDialogue.TypeDialogueAsync(currentDialoguePack.Goodbye, token);
             _isTyping = false;
             await UniTask.Delay(delayBeforeShopClosingMillisecons, cancellationToken: token);
             
             shopUI.SetActive(false);
             playerGUI.SetActive(true);
+            _isClosing = false;
         }
         private void DisableInput()
         {
@@ -131,8 +139,37 @@ namespace UI.UIShop
             vetDialogueText.text = "";
             _isTyping = true;
             await UniTask.Delay(delayBeforeDialogueChangeMilliseconds, cancellationToken: token);
-            await _shopDialogue.TypeDialogueAsync(ability.VetReactionText, token);
+            await _shopDialogue.TypeDialogueAsync(GetDialogueForAbility(ability), token);
             _isTyping = false;
+        }
+
+        private string GetDialogueForAbility(Ability ability)
+        {
+            var abilityDialogues = GetCurrentDialoguePack().AbilityDialoguePairs;
+            foreach (var pair in abilityDialogues)
+            {
+                var type = pair.AbilityType.Type;
+                if (type.IsAssignableFrom(ability.GetType()))
+                {
+                    return pair.Dialogue;
+                }
+            }
+            throw new Exception($"Dialogue for ability type {ability.GetType()} not found. Make sure to assign it in config");
+        }
+        private DialoguePack GetCurrentDialoguePack()
+        {
+            if (levelChargesHandler == null)
+            {
+                Debug.LogWarning("Level Charges Handler is not initialized. Charges passed is always zero.");
+                return dialogueConfig.ChargesDialoguePacks[0];
+            }
+            var dialogueIndex = levelChargesHandler.ChargesPassed;
+
+            if (dialogueIndex >= dialogueConfig.ChargesDialoguePacks.Length)
+            {
+                dialogueIndex = dialogueConfig.ChargesDialoguePacks.Length - 1;
+            }
+            return dialogueConfig.ChargesDialoguePacks[dialogueIndex];
         }
     }
 }

@@ -35,6 +35,10 @@ namespace Enemies
             _initScale = transform.localScale.x;
             SubscribeOnEvents();
         }
+        private void OnEnable()
+        {
+            _aiPath.canMove = true;
+        }
         private void OnDestroy()
         {
             UnsubscribeOnEvents();

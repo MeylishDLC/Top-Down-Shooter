@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using Bullets.Projectile;
 using Cysharp.Threading.Tasks;
 using Player.PlayerControl;
@@ -9,6 +10,8 @@ namespace Player.PlayerAbilities
     [CreateAssetMenu(fileName = "Bomb", menuName = "Combat/Abilities/Bomb")]
     public class Bomb: Ability
     {
+        public override event Action OnAbilitySuccessfullyUsed;
+
         [SerializeField] private GameObject bombPrefab;
         [SerializeField] private float projectileMaxMoveSpeed;
         [SerializeField] private float projectileMaxHeight;
@@ -17,7 +20,6 @@ namespace Player.PlayerAbilities
         private Transform _target;
         private Transform _playerTransform;
         private Vector3 _targetPosition;
-        
         public override void Construct(PlayerMovement playerMovement)
         {
             _playerTransform = playerMovement.transform;

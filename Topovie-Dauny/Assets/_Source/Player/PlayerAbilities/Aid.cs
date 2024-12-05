@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using Cysharp.Threading.Tasks;
 using Player.PlayerCombat;
 using Player.PlayerControl;
@@ -9,11 +10,12 @@ namespace Player.PlayerAbilities
     [CreateAssetMenu(fileName = "Aid", menuName = "Combat/Abilities/Aid")]
     public class Aid: Ability
     {
+        public override event Action OnAbilitySuccessfullyUsed;
+
         [Header("Specific Settings")]
         [SerializeField] private int healAmount;
 
         private PlayerHealth _playerHealth;
-
         public override void Construct(PlayerMovement playerMovement)
         {
             _playerHealth = playerMovement.gameObject.GetComponent<PlayerHealth>();

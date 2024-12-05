@@ -12,6 +12,8 @@ namespace Player.PlayerAbilities
     [CreateAssetMenu(fileName = "Shield", menuName = "Combat/Abilities/Shield")]
     public class Shield: Ability
     {
+        public override event Action OnAbilitySuccessfullyUsed;
+
         [SerializeField] private float shieldDuration; 
         [SerializeField] private float shieldBlinkSpeedOnDisappear;
         [SerializeField] private float remainedTimeToStartBlink;
@@ -21,7 +23,6 @@ namespace Player.PlayerAbilities
         private PlayerHealth _playerHealth;
         private SpriteRenderer _shieldRenderer;
         private CancellationTokenSource _invincibilityCts = new();
-        
         public override void Construct(PlayerMovement playerMovement)
         {
             _playerHealth = playerMovement.GetComponent<PlayerHealth>();

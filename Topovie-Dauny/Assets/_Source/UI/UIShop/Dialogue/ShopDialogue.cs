@@ -1,8 +1,9 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using Cysharp.Threading.Tasks;
 using TMPro;
 
-namespace UI.UIShop
+namespace UI.UIShop.Dialogue
 {
     public class ShopDialogue
     {
@@ -18,12 +19,19 @@ namespace UI.UIShop
 
         public async UniTask TypeDialogueAsync(string text, CancellationToken token)
         {
-            _currentText = "";
-            for (int i = 0; i <= text.Length; i++)
+            try
             {
-                _currentText = text.Substring(0, i);
-                _dialogueText.text = _currentText;
-                await UniTask.Delay(_typeSpeed, cancellationToken: token);
+                _currentText = "";
+                for (int i = 0; i <= text.Length; i++)
+                {
+                    _currentText = text.Substring(0, i);
+                    _dialogueText.text = _currentText;
+                    await UniTask.Delay(_typeSpeed, cancellationToken: token);
+                }
+            }
+            catch (OperationCanceledException)
+            {
+                //
             }
         }
     }

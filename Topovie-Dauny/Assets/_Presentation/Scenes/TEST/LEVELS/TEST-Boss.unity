@@ -1427,6 +1427,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 6410922165663908456}
     - target: {fileID: 1458607276898004957, guid: 79028eface50ed546868951a9acd3747, type: 3}
+      propertyPath: dialogueConfig
+      value: 
+      objectReference: {fileID: 11400000, guid: cc87ab933c04bef47900176b71fb410e, type: 2}
+    - target: {fileID: 1458607276898004957, guid: 79028eface50ed546868951a9acd3747, type: 3}
       propertyPath: vetDialogueText
       value: 
       objectReference: {fileID: 598948926}
@@ -22719,6 +22723,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 6826085935364595012, guid: e0ed0d935843ac54d9b21f07401a0fbe, type: 3}
+    - {fileID: 2532477045862479562, guid: e0ed0d935843ac54d9b21f07401a0fbe, type: 3}
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 482713971272158758, guid: e0ed0d935843ac54d9b21f07401a0fbe, type: 3}
       insertIndex: -1
