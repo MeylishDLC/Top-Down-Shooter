@@ -94,6 +94,9 @@ namespace Enemies
         }
         private async UniTask ShowEnemyDeathAsync(CancellationToken token)
         {
+            _knockBack.OnKnockBackStarted -= DisableMovement;
+            _knockBack.OnKnockBackEnded -= EnableMovement;
+            
             DisableMovement();
             await gameObject.transform.DOScaleX(0f, deathAnimationDuration).ToUniTask(cancellationToken: token);
             gameObject.SetActive(false);
@@ -108,12 +111,6 @@ namespace Enemies
         }
         private void UnsubscribeOnEvents()
         {
-            if (_knockBack is null)
-            {
-                return;
-            }
-            _knockBack.OnKnockBackStarted -= DisableMovement;
-            _knockBack.OnKnockBackEnded -= EnableMovement;
             enemyHealth.OnDamageTaken -= ChangeColorOnDamageTaken;
             enemyHealth.OnEnemyDied -= ShowEnemyDeath;
         }
