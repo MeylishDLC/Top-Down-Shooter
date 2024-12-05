@@ -19,7 +19,6 @@ namespace Enemies
         
         private AIPath _aiPath;
         private SpriteRenderer _enemyRenderer;
-        private KnockBack _knockBack;
         private CancellationToken _deathCancellationToken;
         private Transform _playerTransform;
 
@@ -31,7 +30,6 @@ namespace Enemies
             _enemyRenderer = GetComponent<SpriteRenderer>();
             _deathCancellationToken = this.GetCancellationTokenOnDestroy();
             
-            _knockBack = enemyHealth.KnockBack;
             _initScale = transform.localScale.x;
             SubscribeOnEvents();
         }
@@ -98,9 +96,6 @@ namespace Enemies
         }
         private async UniTask ShowEnemyDeathAsync(CancellationToken token)
         {
-            _knockBack.OnKnockBackStarted -= DisableMovement;
-            _knockBack.OnKnockBackEnded -= EnableMovement;
-            
             DisableMovement();
             await gameObject.transform.DOScaleX(0f, deathAnimationDuration).ToUniTask(cancellationToken: token);
             gameObject.SetActive(false);
@@ -108,8 +103,6 @@ namespace Enemies
         }
         private void SubscribeOnEvents()
         {
-            _knockBack.OnKnockBackStarted += DisableMovement;
-            _knockBack.OnKnockBackEnded += EnableMovement;
             enemyHealth.OnDamageTaken += ChangeColorOnDamageTaken;
             enemyHealth.OnEnemyDied += ShowEnemyDeath;
         }

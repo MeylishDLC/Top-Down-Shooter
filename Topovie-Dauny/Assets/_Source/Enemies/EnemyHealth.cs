@@ -12,15 +12,10 @@ namespace Enemies
         public event Action<EnemyHealth> OnObjectDisabled;
         public event Action OnEnemyDied;
         public event Action OnDamageTaken;
-        public KnockBack KnockBack { get; private set; }
         public PlayerMovement PlayerMovement {get; private set;}
         
         [SerializeField] private EnemyMovement enemyMovement;
         [SerializeField] private int maxHealth;
-        
-        [Header("Knockback Settings")]
-        [SerializeField] private int knockBackTimeMilliseconds = 200;
-        [SerializeField] private float knockbackThrust = 15f;
         
         private int _currentHealth;
         private bool _isDead;
@@ -29,7 +24,6 @@ namespace Enemies
         public void Construct(PlayerMovement playerMovement)
         {
             PlayerMovement = playerMovement;
-            KnockBack = new KnockBack(this,GetComponent<Rigidbody2D>(), knockBackTimeMilliseconds, knockbackThrust);
             _currentHealth = maxHealth;
             enemyMovement.SetDestination(playerMovement.transform);
         }
@@ -51,7 +45,6 @@ namespace Enemies
             
             _currentHealth -= damage;
             OnDamageTaken?.Invoke();
-            KnockBack.GetKnockedBack(PlayerMovement.transform);
 
             if (_currentHealth <= 0)
             {
