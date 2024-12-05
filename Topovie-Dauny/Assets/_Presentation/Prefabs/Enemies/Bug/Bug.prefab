@@ -308,8 +308,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.09171591, y: -0.32138157}
-  m_Size: {x: 2.2538009, y: 1.1827652}
+  m_Offset: {x: -0.108009405, y: -0.44441035}
+  m_Size: {x: 1.9388111, y: 0.93671584}
   m_Direction: 1
 --- !u!50 &7945991334105029681
 Rigidbody2D:
@@ -409,8 +409,8 @@ MonoBehaviour:
   targetCompatibility: {fileID: 0}
   maxAcceleration: 3
   rotationSpeed: 360
-  slowdownDistance: 0.1
-  pickNextWaypointDist: 0.26
+  slowdownDistance: 0.32
+  pickNextWaypointDist: 0.38
   alwaysDrawGizmos: 0
   slowWhenNotFacingTarget: 1
   preventMovingBackwards: 0
@@ -600,7 +600,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 10, y: 10, z: 10}
+  m_LocalScale: {x: 8, y: 8, z: 8}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 3070392791426088969}

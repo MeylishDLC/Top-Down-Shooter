@@ -21,6 +21,7 @@ namespace UI.LevelUI
         [SerializeField] private float scaleValue;
         [SerializeField] private float scaleDuration;
 
+        private Vector3 _initScale;
         private InputListener _inputListener;
         
         [Inject]
@@ -29,9 +30,14 @@ namespace UI.LevelUI
             _inputListener = inputListener;
             confirmButton.onClick.AddListener(Confirm);
             cancelButton.onClick.AddListener(CloseConfirmationScreen);
+            _initScale = confirmationPanel.localScale;
         }
         public void OpenConfirmationScreen()
         {
+            if (gameObject.activeSelf)
+            {
+                return;
+            }
             _inputListener.SetInput(false);
             confirmationScreen.gameObject.SetActive(true);
             AnimateAsync(CancellationToken.None).Forget();
@@ -50,10 +56,9 @@ namespace UI.LevelUI
         {
             SetButtonActive(false);
             
-            var initScale = confirmationPanel.localScale;
             await confirmationPanel.DOScale(scaleValue, scaleDuration).SetLoops(2, LoopType.Yoyo)
                 .ToUniTask(cancellationToken: token);
-            confirmationPanel.localScale = initScale;
+            confirmationPanel.localScale = _initScale;
             
             SetButtonActive(true);
         }
