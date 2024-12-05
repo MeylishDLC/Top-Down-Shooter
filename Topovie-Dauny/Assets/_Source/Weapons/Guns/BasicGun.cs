@@ -25,7 +25,7 @@ namespace Weapons.Guns
         private PlayerKickback _playerKickback;
         private BulletPool _bulletPool;
         private float _remainingTime;
-        public void Initialize(BulletPool bulletPool)
+        public override void Initialize(BulletPool bulletPool)
         {
             _playerKickback = new PlayerKickback(kickbackDistance, kickbackDuration,transform, kickbackTransform);
             CurrentBulletsAmount = BulletsAmount;

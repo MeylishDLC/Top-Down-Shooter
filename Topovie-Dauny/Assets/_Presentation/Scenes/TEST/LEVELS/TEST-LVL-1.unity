@@ -454,9 +454,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 108325197}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2350c9c7e2c9484294533b1811782c1a, type: 3}
+  m_Script: {fileID: 11500000, guid: 049bb2755067432c90a4e05162bfc1f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  guns:
+  - {fileID: 696262010}
+  - {fileID: 620779489402787806}
+  containers:
+  - {fileID: 216725094}
+  - {fileID: 162743283}
+  towers: []
   pathfinder: {fileID: 3507204203854159203}
   environmentPrefab:
     m_AssetGUID: 9106a44d6dece3f4daa8e01004e8c523
@@ -465,11 +472,6 @@ MonoBehaviour:
     m_EditorAssetChanged: 0
   playerRespawnPoint: {fileID: 1700621646}
   playerObject: {fileID: 620779489402787807}
-  pistolGun: {fileID: 696262010}
-  ppGun: {fileID: 620779489402787806}
-  containers:
-  - {fileID: 216725094}
-  - {fileID: 162743283}
 --- !u!114 &114847100
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -625,7 +627,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0dbc8b90140d43868fe0dd348f29b554, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <EnemyPrefabAssetName>k__BackingField: MuzhikShooter
+  <EnemyPrefabAssetName>k__BackingField: Muzhik
 --- !u!1 &176860843
 GameObject:
   m_ObjectHideFlags: 0

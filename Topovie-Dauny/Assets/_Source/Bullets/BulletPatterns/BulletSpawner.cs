@@ -10,7 +10,7 @@ namespace Bullets.BulletPatterns
     public class BulletSpawner : MonoBehaviour, IPoolUser
 {
     [SerializeField] private BulletSpawnerConfig config;
-
+    
     private EnemyBulletPool _enemyBulletPool;
     private float _timer;
     private float _angleOffset;
@@ -19,7 +19,6 @@ namespace Bullets.BulletPatterns
     {
         _enemyBulletPool = pool;
     }
-
     private void Update()
     {
         _timer += Time.deltaTime;
@@ -39,7 +38,6 @@ namespace Bullets.BulletPatterns
             _timer = 0;
         }
     }
-
     private void Fire()
     {
         if (config.SpawnerType == SpawnerType.RadialSpin)

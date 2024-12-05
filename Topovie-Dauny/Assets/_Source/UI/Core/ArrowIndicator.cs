@@ -60,6 +60,10 @@ namespace UI.Core
         }
         private void OnCinemachineCameraUpdated(CinemachineBrain brain)
         {
+            if (!_player)
+            {
+                return;
+            }
             if (IsCloseToTarget())
             {
                 if (!_isFaded)

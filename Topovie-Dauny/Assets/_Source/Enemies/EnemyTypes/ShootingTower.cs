@@ -11,6 +11,7 @@ namespace Enemies.EnemyTypes
 {
     public class ShootingTower: MonoBehaviour, IPoolUser
     {
+        [field:SerializeField] public string EnemyBulletAssetName { get; private set; }
         [SerializeField] private BulletSpawner[] bulletSpawners;
         [SerializeField] private float shootTime;
         [SerializeField] private float delayBetweenShooting;

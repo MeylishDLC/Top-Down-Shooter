@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3600414297483875113}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: FirePoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -25,7 +25,7 @@ Transform:
   m_GameObject: {fileID: 263698958457409514}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: 0.0000008214264, w: 1}
-  m_LocalPosition: {x: 1.0300001, y: 0.58990455, z: 5304.524}
+  m_LocalPosition: {x: 1.0300001, y: 0.58990455, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -45,7 +45,7 @@ GameObject:
   - component: {fileID: 8280761124210143465}
   - component: {fileID: 5781345561014339661}
   - component: {fileID: 7447856476305550677}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: TowerOpen
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -105,8 +105,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -1160405377
-  m_SortingLayer: 5
+  m_SortingLayerID: 1379740221
+  m_SortingLayer: 6
   m_SortingOrder: 0
   m_Sprite: {fileID: 2051708044, guid: f9fa26d26a033fb45b907bfbbbd8979c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -150,7 +150,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5640118286011725038}
   - component: {fileID: 2006902646129667962}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Fire (1)
   m_TagString: Untagged
   m_Icon: {fileID: 1206586993520771344, guid: 0000000000000000d000000000000000, type: 0}
@@ -195,7 +195,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8175419169588821824}
   - component: {fileID: 5725458756350492423}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Fire (2)
   m_TagString: Untagged
   m_Icon: {fileID: 1206586993520771344, guid: 0000000000000000d000000000000000, type: 0}
@@ -240,7 +240,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6361768470024353454}
   - component: {fileID: 8859352941417817826}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Fire
   m_TagString: Untagged
   m_Icon: {fileID: 1206586993520771344, guid: 0000000000000000d000000000000000, type: 0}
@@ -285,7 +285,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8254613597791321651}
   - component: {fileID: 6625213008478135735}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: TowerJaw
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -301,7 +301,7 @@ Transform:
   m_GameObject: {fileID: 7117342818449279337}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.15000089, y: 2.9700973, z: -5304.524}
+  m_LocalPosition: {x: -0.15000089, y: 2.9700973, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -371,6 +371,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4871503046708620930}
   - component: {fileID: 2486055880241781864}
+  - component: {fileID: 5399920363716889044}
   m_Layer: 6
   m_Name: Base
   m_TagString: Untagged
@@ -446,6 +447,41 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!70 &5399920363716889044
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7292830570989531358}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.14108214, y: 0.5172242}
+  m_Size: {x: 3.9592626, y: 3.9592626}
+  m_Direction: 0
 --- !u!1 &7368513504346754492
 GameObject:
   m_ObjectHideFlags: 0
@@ -456,7 +492,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3268475803421246599}
   - component: {fileID: 7235073318342568389}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Tower
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -491,6 +527,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d4176e6eacf416a92ce6fd531b61c56, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <EnemyBulletAssetName>k__BackingField: EnemyBracket(tower)
   bulletSpawners:
   - {fileID: 8859352941417817826}
   - {fileID: 2006902646129667962}

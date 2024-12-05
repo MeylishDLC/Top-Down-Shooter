@@ -1816,7 +1816,7 @@ GameObject:
   - component: {fileID: 1061318768}
   - component: {fileID: 1061318769}
   m_Layer: 0
-  m_Name: Leos
+  m_Name: Men
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1849,7 +1849,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0dbc8b90140d43868fe0dd348f29b554, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <EnemyPrefabAssetName>k__BackingField: Leo
+  <EnemyPrefabAssetName>k__BackingField: Muzhik
 --- !u!114 &1068016372 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8222006818653636734, guid: e0ed0d935843ac54d9b21f07401a0fbe, type: 3}
@@ -2018,30 +2018,6 @@ MonoBehaviour:
   mainCamera: {fileID: 4081401207632641913}
   levelDialogueConfig: {fileID: 11400000, guid: 8cf759aa29c0eb64d938bef452cd135c, type: 2}
   poolInitializerConfig: {fileID: 11400000, guid: a28ab32df95841844b6b655aa58497d5, type: 2}
---- !u!114 &1541323202
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2185695681908027189}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f0d39936ea1642d8bdf14e158a86269d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pathfinder: {fileID: 3507204203854159205}
-  environmentPrefab:
-    m_AssetGUID: 46ad1b7b34c44c64191c8ba523b2785c
-    m_SubObjectName: 
-    m_SubObjectType: 
-    m_EditorAssetChanged: 0
-  playerRespawnPoint: {fileID: 2036484950}
-  playerObject: {fileID: 366786689}
-  tutorial: {fileID: 2071173041}
-  pistolGun: {fileID: 696262010}
-  containers:
-  - {fileID: 1061318769}
 --- !u!4 &1612465537 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5448661762863528021, guid: af35db23b32508c4ab8e46f098395935, type: 3}
@@ -2798,7 +2774,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4782610329963665305}
-  - component: {fileID: 1541323202}
+  - component: {fileID: 4782610329963665306}
   m_Layer: 0
   m_Name: TutorBootstrapper
   m_TagString: Untagged
@@ -2950,6 +2926,31 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1037799472}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4782610329963665306
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2185695681908027189}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 049bb2755067432c90a4e05162bfc1f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  guns:
+  - {fileID: 696262010}
+  containers:
+  - {fileID: 1061318769}
+  towers: []
+  pathfinder: {fileID: 3507204203854159205}
+  environmentPrefab:
+    m_AssetGUID: 46ad1b7b34c44c64191c8ba523b2785c
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0
+  playerRespawnPoint: {fileID: 2036484950}
+  playerObject: {fileID: 366786689}
 --- !u!1 &4852689288085394241 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4076473393843435854, guid: ba3f276fa16aec249a029d4ce9df78dd, type: 3}

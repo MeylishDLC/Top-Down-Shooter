@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using Core.InputSystem;
+using Core.SceneManagement;
 using Cysharp.Threading.Tasks;
 using DialogueSystem;
 using GameEnvironment;
@@ -39,10 +40,12 @@ namespace UI.Tutorial
         
         private InputListener _inputListener;
         private DialogueManager _dialogueManager;
+        private SceneLoader _sceneLoader;
 
         [Inject]
-        public void Construct(InputListener inputListener, DialogueManager dialogueManager)
+        public void Construct(InputListener inputListener, DialogueManager dialogueManager, SceneLoader sceneLoader)
         {
+            _sceneLoader = sceneLoader;
             _dialogueManager = dialogueManager;
             _inputListener = inputListener;
         }
@@ -51,8 +54,13 @@ namespace UI.Tutorial
             wasdIndicator.gameObject.SetActive(false);
             abilitiesIndicator.gameObject.SetActive(false);
             abilitiesIndicator.gameObject.SetActive(false);
+            
+            if (_sceneLoader.CurrentSceneIndex != _sceneLoader.LastSceneIndex)
+            {
+                EnableTutorial();
+            }
         }
-        public void EnableTutorial()
+        private void EnableTutorial()
         {
             portalTrigger.enabled = false;
             shopTrigger.enabled = false;

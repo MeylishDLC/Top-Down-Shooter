@@ -32,7 +32,7 @@ namespace Weapons.Guns
         private float _remainingTime;
         private bool _canShoot = true;
         
-        public void Initialize(BulletPool bulletPool)
+        public override void Initialize(BulletPool bulletPool)
         {
             _playerKickback = new PlayerKickback(kickbackDistance, kickbackDuration,transform, kickbackTransform);
             CurrentBulletsAmount = BulletsAmount;

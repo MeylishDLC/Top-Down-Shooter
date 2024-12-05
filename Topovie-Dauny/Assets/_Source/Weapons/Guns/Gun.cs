@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading;
+using Bullets.BulletPools;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -21,6 +22,7 @@ namespace Weapons.Guns
         [field:Header("UI")]
         [field:SerializeField] public Sprite GunIconSprite { get; protected set; }
         [field:SerializeField] public Image GunKeyImage { get; protected set; }
+        public abstract void Initialize(BulletPool pool);
         public abstract void Shoot();
         public abstract void StopReload();
         protected abstract void Reload();

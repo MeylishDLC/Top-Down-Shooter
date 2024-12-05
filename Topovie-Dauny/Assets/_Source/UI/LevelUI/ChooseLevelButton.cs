@@ -50,22 +50,15 @@ namespace UI.LevelUI
         }
         private void UpdateButton()
         {
-            var passedLevels = _levelSave.GetLevelsPassed();
-            var lastLevelPassed = passedLevels-1;
-            if (lastLevelPassed == levelNumber || passedLevels == levelNumber)
+            var nextLevelNumber = _levelSave.GetLevelsPassed();
+
+            if (levelNumber <= nextLevelNumber)
             {
                 SetUnlocked();
             }
             else
             {
-                if (levelNumber == 0)
-                {
-                    SetUnlocked();
-                }
-                else
-                {
-                    SetLocked();
-                }
+                SetLocked();
             }
         }
         private void SetLocked()

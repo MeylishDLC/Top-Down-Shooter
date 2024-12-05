@@ -16521,7 +16521,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2b466e7ecab41559001d1bfeed91dad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pathfinder: {fileID: 0}
+  guns:
+  - {fileID: 696262010}
+  - {fileID: 2087668938}
+  - {fileID: 802135425}
+  - {fileID: 909284519}
+  fireballsSpawners:
+  - <FireballAssetName>k__BackingField: Fireball
+    <BulletSpawner>k__BackingField: {fileID: 1690919634}
+  - <FireballAssetName>k__BackingField: Fireball
+    <BulletSpawner>k__BackingField: {fileID: 1926940746}
+  - <FireballAssetName>k__BackingField: Fireball
+    <BulletSpawner>k__BackingField: {fileID: 1487045277}
+  - <FireballAssetName>k__BackingField: OrbitingFireball
+    <BulletSpawner>k__BackingField: {fileID: 650440356}
   environmentPrefab:
     m_AssetGUID: 88f94ed5513e48c4a9d7c4818e07abec
     m_SubObjectName: 
@@ -16529,19 +16542,6 @@ MonoBehaviour:
     m_EditorAssetChanged: 0
   playerRespawnPoint: {fileID: 1835977052}
   playerObject: {fileID: 454037946}
-  pistolGun: {fileID: 696262010}
-  ppGun: {fileID: 2087668938}
-  shotgun: {fileID: 802135425}
-  rpgGun: {fileID: 909284519}
-  bulletSpawners:
-  - <EnemyAssetName>k__BackingField: Fireball
-    <Object>k__BackingField: {fileID: 1690919634}
-  - <EnemyAssetName>k__BackingField: Fireball
-    <Object>k__BackingField: {fileID: 1926940746}
-  - <EnemyAssetName>k__BackingField: Fireball
-    <Object>k__BackingField: {fileID: 1487045277}
-  - <EnemyAssetName>k__BackingField: OrbitingFireball
-    <Object>k__BackingField: {fileID: 650440356}
 --- !u!1 &4852689288085394241 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4076473393843435854, guid: ba3f276fa16aec249a029d4ce9df78dd, type: 3}
