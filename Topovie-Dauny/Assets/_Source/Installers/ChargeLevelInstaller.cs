@@ -7,6 +7,7 @@ using DialogueSystem.LevelDialogue;
 using Player.PlayerCombat;
 using Player.PlayerControl;
 using UI.Core;
+using UI.PlayerGUI;
 using UI.UIShop;
 using UnityEngine;
 using Zenject;
@@ -99,7 +100,6 @@ namespace Installers
             Container.Bind<LevelDialogues>().AsSingle()
                 .WithArguments(levelChargesHandler, _dialogueManager, levelDialogueConfig);
         }
-
         private void BindPoolInitializer()
         {
             _poolInitializer = new PoolInitializer(poolInitializerConfig);

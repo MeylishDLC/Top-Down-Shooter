@@ -3509,6 +3509,22 @@ PrefabInstance:
       propertyPath: showGraphs
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2221232130911802252, guid: c6a250a527255e6469bb66117addd5ee, type: 3}
+      propertyPath: threadCount
+      value: -2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2221232130911802252, guid: c6a250a527255e6469bb66117addd5ee, type: 3}
+      propertyPath: maxFrameTime
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 2221232130911802252, guid: c6a250a527255e6469bb66117addd5ee, type: 3}
+      propertyPath: scanOnStartup
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2221232130911802252, guid: c6a250a527255e6469bb66117addd5ee, type: 3}
+      propertyPath: logPathResults
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 3355572311016342327, guid: c6a250a527255e6469bb66117addd5ee, type: 3}
       propertyPath: m_Name
       value: Pathfinding
@@ -4194,6 +4210,14 @@ PrefabInstance:
     - target: {fileID: 3299117446147514168, guid: e0ed0d935843ac54d9b21f07401a0fbe, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3483689785325735237, guid: e0ed0d935843ac54d9b21f07401a0fbe, type: 3}
+      propertyPath: target
+      value: 
+      objectReference: {fileID: 505231907}
+    - target: {fileID: 3483689785325735237, guid: e0ed0d935843ac54d9b21f07401a0fbe, type: 3}
+      propertyPath: hideDistance
+      value: 3.9
       objectReference: {fileID: 0}
     - target: {fileID: 3668824664310652873, guid: e0ed0d935843ac54d9b21f07401a0fbe, type: 3}
       propertyPath: m_AnchoredPosition.y
