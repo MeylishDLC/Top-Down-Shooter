@@ -361,6 +361,94 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &7261264635920231479
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6156105544608113844}
+  - component: {fileID: 7426326496115153013}
+  m_Layer: 8
+  m_Name: Trigger
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6156105544608113844
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7261264635920231479}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3268475803421246599}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!60 &7426326496115153013
+PolygonCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7261264635920231479}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: 0.08508499, y: 0.11521967}
+      - {x: 0.11196111, y: 0.17505285}
+      - {x: 0.052047692, y: 0.29886207}
+      - {x: -0.06306409, y: 0.29950076}
+      - {x: -0.11659857, y: 0.1758064}
+      - {x: -0.084716566, y: 0.121844284}
+      - {x: -0.13829201, y: 0.06178826}
+      - {x: -0.16384637, y: -0.04931879}
+      - {x: -0.0068242373, y: -0.17415553}
+      - {x: 0.15706366, y: -0.04931891}
+      - {x: 0.12845421, y: 0.06280905}
+  m_UseDelaunayMesh: 0
 --- !u!1 &7292830570989531358
 GameObject:
   m_ObjectHideFlags: 0
@@ -492,6 +580,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3268475803421246599}
   - component: {fileID: 7235073318342568389}
+  - component: {fileID: 4371402125102881943}
   m_Layer: 0
   m_Name: Tower
   m_TagString: Untagged
@@ -513,6 +602,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4871503046708620930}
+  - {fileID: 6156105544608113844}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &7235073318342568389
@@ -540,3 +630,23 @@ MonoBehaviour:
   maxAngle: 29
   minAngle: -29
   waitTimeOnAngleReached: 1
+--- !u!114 &4371402125102881943
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7368513504346754492}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0d6042718ce4800b299e41b3998328e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shootingTower: {fileID: 7235073318342568389}
+  maxHealth: 300
+  towerImages:
+  - {fileID: 2486055880241781864}
+  - {fileID: 6625213008478135735}
+  - {fileID: 5781345561014339661}
+  colorOnHit: {r: 0.6698113, g: 0.6698113, b: 0.6698113, a: 1}
+  colorStayDuration: 0.2

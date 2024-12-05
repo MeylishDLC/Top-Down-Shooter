@@ -20,6 +20,7 @@ namespace Core.SceneManagement
         public async UniTask LoadSceneAsync(int index, bool disableScreenOnLoad = true)
         {
             LastSceneIndex = SceneManager.GetActiveScene().buildIndex; 
+            CurrentSceneIndex = index;
             _loadingSlider.value = 0;
             _loadingScreen.gameObject.SetActive(true);
             
@@ -45,7 +46,6 @@ namespace Core.SceneManagement
             {
                 _loadingScreen.gameObject.SetActive(false);
             }
-            CurrentSceneIndex = index;
         }
         public void SetLoadingScreenActive(bool active)
         {

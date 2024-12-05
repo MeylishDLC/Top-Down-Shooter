@@ -58,6 +58,14 @@ namespace Enemies.EnemyTypes
                 bulletSpawner.InjectPool(pool);
             }
         }
+        public async UniTask StopShootingAsync(CancellationToken token)
+        {
+            CancelRecreateCts();
+            SetBulletSpawnersEnabled(false);
+            jawAnimator.SetTrigger(Close);
+            await towerJawTransform.DORotate(new Vector3(0, 0, 0), animationSpeed)
+                .ToUniTask(cancellationToken: token);
+        }
         private void SetEnableOnStateChange(GameStates state)
         {
             if (state == GameStates.Fight)
@@ -106,14 +114,6 @@ namespace Enemies.EnemyTypes
             {
                 //
             }
-        }
-        private async UniTask StopShootingAsync(CancellationToken token)
-        {
-            CancelRecreateCts();
-            SetBulletSpawnersEnabled(false);
-            jawAnimator.SetTrigger(Close);
-            await towerJawTransform.DORotate(new Vector3(0, 0, 0), animationSpeed)
-                .ToUniTask(cancellationToken: token);
         }
         private void SetTowerShooting(bool isShooting)
         {

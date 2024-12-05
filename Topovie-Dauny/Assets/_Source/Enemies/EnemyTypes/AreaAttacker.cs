@@ -37,7 +37,11 @@ namespace Enemies.EnemyTypes
         private PlayerHealth _playerHealth;
         private bool _isPlayerInRange;
         private bool _isWarning;
-        
+        private void OnEnable()
+        {
+            _isWarning = false;
+            _isPlayerInRange = false;
+        }
         private void Start()
         {
             _destroyCancellationToken = this.GetCancellationTokenOnDestroy();
