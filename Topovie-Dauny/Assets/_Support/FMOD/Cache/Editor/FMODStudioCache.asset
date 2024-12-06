@@ -15,11 +15,65 @@ MonoBehaviour:
   Path: FMODProject/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 638690850317118914
+  lastModified: 638690863046134564
   FileSizes:
   - Name: Desktop
     Value: 1340
   Exists: 1
+--- !u!114 &-5312013320122821637
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/Weapon/RPG
+  m_EditorClassIdentifier: 
+  Path: event:/SFX/Weapon/RPG
+  Guid:
+    Data1: -178533124
+    Data2: 1304917915
+    Data3: -986002531
+    Data4: 1092935876
+  Banks:
+  - {fileID: 3210779146886205598}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
+--- !u!114 &-3044483495672890884
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/Weapon/Shotgun
+  m_EditorClassIdentifier: 
+  Path: event:/SFX/Weapon/Shotgun
+  Guid:
+    Data1: -635287834
+    Data2: 1224631674
+    Data3: -1832393849
+    Data4: -448619877
+  Banks:
+  - {fileID: 3210779146886205598}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
 --- !u!114 &-2274775018662892179
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -55,11 +109,38 @@ MonoBehaviour:
   Path: FMODProject/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638690850317138938
+  lastModified: 638690863046144564
   FileSizes:
   - Name: Desktop
-    Value: 928
+    Value: 1164
   Exists: 1
+--- !u!114 &-1316820983204886502
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/Weapon/Pistol
+  m_EditorClassIdentifier: 
+  Path: event:/SFX/Weapon/Pistol
+  Guid:
+    Data1: -1622220916
+    Data2: 1139440784
+    Data3: -1588397439
+    Data4: 1376928653
+  Banks:
+  - {fileID: 3210779146886205598}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -79,13 +160,45 @@ MonoBehaviour:
   - {fileID: 3210779146886205598}
   EditorEvents:
   - {fileID: 2736141594847941616}
+  - {fileID: 7545971346797453203}
+  - {fileID: -1316820983204886502}
+  - {fileID: 458141876425460587}
+  - {fileID: -3044483495672890884}
+  - {fileID: -5312013320122821637}
   EditorParameters: []
   MasterBanks:
   - {fileID: -6366681157243713885}
   StringsBanks:
   - {fileID: -1816647176805912851}
-  cacheTime: 638690850346399297
+  cacheTime: 638690863047898503
   cacheVersion: 131616
+--- !u!114 &458141876425460587
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/Weapon/PP
+  m_EditorClassIdentifier: 
+  Path: event:/SFX/Weapon/PP
+  Guid:
+    Data1: -1686944547
+    Data2: 1103764357
+    Data3: 460686218
+    Data4: -1159454748
+  Banks:
+  - {fileID: 3210779146886205598}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
 --- !u!114 &2736141594847941616
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -128,8 +241,35 @@ MonoBehaviour:
   Path: FMODProject/Build/Desktop/SFX.bank
   Name: SFX
   StudioPath: bank:/SFX
-  lastModified: 638690850346399297
+  lastModified: 638690863047898503
   FileSizes:
   - Name: Desktop
-    Value: 494
+    Value: 90240
   Exists: 1
+--- !u!114 &7545971346797453203
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/Weapon/Reload
+  m_EditorClassIdentifier: 
+  Path: event:/SFX/Weapon/Reload
+  Guid:
+    Data1: 1303656549
+    Data2: 1283491190
+    Data3: 359644289
+    Data4: -1933706188
+  Banks:
+  - {fileID: 3210779146886205598}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0

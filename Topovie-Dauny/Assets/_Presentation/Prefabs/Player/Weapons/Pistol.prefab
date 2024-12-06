@@ -73,7 +73,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 809442407
-  m_SortingLayer: 7
+  m_SortingLayer: 8
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 418639eb874e32847845bee72f64f304, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -105,7 +105,14 @@ MonoBehaviour:
   <ShootOnHold>k__BackingField: 0
   <GunIconSprite>k__BackingField: {fileID: 36620012, guid: 6c125c16a37ab8d458057719f06f66d9, type: 3}
   <GunKeyImage>k__BackingField: {fileID: 0}
-  bulletPrefab: {fileID: 553695123358261265, guid: ab3184001d669df459f90e8f257dd1f5, type: 3}
+  shootSound:
+    Guid:
+      Data1: -1622220916
+      Data2: 1139440784
+      Data3: -1588397439
+      Data4: 1376928653
+    Path: event:/SFX/Weapon/Pistol
+  soundDelay: 0
   firingPointAnimator: {fileID: 4011225631588486583}
   reloadingImage: {fileID: 0}
   kickbackTransform: {fileID: 0}
@@ -205,7 +212,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1002419675
-  m_SortingLayer: 9
+  m_SortingLayer: 11
   m_SortingOrder: 0
   m_Sprite: {fileID: 0}
   m_Color: {r: 0, g: 0, b: 0, a: 1}

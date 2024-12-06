@@ -11,8 +11,11 @@ using Cysharp.Threading.Tasks;
 using DialogueSystem.LevelDialogue;
 using Enemies;
 using Enemies.EnemyTypes;
+using FMOD.Studio;
+using SoundSystem;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using UnityEngine.SceneManagement;
 using Weapons.Guns;
 using Zenject;
 
@@ -39,22 +42,24 @@ namespace Core.Bootstrappers
         private LevelChargesHandler _levelChargesHandler;
         private LevelDialogues _levelDialogues;
         private SceneLoader _sceneLoader;
+        private AudioManager _audioManager;
         
         [Inject]
         public void Construct(SceneLoader sceneLoader, PoolInitializer poolInitializer, LevelChargesHandler levelChargesHandler,
-            LevelDialogues levelDialogues)
+            LevelDialogues levelDialogues, AudioManager audioManager)
         {
             _sceneLoader = sceneLoader;
             _poolInitializer = poolInitializer;
             _levelChargesHandler = levelChargesHandler;
             _levelDialogues = levelDialogues;
+            _audioManager = audioManager;
         }
         private void Awake()
         {
             _sceneLoader.SetLoadingScreenActive(true);
             Initialize(CancellationToken.None)
                 .ContinueWith(() => InstantiateAssets(CancellationToken.None))
-                .ContinueWith(() => _sceneLoader.SetLoadingScreenActive(false)).Forget();
+                .ContinueWith(ShowScene).Forget();
         }
         private void Start()
         {
@@ -72,6 +77,13 @@ namespace Core.Bootstrappers
             {
                 pathfinder.Scan();
             }
+        }
+        private void ShowScene()
+        {
+            var levelNumber = SceneManager.GetActiveScene().buildIndex - 2;
+            var music = _audioManager.FMODEvents.LevelsMusic[levelNumber];
+            _audioManager.ChangeMusic(music, STOP_MODE.ALLOWFADEOUT);
+            _sceneLoader.SetLoadingScreenActive(false);
         }
         private async UniTask Initialize(CancellationToken cancellationToken)
         {

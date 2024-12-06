@@ -2,15 +2,21 @@
 using System.Threading;
 using Bullets.BulletPools;
 using Cysharp.Threading.Tasks;
+using FMODUnity;
 using Player.PlayerControl.GunMovement;
+using SoundSystem;
 using UnityEngine;
 using UnityEngine.UI;
+using Zenject;
 using Random = UnityEngine.Random;
 
 namespace Weapons.Guns
 {
     public class Shotgun: Gun
     {
+        [field:Header("Sound")]
+        [SerializeField] private EventReference shootSound;
+        
         [field:Header("Main Settings")]
         [SerializeField] private Transform firingPoint;
         [SerializeField] private int bulletsPerShot = 5;
@@ -26,12 +32,18 @@ namespace Weapons.Guns
         [SerializeField] private float kickbackDuration;
    
         private static readonly int shoot = Animator.StringToHash("shoot");
-        
+
+        private AudioManager _audioManager;
         private PlayerKickback _playerKickback;
         private BulletPool _bulletPool;
         private float _remainingTime;
         private bool _canShoot = true;
-        
+
+        [Inject]
+        public void Construct(AudioManager audioManager)
+        {
+            _audioManager = audioManager;
+        }
         public override void Initialize(BulletPool bulletPool)
         {
             _playerKickback = new PlayerKickback(kickbackDistance, kickbackDuration,transform, kickbackTransform);
@@ -83,6 +95,7 @@ namespace Weapons.Guns
                     bullet.transform.right = direction;
                 }
             }
+            _audioManager.PlayOneShot(shootSound);
             _playerKickback.ApplyKickback(CancellationToken.None).Forget();
             WaitDelayBetweenShots(CancellationToken.None).Forget();
         }
@@ -103,6 +116,7 @@ namespace Weapons.Guns
         private async UniTask ReloadAsync(CancellationToken token)
         {
             ShowReloadingImage();
+            _audioManager.PlayOneShot(_audioManager.FMODEvents.ReloadSound);
             await UpdateReloadingImageAsync(token);
             if (!token.IsCancellationRequested)
             {
