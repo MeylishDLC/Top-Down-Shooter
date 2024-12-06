@@ -2774,7 +2774,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4782610329963665305}
-  - component: {fileID: 4782610329963665306}
+  - component: {fileID: 4782610329963665307}
   m_Layer: 0
   m_Name: TutorBootstrapper
   m_TagString: Untagged
@@ -2926,7 +2926,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1037799472}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4782610329963665306
+--- !u!114 &4782610329963665307
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2935,7 +2935,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2185695681908027189}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 049bb2755067432c90a4e05162bfc1f3, type: 3}
+  m_Script: {fileID: 11500000, guid: 5a59fbe36a9b4570bfbb8c179c9fd89e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   guns:
@@ -2951,6 +2951,7 @@ MonoBehaviour:
     m_EditorAssetChanged: 0
   playerRespawnPoint: {fileID: 2036484950}
   playerObject: {fileID: 366786689}
+  tutorial: {fileID: 2071173041}
 --- !u!1 &4852689288085394241 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4076473393843435854, guid: ba3f276fa16aec249a029d4ce9df78dd, type: 3}

@@ -54,20 +54,19 @@ namespace UI.Tutorial
             wasdIndicator.gameObject.SetActive(false);
             abilitiesIndicator.gameObject.SetActive(false);
             abilitiesIndicator.gameObject.SetActive(false);
-            
-            if (_sceneLoader.CurrentSceneIndex != _sceneLoader.LastSceneIndex)
-            {
-                EnableTutorial();
-            }
         }
-        private void EnableTutorial()
+        public void EnableTutorial()
         {
+            if (_sceneLoader.CurrentSceneIndex == _sceneLoader.LastSceneIndex)
+            {
+                return;
+            }
             portalTrigger.enabled = false;
             shopTrigger.enabled = false;
             
             _inputListener.SetInput(false, true);
             _dialogueManager.EnterDialogueMode(dialogueOnTutorialStart);
-            _dialogueManager.OnDialogueEnded += StartTutorial; 
+            _dialogueManager.OnDialogueEnded += StartTutorial;
         }
         private void StartTutorial()
         {
@@ -82,11 +81,9 @@ namespace UI.Tutorial
         {
             await UniTask.Delay(TimeSpan.FromSeconds(timeBeforeWasdIndicatorAppear), cancellationToken: token);
             wasdIndicator.gameObject.SetActive(true);
-            //todo indicator animation
             
             await ReadWalkInputAsync(token);
             await UniTask.Delay(TimeSpan.FromSeconds(wasdIndicatorDisappearTime), cancellationToken: token);
-            //todo stop indicator animation
             wasdIndicator.gameObject.SetActive(false);
         }
         private async UniTask ReadWalkInputAsync(CancellationToken token)
@@ -101,8 +98,6 @@ namespace UI.Tutorial
             _inputListener.SetFiringAbility(true);
             await UniTask.Delay(TimeSpan.FromSeconds(timeBeforeAttackIndicatorAppear), cancellationToken: token);
             attackIndicator.gameObject.SetActive(true);
-            //todo indicator animation
-            
             _inputListener.OnFirePressed += GetFirePressed;
         }
         private void GetFirePressed()
@@ -113,9 +108,7 @@ namespace UI.Tutorial
         private async UniTask OnFirePressedAsync(CancellationToken token)
         {
             await UniTask.Delay(TimeSpan.FromSeconds(attackIndicatorDisappearTime), cancellationToken: token);
-            //todo stop indicator animation
             attackIndicator.gameObject.SetActive(false);
-            
             await ReadUseAbilityInput(token);
         }
         private async UniTask ReadUseAbilityInput(CancellationToken token)

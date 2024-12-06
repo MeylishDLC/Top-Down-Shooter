@@ -1,4 +1,5 @@
-﻿using Core.InputSystem;
+﻿using System;
+using Core.InputSystem;
 using Core.SceneManagement;
 using Cysharp.Threading.Tasks;
 using UI.Core;
@@ -20,7 +21,8 @@ namespace UI.Menus
         [Header("Options Screen")]
         [SerializeField] private GameObject optionsScreen;
         [SerializeField] private Button optionsReturnButton;
-        
+
+        private const float DelayBeforeCanPause = 2f;
         private CustomCursor _customCursor;
         private SceneLoader _sceneLoader;
         private InputListener _inputListener;
@@ -40,7 +42,8 @@ namespace UI.Menus
             menuButton.onClick.AddListener(GoToMainMenu);
             optionsReturnButton.onClick.AddListener(ReturnToPause);
             
-            _inputListener.OnPausePressed += HandlePausePressed;
+            UniTask.Delay(TimeSpan.FromSeconds(DelayBeforeCanPause))
+                .ContinueWith(() => _inputListener.OnPausePressed += HandlePausePressed).Forget();
         }
         private void OnDestroy()
         {

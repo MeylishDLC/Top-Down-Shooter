@@ -45,6 +45,7 @@ namespace Enemies
         {
             _aiPath = GetComponent<AIPath>();
             _enemyRenderer = GetComponent<SpriteRenderer>();
+            _enemyRenderer.sortingOrder = Random.Range (0, 100);
             _deathCancellationToken = this.GetCancellationTokenOnDestroy();
             
             _initScale = transform.localScale.x;

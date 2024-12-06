@@ -10,50 +10,62 @@ using Core.SceneManagement;
 using Cysharp.Threading.Tasks;
 using DialogueSystem.LevelDialogue;
 using Enemies;
+using FMOD.Studio;
+using SoundSystem;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
 using Weapons.Guns;
 using Zenject;
 
 namespace Core.Bootstrappers
 {
-    public class BossLevelBootstrapper: MonoBehaviour
+    public class BossLevelBootstrapper : MonoBehaviour
     {
-        [Header("Guns")] 
-        [SerializeField] private List<Gun> guns;
-        
-        [FormerlySerializedAs("fireballs")]
-        [Header("Fireball Spawners")]
-        [SerializeField] private FireballSpawnerNamePair[] fireballsSpawners;
-        
-        [Header("Scene Load Stuff")] 
-        [SerializeField] private AssetReferenceGameObject environmentPrefab;
+        [Header("Guns")] [SerializeField] private List<Gun> guns;
+
+        [FormerlySerializedAs("fireballs")] [Header("Fireball Spawners")] [SerializeField]
+        private FireballSpawnerNamePair[] fireballsSpawners;
+
+        [Header("Scene Load Stuff")] [SerializeField]
+        private AssetReferenceGameObject environmentPrefab;
+
         [SerializeField] private Transform playerRespawnPoint;
         [SerializeField] private GameObject playerObject;
-        
+
         private const float LoadDelay = 0.7f;
         private readonly AssetLoader _environmentLoader = new();
         private PoolInitializer _poolInitializer;
         private SceneLoader _sceneLoader;
-        
+        private AudioManager _audioManager;
+
         [Inject]
-        public void Construct(PoolInitializer poolInitializer, SceneLoader sceneLoader)
+        public void Construct(PoolInitializer poolInitializer, SceneLoader sceneLoader, AudioManager audioManager)
         {
             _poolInitializer = poolInitializer;
             _sceneLoader = sceneLoader;
+            _audioManager = audioManager;
         }
         private void Awake()
         {
             _sceneLoader.SetLoadingScreenActive(true);
             Initialize(CancellationToken.None)
                 .ContinueWith(() => InstantiateAssets(CancellationToken.None))
-                .ContinueWith(() => _sceneLoader.SetLoadingScreenActive(false)).Forget();
+                .ContinueWith(ShowScene).Forget();
         }
+
         private void OnDestroy()
         {
             _environmentLoader.ReleaseStoredInstance();
             _poolInitializer.CleanUp();
+        }
+        private void ShowScene()
+        {
+            var levelNumber = SceneManager.GetActiveScene().buildIndex - 2;
+            var music = _audioManager.FMODEvents.LevelsMusic[levelNumber];
+            _audioManager.ChangeMusic(music, STOP_MODE.ALLOWFADEOUT);
+            _sceneLoader.SetLoadingScreenActive(false);
         }
         private async UniTask Initialize(CancellationToken cancellationToken)
         {
@@ -62,6 +74,7 @@ namespace Core.Bootstrappers
             InitializeGuns();
             InitializeFireballSpawners();
         }
+
         private void InitializeFireballSpawners()
         {
             foreach (var spawner in fireballsSpawners)
@@ -70,13 +83,15 @@ namespace Core.Bootstrappers
                 spawner.BulletSpawner.InjectPool(pool);
             }
         }
+
         private void InitializeGuns()
         {
             for (int i = 0; i < guns.Count; i++)
             {
-                guns[i].Initialize(_poolInitializer.GetBulletPoolForPlayerWeapon(i+1));
+                guns[i].Initialize(_poolInitializer.GetBulletPoolForPlayerWeapon(i + 1));
             }
         }
+
         private async UniTask InstantiateAssets(CancellationToken token)
         {
             _sceneLoader.SetLoadingScreenActive(true);
@@ -85,13 +100,16 @@ namespace Core.Bootstrappers
             {
                 PutPlayerInRespawn();
             }
+
             await UniTask.Delay(TimeSpan.FromSeconds(LoadDelay), cancellationToken: token);
             _sceneLoader.SetLoadingScreenActive(false);
         }
+
         private async UniTask InstantiateEnvironment(CancellationToken token)
         {
             await _environmentLoader.LoadGameObject(environmentPrefab, token).ContinueWith(Instantiate);
         }
+
         private void PutPlayerInRespawn()
         {
             playerObject.transform.position = playerRespawnPoint.position;
@@ -100,8 +118,8 @@ namespace Core.Bootstrappers
         [System.Serializable]
         public class FireballSpawnerNamePair
         {
-            [field:SerializeField] public string FireballAssetName {get; private set;}
-            [field:SerializeField] public BulletSpawner BulletSpawner {get; private set;}
+            [field: SerializeField] public string FireballAssetName { get; private set; }
+            [field: SerializeField] public BulletSpawner BulletSpawner { get; private set; }
         }
     }
 }

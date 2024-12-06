@@ -56,10 +56,7 @@ namespace Core.Bootstrappers
         }
         private void Awake()
         {
-            _sceneLoader.SetLoadingScreenActive(true);
-            Initialize(CancellationToken.None)
-                .ContinueWith(() => InstantiateAssets(CancellationToken.None))
-                .ContinueWith(ShowScene).Forget();
+            LoadScene(CancellationToken.None).Forget();
         }
         private void OnDestroy()
         {
@@ -69,10 +66,17 @@ namespace Core.Bootstrappers
         }
         private void ScanPaths()
         {
-            if (pathfinder != null)
+            if (pathfinder)
             {
                 pathfinder.Scan();
             }
+        }
+        protected virtual UniTask LoadScene(CancellationToken token)
+        {
+            _sceneLoader.SetLoadingScreenActive(true);
+            return InitializePools(token)
+                .ContinueWith(() => InstantiateAssets(token))
+                .ContinueWith(ShowScene);
         }
         private void ShowScene()
         {
@@ -82,7 +86,7 @@ namespace Core.Bootstrappers
             _sceneLoader.SetLoadingScreenActive(false);
             _levelDialogues?.PlayStartDialogue();
         }
-        private async UniTask Initialize(CancellationToken cancellationToken)
+        private async UniTask InitializePools(CancellationToken cancellationToken)
         {
             await Addressables.InitializeAsync().ToUniTask(cancellationToken: cancellationToken);
             _poolInitializer.InitAll();
