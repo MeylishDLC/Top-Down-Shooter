@@ -23,7 +23,6 @@ namespace Weapons.AbilityWeapons
         [SerializeField] private float scaleIncreaseWhenBlowup;
         [SerializeField] private Animator animator;
         [SerializeField] private Projectile projectile;
-        [SerializeField] private EventReference blowUpSound;
         
         private static readonly int Blowup = Animator.StringToHash("blowup");
         private AudioManager _audioManager;
@@ -47,7 +46,7 @@ namespace Weapons.AbilityWeapons
             DealDamageInRange();
             await gameObject.transform.DOScale(scaleIncreaseWhenBlowup, 0f);
             animator.SetTrigger(Blowup);
-            _audioManager.PlayOneShot(blowUpSound);
+            _audioManager.PlayOneShot(_audioManager.FMODEvents.BombSound);
             await UniTask.Delay(TimeSpan.FromSeconds(blowupDuration), cancellationToken: token);
             gameObject.SetActive(false);
         }

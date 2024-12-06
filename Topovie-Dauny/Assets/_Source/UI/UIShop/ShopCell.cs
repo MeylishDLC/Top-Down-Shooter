@@ -1,5 +1,6 @@
 ﻿using System;
 using Player.PlayerAbilities;
+using SoundSystem;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -11,26 +12,25 @@ namespace UI.UIShop
     {
         public event Action<Ability> OnEquipAbilityModeEntered; 
         [field:SerializeField] public Ability ability { get; private set; }
-
         [Header("UI")] 
         [SerializeField] private Image equipImage;
         [SerializeField] private Color equipColor;
         
-        private Button equipButton;
+        private AudioManager _audioManager;
+        private Button _equipButton;
         private Shop _shop;
-
-        private void Awake()
-        {
-            equipButton = GetComponent<Button>();
-            equipButton.onClick.AddListener(EnterEquipAbilityMode);
-
-            equipImage.color = equipColor;
-        }
-
         [Inject]
-        public void Construct(Shop shop)
+        public void Construct(Shop shop, AudioManager audioManager)
         {
             _shop = shop;
+            _audioManager = audioManager;
+        }
+        private void Awake()
+        {
+            _equipButton = GetComponent<Button>();
+            _equipButton.onClick.AddListener(EnterEquipAbilityMode);
+
+            equipImage.color = equipColor;
         }
         public void OnPointerEnter(PointerEventData eventData)
         {
@@ -54,6 +54,7 @@ namespace UI.UIShop
         }
         private void EnterEquipAbilityMode()
         {
+            _audioManager.PlayOneShot(_audioManager.FMODEvents.ShopButtonSound);
             _shop.EquipScreen.gameObject.SetActive(true);
             OnEquipAbilityModeEntered?.Invoke(ability);
         }

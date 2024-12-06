@@ -16,7 +16,6 @@ namespace Player.PlayerAbilities
         public override event Action OnAbilitySuccessfullyUsed;
 
         [SerializeField] private StunZone stunZonePrefab;
-        [SerializeField] private EventReference useSound;
         private Transform _playerTransform;
         private AudioManager _audioManager;
         public override void Construct(PlayerMovement playerMovement, ProjectContext projectContext)
@@ -31,7 +30,7 @@ namespace Player.PlayerAbilities
         private async UniTask UseAbilityAsync(CancellationToken token)
         {
             Instantiate(stunZonePrefab, _playerTransform.position, Quaternion.identity);
-            _audioManager.PlayOneShot(useSound);
+            _audioManager.PlayOneShot(_audioManager.FMODEvents.StunSound);
             OnAbilitySuccessfullyUsed?.Invoke();
             await UniTask.Delay(CooldownMilliseconds, cancellationToken: token);
         }

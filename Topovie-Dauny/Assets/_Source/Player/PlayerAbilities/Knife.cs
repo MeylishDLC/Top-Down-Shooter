@@ -17,7 +17,6 @@ namespace Player.PlayerAbilities
         
         [Header("Specific Settings")] 
         [SerializeField] private KnifeObject knifePrefab;
-        [SerializeField] private EventReference useSound;
         
         private Transform _playerTransform;
         private AudioManager _audioManager;
@@ -43,7 +42,7 @@ namespace Player.PlayerAbilities
             knife.transform.rotation = Quaternion.Euler(0, 0, angle);
 
             knife.ShootInDirection(direction);
-            _audioManager.PlayOneShot(useSound);
+            _audioManager.PlayOneShot(_audioManager.FMODEvents.KnifeSound);
             OnAbilitySuccessfullyUsed?.Invoke();
 
             await UniTask.Delay(CooldownMilliseconds, cancellationToken: token);

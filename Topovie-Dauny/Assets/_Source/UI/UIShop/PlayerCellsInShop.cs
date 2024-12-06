@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using Player.PlayerAbilities;
+using SoundSystem;
 using UnityEngine;
 using UnityEngine.UI;
+using Zenject;
 
 namespace UI.UIShop
 {
@@ -19,6 +21,12 @@ namespace UI.UIShop
         private readonly Dictionary<Button, Ability> _equipmentCellAbilities = new();
         private readonly List<Image> _equipmentCellImages = new();
         private Ability _newAbilityToEquip;
+        private AudioManager _audioManager;
+        [Inject]
+        public void Construct(AudioManager audioManager)
+        {
+            _audioManager = audioManager;
+        }
         private void Awake()
         {
             InitializeImages();
@@ -34,45 +42,41 @@ namespace UI.UIShop
         }
         public void OnEquipmentCellChoose(int cellIndex)
         {
+            _audioManager.PlayOneShot(_audioManager.FMODEvents.ShopButtonSound);
             equipScreen.SetActive(false);
             ChangeButtonsInteractable(false);
             
             if (IsNewAbilitySetInOtherCells(cellIndex, out var indexOfOtherCell))
             {
+                //move ability to opposite cell
                 var abilityInTheCellChosen = _equipmentCellAbilities[EquipmentCells[cellIndex]];
-                _equipmentCellAbilities[EquipmentCells[cellIndex]] = _newAbilityToEquip;
-                _equipmentCellAbilities[EquipmentCells[indexOfOtherCell]] = abilityInTheCellChosen;
                 
-                //todo refactor
-                var newAbilityImage = EquipmentCells[cellIndex].gameObject.transform.GetChild(0).GetComponent<Image>();
-                newAbilityImage.sprite = _newAbilityToEquip.AbilityImage;
-                
-                var prevAbilityImage = EquipmentCells[indexOfOtherCell].gameObject.transform.GetChild(0).GetComponent<Image>();
-                prevAbilityImage.sprite = abilityInTheCellChosen.AbilityImage;
-                
+                SetNewAbilityInCell(cellIndex, _newAbilityToEquip);
+                SetNewAbilityInCell(indexOfOtherCell, abilityInTheCellChosen);
                 OnAbilityChanged?.Invoke(indexOfOtherCell, abilityInTheCellChosen);
             }
             else
             {
-                _equipmentCellAbilities[EquipmentCells[cellIndex]]= _newAbilityToEquip;
-                
-                var image = EquipmentCells[cellIndex].gameObject.transform.GetChild(0).GetComponent<Image>();
-                image.sprite = _newAbilityToEquip.AbilityImage;
+                SetNewAbilityInCell(cellIndex, _newAbilityToEquip);
             }
             OnAbilityChanged?.Invoke(cellIndex, _newAbilityToEquip);
         }
-
+        private void SetNewAbilityInCell(int cellIndex, Ability abilityToEquip)
+        {
+            //todo refactor
+            _equipmentCellAbilities[EquipmentCells[cellIndex]] = abilityToEquip;
+            var image = EquipmentCells[cellIndex].gameObject.transform.GetChild(0).GetComponent<Image>();
+            image.sprite = abilityToEquip.AbilityImage;
+        }
         private bool IsNewAbilitySetInOtherCells(int cellChosen, out int indexOfOtherCell)
         {
             indexOfOtherCell = -1;
-            
-            for (int i = 0; i < EquipmentCells.Length; i++)
+            for (var i = 0; i < EquipmentCells.Length; i++)
             {
                 if (i == cellChosen)
                 {
                     continue;
                 } 
-                
                 var image = EquipmentCells[i].gameObject.transform.GetChild(0).GetComponent<Image>();
                 if (image.sprite == _newAbilityToEquip.AbilityImage)
                 {
@@ -82,7 +86,6 @@ namespace UI.UIShop
             }
             return false;
         }
-
         private void SetEquipmentCellsOnStart()
         {
             //set images
@@ -90,7 +93,6 @@ namespace UI.UIShop
             {
                 _equipmentCellImages.ElementAt(i).sprite = abilitiesOnStart[i].AbilityImage;
             }
-            
             //set abilities in player GUI
             for (int i = 0; i < abilitiesOnStart.Length; i++)
             {
@@ -114,7 +116,6 @@ namespace UI.UIShop
         }
         private void EnterEquipAbilityMode(Ability abilityToEquip)
         {
-            Debug.Log("Entered equip ability mode");
             ChangeButtonsInteractable(true);
             _newAbilityToEquip = abilityToEquip;
         }
@@ -135,7 +136,6 @@ namespace UI.UIShop
                 }
             }
         }
-        
         private void ChangeButtonsInteractable(bool interactable)
         {
             foreach (var cell in EquipmentCells)

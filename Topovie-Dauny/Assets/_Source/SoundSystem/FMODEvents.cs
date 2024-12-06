@@ -14,6 +14,16 @@ namespace SoundSystem
         
         [field: Header("\n----SFX----")]
         [field: SerializeField] public EventReference ReloadSound { get; private set; }
-
+        [field: Header("Abilities Sounds")]
+        [field: SerializeField] public EventReference AidSound { get; private set; }
+        [field: SerializeField] public EventReference BombSound { get; private set; }
+        [field: SerializeField] public EventReference KnifeSound { get; private set; }
+        [field: SerializeField] public EventReference ShieldSound { get; private set; }
+        [field: SerializeField] public EventReference CatFoodSound { get; private set; }
+        [field: SerializeField] public EventReference StunSound { get; private set; }
+        
+        [field:Header("Shop Sounds")]
+        [field: SerializeField] public EventReference ShopButtonSound { get; private set; }
+        [field: SerializeField] public EventReference ShopEnterSound { get; private set; }
     }
 }

@@ -16,7 +16,6 @@ namespace Player.PlayerAbilities
         public override event Action OnAbilitySuccessfullyUsed;
 
         [Header("Specific Settings")] 
-        [SerializeField] private EventReference useSound;
         [SerializeField] private int healAmount;
 
         private PlayerHealth _playerHealth;
@@ -30,7 +29,7 @@ namespace Player.PlayerAbilities
         {
             if (Mathf.Approximately(_playerHealth.CurrentHealth, _playerHealth.MaxHealth))
             {
-                _audioManager.PlayOneShot(useSound);
+                _audioManager.PlayOneShot(_audioManager.FMODEvents.AidSound);
                 return;
             }
             UseAbilityAsync(CancellationToken.None).Forget();

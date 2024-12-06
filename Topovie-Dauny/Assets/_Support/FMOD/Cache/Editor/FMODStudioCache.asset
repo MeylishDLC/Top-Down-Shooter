@@ -1,5 +1,59 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-9133690360168779494
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/Environment/PortalEnabled
+  m_EditorClassIdentifier: 
+  Path: event:/SFX/Environment/PortalEnabled
+  Guid:
+    Data1: -1336715697
+    Data2: 1332865850
+    Data3: 1794702978
+    Data4: -508047332
+  Banks:
+  - {fileID: 3210779146886205598}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
+--- !u!114 &-8787957906202234763
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/Environment/AttackStarted
+  m_EditorClassIdentifier: 
+  Path: event:/SFX/Environment/AttackStarted
+  Guid:
+    Data1: -1385867973
+    Data2: 1143159195
+    Data3: 1943529094
+    Data4: -1428919562
+  Banks:
+  - {fileID: 3210779146886205598}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
 --- !u!114 &-8432814921992026465
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -42,7 +96,7 @@ MonoBehaviour:
   Path: FMODProject/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 638691000773560202
+  lastModified: 638691035847332505
   FileSizes:
   - Name: Desktop
     Value: 1340
@@ -119,6 +173,60 @@ MonoBehaviour:
     Data2: 1304917915
     Data3: -986002531
     Data4: 1092935876
+  Banks:
+  - {fileID: 3210779146886205598}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
+--- !u!114 &-4964494115099814274
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/Environment/ChargingSound
+  m_EditorClassIdentifier: 
+  Path: event:/SFX/Environment/ChargingSound
+  Guid:
+    Data1: 842581923
+    Data2: 1176450767
+    Data3: 1381533595
+    Data4: 643250643
+  Banks:
+  - {fileID: 3210779146886205598}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 11102
+--- !u!114 &-3842749789629150810
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/Environment/ShopButtonPress
+  m_EditorClassIdentifier: 
+  Path: event:/SFX/Environment/ShopButtonPress
+  Guid:
+    Data1: 1756524185
+    Data2: 1097881077
+    Data3: 1944504982
+    Data4: 1655374284
   Banks:
   - {fileID: 3210779146886205598}
   IsStream: 0
@@ -217,10 +325,10 @@ MonoBehaviour:
   Path: FMODProject/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638691000773570205
+  lastModified: 638691035847342512
   FileSizes:
   - Name: Desktop
-    Value: 1834
+    Value: 2100
   Exists: 1
 --- !u!114 &-1316820983204886502
 MonoBehaviour:
@@ -315,12 +423,17 @@ MonoBehaviour:
   - {fileID: 8813783809357966664}
   - {fileID: -270982577642874965}
   - {fileID: 2834695972252174095}
+  - {fileID: -8787957906202234763}
+  - {fileID: -9133690360168779494}
+  - {fileID: 2120024753798399753}
+  - {fileID: -3842749789629150810}
+  - {fileID: -4964494115099814274}
   EditorParameters: []
   MasterBanks:
   - {fileID: -6366681157243713885}
   StringsBanks:
   - {fileID: -1816647176805912851}
-  cacheTime: 638691024600953421
+  cacheTime: 638691035850449577
   cacheVersion: 131616
 --- !u!114 &165189585111624022
 MonoBehaviour:
@@ -457,6 +570,33 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 0
+--- !u!114 &2120024753798399753
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/Environment/ShopEnterSound
+  m_EditorClassIdentifier: 
+  Path: event:/SFX/Environment/ShopEnterSound
+  Guid:
+    Data1: -410119572
+    Data2: 1182085963
+    Data3: -249995888
+    Data4: 626391260
+  Banks:
+  - {fileID: 3210779146886205598}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
 --- !u!114 &2165535598980862693
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -553,10 +693,10 @@ MonoBehaviour:
   Path: FMODProject/Build/Desktop/SFX.bank
   Name: SFX
   StudioPath: bank:/SFX
-  lastModified: 638691024600953421
+  lastModified: 638691035850449577
   FileSizes:
   - Name: Desktop
-    Value: 246432
+    Value: 481056
   Exists: 1
 --- !u!114 &3387091442255413876
 MonoBehaviour:

@@ -37,7 +37,6 @@ namespace UI.UIShop
         private StatesChanger _statesChanger;
         private InputListener _inputListener;
         private ShopDialogue _shopDialogue;
-        private bool _canBeOpen = true;
         private bool _isTyping;
         private bool _isClosing;
         private CancellationTokenSource _stopTypingCts = new();
@@ -53,30 +52,20 @@ namespace UI.UIShop
         {
             shopUI.SetActive(false);
             closeButton.onClick.AddListener(CloseShop);
-            _statesChanger.OnStateChanged += SetCanBeOpen;
             playerCellsInShop.OnAbilityChanged += ChangeDialogue;
             _shopDialogue = new ShopDialogue(vetDialogueText, typeSpeedMilliseconds, dialogueAudioSO, _audioManager);
         }
         //todo fix shooting in shop after dialogue
         private void OnDestroy()
         {
-            _statesChanger.OnStateChanged -= SetCanBeOpen;
             playerCellsInShop.OnAbilityChanged -= ChangeDialogue;
             _stopTypingCts?.Dispose();
         }
-        private void SetCanBeOpen(GameStates state)
-        {
-            _canBeOpen = state != GameStates.Fight;
-        }
         public void OpenShop()
         {
-            if (!_canBeOpen)
-            {
-                return;
-            }
-            
             if (!IsShopOpen())
             {
+                _audioManager.PlayOneShot(_audioManager.FMODEvents.ShopEnterSound);
                 OpenShopAsync(_stopTypingCts.Token).Forget();
             }
         }

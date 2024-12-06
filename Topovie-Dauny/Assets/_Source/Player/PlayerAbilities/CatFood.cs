@@ -15,7 +15,6 @@ namespace Player.PlayerAbilities
         public override event Action OnAbilitySuccessfullyUsed;
         
         [Header("Specific Settings")] 
-        [SerializeField] private EventReference useSound;
         [SerializeField] private float newPlayerSpeed;
         [SerializeField] private float boostDuration;
 
@@ -35,7 +34,7 @@ namespace Player.PlayerAbilities
         private async UniTask UseAbilityAsync(CancellationToken token)
         {
             OnAbilitySuccessfullyUsed?.Invoke();
-            _audioManager.PlayOneShot(useSound);
+            _audioManager.PlayOneShot(_audioManager.FMODEvents.CatFoodSound);
             ChangeSpeedForTime(token).Forget();
             await UniTask.Delay(CooldownMilliseconds, cancellationToken: token);
         }

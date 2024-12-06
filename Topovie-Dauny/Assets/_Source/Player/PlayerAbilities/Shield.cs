@@ -22,7 +22,6 @@ namespace Player.PlayerAbilities
         [SerializeField] private float shieldBlinkSpeedOnDisappear;
         [SerializeField] private float blinkDuration = 2;
         [SerializeField] private GameObject shieldPrefab;
-        [SerializeField] private EventReference useSound;
 
         private float _initialTransparency;
         private PlayerHealth _playerHealth;
@@ -49,7 +48,7 @@ namespace Player.PlayerAbilities
             _playerHealth.SetCanTakeDamage(false);
             KeepPlayerInvincible(_invincibilityCts.Token).Forget();
             InstantiateShield();
-            _audioManager.PlayOneShot(useSound);
+            _audioManager.PlayOneShot(_audioManager.FMODEvents.ShieldSound);
             await UniTask.Delay(TimeSpan.FromSeconds(shieldDuration - blinkDuration), cancellationToken: token);
             await Blink(token);
             await DisableShield(token);

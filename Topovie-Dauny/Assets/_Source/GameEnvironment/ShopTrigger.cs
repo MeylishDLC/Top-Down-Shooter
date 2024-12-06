@@ -62,11 +62,11 @@ namespace GameEnvironment
         {
             if (gameState != GameStates.Fight)
             {
-                enabled = true;
+                gameObject.SetActive(true);
             }
             else
             {
-                enabled = false;
+                gameObject.SetActive(false);
             }
         }
         private void OnTriggerEnter2D(Collider2D other)
