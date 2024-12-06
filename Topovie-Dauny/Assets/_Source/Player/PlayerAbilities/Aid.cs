@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Threading;
 using Cysharp.Threading.Tasks;
+using FMODUnity;
 using Player.PlayerCombat;
 using Player.PlayerControl;
+using SoundSystem;
 using UnityEngine;
+using Zenject;
 
 namespace Player.PlayerAbilities
 {
@@ -12,18 +15,22 @@ namespace Player.PlayerAbilities
     {
         public override event Action OnAbilitySuccessfullyUsed;
 
-        [Header("Specific Settings")]
+        [Header("Specific Settings")] 
+        [SerializeField] private EventReference useSound;
         [SerializeField] private int healAmount;
 
         private PlayerHealth _playerHealth;
-        public override void Construct(PlayerMovement playerMovement)
+        private AudioManager _audioManager;
+        public override void Construct(PlayerMovement playerMovement, ProjectContext projectContext)
         {
+            _audioManager = projectContext.Container.Resolve<AudioManager>();
             _playerHealth = playerMovement.gameObject.GetComponent<PlayerHealth>();
         }
         public override void UseAbility()
         {
             if (Mathf.Approximately(_playerHealth.CurrentHealth, _playerHealth.MaxHealth))
             {
+                _audioManager.PlayOneShot(useSound);
                 return;
             }
             UseAbilityAsync(CancellationToken.None).Forget();

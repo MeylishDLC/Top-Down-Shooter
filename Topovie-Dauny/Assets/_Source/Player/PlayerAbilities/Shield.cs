@@ -3,9 +3,12 @@ using System.Threading;
 using _Support.Demigiant.DOTween.Modules;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
+using FMODUnity;
 using Player.PlayerCombat;
 using Player.PlayerControl;
+using SoundSystem;
 using UnityEngine;
+using Zenject;
 
 namespace Player.PlayerAbilities
 {
@@ -14,17 +17,21 @@ namespace Player.PlayerAbilities
     {
         public override event Action OnAbilitySuccessfullyUsed;
 
+        [Header("Specific Settings")] 
         [SerializeField] private float shieldDuration; 
         [SerializeField] private float shieldBlinkSpeedOnDisappear;
-        [SerializeField] private float remainedTimeToStartBlink;
+        [SerializeField] private float blinkDuration = 2;
         [SerializeField] private GameObject shieldPrefab;
+        [SerializeField] private EventReference useSound;
 
         private float _initialTransparency;
         private PlayerHealth _playerHealth;
+        private AudioManager _audioManager;
         private SpriteRenderer _shieldRenderer;
         private CancellationTokenSource _invincibilityCts = new();
-        public override void Construct(PlayerMovement playerMovement)
+        public override void Construct(PlayerMovement playerMovement, ProjectContext projectContext)
         {
+            _audioManager = projectContext.Container.Resolve<AudioManager>();
             _playerHealth = playerMovement.GetComponent<PlayerHealth>();
         }
         public override void UseAbility()
@@ -41,25 +48,37 @@ namespace Player.PlayerAbilities
         {
             _playerHealth.SetCanTakeDamage(false);
             KeepPlayerInvincible(_invincibilityCts.Token).Forget();
-            
+            InstantiateShield();
+            _audioManager.PlayOneShot(useSound);
+            await UniTask.Delay(TimeSpan.FromSeconds(shieldDuration - blinkDuration), cancellationToken: token);
+            await Blink(token);
+            await DisableShield(token);
+        }
+        private void InstantiateShield()
+        {
             var shield = Instantiate(shieldPrefab, _playerHealth.gameObject.transform);
             _shieldRenderer = shield.GetComponent<SpriteRenderer>();
             _initialTransparency = _shieldRenderer.color.a;
-            
-            //todo: throw exception if negative
-            await UniTask.Delay(TimeSpan.FromSeconds(shieldDuration - remainedTimeToStartBlink), cancellationToken: token);
-
-            var loopsAmount = (int)Math.Round(remainedTimeToStartBlink / shieldBlinkSpeedOnDisappear);
-            await _shieldRenderer.DOFade(0f, shieldBlinkSpeedOnDisappear).SetLoops(loopsAmount, LoopType.Yoyo);
-            
+        }
+        private UniTask Blink(CancellationToken token)
+        {
+            if (shieldDuration - blinkDuration <= 0)
+            {
+                throw new Exception("Blink duration can't be bigger than shield duration");
+            }
+            var loopsAmount = (int)Math.Round(blinkDuration / shieldBlinkSpeedOnDisappear);
+            return _shieldRenderer.DOFade(0f, shieldBlinkSpeedOnDisappear).SetLoops(loopsAmount, LoopType.Yoyo)
+                .ToUniTask(cancellationToken: token);
+        }
+        private UniTask DisableShield(CancellationToken token)
+        {
             CancelInvincibility();
             _playerHealth.SetCanTakeDamage(true);
             _shieldRenderer.gameObject.SetActive(false);
             
-            await _shieldRenderer.DOFade(_initialTransparency, 0f);
-            Destroy(shield);
+            return _shieldRenderer.DOFade(_initialTransparency, 0f).ToUniTask(cancellationToken: token)
+                .ContinueWith(() => Destroy(_shieldRenderer.gameObject));
         }
-        //todo refactor
         private async UniTask KeepPlayerInvincible(CancellationToken token)
         {
             while (!token.IsCancellationRequested)

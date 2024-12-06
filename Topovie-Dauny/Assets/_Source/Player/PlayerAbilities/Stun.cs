@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Threading;
 using Cysharp.Threading.Tasks;
+using FMODUnity;
 using Player.PlayerControl;
+using SoundSystem;
 using UnityEngine;
 using Weapons.AbilityWeapons;
+using Zenject;
 
 namespace Player.PlayerAbilities
 {    
@@ -13,9 +16,12 @@ namespace Player.PlayerAbilities
         public override event Action OnAbilitySuccessfullyUsed;
 
         [SerializeField] private StunZone stunZonePrefab;
+        [SerializeField] private EventReference useSound;
         private Transform _playerTransform;
-        public override void Construct(PlayerMovement playerMovement)
+        private AudioManager _audioManager;
+        public override void Construct(PlayerMovement playerMovement, ProjectContext projectContext)
         {
+            _audioManager = projectContext.Container.Resolve<AudioManager>();
             _playerTransform = playerMovement.transform;
         }
         public override void UseAbility()
@@ -25,6 +31,7 @@ namespace Player.PlayerAbilities
         private async UniTask UseAbilityAsync(CancellationToken token)
         {
             Instantiate(stunZonePrefab, _playerTransform.position, Quaternion.identity);
+            _audioManager.PlayOneShot(useSound);
             OnAbilitySuccessfullyUsed?.Invoke();
             await UniTask.Delay(CooldownMilliseconds, cancellationToken: token);
         }

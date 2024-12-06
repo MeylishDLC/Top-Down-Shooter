@@ -1,6 +1,8 @@
 ﻿using System;
 using Player.PlayerControl;
+using SoundSystem;
 using UnityEngine;
+using Zenject;
 
 namespace Player.PlayerAbilities
 {
@@ -15,7 +17,7 @@ namespace Player.PlayerAbilities
         [field: TextArea]
         [field:SerializeField] public string AbilityDescription { get; private set; }
         [field:SerializeField] public AbilityTypes AbilityType { get; protected set; } = AbilityTypes.TapButton;
-        public abstract void Construct(PlayerMovement playerMovement);
+        public abstract void Construct(PlayerMovement playerMovement, ProjectContext projectContext);
         public abstract void UseAbility();
     }
 

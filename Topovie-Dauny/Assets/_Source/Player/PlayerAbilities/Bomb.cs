@@ -3,7 +3,9 @@ using System.Threading;
 using Bullets.Projectile;
 using Cysharp.Threading.Tasks;
 using Player.PlayerControl;
+using SoundSystem;
 using UnityEngine;
+using Zenject;
 
 namespace Player.PlayerAbilities
 {
@@ -19,10 +21,12 @@ namespace Player.PlayerAbilities
         
         private Transform _target;
         private Transform _playerTransform;
+        private ProjectContext _projectContext;
         private Vector3 _targetPosition;
-        public override void Construct(PlayerMovement playerMovement)
+        public override void Construct(PlayerMovement playerMovement, ProjectContext projectContext)
         {
             _playerTransform = playerMovement.transform;
+            _projectContext = projectContext;
         }
         public override void UseAbility()
         {
@@ -48,8 +52,7 @@ namespace Player.PlayerAbilities
         }
         private void ThrowBomb()
         {
-            var projectile = Instantiate(bombPrefab, _playerTransform.position, Quaternion.identity)
-                .GetComponent<Projectile>(); 
+            var projectile = _projectContext.Container.InstantiatePrefabForComponent<Projectile>(bombPrefab); 
             projectile.transform.position = _playerTransform.position;
             projectile.Initialize(_target, config);
             Destroy(_target.gameObject, projectile.Lifetime);

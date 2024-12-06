@@ -15,20 +15,18 @@ namespace Player.PlayerCombat
         [SerializeField] private UIPlayerEquipmentCell[] uiPlayerEquipmentCells;
         
         private PlayerMovement _playerMovement;
-        private DialogueManager _dialogueManager;
-        private Shop _shop;
         private InputListener _inputListener;
         private WeaponsSetter _weaponsSetter;
+        private ProjectContext _projectContext;
 
         [Inject]
-        public void Construct(PlayerMovement playerMovement, DialogueManager dialogueManager, 
-            Shop shop, InputListener inputListener, WeaponsSetter weaponsSetter)
+        public void Construct(PlayerMovement playerMovement, InputListener inputListener, WeaponsSetter weaponsSetter,
+            ProjectContext projectContext)
         {
+            _projectContext = projectContext;
             _playerMovement = playerMovement;
             _weaponsSetter = weaponsSetter;
             _inputListener = inputListener;
-            _dialogueManager = dialogueManager;
-            _shop = shop;
             
             _weaponsSetter.SubscribeOnInputEvents(_inputListener);
         }
@@ -43,7 +41,7 @@ namespace Player.PlayerCombat
         }
         private void EnableAbility(Ability ability)
         {
-            ability.Construct(_playerMovement);
+            ability.Construct(_playerMovement, _projectContext);
             ability.UseAbility();
         }
         private void SubscribeOnEvents()

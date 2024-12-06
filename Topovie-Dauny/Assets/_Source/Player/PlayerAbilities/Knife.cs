@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Threading;
 using Cysharp.Threading.Tasks;
+using FMODUnity;
 using Player.PlayerControl;
+using SoundSystem;
 using UnityEngine;
 using Weapons.AbilityWeapons;
+using Zenject;
 
 namespace Player.PlayerAbilities
 {
@@ -12,11 +15,16 @@ namespace Player.PlayerAbilities
     {
         public override event Action OnAbilitySuccessfullyUsed;
         
+        [Header("Specific Settings")] 
         [SerializeField] private KnifeObject knifePrefab;
+        [SerializeField] private EventReference useSound;
+        
         private Transform _playerTransform;
-        public override void Construct(PlayerMovement playerMovement)
+        private AudioManager _audioManager;
+        public override void Construct(PlayerMovement playerMovement, ProjectContext projectContext)
         {
             _playerTransform = playerMovement.transform;
+            _audioManager = projectContext.Container.Resolve<AudioManager>();
         }
         public override void UseAbility()
         {
@@ -35,6 +43,7 @@ namespace Player.PlayerAbilities
             knife.transform.rotation = Quaternion.Euler(0, 0, angle);
 
             knife.ShootInDirection(direction);
+            _audioManager.PlayOneShot(useSound);
             OnAbilitySuccessfullyUsed?.Invoke();
 
             await UniTask.Delay(CooldownMilliseconds, cancellationToken: token);

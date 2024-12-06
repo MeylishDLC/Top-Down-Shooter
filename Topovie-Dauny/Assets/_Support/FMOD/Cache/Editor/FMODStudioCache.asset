@@ -1,5 +1,32 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-8432814921992026465
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/Abilities/CatFoodUsed
+  m_EditorClassIdentifier: 
+  Path: event:/SFX/Abilities/CatFoodUsed
+  Guid:
+    Data1: -2066356953
+    Data2: 1084484435
+    Data3: 1471122818
+    Data4: -160131729
+  Banks:
+  - {fileID: 3210779146886205598}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
 --- !u!114 &-6366681157243713885
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15,7 +42,7 @@ MonoBehaviour:
   Path: FMODProject/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 638690954870206001
+  lastModified: 638691000773560202
   FileSizes:
   - Name: Desktop
     Value: 1340
@@ -128,6 +155,33 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 0
+--- !u!114 &-2867663760523903900
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/Abilities/ShieldUsed
+  m_EditorClassIdentifier: 
+  Path: event:/SFX/Abilities/ShieldUsed
+  Guid:
+    Data1: 1869907479
+    Data2: 1212095189
+    Data3: 1421960851
+    Data4: 1805604961
+  Banks:
+  - {fileID: 3210779146886205598}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
 --- !u!114 &-2274775018662892179
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -163,10 +217,10 @@ MonoBehaviour:
   Path: FMODProject/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638690954870216004
+  lastModified: 638691000773570205
   FileSizes:
   - Name: Desktop
-    Value: 1562
+    Value: 1834
   Exists: 1
 --- !u!114 &-1316820983204886502
 MonoBehaviour:
@@ -186,6 +240,33 @@ MonoBehaviour:
     Data2: 1139440784
     Data3: -1588397439
     Data4: 1376928653
+  Banks:
+  - {fileID: 3210779146886205598}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
+--- !u!114 &-270982577642874965
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/Abilities/KnifeUsed
+  m_EditorClassIdentifier: 
+  Path: event:/SFX/Abilities/KnifeUsed
+  Guid:
+    Data1: 1976366424
+    Data2: 1305540305
+    Data3: -2089134928
+    Data4: 872553566
   Banks:
   - {fileID: 3210779146886205598}
   IsStream: 0
@@ -228,12 +309,18 @@ MonoBehaviour:
   - {fileID: 165189585111624022}
   - {fileID: 5557941516986077180}
   - {fileID: -5432835319117309448}
+  - {fileID: 1336887821128035172}
+  - {fileID: -2867663760523903900}
+  - {fileID: -8432814921992026465}
+  - {fileID: 8813783809357966664}
+  - {fileID: -270982577642874965}
+  - {fileID: 2834695972252174095}
   EditorParameters: []
   MasterBanks:
   - {fileID: -6366681157243713885}
   StringsBanks:
   - {fileID: -1816647176805912851}
-  cacheTime: 638690954872826583
+  cacheTime: 638691000775468010
   cacheVersion: 131616
 --- !u!114 &165189585111624022
 MonoBehaviour:
@@ -307,6 +394,33 @@ MonoBehaviour:
     Data2: 1324136730
     Data3: 500506514
     Data4: -2097475923
+  Banks:
+  - {fileID: 3210779146886205598}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
+--- !u!114 &1336887821128035172
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/Abilities/BombUsed
+  m_EditorClassIdentifier: 
+  Path: event:/SFX/Abilities/BombUsed
+  Guid:
+    Data1: -894650879
+    Data2: 1200730066
+    Data3: -1422512736
+    Data4: -1030851828
   Banks:
   - {fileID: 3210779146886205598}
   IsStream: 0
@@ -397,6 +511,33 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 155062
+--- !u!114 &2834695972252174095
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/Abilities/StunUsed
+  m_EditorClassIdentifier: 
+  Path: event:/SFX/Abilities/StunUsed
+  Guid:
+    Data1: 782990426
+    Data2: 1336584649
+    Data3: -113757562
+    Data4: -2016843152
+  Banks:
+  - {fileID: 3210779146886205598}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
 --- !u!114 &3210779146886205598
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -412,10 +553,10 @@ MonoBehaviour:
   Path: FMODProject/Build/Desktop/SFX.bank
   Name: SFX
   StudioPath: bank:/SFX
-  lastModified: 638690954872826583
+  lastModified: 638691000775468010
   FileSizes:
   - Name: Desktop
-    Value: 165024
+    Value: 246176
   Exists: 1
 --- !u!114 &3387091442255413876
 MonoBehaviour:
@@ -516,6 +657,33 @@ MonoBehaviour:
     Data2: 1283491190
     Data3: 359644289
     Data4: -1933706188
+  Banks:
+  - {fileID: 3210779146886205598}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
+--- !u!114 &8813783809357966664
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/Abilities/AidUsed
+  m_EditorClassIdentifier: 
+  Path: event:/SFX/Abilities/AidUsed
+  Guid:
+    Data1: -444689332
+    Data2: 1245493151
+    Data3: 1003006636
+    Data4: 1853634578
   Banks:
   - {fileID: 3210779146886205598}
   IsStream: 0

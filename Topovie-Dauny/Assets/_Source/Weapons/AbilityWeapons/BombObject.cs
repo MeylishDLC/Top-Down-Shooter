@@ -7,7 +7,10 @@ using Bullets.Projectile;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using Enemies;
+using FMODUnity;
+using SoundSystem;
 using UnityEngine;
+using Zenject;
 
 namespace Weapons.AbilityWeapons
 {
@@ -20,8 +23,15 @@ namespace Weapons.AbilityWeapons
         [SerializeField] private float scaleIncreaseWhenBlowup;
         [SerializeField] private Animator animator;
         [SerializeField] private Projectile projectile;
+        [SerializeField] private EventReference blowUpSound;
         
         private static readonly int Blowup = Animator.StringToHash("blowup");
+        private AudioManager _audioManager;
+        [Inject]
+        public void Construct(AudioManager audioManager)
+        {
+            _audioManager = audioManager;
+        }
         private void Start()
         {
             projectile.Calculations.OnDestinationReached += BlowUp;
@@ -35,9 +45,9 @@ namespace Weapons.AbilityWeapons
         {
             await UniTask.Delay(timeBeforeBlowMilliseconds, cancellationToken: token);
             DealDamageInRange();
-            
             await gameObject.transform.DOScale(scaleIncreaseWhenBlowup, 0f);
             animator.SetTrigger(Blowup);
+            _audioManager.PlayOneShot(blowUpSound);
             await UniTask.Delay(TimeSpan.FromSeconds(blowupDuration), cancellationToken: token);
             gameObject.SetActive(false);
         }
