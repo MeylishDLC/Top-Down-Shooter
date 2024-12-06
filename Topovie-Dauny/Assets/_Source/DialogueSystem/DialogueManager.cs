@@ -255,7 +255,7 @@ namespace DialogueSystem
         private void SetCurrentAudioInfo(string id)
         {
             _audioInfoDictionary.TryGetValue(id, out var audioInfo);
-            if (audioInfo != null)
+            if (audioInfo is not null)
             {
                 _currentAudioInfo = audioInfo;
             }
