@@ -6,6 +6,7 @@ using Core.Data;
 using Cysharp.Threading.Tasks;
 using Enemies;
 using GameEnvironment;
+using SoundSystem;
 using UI.Menus;
 using UnityEngine;
 using Zenject;
@@ -29,6 +30,7 @@ namespace Core.LevelSettings
          
          private EnemyContainer[] _allEnemyContainers;
          private Spawner _spawner;
+         private LevelChargeSound _levelChargeSound;
          private StatesChanger _statesChanger;
          
          private CancellationTokenSource _chargingPauseCts = new();
@@ -37,10 +39,11 @@ namespace Core.LevelSettings
          private int _currentChargeIndex;
 
          [Inject]
-         public void Construct(Spawner spawner, StatesChanger statesChanger)
+         public void Construct(Spawner spawner, StatesChanger statesChanger, AudioManager audioManager)
          {
              _statesChanger = statesChanger;
              _spawner = spawner;
+             _levelChargeSound = new LevelChargeSound(audioManager);
          }
          private void Awake()
          {
@@ -75,7 +78,6 @@ namespace Core.LevelSettings
              {
                  return;
              }
-                 
              if (ChargesPassed >= portalCharges.Length)
              {
                  return;
@@ -84,7 +86,6 @@ namespace Core.LevelSettings
              _currentChargeIndex = chargeIndex;
              UnsubscribeOnStartCharging(portalChargeTriggers[_currentChargeIndex]);
              SubscribeOnChargeEvents(portalChargeTriggers[_currentChargeIndex].GetComponent<RangeDetector>());
-                 
              _statesChanger.ChangeState(GameStates.Fight);
                  
              var enemyWave = portalCharges[chargeIndex];
@@ -99,6 +100,7 @@ namespace Core.LevelSettings
          {
              try
              {
+                 _levelChargeSound.PlayChargeSound();
                  await UniTask.Delay(TimeSpan.FromSeconds(durationToCharge), cancellationToken: token);
                  _chargingFinishCts.Cancel();
                  _chargingFinishCts.Dispose();
@@ -116,6 +118,8 @@ namespace Core.LevelSettings
              _chargingPauseCts?.Cancel();
              _chargingPauseCts?.Dispose();
              _chargingPauseCts = new CancellationTokenSource();
+             
+             _levelChargeSound.StopChargeSound();
              Debug.Log("Charge Paused");
          }
          private void ResumeChargingPortal()
@@ -149,6 +153,7 @@ namespace Core.LevelSettings
          {
              DisableAllEnemies();
              UnsubscribeOnChargeEvents(portalChargeTriggers[_currentChargeIndex].GetComponent<RangeDetector>());
+             _levelChargeSound.StopChargeSound();
              portalChargeTriggers[_currentChargeIndex].enabled = false;
              OnChargePassed?.Invoke();
              try

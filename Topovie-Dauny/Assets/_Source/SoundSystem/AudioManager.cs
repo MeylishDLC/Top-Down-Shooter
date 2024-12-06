@@ -76,6 +76,14 @@ namespace SoundSystem
 
             StopMusicAfterTime(wrapper, time).Forget();
         }
+        public void StartPlayingSound(EventInstanceWrapper soundWrapper)
+        {
+            soundWrapper.Instance.start();
+        }
+        public void StopPlayingSound(EventInstanceWrapper soundWrapper, STOP_MODE stopMode)
+        {
+            soundWrapper.Instance.stop(stopMode);
+        }
         private void InitializeMusic(EventReference musicEventReference)
         {
             _musicEventInstance = CreateInstance(musicEventReference);
@@ -120,10 +128,13 @@ namespace SoundSystem
     public class EventInstanceWrapper
     {
         public EventInstance Instance { get; }
-
         public EventInstanceWrapper(EventInstance instance)
         {
             Instance = instance;
+        }
+        public EventInstanceWrapper(EventReference soundReference)
+        {
+            Instance = RuntimeManager.CreateInstance(soundReference);
         }
     }
 }

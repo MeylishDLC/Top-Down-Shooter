@@ -27,9 +27,9 @@ namespace Player.PlayerAbilities
         }
         public override void UseAbility()
         {
+            _audioManager.PlayOneShot(_audioManager.FMODEvents.AidSound);
             if (Mathf.Approximately(_playerHealth.CurrentHealth, _playerHealth.MaxHealth))
             {
-                _audioManager.PlayOneShot(_audioManager.FMODEvents.AidSound);
                 return;
             }
             UseAbilityAsync(CancellationToken.None).Forget();

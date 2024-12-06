@@ -22,8 +22,13 @@ namespace SoundSystem
         [field: SerializeField] public EventReference CatFoodSound { get; private set; }
         [field: SerializeField] public EventReference StunSound { get; private set; }
         
-        [field:Header("Shop Sounds")]
+        [field: Header("Shop Sounds")]
         [field: SerializeField] public EventReference ShopButtonSound { get; private set; }
         [field: SerializeField] public EventReference ShopEnterSound { get; private set; }
+        
+        [field:Header("Level Sounds")]
+        [field: SerializeField] public EventReference ChargingSound { get; private set; }
+        [field: SerializeField] public EventReference AttackStartedSound { get; private set; }
+        [field: SerializeField] public EventReference PortalEnabledSound { get; private set; }
     }
 }
