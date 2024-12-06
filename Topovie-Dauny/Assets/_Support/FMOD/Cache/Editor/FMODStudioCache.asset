@@ -15,7 +15,7 @@ MonoBehaviour:
   Path: FMODProject/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 638690902811494021
+  lastModified: 638690954870206001
   FileSizes:
   - Name: Desktop
     Value: 1340
@@ -38,6 +38,33 @@ MonoBehaviour:
     Data2: 1268474220
     Data3: -2120609624
     Data4: -423902781
+  Banks:
+  - {fileID: 3210779146886205598}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
+--- !u!114 &-5432835319117309448
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/Enemies/TowerShoot
+  m_EditorClassIdentifier: 
+  Path: event:/SFX/Enemies/TowerShoot
+  Guid:
+    Data1: -344254248
+    Data2: 1241393948
+    Data3: -1070955080
+    Data4: 239582865
   Banks:
   - {fileID: 3210779146886205598}
   IsStream: 0
@@ -136,10 +163,10 @@ MonoBehaviour:
   Path: FMODProject/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638690902811504010
+  lastModified: 638690954870216004
   FileSizes:
   - Name: Desktop
-    Value: 1310
+    Value: 1562
   Exists: 1
 --- !u!114 &-1316820983204886502
 MonoBehaviour:
@@ -195,13 +222,46 @@ MonoBehaviour:
   - {fileID: 5927711503935954794}
   - {fileID: -5789587937291096852}
   - {fileID: 467589359763615532}
+  - {fileID: 1607794392396626033}
+  - {fileID: 2165535598980862693}
+  - {fileID: 3387091442255413876}
+  - {fileID: 165189585111624022}
+  - {fileID: 5557941516986077180}
+  - {fileID: -5432835319117309448}
   EditorParameters: []
   MasterBanks:
   - {fileID: -6366681157243713885}
   StringsBanks:
   - {fileID: -1816647176805912851}
-  cacheTime: 638690902812277254
+  cacheTime: 638690954872826583
   cacheVersion: 131616
+--- !u!114 &165189585111624022
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/Enemies/Leo
+  m_EditorClassIdentifier: 
+  Path: event:/SFX/Enemies/Leo
+  Guid:
+    Data1: 61639807
+    Data2: 1240037016
+    Data3: 134376327
+    Data4: 606610161
+  Banks:
+  - {fileID: 3210779146886205598}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
 --- !u!114 &458141876425460587
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -256,6 +316,60 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 0
+--- !u!114 &1607794392396626033
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/Dialogue/MC
+  m_EditorClassIdentifier: 
+  Path: event:/SFX/Dialogue/MC
+  Guid:
+    Data1: -52041446
+    Data2: 1301878070
+    Data3: 1676860092
+    Data4: -1950970725
+  Banks:
+  - {fileID: 3210779146886205598}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
+--- !u!114 &2165535598980862693
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/Enemies/Men
+  m_EditorClassIdentifier: 
+  Path: event:/SFX/Enemies/Men
+  Guid:
+    Data1: -709617095
+    Data2: 1128456914
+    Data3: -335382601
+    Data4: -1498732797
+  Banks:
+  - {fileID: 3210779146886205598}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
 --- !u!114 &2736141594847941616
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -298,11 +412,65 @@ MonoBehaviour:
   Path: FMODProject/Build/Desktop/SFX.bank
   Name: SFX
   StudioPath: bank:/SFX
-  lastModified: 638690902812277254
+  lastModified: 638690954872826583
   FileSizes:
   - Name: Desktop
-    Value: 99264
+    Value: 165024
   Exists: 1
+--- !u!114 &3387091442255413876
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/Enemies/MenShooting
+  m_EditorClassIdentifier: 
+  Path: event:/SFX/Enemies/MenShooting
+  Guid:
+    Data1: -502999720
+    Data2: 1173792372
+    Data3: 1201964722
+    Data4: -1440030995
+  Banks:
+  - {fileID: 3210779146886205598}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
+--- !u!114 &5557941516986077180
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/Enemies/BugAttack
+  m_EditorClassIdentifier: 
+  Path: event:/SFX/Enemies/BugAttack
+  Guid:
+    Data1: -584408669
+    Data2: 1118884817
+    Data3: 1392058507
+    Data4: 199424864
+  Banks:
+  - {fileID: 3210779146886205598}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
 --- !u!114 &5927711503935954794
 MonoBehaviour:
   m_ObjectHideFlags: 0

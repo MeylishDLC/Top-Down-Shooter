@@ -3,9 +3,12 @@ using System.Threading;
 using _Support.Demigiant.DOTween.Modules;
 using Cinemachine;
 using Cysharp.Threading.Tasks;
+using FMODUnity;
 using Pathfinding;
 using Player.PlayerCombat;
+using SoundSystem;
 using UnityEngine;
+using Zenject;
 
 namespace Enemies.EnemyTypes
 {
@@ -23,20 +26,30 @@ namespace Enemies.EnemyTypes
         [SerializeField] private Color attackColor = Color.red;
         [SerializeField] private float colorTransitionDuration;
         
+        [Header("Sound")]
+        [SerializeField] private EventReference attackSound;
+        [SerializeField] private float soundDistance = 2f;
+        
         [Header("Warn Settings")]
         [SerializeField] private float warningDuration;
         [SerializeField] private SpriteRenderer rangeSprite;
         [SerializeField] private float rangeTransparencyOnWarn;
-        [SerializeField] private float fadeInDuration;
-        [SerializeField] private float fadeOutDuration;
+        [SerializeField] private float fadeDuration;
 
         private CancellationTokenSource _cancelAttackCts = new();
         private CancellationToken _destroyCancellationToken;
 
+        private AudioManager _audioManager;
         private Color _initRangeColor;
         private PlayerHealth _playerHealth;
         private bool _isPlayerInRange;
         private bool _isWarning;
+
+        [Inject]
+        public void Construct(AudioManager audioManager)
+        {
+            _audioManager = audioManager;
+        }
         private void OnEnable()
         {
             _isWarning = false;
@@ -70,7 +83,7 @@ namespace Enemies.EnemyTypes
                 {
                     _isWarning = false;
                     CancelRecreateCts();
-                    FadeArea(0f, fadeOutDuration, _destroyCancellationToken);
+                    FadeArea(0f, fadeDuration, _destroyCancellationToken);
                 }
             }
         }
@@ -102,7 +115,7 @@ namespace Enemies.EnemyTypes
             try
             {
                 _isWarning = true;
-                await FadeArea(rangeTransparencyOnWarn, fadeInDuration, token);
+                await FadeArea(rangeTransparencyOnWarn, fadeDuration, token);
                 await UniTask.Delay(TimeSpan.FromSeconds(warningDuration), cancellationToken: token);
                 _isWarning = false;
                 await AttackAsync(_destroyCancellationToken);
@@ -133,13 +146,15 @@ namespace Enemies.EnemyTypes
         {
             await rangeSprite.DOColor(attackColor, colorTransitionDuration).ToUniTask(cancellationToken: token);
             impulseSource.GenerateImpulse(impulseStrength);
+            _audioManager.PlayOneShot(attackSound, gameObject.transform.position, 
+                _playerHealth.transform.position, soundDistance);
             Instantiate(impactParticlesPrefab, transform);
         }
 
         private async UniTask ShowEndAttackAsync(CancellationToken token)
         {
             await rangeSprite.DOColor(_initRangeColor, colorTransitionDuration).ToUniTask(cancellationToken: token);
-            await FadeArea(0f, fadeOutDuration, token);
+            await FadeArea(0f, fadeDuration, token);
         }
         private void CancelRecreateCts()
         {

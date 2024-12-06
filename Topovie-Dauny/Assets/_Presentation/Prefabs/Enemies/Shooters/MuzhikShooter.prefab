@@ -125,6 +125,7 @@ GameObject:
   - component: {fileID: 269334757122339233}
   - component: {fileID: 4717691597737457436}
   - component: {fileID: 478919944582719845}
+  - component: {fileID: 2189517694948647321}
   m_Layer: 15
   m_Name: MuzhikShooter
   m_TagString: Untagged
@@ -368,6 +369,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyHealth: {fileID: 4717691597737457436}
+  moveSound:
+    Guid:
+      Data1: -502999720
+      Data2: 1173792372
+      Data3: 1201964722
+      Data4: -1440030995
+    Path: event:/SFX/Enemies/MenShooting
+  soundFrequency: 2.5
+  soundDistance: 5
   colorOnDamageTaken: {r: 0.9725491, g: 0.38823533, b: 0.38823533, a: 1}
   colorStayDuration: 0.1
   deathAnimationDuration: 0.5
@@ -385,8 +395,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyMovement: {fileID: 269334757122339233}
   maxHealth: 15
-  knockBackTimeMilliseconds: 0
-  knockbackThrust: 0
 --- !u!114 &478919944582719845
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -402,6 +410,37 @@ MonoBehaviour:
   minShootRate: 1
   maxShootRate: 2
   projectileConfig: {fileID: 11400000, guid: 4609a5013e3ab514c8b44087aa18baa0, type: 2}
+--- !u!114 &2189517694948647321
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7292485630082978289}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: -502999720
+      Data2: 1173792372
+      Data3: 1201964722
+      Data4: -1440030995
+    Path: event:/SFX/Enemies/MenShooting
+  Event: 
+  PlayEvent: 11
+  StopEvent: 12
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  AllowNonRigidbodyDoppler: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 20
 --- !u!1 &8147804419320651098
 GameObject:
   m_ObjectHideFlags: 0

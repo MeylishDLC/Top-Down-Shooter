@@ -3,14 +3,23 @@ using System.Threading;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using Enemies.Combat;
+using FMODUnity;
 using Pathfinding;
+using SoundSystem;
 using UnityEngine;
+using Zenject;
+using Random = UnityEngine.Random;
 
 namespace Enemies
 {
     public class EnemyMovement: MonoBehaviour
     {
         [SerializeField] private EnemyHealth enemyHealth;
+        
+        [Header("Sound")]
+        [SerializeField] private EventReference moveSound;
+        [SerializeField] private float soundFrequency;
+        [SerializeField] private float soundDistance = 2f;
         
         [Header("Visual")]
         [SerializeField] private Color colorOnDamageTaken;
@@ -21,9 +30,17 @@ namespace Enemies
         private SpriteRenderer _enemyRenderer;
         private CancellationToken _deathCancellationToken;
         private Transform _playerTransform;
-
+        
+        private AudioManager _audioManager;
+        private float _timer;
         private float _initScale;
         private bool _isFacingRight;
+
+        [Inject]
+        public void Construct(AudioManager audioManager)
+        {
+            _audioManager = audioManager;
+        }
         private void Awake()
         {
             _aiPath = GetComponent<AIPath>();
@@ -35,6 +52,7 @@ namespace Enemies
         }
         private void OnEnable()
         {
+            _timer = Random.Range(0f, soundFrequency);
             _aiPath.canMove = true;
         }
         private void OnDestroy()
@@ -46,6 +64,18 @@ namespace Enemies
             if (_aiPath.canMove)
             {
                HandleFlipping();
+            }
+            
+            if (moveSound.IsNull)
+            {
+                return;
+            }
+            _timer += Time.deltaTime;
+            if (_timer >= soundFrequency)
+            {
+                _audioManager.PlayOneShot(moveSound, gameObject.transform.position, 
+                    _playerTransform.position, soundDistance);
+                _timer = 0;
             }
         }
         public void SetDestination(Transform playerTransform)
@@ -72,14 +102,6 @@ namespace Enemies
             var newScaleX = _isFacingRight ? -_initScale : _initScale;
             transform.DOScaleX(newScaleX, 0f);
         }
-        private void EnableMovement()
-        {
-            _aiPath.canMove = true;
-        }
-        private void DisableMovement()
-        {
-            _aiPath.canMove = false;
-        }
         private void ShowEnemyDeath()
         {
             ShowEnemyDeathAsync(_deathCancellationToken).Forget();
@@ -96,7 +118,7 @@ namespace Enemies
         }
         private async UniTask ShowEnemyDeathAsync(CancellationToken token)
         {
-            DisableMovement();
+            _aiPath.canMove = false;
             await gameObject.transform.DOScaleX(0f, deathAnimationDuration).ToUniTask(cancellationToken: token);
             gameObject.SetActive(false);
             await gameObject.transform.DOScaleX(_initScale, 0f);

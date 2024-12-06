@@ -443,6 +443,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyHealth: {fileID: 8671391910095024701}
+  moveSound:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
+  soundFrequency: 0
+  soundDistance: 2
   colorOnDamageTaken: {r: 0.9725491, g: 0.38823533, b: 0.38823533, a: 1}
   colorStayDuration: 0.1
   deathAnimationDuration: 0.5
@@ -714,8 +723,15 @@ MonoBehaviour:
   attackDuration: 0.5
   attackColor: {r: 1, g: 0, b: 0, a: 0.39215687}
   colorTransitionDuration: 0.1
+  attackSound:
+    Guid:
+      Data1: -584408669
+      Data2: 1118884817
+      Data3: 1392058507
+      Data4: 199424864
+    Path: event:/SFX/Enemies/BugAttack
+  soundDistance: 5
   warningDuration: 1
   rangeSprite: {fileID: 526982141956477456}
   rangeTransparencyOnWarn: 0.3
-  fadeInDuration: 0.15
-  fadeOutDuration: 0.15
+  fadeDuration: 0

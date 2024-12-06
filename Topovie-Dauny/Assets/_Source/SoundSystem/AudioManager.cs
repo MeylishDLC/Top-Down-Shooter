@@ -23,6 +23,7 @@ namespace SoundSystem
         private Bus _musicBus;
         private Bus _sfxBus;
         private List<EventInstance> _eventInstances = new();
+        private List<StudioEventEmitter> _eventEmitters = new();
         private EventInstance _musicEventInstance;
         private void Awake()
         {
@@ -48,6 +49,16 @@ namespace SoundSystem
         public void PlayOneShot(EventReference sound)
         {
             RuntimeManager.PlayOneShot(sound);
+        }
+        public void PlayOneShot(EventReference sound, Vector3 worldPos, Vector3 listenerPos, float maxDistance)
+        {
+            var distance = Vector3.Distance(worldPos, listenerPos);
+            var attenuation = Mathf.Clamp01(1 - (distance / maxDistance));
+            var instance = RuntimeManager.CreateInstance(sound);
+            instance.set3DAttributes(worldPos.To3DAttributes());
+            instance.setVolume(attenuation);
+            instance.start();
+            instance.release();
         }
         public void ChangeMusic(EventReference music, STOP_MODE stopMode)
         {

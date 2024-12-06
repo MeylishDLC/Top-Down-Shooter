@@ -145,6 +145,7 @@ GameObject:
   - component: {fileID: 6619848632396508895}
   - component: {fileID: 4234370524342323861}
   - component: {fileID: 3686213671687945947}
+  - component: {fileID: 1844861533712363328}
   m_Layer: 15
   m_Name: Muzhik
   m_TagString: Untagged
@@ -388,6 +389,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyHealth: {fileID: 3686213671687945947}
+  moveSound:
+    Guid:
+      Data1: -709617095
+      Data2: 1128456914
+      Data3: -335382601
+      Data4: -1498732797
+    Path: event:/SFX/Enemies/Men
+  soundFrequency: 2.5
+  soundDistance: 5
   colorOnDamageTaken: {r: 0.9725491, g: 0.38823533, b: 0.38823533, a: 1}
   colorStayDuration: 0.1
   deathAnimationDuration: 0.5
@@ -405,6 +415,37 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyMovement: {fileID: 4234370524342323861}
   maxHealth: 30
+--- !u!114 &1844861533712363328
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3739623183934700978}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: -709617095
+      Data2: 1128456914
+      Data3: -335382601
+      Data4: -1498732797
+    Path: event:/SFX/Enemies/Men
+  Event: 
+  PlayEvent: 11
+  StopEvent: 12
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  AllowNonRigidbodyDoppler: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 20
 --- !u!1 &8879187081392620469
 GameObject:
   m_ObjectHideFlags: 0

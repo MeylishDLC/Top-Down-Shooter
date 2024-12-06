@@ -387,6 +387,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyHealth: {fileID: 3686213671687945947}
+  moveSound:
+    Guid:
+      Data1: 61639807
+      Data2: 1240037016
+      Data3: 134376327
+      Data4: 606610161
+    Path: event:/SFX/Enemies/Leo
+  soundFrequency: 2.5
+  soundDistance: 5
   colorOnDamageTaken: {r: 0.9725491, g: 0.38823533, b: 0.38823533, a: 1}
   colorStayDuration: 0.1
   deathAnimationDuration: 0.5
@@ -404,8 +413,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyMovement: {fileID: 8875516636895227797}
   maxHealth: 20
-  knockBackTimeMilliseconds: 0
-  knockbackThrust: 0
 --- !u!1 &8879187081392620469
 GameObject:
   m_ObjectHideFlags: 0

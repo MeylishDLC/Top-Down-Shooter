@@ -3,18 +3,32 @@ using System.Collections.Generic;
 using System.Linq;
 using Bullets.BulletPools;
 using Core.PoolingSystem;
+using FMODUnity;
+using Player.PlayerControl;
+using SoundSystem;
 using UnityEngine;
+using Zenject;
 
 namespace Bullets.BulletPatterns
 {
     public class BulletSpawner : MonoBehaviour, IPoolUser
 {
     [SerializeField] private BulletSpawnerConfig config;
+    [SerializeField] private EventReference fireSound;
+    [SerializeField] private float soundDistance = 2f;
     
+    private AudioManager _audioManager;
+    private Transform _playerTransform;
     private EnemyBulletPool _enemyBulletPool;
     private float _timer;
     private float _angleOffset;
-
+    
+    [Inject]
+    public void Construct(AudioManager audioManager, PlayerMovement playerMovement)
+    {
+        _playerTransform = playerMovement.transform;
+        _audioManager = audioManager;
+    }
     public void InjectPool(EnemyBulletPool pool)
     {
         _enemyBulletPool = pool;
@@ -40,6 +54,10 @@ namespace Bullets.BulletPatterns
     }
     private void Fire()
     {
+        if (!fireSound.IsNull)
+        {
+            _audioManager.PlayOneShot(fireSound, transform.position, _playerTransform.position, soundDistance);
+        }
         if (config.SpawnerType == SpawnerType.RadialSpin)
         {
             FireRadialSpin();
