@@ -1,4 +1,5 @@
 using Core.LevelSettings;
+using SoundSystem;
 using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
@@ -11,10 +12,17 @@ namespace Installers
         [SerializeField] private RectTransform loadingScreenPrefab;
         [SerializeField] private SceneLoader sceneLoaderPrefab;
         [SerializeField] private Canvas canvasPrefab;
+        [SerializeField] private AudioManager audioManagerPrefab;
         public override void InstallBindings()
         {
+            BindAudioManager();
             BindLevelSave();
             BindSceneLoader();
+        }
+        private void BindAudioManager()
+        {
+            var audioManager = Container.InstantiatePrefabForComponent<AudioManager>(audioManagerPrefab);
+            Container.Bind<AudioManager>().FromInstance(audioManager).AsSingle();
         }
         private void BindLevelSave()
         {
