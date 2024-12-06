@@ -155,12 +155,11 @@ MonoBehaviour:
   shopUI: {fileID: 0}
   playerGUI: {fileID: 0}
   closeButton: {fileID: 0}
-  speechOnEnterShop: "\u041D\u0443 \u043F\u0440\u0438\u0432\u0435\u0442\u0438\u043A,
-    \u0436\u0438\u0432\u043E\u0442\u043D\u043E\u0435 <3"
-  speechOnExitShop: "\u041F\u0440\u0438\u0445\u043E\u0434\u0438 \u0435\u0449\u0451,
-    \u043A\u043E\u0442\u0438\u043A!"
+  levelChargesHandler: {fileID: 0}
+  dialogueConfig: {fileID: 0}
+  dialogueAudioSO: {fileID: 11400000, guid: 000711248e03f4c419fe31c64605be27, type: 2}
   vetDialogueText: {fileID: 0}
-  typeSpeedMilliseconds: 10
+  typeSpeedMilliseconds: 15
   delayBeforeDialogueChangeMilliseconds: 100
   delayBeforeShopClosingMillisecons: 500
   playerCellsInShop: {fileID: 0}

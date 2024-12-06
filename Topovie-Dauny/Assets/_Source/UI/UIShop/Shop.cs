@@ -5,6 +5,8 @@ using Core.InputSystem;
 using Core.LevelSettings;
 using Cysharp.Threading.Tasks;
 using Player.PlayerAbilities;
+using SoundSystem;
+using SoundSystem.DialogueSoundSO;
 using TMPro;
 using UI.UIShop.Dialogue;
 using UnityEngine;
@@ -24,12 +26,14 @@ namespace UI.UIShop
         [Header("Vet Dialogue")] 
         [SerializeField] private LevelChargesHandler levelChargesHandler;
         [SerializeField] private VetDialogueConfig dialogueConfig;
+        [SerializeField] private DialogueAudioInfoSO dialogueAudioSO;
         [SerializeField] private TMP_Text vetDialogueText;
         [SerializeField] private int typeSpeedMilliseconds;
         [SerializeField] private int delayBeforeDialogueChangeMilliseconds;
         [SerializeField] private int delayBeforeShopClosingMillisecons;
         [SerializeField] private PlayerCellsInShop playerCellsInShop;
 
+        private AudioManager _audioManager;
         private StatesChanger _statesChanger;
         private InputListener _inputListener;
         private ShopDialogue _shopDialogue;
@@ -39,8 +43,9 @@ namespace UI.UIShop
         private CancellationTokenSource _stopTypingCts = new();
 
         [Inject]
-        public void Construct(InputListener inputListener, StatesChanger statesChanger)
+        public void Construct(InputListener inputListener, StatesChanger statesChanger, AudioManager audioManager)
         {
+            _audioManager = audioManager;
             _statesChanger = statesChanger;
             _inputListener = inputListener;
         }
@@ -50,7 +55,7 @@ namespace UI.UIShop
             closeButton.onClick.AddListener(CloseShop);
             _statesChanger.OnStateChanged += SetCanBeOpen;
             playerCellsInShop.OnAbilityChanged += ChangeDialogue;
-            _shopDialogue = new ShopDialogue(vetDialogueText, typeSpeedMilliseconds);
+            _shopDialogue = new ShopDialogue(vetDialogueText, typeSpeedMilliseconds, dialogueAudioSO, _audioManager);
         }
         //todo fix shooting in shop after dialogue
         private void OnDestroy()

@@ -5,6 +5,7 @@ using Core.PoolingSystem.Configs;
 using DialogueSystem;
 using Player.PlayerCombat;
 using Player.PlayerControl;
+using SoundSystem;
 using UI.Core;
 using UI.UIShop;
 using UnityEngine;
@@ -53,7 +54,7 @@ namespace Installers
         }
         private void BindDialogueManager()
         {
-            _dialogueManager = new DialogueManager(inputListener, baseDialogueDisplay);
+            _dialogueManager = new DialogueManager(inputListener, baseDialogueDisplay, Container.Resolve<AudioManager>());
             Container.Bind<DialogueManager>().FromInstance(_dialogueManager).AsSingle();
         }
         private void BindPlayer()

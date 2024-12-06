@@ -3,10 +3,14 @@ using System.Collections.Generic;
 using System.Threading;
 using Core.InputSystem;
 using Cysharp.Threading.Tasks;
+using FMODUnity;
 using Ink.Runtime;
 using ModestTree;
+using SoundSystem;
+using SoundSystem.DialogueSoundSO;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using Random = UnityEngine.Random;
 
 namespace DialogueSystem
 {
@@ -17,8 +21,10 @@ namespace DialogueSystem
         public bool DialogueIsPlaying { get; private set; }
         public bool CanEnterDialogueMode { get; private set; } = true;
         
+        private AudioManager _audioManager;
         private readonly DialogueDisplay _dialogueDisplay;
-        
+        private DialogueAudioInfoSO _currentAudioInfo;
+        private Dictionary<string, DialogueAudioInfoSO> _audioInfoDictionary;
         private Story _currentStory;
         private bool _hasChosen;
         private bool _canContinueLine;
@@ -29,14 +35,17 @@ namespace DialogueSystem
         private readonly InputListener _inputListener;
         private CancellationTokenSource _skipLineCts = new();
         
-        public DialogueManager(InputListener inputListener, DialogueDisplay dialogueDisplay)
+        public DialogueManager(InputListener inputListener, DialogueDisplay dialogueDisplay, AudioManager audioManager)
         {
+            _audioManager = audioManager;
             _inputListener = inputListener;
             _dialogueDisplay = dialogueDisplay;
+            _currentAudioInfo = _dialogueDisplay.DefaultAudioInfo;
             
             _dialogueDisplay.gameObject.SetActive(false);
             _inputListener.OnInteractPressed += HandleInput;
             SubscribeChoices();
+            InitializeAudioInfoDictionary();
         }
         public void CleanUp()
         {
@@ -125,6 +134,7 @@ namespace DialogueSystem
                     else
                     {
                         _dialogueDisplay.DialogueText.maxVisibleCharacters++;
+                        PlayDialogueSound(_dialogueDisplay.DialogueText.maxVisibleCharacters);
                         await UniTask.Delay(TimeSpan.FromSeconds(_dialogueDisplay.DialogueTypeSpeed),
                             cancellationToken: token);
                     }
@@ -175,6 +185,7 @@ namespace DialogueSystem
                 {
                     case SpeakerTag:
                         _dialogueDisplay.NameText.text = tagValue;
+                        SetCurrentAudioInfo(tagValue);
                         break;
                     case SpriteTag:
                         _dialogueDisplay.SpriteAnimator.Play(tagValue);
@@ -203,7 +214,7 @@ namespace DialogueSystem
                 index++;
             }
 
-            for (int i = index; i < _dialogueDisplay.Choices.Length; i++)
+            for (var i = index; i < _dialogueDisplay.Choices.Length; i++)
             {
                 _dialogueDisplay.Choices[i].gameObject.SetActive(false);
             }
@@ -215,6 +226,42 @@ namespace DialogueSystem
             foreach (var choiceButton in _dialogueDisplay.Choices)
             {
                 choiceButton.gameObject.SetActive(false);
+            }
+        }
+        private void PlayDialogueSound(int currenDisplayedCharCount)
+        {
+            var typeSounds = _currentAudioInfo.TypeSounds;
+            var frequencyLvl = _currentAudioInfo.FrequencyLvl;
+            //setting sound effect per particular number of a char
+            if (currenDisplayedCharCount % frequencyLvl == 0)
+            {
+                var randomIndex = Random.Range(0, typeSounds.Length);
+                var soundClip = typeSounds[randomIndex];
+                _audioManager.PlayOneShot(soundClip);
+            }
+        }
+        private void InitializeAudioInfoDictionary()
+        {
+            _audioInfoDictionary = new Dictionary<string, DialogueAudioInfoSO>
+            {
+                { _dialogueDisplay.DefaultAudioInfo.Id, _dialogueDisplay.DefaultAudioInfo }
+            };
+            
+            foreach (var audioInfo in _dialogueDisplay.AudioInfos)
+            {
+                _audioInfoDictionary.Add(audioInfo.Id, audioInfo);
+            }
+        }
+        private void SetCurrentAudioInfo(string id)
+        {
+            _audioInfoDictionary.TryGetValue(id, out var audioInfo);
+            if (audioInfo != null)
+            {
+                _currentAudioInfo = audioInfo;
+            }
+            else
+            {
+                Debug.LogWarning("Failed to find audio info for this id: " + id);
             }
         }
         private void CancelRecreateCts()
@@ -240,7 +287,7 @@ namespace DialogueSystem
         }
         private void SubscribeChoices()
         {
-            for (int i = 0; i < _dialogueDisplay.Choices.Length; i++)
+            for (var i = 0; i < _dialogueDisplay.Choices.Length; i++)
             {
                 var buttonIndex = i;
                 _dialogueDisplay.Choices[i].onClick.AddListener(() => MakeChoice(buttonIndex));
@@ -248,7 +295,7 @@ namespace DialogueSystem
         }
         private void UnsubscribeChoices()
         {
-            for (int i = 0; i < _dialogueDisplay.Choices.Length; i++)
+            for (var i = 0; i < _dialogueDisplay.Choices.Length; i++)
             {
                 var buttonIndex = i;
                 _dialogueDisplay.Choices[i].onClick.AddListener(() => MakeChoice(buttonIndex));

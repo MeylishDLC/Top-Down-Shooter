@@ -6,6 +6,7 @@ using DialogueSystem;
 using DialogueSystem.LevelDialogue;
 using Player.PlayerCombat;
 using Player.PlayerControl;
+using SoundSystem;
 using UI.Core;
 using UI.PlayerGUI;
 using UI.UIShop;
@@ -60,7 +61,7 @@ namespace Installers
         }
         private void BindDialogueManager()
         {
-            _dialogueManager = new DialogueManager(inputListener, baseDialogueDisplay);
+            _dialogueManager = new DialogueManager(inputListener, baseDialogueDisplay, Container.Resolve<AudioManager>());
             Container.Bind<DialogueManager>().FromInstance(_dialogueManager).AsSingle();
         }
         private void BindPlayer()

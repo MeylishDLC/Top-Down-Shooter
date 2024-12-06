@@ -1,19 +1,26 @@
 ﻿using System;
 using System.Threading;
 using Cysharp.Threading.Tasks;
+using SoundSystem;
+using SoundSystem.DialogueSoundSO;
 using TMPro;
+using Random = UnityEngine.Random;
 
 namespace UI.UIShop.Dialogue
 {
     public class ShopDialogue
     {
-        private TMP_Text _dialogueText;
-        private int _typeSpeed;
-        private string _currentText = "";
+        private readonly TMP_Text _dialogueText;
+        private readonly int _typeSpeed;
+        private readonly DialogueAudioInfoSO _dialogueAudio;
+        private readonly AudioManager _audioManager;
         
-        public ShopDialogue(TMP_Text dialogueText, int typeSpeedMilliseconds)
+        public ShopDialogue(TMP_Text dialogueText, int typeSpeedMilliseconds, DialogueAudioInfoSO dialogueAudio,
+            AudioManager audioManager)
         {
+            _dialogueAudio = dialogueAudio;
             _dialogueText = dialogueText;
+            _audioManager = audioManager;
             _typeSpeed = typeSpeedMilliseconds;
         }
 
@@ -21,17 +28,30 @@ namespace UI.UIShop.Dialogue
         {
             try
             {
-                _currentText = "";
-                for (int i = 0; i <= text.Length; i++)
+                _dialogueText.text = text;
+                _dialogueText.maxVisibleCharacters = 0;
+
+                foreach (var letter in text.ToCharArray())
                 {
-                    _currentText = text.Substring(0, i);
-                    _dialogueText.text = _currentText;
+                    _dialogueText.maxVisibleCharacters++;
+                    PlayDialogueSound(_dialogueText.maxVisibleCharacters);
                     await UniTask.Delay(_typeSpeed, cancellationToken: token);
                 }
             }
             catch (OperationCanceledException)
             {
                 //
+            }
+        }
+        private void PlayDialogueSound(int currenDisplayedCharCount)
+        {
+            var typeSounds = _dialogueAudio.TypeSounds;
+            var frequencyLvl = _dialogueAudio.FrequencyLvl;
+            if (currenDisplayedCharCount % frequencyLvl == 0)
+            {
+                var randomIndex = Random.Range(0, typeSounds.Length);
+                var soundClip = typeSounds[randomIndex];
+                _audioManager.PlayOneShot(soundClip);
             }
         }
     }

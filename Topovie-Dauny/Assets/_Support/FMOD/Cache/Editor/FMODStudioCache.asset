@@ -15,11 +15,38 @@ MonoBehaviour:
   Path: FMODProject/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 638690863046134564
+  lastModified: 638690902811494021
   FileSizes:
   - Name: Desktop
     Value: 1340
   Exists: 1
+--- !u!114 &-5789587937291096852
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/Dialogue/LeoBoss
+  m_EditorClassIdentifier: 
+  Path: event:/SFX/Dialogue/LeoBoss
+  Guid:
+    Data1: 795281044
+    Data2: 1268474220
+    Data3: -2120609624
+    Data4: -423902781
+  Banks:
+  - {fileID: 3210779146886205598}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
 --- !u!114 &-5312013320122821637
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -109,10 +136,10 @@ MonoBehaviour:
   Path: FMODProject/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638690863046144564
+  lastModified: 638690902811504010
   FileSizes:
   - Name: Desktop
-    Value: 1164
+    Value: 1310
   Exists: 1
 --- !u!114 &-1316820983204886502
 MonoBehaviour:
@@ -165,12 +192,15 @@ MonoBehaviour:
   - {fileID: 458141876425460587}
   - {fileID: -3044483495672890884}
   - {fileID: -5312013320122821637}
+  - {fileID: 5927711503935954794}
+  - {fileID: -5789587937291096852}
+  - {fileID: 467589359763615532}
   EditorParameters: []
   MasterBanks:
   - {fileID: -6366681157243713885}
   StringsBanks:
   - {fileID: -1816647176805912851}
-  cacheTime: 638690863047898503
+  cacheTime: 638690902812277254
   cacheVersion: 131616
 --- !u!114 &458141876425460587
 MonoBehaviour:
@@ -190,6 +220,33 @@ MonoBehaviour:
     Data2: 1103764357
     Data3: 460686218
     Data4: -1159454748
+  Banks:
+  - {fileID: 3210779146886205598}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
+--- !u!114 &467589359763615532
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/Dialogue/Leo
+  m_EditorClassIdentifier: 
+  Path: event:/SFX/Dialogue/Leo
+  Guid:
+    Data1: 1266749601
+    Data2: 1324136730
+    Data3: 500506514
+    Data4: -2097475923
   Banks:
   - {fileID: 3210779146886205598}
   IsStream: 0
@@ -241,11 +298,38 @@ MonoBehaviour:
   Path: FMODProject/Build/Desktop/SFX.bank
   Name: SFX
   StudioPath: bank:/SFX
-  lastModified: 638690863047898503
+  lastModified: 638690902812277254
   FileSizes:
   - Name: Desktop
-    Value: 90240
+    Value: 99264
   Exists: 1
+--- !u!114 &5927711503935954794
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/Dialogue/Vet
+  m_EditorClassIdentifier: 
+  Path: event:/SFX/Dialogue/Vet
+  Guid:
+    Data1: -928932041
+    Data2: 1248360711
+    Data3: 594976919
+    Data4: 551268533
+  Banks:
+  - {fileID: 3210779146886205598}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
 --- !u!114 &7545971346797453203
 MonoBehaviour:
   m_ObjectHideFlags: 0

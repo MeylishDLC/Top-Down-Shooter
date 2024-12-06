@@ -61,10 +61,6 @@ namespace Core.Bootstrappers
                 .ContinueWith(() => InstantiateAssets(CancellationToken.None))
                 .ContinueWith(ShowScene).Forget();
         }
-        private void Start()
-        {
-            _levelDialogues?.PlayStartDialogue();
-        }
         private void OnDestroy()
         {
             _environmentLoader.ReleaseStoredInstance();
@@ -84,6 +80,7 @@ namespace Core.Bootstrappers
             var music = _audioManager.FMODEvents.LevelsMusic[levelNumber];
             _audioManager.ChangeMusic(music, STOP_MODE.ALLOWFADEOUT);
             _sceneLoader.SetLoadingScreenActive(false);
+            _levelDialogues?.PlayStartDialogue();
         }
         private async UniTask Initialize(CancellationToken cancellationToken)
         {
@@ -93,6 +90,16 @@ namespace Core.Bootstrappers
             InitializeEnemyContainers();
             InitializeBulletSpawners();
             _levelChargesHandler.InitAllContainers(containers);
+        }
+        private async UniTask InstantiateAssets(CancellationToken token)
+        {
+            await InstantiateEnvironment(token);
+            if (_sceneLoader.LastSceneIndex == _sceneLoader.CurrentSceneIndex)
+            {
+                PutPlayerInRespawn();
+            }
+            ScanPaths();
+            await UniTask.Delay(TimeSpan.FromSeconds(LoadDelay), cancellationToken: token);
         }
         private void InitializeGuns()
         {
@@ -120,16 +127,6 @@ namespace Core.Bootstrappers
                 var pool = _poolInitializer.GetBulletPoolForEnemy(tower.EnemyBulletAssetName);
                 tower.InjectPool(pool);
             }
-        }
-        private async UniTask InstantiateAssets(CancellationToken token)
-        {
-            await InstantiateEnvironment(token);
-            if (_sceneLoader.LastSceneIndex == _sceneLoader.CurrentSceneIndex)
-            {
-                PutPlayerInRespawn();
-            }
-            ScanPaths();
-            await UniTask.Delay(TimeSpan.FromSeconds(LoadDelay), cancellationToken: token);
         }
         private async UniTask InstantiateEnvironment(CancellationToken token)
         {

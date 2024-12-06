@@ -1,4 +1,5 @@
-﻿using TMPro;
+﻿using SoundSystem.DialogueSoundSO;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -20,6 +21,10 @@ namespace DialogueSystem
         [field:Header("Time Settings")] 
         [field: SerializeField] public float DialogueRestartDelay {get; private set;}
         [field: SerializeField] public float DialogueTypeSpeed {get; private set;}
+        
+        [field:Header("Audio")]
+        [field:SerializeField] public DialogueAudioInfoSO DefaultAudioInfo {get; private set;}
+        [field:SerializeField] public DialogueAudioInfoSO[] AudioInfos {get; private set;}
 
         private void Start()
         {
