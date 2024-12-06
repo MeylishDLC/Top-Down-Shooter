@@ -43,7 +43,7 @@ namespace Core.LevelSettings
          {
              _statesChanger = statesChanger;
              _spawner = spawner;
-             _levelChargeSound = new LevelChargeSound(audioManager);
+             _levelChargeSound = new LevelChargeSound(audioManager, _statesChanger);
          }
          private void Awake()
          {
@@ -62,6 +62,7 @@ namespace Core.LevelSettings
              }
              gameOverScreen.OnGameOver -= StopSpawning;
              gameOverScreen.OnScreenFaded -= DisableAllEnemies;
+             _levelChargeSound.CleanUp();
          }
          public void InitAllContainers(IEnumerable<EnemyContainer> containers)
          {
