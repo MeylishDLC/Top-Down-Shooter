@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading;
 using _Support.Demigiant.DOTween.Modules;
 using Cysharp.Threading.Tasks;
+using SoundSystem;
 using UnityEngine;
 
 namespace Enemies.Boss.BossAttacks.Lines
@@ -21,9 +22,9 @@ namespace Enemies.Boss.BossAttacks.Lines
         private readonly float _transitionDuration;
         private readonly float _warningDuration;
         private readonly float _attackDuration;
-        
+        private readonly AudioManager _audioManager;
         public LinesAttackVisual(BaseBossAttackConfig config, ContinuousAttack[] lines, 
-            float transparencyOnWarn, float transparencyOnAttack)
+            float transparencyOnWarn, float transparencyOnAttack, AudioManager audioManager)
         {
             _linesRenderers = GetRenderers(lines);
             _transparencyOnAttack = transparencyOnAttack;
@@ -34,8 +35,8 @@ namespace Enemies.Boss.BossAttacks.Lines
             _transitionDuration = config.TransitionDuration;
             _warningDuration = config.WarningDuration;
             _attackDuration = config.AttackDuration;
+            _audioManager = audioManager;
         }
-        
         public async UniTask ShowLineWarnAsync(int lineIndex, CancellationToken token)
         {
             await DoLineFade(_linesRenderers[lineIndex], _transparencyOnWarn, _fadeInTime, token);
@@ -45,6 +46,7 @@ namespace Enemies.Boss.BossAttacks.Lines
         public async UniTask ShowLineAttack(int lineIndex, CancellationToken token)
         {
             await DoLineFade(_linesRenderers[lineIndex], _transparencyOnAttack, _transitionDuration, token);
+            _audioManager.PlayOneShot(_audioManager.FMODEvents.LinesSound);
             OnLineAttackStarted?.Invoke(lineIndex);
             await UniTask.Delay(TimeSpan.FromSeconds(_attackDuration), cancellationToken: token);
         }

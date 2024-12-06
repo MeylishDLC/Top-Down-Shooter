@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Threading;
 using Cysharp.Threading.Tasks;
+using SoundSystem;
 using UnityEngine;
+using Zenject;
 using Random = UnityEngine.Random;
 
 namespace Enemies.Boss.BossAttacks.Lines
@@ -18,6 +20,12 @@ namespace Enemies.Boss.BossAttacks.Lines
         private bool _isAttackingOpposite;
         private CancellationToken _destroyCancellationToken;
         private LinesAttackVisual _linesAttackVisual;
+
+        [Inject]
+        public void Construct(AudioManager audioManager)
+        {
+            _linesAttackVisual = new LinesAttackVisual(config, lines, transparencyOnWarn, transparencyOnAttack, audioManager);
+        }
         private void Awake()
         {
             _destroyCancellationToken = this.GetCancellationTokenOnDestroy();
@@ -26,7 +34,6 @@ namespace Enemies.Boss.BossAttacks.Lines
                 line.enabled = false;
             }
             
-            _linesAttackVisual = new LinesAttackVisual(config, lines, transparencyOnWarn, transparencyOnAttack);
             _linesAttackVisual.SetAllLinesTransparency(0);
             _linesAttackVisual.OnLineAttackStarted += EnableAttack;
             _linesAttackVisual.OnLineAttackEnded += DisableAttack;

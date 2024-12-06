@@ -96,7 +96,7 @@ MonoBehaviour:
   Path: FMODProject/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 638691035847332505
+  lastModified: 638691112502384339
   FileSizes:
   - Name: Desktop
     Value: 1340
@@ -236,6 +236,33 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 0
+--- !u!114 &-3442178439822453599
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/Boss/Lasers
+  m_EditorClassIdentifier: 
+  Path: event:/SFX/Boss/Lasers
+  Guid:
+    Data1: -1071099872
+    Data2: 1077839611
+    Data3: -216908662
+    Data4: 794440897
+  Banks:
+  - {fileID: 3210779146886205598}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
 --- !u!114 &-3044483495672890884
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -325,10 +352,10 @@ MonoBehaviour:
   Path: FMODProject/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638691035847342512
+  lastModified: 638691112502394440
   FileSizes:
   - Name: Desktop
-    Value: 2100
+    Value: 2294
   Exists: 1
 --- !u!114 &-1316820983204886502
 MonoBehaviour:
@@ -357,6 +384,33 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 0
+--- !u!114 &-807883880819635103
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/Boss/Fireballs
+  m_EditorClassIdentifier: 
+  Path: event:/SFX/Boss/Fireballs
+  Guid:
+    Data1: 319954251
+    Data2: 1277442701
+    Data3: -1033189731
+    Data4: -654325359
+  Banks:
+  - {fileID: 3210779146886205598}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 4848
 --- !u!114 &-270982577642874965
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -428,12 +482,16 @@ MonoBehaviour:
   - {fileID: 2120024753798399753}
   - {fileID: -3842749789629150810}
   - {fileID: -4964494115099814274}
+  - {fileID: 8064616280114220579}
+  - {fileID: -3442178439822453599}
+  - {fileID: -807883880819635103}
+  - {fileID: 7875577303547480472}
   EditorParameters: []
   MasterBanks:
   - {fileID: -6366681157243713885}
   StringsBanks:
   - {fileID: -1816647176805912851}
-  cacheTime: 638691068018487521
+  cacheTime: 638691152751667587
   cacheVersion: 131616
 --- !u!114 &165189585111624022
 MonoBehaviour:
@@ -693,10 +751,10 @@ MonoBehaviour:
   Path: FMODProject/Build/Desktop/SFX.bank
   Name: SFX
   StudioPath: bank:/SFX
-  lastModified: 638691068018487521
+  lastModified: 638691152751667587
   FileSizes:
   - Name: Desktop
-    Value: 481056
+    Value: 685568
   Exists: 1
 --- !u!114 &3387091442255413876
 MonoBehaviour:
@@ -797,6 +855,60 @@ MonoBehaviour:
     Data2: 1283491190
     Data3: 359644289
     Data4: -1933706188
+  Banks:
+  - {fileID: 3210779146886205598}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
+--- !u!114 &7875577303547480472
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/Boss/LeoTransformation
+  m_EditorClassIdentifier: 
+  Path: event:/SFX/Boss/LeoTransformation
+  Guid:
+    Data1: -661046023
+    Data2: 1104377107
+    Data3: 2032804758
+    Data4: 1171171420
+  Banks:
+  - {fileID: 3210779146886205598}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
+--- !u!114 &8064616280114220579
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/Boss/Chessboard
+  m_EditorClassIdentifier: 
+  Path: event:/SFX/Boss/Chessboard
+  Guid:
+    Data1: 1477384224
+    Data2: 1291789113
+    Data3: 770877871
+    Data4: 1028959158
   Banks:
   - {fileID: 3210779146886205598}
   IsStream: 0

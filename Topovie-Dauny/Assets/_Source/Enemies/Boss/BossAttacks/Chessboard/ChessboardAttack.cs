@@ -1,6 +1,8 @@
 using System.Threading;
 using Cysharp.Threading.Tasks;
+using SoundSystem;
 using UnityEngine;
+using Zenject;
 
 namespace Enemies.Boss.BossAttacks.Chessboard
 {
@@ -12,11 +14,14 @@ namespace Enemies.Boss.BossAttacks.Chessboard
 
         private CancellationToken _destroyCancellationToken;
         private ChessboardVisual _chessboardVisual;
-        
+        [Inject]
+        public void Construct(AudioManager audioManager)
+        {
+            _chessboardVisual = new ChessboardVisual(chessboardSprite, config, audioManager);
+        }
         private void Awake()
         {
             _destroyCancellationToken = this.GetCancellationTokenOnDestroy();
-            _chessboardVisual = new ChessboardVisual(chessboardSprite, config);
             _chessboardVisual.OnAttackStarted += EnableHitCollider;
             _chessboardVisual.OnAttackEnded += DisableHitCollider;
             

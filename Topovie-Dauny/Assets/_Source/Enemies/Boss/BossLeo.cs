@@ -5,6 +5,7 @@ using Core.LevelSettings;
 using Cysharp.Threading.Tasks;
 using DialogueSystem;
 using Enemies.Boss.Phases;
+using UI.Menus;
 using UnityEngine;
 using Zenject;
 
@@ -14,6 +15,7 @@ namespace Enemies.Boss
     {
         public event Action OnBossDefeated;
         
+        [SerializeField] private GameOverScreen gameOverScreen;
         [SerializeField] private BossFightTrigger bossFightTrigger;
         [SerializeField] private SerializedDictionary<BossPhase, TextAsset> phaseDialoguePair;
         [SerializeField] private BossHealth bossHealth;
@@ -43,13 +45,14 @@ namespace Enemies.Boss
             
             _destroyCancellationToken = this.GetCancellationTokenOnDestroy();
             bossHealth.OnPhaseFinished += EndPhase;
-
             bossFightTrigger.OnBossFightStarted += StartFight;
+            gameOverScreen.OnScreenFaded += DestroyOnGameOver;
         }
         private void OnDestroy()
         {
             bossHealth.OnPhaseFinished -= EndPhase;
             bossHealth.OnDamageTaken -= _bossLeoVisual.ShowLeoHurt;
+            gameOverScreen.OnScreenFaded -= DestroyOnGameOver;
         }
         private void StartFight()
         {
@@ -91,7 +94,6 @@ namespace Enemies.Boss
             bossHealth.ChangePhase(phase);
             phase.StartPhase();
         }
-
         private void PlayDialogue()
         {
             _dialogueManager.OnDialogueEnded += StartPhase;
@@ -103,9 +105,8 @@ namespace Enemies.Boss
                 StartPhase();
                 return;
             }
-            
             _dialogueManager.EnterDialogueMode(dialogue);
         }
-        
+        private void DestroyOnGameOver() => Destroy(gameObject);
     }
 }

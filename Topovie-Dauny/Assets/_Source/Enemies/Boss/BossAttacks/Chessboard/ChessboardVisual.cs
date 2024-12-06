@@ -2,6 +2,7 @@
 using System.Threading;
 using _Support.Demigiant.DOTween.Modules;
 using Cysharp.Threading.Tasks;
+using SoundSystem;
 using UnityEngine;
 
 namespace Enemies.Boss.BossAttacks.Chessboard
@@ -21,8 +22,8 @@ namespace Enemies.Boss.BossAttacks.Chessboard
         private readonly float _fadeInDuration;
         private readonly float _blinkDuration;
         private readonly int _warningBlinkAmount;
-        
-        public ChessboardVisual(SpriteRenderer chessboardSprite, ChessboardConfig config)
+        private readonly AudioManager _audioManager;
+        public ChessboardVisual(SpriteRenderer chessboardSprite, ChessboardConfig config, AudioManager audioManager)
         {
             _chessboardSprite = chessboardSprite;
             _attackingTileColor = config.AttackingTileColor;
@@ -33,6 +34,7 @@ namespace Enemies.Boss.BossAttacks.Chessboard
             _fadeOutDuration = config.FadeOutTime;
             _fadeInDuration = config.FadeInTime;
             
+            _audioManager = audioManager;
             _warningBlinkAmount = config.WarningBlinkAmount;
             _blinkDuration = config.WarningDuration/config.WarningBlinkAmount;
         }
@@ -42,6 +44,7 @@ namespace Enemies.Boss.BossAttacks.Chessboard
             _chessboardSprite.color = _attackingTileColor;
             
             await UniTask.Delay(TimeSpan.FromSeconds(_delayBeforeAttack), cancellationToken: token);
+            _audioManager.PlayOneShot(_audioManager.FMODEvents.ChessboardSound);
             _chessboardSprite.gameObject.SetActive(true);
             OnAttackStarted?.Invoke();
             

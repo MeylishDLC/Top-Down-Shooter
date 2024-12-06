@@ -2,6 +2,7 @@
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
+using SoundSystem;
 using UnityEngine;
 
 namespace Enemies.Boss.BossAttacks.Lasers
@@ -22,9 +23,9 @@ namespace Enemies.Boss.BossAttacks.Lasers
         private readonly float _transitionDuration;
         private readonly float _warningDuration;
         private readonly float _attackDuration;
-        
+        private readonly AudioManager _audioManager;
         public LasersVisual(BaseBossAttackConfig config, Material laserMaterial, 
-            float intensityOnWarn, float intensityOnAttack)
+            float intensityOnWarn, float intensityOnAttack, AudioManager audioManager)
         {
             _laserMaterial = laserMaterial;
             _intensityOnWarn = intensityOnWarn;
@@ -35,8 +36,8 @@ namespace Enemies.Boss.BossAttacks.Lasers
             _transitionDuration = config.TransitionDuration;
             _warningDuration = config.WarningDuration;
             _attackDuration = config.AttackDuration;
+            _audioManager = audioManager;
         }
-        
         public async UniTask ShowWarningAsync(CancellationToken token)
         {
             await DoLasersFade(_intensityOnWarn, _fadeInTime,token);
@@ -45,6 +46,7 @@ namespace Enemies.Boss.BossAttacks.Lasers
 
         public async UniTask ShowStartAttackAsync(CancellationToken token)
         {
+            _audioManager.PlayOneShot(_audioManager.FMODEvents.LasersSound);
             await DoLasersFade(_intensityOnAttack, _transitionDuration, token);
             OnAttackStarted?.Invoke();
             await UniTask.Delay(TimeSpan.FromSeconds(_attackDuration), cancellationToken: token);

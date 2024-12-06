@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Threading;
 using _Support.Demigiant.DOTween.Modules;
+using Core.InputSystem;
 using Cysharp.Threading.Tasks;
 using Enemies.Boss;
 using UnityEngine;
 using UnityEngine.UI;
+using Zenject;
 
 namespace UI.Comics
 {
@@ -23,7 +25,12 @@ namespace UI.Comics
         private Image _buttonImage;
         private int _currentPage;
         private CancellationToken _destroyCancellationToken;
-        
+        private InputListener _inputListener;
+        [Inject]
+        public void Construct(InputListener inputListener)
+        {
+            _inputListener = inputListener;
+        }
         private void OnValidate()
         {
             if (TryGetComponent<Image>(out var img))
@@ -49,6 +56,7 @@ namespace UI.Comics
         }
         public void ShowComics()
         {
+            _inputListener.SetInput(false);
             FadeInAsync(_destroyCancellationToken).Forget();
         }
         private async UniTask FadeInAsync(CancellationToken token)

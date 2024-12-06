@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Threading;
 using Cysharp.Threading.Tasks;
+using SoundSystem;
 using UnityEngine;
+using Zenject;
 
 namespace Enemies.Boss.BossAttacks.Lasers
 {
@@ -15,11 +17,15 @@ namespace Enemies.Boss.BossAttacks.Lasers
 
         private CancellationToken _destroyCancellationToken;
         private LasersVisual _lasersVisual;
+        [Inject]
+        public void Construct(AudioManager audioManager)
+        {
+            _lasersVisual = new LasersVisual(config, laserMaterial, intensityOnWarn, intensityOnAttack, audioManager);
+        }
         private void Awake()
         {
             _destroyCancellationToken = this.GetCancellationTokenOnDestroy();
             DisableAttack();
-            _lasersVisual = new LasersVisual(config, laserMaterial, intensityOnWarn, intensityOnAttack);
             _lasersVisual.DoLasersFade(0,0, _destroyCancellationToken);
 
             _lasersVisual.OnAttackEnded += DisableAttack;

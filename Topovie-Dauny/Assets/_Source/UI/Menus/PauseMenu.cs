@@ -67,6 +67,7 @@ namespace UI.Menus
         private void PauseGame()
         {
             Cursor.visible = true;
+            _inputListener.SetInput(false);
             _customCursor.gameObject.SetActive(false);
             
             IsPaused = true;
@@ -77,7 +78,8 @@ namespace UI.Menus
         {
             Cursor.visible = false;
             _customCursor.gameObject.SetActive(true);
-            
+            _inputListener.SetInput(true);
+
             IsPaused = false;
             pauseMenu.SetActive(false);
             Time.timeScale = 1f;
