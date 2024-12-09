@@ -21,10 +21,14 @@ namespace DialogueSystem.LevelDialogue
         }
         public void PlayStartDialogue()
         {
-            if (_config.DialogueOnStart != null)
+            if (HasStartDialogue())
             {
                 _dialogueManager.EnterDialogueMode(_config.DialogueOnStart);
             }
+        }
+        public bool HasStartDialogue()
+        {
+            return _config.DialogueOnStart is not null;
         }
         public void CleanUp()
         {
