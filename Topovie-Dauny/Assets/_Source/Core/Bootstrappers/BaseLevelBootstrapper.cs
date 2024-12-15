@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading;
 using Bullets.BulletPatterns;
 using Core.Data;
+using Core.InputSystem;
 using Core.LevelSettings;
 using Core.LoadingSystem;
 using Core.PoolingSystem;
@@ -43,16 +44,18 @@ namespace Core.Bootstrappers
         private LevelDialogues _levelDialogues;
         private SceneLoader _sceneLoader;
         private AudioManager _audioManager;
+        private InputListener _inputListener;
         
         [Inject]
         public void Construct(SceneLoader sceneLoader, PoolInitializer poolInitializer, LevelChargesHandler levelChargesHandler,
-            LevelDialogues levelDialogues, AudioManager audioManager)
+            LevelDialogues levelDialogues, AudioManager audioManager, InputListener inputListener)
         {
             _sceneLoader = sceneLoader;
             _poolInitializer = poolInitializer;
             _levelChargesHandler = levelChargesHandler;
             _levelDialogues = levelDialogues;
             _audioManager = audioManager;
+            _inputListener = inputListener;
         }
         private void Awake()
         {
@@ -73,6 +76,7 @@ namespace Core.Bootstrappers
         }
         protected virtual UniTask LoadScene(CancellationToken token)
         {
+            _inputListener.SetInput(false);
             _sceneLoader.SetLoadingScreenActive(true);
             return InitializePools(token)
                 .ContinueWith(() => InstantiateAssets(token))
@@ -82,8 +86,11 @@ namespace Core.Bootstrappers
         {
             var levelNumber = SceneManager.GetActiveScene().buildIndex - 2;
             var music = _audioManager.FMODEvents.LevelsMusic[levelNumber];
+            _inputListener.SetInput(true);
+            
             _audioManager.ChangeMusic(music, STOP_MODE.ALLOWFADEOUT);
             _sceneLoader.SetLoadingScreenActive(false);
+
             _levelDialogues?.PlayStartDialogue();
         }
         private async UniTask InitializePools(CancellationToken cancellationToken)

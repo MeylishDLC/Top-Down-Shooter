@@ -87,7 +87,6 @@ namespace Enemies.EnemyTypes
                 }
             }
         }
-
         private void OnTriggerEnter2D(Collider2D other)
         {
             if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
@@ -109,7 +108,6 @@ namespace Enemies.EnemyTypes
                 _isPlayerInRange = true;
             }
         }
-
         private async UniTask WarnAsync(CancellationToken token)
         {
             try
@@ -135,7 +133,7 @@ namespace Enemies.EnemyTypes
             await ShowStartAttackAsync(token);
             if (_isPlayerInRange)
             {
-                _playerHealth.TakeDamageWithKnockback(attackDamage, transform);
+                _playerHealth.TakeDamage(attackDamage);
             }
             await UniTask.Delay(TimeSpan.FromSeconds(attackDuration), cancellationToken: token);
             await ShowEndAttackAsync(token);

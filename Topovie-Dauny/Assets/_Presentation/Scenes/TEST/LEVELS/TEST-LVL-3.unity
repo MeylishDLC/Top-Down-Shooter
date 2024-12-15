@@ -4535,6 +4535,10 @@ PrefabInstance:
       value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 4250440572906355449, guid: af35db23b32508c4ab8e46f098395935, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4250440572906355449, guid: af35db23b32508c4ab8e46f098395935, type: 3}
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
@@ -4653,6 +4657,10 @@ PrefabInstance:
     - target: {fileID: 5332433347470275641, guid: af35db23b32508c4ab8e46f098395935, type: 3}
       propertyPath: weaponsObjects.pairs.Array.data[1].value
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5940541333584234523, guid: af35db23b32508c4ab8e46f098395935, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6201013786433417657, guid: af35db23b32508c4ab8e46f098395935, type: 3}
       propertyPath: m_AnchoredPosition.x

@@ -34,7 +34,6 @@ namespace SoundSystem
             _masterBus = RuntimeManager.GetBus("bus:/");
             _musicBus = RuntimeManager.GetBus("bus:/Music");
             _sfxBus = RuntimeManager.GetBus("bus:/SFX");
-            InitializeMusic(FMODEvents.MenuMusic);
         }
         private void Update()
         {
@@ -66,6 +65,11 @@ namespace SoundSystem
             _musicEventInstance.release();
             InitializeMusic(music);
         }
+        public void StopPlayingMusic(STOP_MODE stopMode)
+        {
+            _musicEventInstance.stop(stopMode);
+            _musicEventInstance.release();
+        }
         public void PlayMusicDuringTime(float time, EventReference music)
         {
             var instance = CreateInstance(music);
@@ -84,7 +88,8 @@ namespace SoundSystem
         {
             soundWrapper.Instance.stop(stopMode);
         }
-        private void InitializeMusic(EventReference musicEventReference)
+
+        public void InitializeMusic(EventReference musicEventReference)
         {
             _musicEventInstance = CreateInstance(musicEventReference);
             _musicEventInstance.start();

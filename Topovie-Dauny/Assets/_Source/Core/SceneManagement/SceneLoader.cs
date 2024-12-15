@@ -1,5 +1,7 @@
 ﻿using System;
 using Cysharp.Threading.Tasks;
+using FMOD.Studio;
+using SoundSystem;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -8,14 +10,16 @@ namespace Core.SceneManagement
 {
     public class SceneLoader: MonoBehaviour
     {
-        private RectTransform _loadingScreen;
-        private Slider _loadingSlider;
         public int LastSceneIndex {get; private set;}
         public int CurrentSceneIndex {get; private set;}
-        public void Construct(RectTransform loadingScreen, Slider loadingSlider)
+        private RectTransform _loadingScreen;
+        private Slider _loadingSlider;
+        private AudioManager _audioManager;
+        public void Construct(RectTransform loadingScreen, Slider loadingSlider, AudioManager audioManager)
         {
             _loadingScreen = loadingScreen;
             _loadingSlider = loadingSlider;
+            _audioManager = audioManager;
         }
         public async UniTask LoadSceneAsync(int index, bool disableScreenOnLoad = true)
         {
@@ -23,6 +27,7 @@ namespace Core.SceneManagement
             CurrentSceneIndex = index;
             _loadingSlider.value = 0;
             _loadingScreen.gameObject.SetActive(true);
+            _audioManager.StopPlayingMusic(STOP_MODE.IMMEDIATE);
             
             var asyncOperation = SceneManager.LoadSceneAsync(index);
             if (asyncOperation is null)

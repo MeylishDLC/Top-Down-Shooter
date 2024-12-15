@@ -28,7 +28,7 @@ namespace DialogueSystem.LevelDialogue
         }
         public bool HasStartDialogue()
         {
-            return _config.DialogueOnStart is not null;
+            return _config.DialogueOnStart;
         }
         public void CleanUp()
         {

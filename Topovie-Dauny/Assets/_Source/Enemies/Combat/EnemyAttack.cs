@@ -6,7 +6,6 @@ namespace Enemies.Combat
     public class EnemyAttack: MonoBehaviour
     {
         [field:SerializeField] public int Attack { get; private set; }
-
         private PlayerHealth _playerHealth;
         protected virtual void OnTriggerEnter2D(Collider2D other)
         {

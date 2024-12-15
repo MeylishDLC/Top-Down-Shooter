@@ -1,5 +1,6 @@
 ﻿using Core.SceneManagement;
 using Cysharp.Threading.Tasks;
+using SoundSystem;
 using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
@@ -17,11 +18,13 @@ namespace UI.Menus
         [SerializeField] private Button returnButton;
         
         private SceneLoader _sceneLoader;
+        private AudioManager _audioManager;
 
         [Inject]
-        public void Construct(SceneLoader sceneLoader)
+        public void Construct(SceneLoader sceneLoader, AudioManager audioManager)
         {
             _sceneLoader = sceneLoader;
+            _audioManager = audioManager;
         }
         private void Awake()
         {
@@ -35,6 +38,8 @@ namespace UI.Menus
             settingsButton.onClick.AddListener(OpenSettingsScreen);
             exitButton.onClick.AddListener(ExitGame);
             returnButton.onClick.AddListener(CloseSettingsScreen);
+            
+            _audioManager.InitializeMusic(_audioManager.FMODEvents.MenuMusic);
         }
         private void LoadChooseLevelScreen()
         {

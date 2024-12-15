@@ -13,6 +13,8 @@ namespace Installers
         [SerializeField] private SceneLoader sceneLoaderPrefab;
         [SerializeField] private Canvas canvasPrefab;
         [SerializeField] private AudioManager audioManagerPrefab;
+        
+        private AudioManager _audioManager;
         public override void InstallBindings()
         {
             BindAudioManager();
@@ -21,8 +23,8 @@ namespace Installers
         }
         private void BindAudioManager()
         {
-            var audioManager = Container.InstantiatePrefabForComponent<AudioManager>(audioManagerPrefab);
-            Container.Bind<AudioManager>().FromInstance(audioManager).AsSingle();
+            _audioManager = Container.InstantiatePrefabForComponent<AudioManager>(audioManagerPrefab);
+            Container.Bind<AudioManager>().FromInstance(_audioManager).AsSingle();
         }
         private void BindLevelSave()
         {
@@ -34,7 +36,7 @@ namespace Installers
             var screen = Container.InstantiatePrefab(loadingScreenPrefab, canvas.transform);
             var loader = Container.InstantiatePrefabForComponent<SceneLoader>(sceneLoaderPrefab);
             
-            loader.Construct(screen.GetComponent<RectTransform>(), screen.GetComponentInChildren<Slider>());
+            loader.Construct(screen.GetComponent<RectTransform>(), screen.GetComponentInChildren<Slider>(), _audioManager);
             Container.Bind<SceneLoader>().FromInstance(loader).AsSingle();
         }
     }

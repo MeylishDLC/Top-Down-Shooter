@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading;
 using Bullets.BulletPatterns;
 using Core.Data;
+using Core.InputSystem;
 using Core.LevelSettings;
 using Core.LoadingSystem;
 using Core.PoolingSystem;
@@ -39,31 +40,39 @@ namespace Core.Bootstrappers
         private PoolInitializer _poolInitializer;
         private SceneLoader _sceneLoader;
         private AudioManager _audioManager;
+        private InputListener _inputListener;
 
         [Inject]
-        public void Construct(PoolInitializer poolInitializer, SceneLoader sceneLoader, AudioManager audioManager)
+        public void Construct(PoolInitializer poolInitializer, SceneLoader sceneLoader, AudioManager audioManager, InputListener inputListener)
         {
             _poolInitializer = poolInitializer;
             _sceneLoader = sceneLoader;
             _audioManager = audioManager;
+            _inputListener = inputListener;
         }
         private void Awake()
-        {
-            _sceneLoader.SetLoadingScreenActive(true);
-            Initialize(CancellationToken.None)
-                .ContinueWith(() => InstantiateAssets(CancellationToken.None))
-                .ContinueWith(ShowScene).Forget();
+        { 
+            LoadScene(CancellationToken.None).Forget();
         }
-
         private void OnDestroy()
         {
             _environmentLoader.ReleaseStoredInstance();
             _poolInitializer.CleanUp();
         }
+        private UniTask LoadScene(CancellationToken token)
+        {
+            _inputListener.SetInput(false);
+            _sceneLoader.SetLoadingScreenActive(true);
+            return Initialize(token)
+                .ContinueWith(() => InstantiateAssets(token))
+                .ContinueWith(ShowScene);
+        }
         private void ShowScene()
         {
             var levelNumber = SceneManager.GetActiveScene().buildIndex - 2;
             var music = _audioManager.FMODEvents.LevelsMusic[levelNumber];
+            _inputListener.SetInput(true);
+            
             _audioManager.ChangeMusic(music, STOP_MODE.ALLOWFADEOUT);
             _sceneLoader.SetLoadingScreenActive(false);
         }

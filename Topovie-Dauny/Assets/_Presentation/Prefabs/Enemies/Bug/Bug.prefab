@@ -478,7 +478,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1809910656139862011}
-  - component: {fileID: 6725581653662575380}
   - component: {fileID: 3983398539901245449}
   m_Layer: 9
   m_Name: AttackTrigger
@@ -502,19 +501,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 293954112978593325}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6725581653662575380
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3728148421295627483}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5262b00d5dc942d4b08e51eaf51c2abe, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <Attack>k__BackingField: 3
 --- !u!60 &3983398539901245449
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -734,4 +720,4 @@ MonoBehaviour:
   warningDuration: 1
   rangeSprite: {fileID: 526982141956477456}
   rangeTransparencyOnWarn: 0.3
-  fadeDuration: 0
+  fadeDuration: 0.1
