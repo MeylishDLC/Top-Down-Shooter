@@ -27,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 4613123226825832647}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.694, y: 0.103, z: 0}
+  m_LocalPosition: {x: -1.426, y: -0.025, z: 0}
   m_LocalScale: {x: -1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -123,7 +123,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &7107918427857471221
 Transform:
   m_ObjectHideFlags: 0
@@ -134,8 +134,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.15, y: 0.0094, z: 0}
-  m_LocalScale: {x: -0.17200407, y: 0.17200407, z: 0.17200407}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: -0.17, y: 0.17, z: 0.17}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 3335994350603962900}
   m_Father: {fileID: 0}
@@ -179,14 +179,14 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 809442407
-  m_SortingLayer: 8
+  m_SortingLayer: 7
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: a88854f1809d7624d84274aada7501b6, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f6501dd10497c9b4bb8f81c1f198705e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 1
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 2.3, y: 1.3}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -209,7 +209,7 @@ MonoBehaviour:
   <ReloadTime>k__BackingField: 1.5
   <IsUnlocked>k__BackingField: 1
   <ShootOnHold>k__BackingField: 1
-  <GunIconSprite>k__BackingField: {fileID: -45671187, guid: 6c125c16a37ab8d458057719f06f66d9, type: 3}
+  <GunIconSprite>k__BackingField: {fileID: 21300000, guid: f6501dd10497c9b4bb8f81c1f198705e, type: 3}
   <GunKeyImage>k__BackingField: {fileID: 0}
   shootSound:
     Guid:

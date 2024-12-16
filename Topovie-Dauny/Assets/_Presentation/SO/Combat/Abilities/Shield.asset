@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Shield
   m_EditorClassIdentifier: 
   <CooldownMilliseconds>k__BackingField: 30000
-  <AbilityImage>k__BackingField: {fileID: 507538063, guid: 6c125c16a37ab8d458057719f06f66d9, type: 3}
+  <AbilityImage>k__BackingField: {fileID: -1985437100, guid: 1d75a43bf1e1d5c45ae077c1513a4034, type: 3}
   <AbilityDefinition>k__BackingField: "\u041E\u0431\u0435\u0440\u0435\u0433 \u0438\u0437
     \u043A\u043E\u0448\u0430\u0447\u044C\u0435\u0439 \u043C\u044F\u0442\u044B - \u0449\u0438\u0442\n\u041F\u043E\u0433\u043B\u043E\u0449\u0430\u0435\u0442
     \u0443\u0440\u043E\u043D, \u043D\u0430\u043D\u043E\u0441\u0438\u043C\u044B\u0439
@@ -28,10 +28,3 @@ MonoBehaviour:
   shieldBlinkSpeedOnDisappear: 0.15
   blinkDuration: 2
   shieldPrefab: {fileID: 8571946885712314728, guid: 8dce5e1ac03af2f4eb5a92f55e0010fb, type: 3}
-  useSound:
-    Guid:
-      Data1: 1869907479
-      Data2: 1212095189
-      Data3: 1421960851
-      Data4: 1805604961
-    Path: event:/SFX/Abilities/ShieldUsed
