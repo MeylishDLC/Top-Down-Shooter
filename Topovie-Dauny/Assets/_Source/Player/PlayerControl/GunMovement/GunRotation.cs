@@ -82,7 +82,7 @@ namespace Player.PlayerControl.GunMovement
                     left.SetActive(false);
                     right.SetActive(false);
                     back.SetActive(false);
-                    CurrentGun.sortingOrder = 1;
+                    CurrentGun.sortingOrder = 0;
                     break;
 
                 case Sides.Right:
@@ -90,7 +90,7 @@ namespace Player.PlayerControl.GunMovement
                     left.SetActive(false);
                     right.SetActive(true);
                     back.SetActive(false);
-                    CurrentGun.sortingOrder = 1;
+                    CurrentGun.sortingOrder = 0;
                     break;
 
                 case Sides.Left:
@@ -98,7 +98,7 @@ namespace Player.PlayerControl.GunMovement
                     left.SetActive(true);
                     right.SetActive(false);
                     back.SetActive(false);
-                    CurrentGun.sortingOrder = 1;
+                    CurrentGun.sortingOrder = 0;
                     break;
 
                 case Sides.Back:
