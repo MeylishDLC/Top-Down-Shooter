@@ -2,7 +2,9 @@ using System;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using Enemies.Combat;
+using SoundSystem;
 using UnityEngine;
+using Zenject;
 
 namespace Player.PlayerCombat
 {
@@ -23,7 +25,14 @@ namespace Player.PlayerCombat
         private bool _canTakeDamage = true;
         private SpriteRenderer _spriteRenderer;
         private KnockBack _knockBack;
+        private AudioManager _audioManager;
         private CancellationToken _deathCancellationToken;
+
+        [Inject]
+        public void Construct(AudioManager audioManager)
+        {
+            _audioManager = audioManager;
+        }
         private void Awake()
         {
             _deathCancellationToken = this.GetCancellationTokenOnDestroy();
@@ -63,6 +72,7 @@ namespace Player.PlayerCombat
             _canTakeDamage = false;
             CurrentHealth -= damageAmount;
             OnDamageTaken?.Invoke(damageAmount);
+            _audioManager.PlayOneShot(_audioManager.FMODEvents.PlayerHitSound);
             _knockBack.GetKnockedBack(damageSource);
             
             RecoverFromDamageAsync(_deathCancellationToken).Forget();

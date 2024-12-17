@@ -14,11 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <MenuMusic>k__BackingField:
     Guid:
-      Data1: -1450704620
-      Data2: 1259257029
-      Data3: 1308302015
-      Data4: -588549653
-    Path: event:/MUSIC/TestMusic
+      Data1: -199263506
+      Data2: 1331405518
+      Data3: 929016985
+      Data4: -2092503908
+    Path: event:/MUSIC/MenuMusic
   <LevelsMusic>k__BackingField:
   - Guid:
       Data1: 783398394
@@ -66,11 +66,11 @@ MonoBehaviour:
     Path: event:/MUSIC/EndingMusic
   <DeathMusic>k__BackingField:
     Guid:
-      Data1: -1450704620
-      Data2: 1259257029
-      Data3: 1308302015
-      Data4: -588549653
-    Path: event:/MUSIC/TestMusic
+      Data1: 1735978610
+      Data2: 1168153603
+      Data3: 35434632
+      Data4: -1937929746
+    Path: event:/MUSIC/DeathMusic
   <ReloadSound>k__BackingField:
     Guid:
       Data1: 1303656549
@@ -78,6 +78,13 @@ MonoBehaviour:
       Data3: 359644289
       Data4: -1933706188
     Path: event:/SFX/Weapon/Reload
+  <PlayerHitSound>k__BackingField:
+    Guid:
+      Data1: -234956231
+      Data2: 1192065502
+      Data3: 1133561500
+      Data4: -1085585626
+    Path: event:/SFX/Player/Hit
   <BugBlowUpSound>k__BackingField:
     Guid:
       Data1: -875741346

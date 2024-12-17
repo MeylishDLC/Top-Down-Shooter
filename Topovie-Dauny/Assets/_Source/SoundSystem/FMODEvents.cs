@@ -16,6 +16,7 @@ namespace SoundSystem
         
         [field: Header("\n----SFX----")]
         [field: SerializeField] public EventReference ReloadSound { get; private set; }
+        [field: SerializeField] public EventReference PlayerHitSound { get; private set; }
         [field: SerializeField] public EventReference BugBlowUpSound { get; private set; }
         [field: SerializeField] public EventReference RpgBlowUpSound { get; private set; }
         

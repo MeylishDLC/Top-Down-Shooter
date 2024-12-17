@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading;
+using _Support.Demigiant.DOTween.Modules;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using Enemies.Combat;
@@ -120,9 +121,11 @@ namespace Enemies
         private async UniTask ShowEnemyDeathAsync(CancellationToken token)
         {
             _aiPath.canMove = false;
-            await gameObject.transform.DOScaleX(0f, deathAnimationDuration).ToUniTask(cancellationToken: token);
+            //await gameObject.transform.DOScaleX(0f, deathAnimationDuration).ToUniTask(cancellationToken: token);
+            await _enemyRenderer.DOFade(0f, deathAnimationDuration).ToUniTask(cancellationToken: token);
             gameObject.SetActive(false);
-            await gameObject.transform.DOScaleX(_initScale, 0f);
+            //await gameObject.transform.DOScaleX(_initScale, 0f);
+            await _enemyRenderer.DOFade(1f, 0).ToUniTask(cancellationToken: token);
         }
         private void SubscribeOnEvents()
         {
