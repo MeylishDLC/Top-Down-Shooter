@@ -3,6 +3,8 @@ using System.Threading;
 using Core.InputSystem;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
+using FMODUnity;
+using SoundSystem;
 using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
@@ -16,17 +18,20 @@ namespace UI.LevelUI
         [SerializeField] private RectTransform confirmationPanel;
         [SerializeField] private Button cancelButton;
         [SerializeField] private Button confirmButton;
-
+        [SerializeField] private EventReference appearSound;
+        
         [Header("UI Animation")] 
         [SerializeField] private float scaleValue;
         [SerializeField] private float scaleDuration;
 
         private Vector3 _initScale;
         private InputListener _inputListener;
+        private AudioManager _audioManager;
         
         [Inject]
-        public void Construct(InputListener inputListener)
+        public void Construct(InputListener inputListener, AudioManager audioManager)
         {
+            _audioManager = audioManager;
             _inputListener = inputListener;
             confirmButton.onClick.AddListener(Confirm);
             cancelButton.onClick.AddListener(CloseConfirmationScreen);
@@ -37,6 +42,10 @@ namespace UI.LevelUI
             if (gameObject.activeSelf)
             {
                 return;
+            }
+            if (!appearSound.IsNull)
+            {
+                _audioManager.PlayOneShot(appearSound);
             }
             _inputListener.SetInput(false);
             confirmationScreen.gameObject.SetActive(true);

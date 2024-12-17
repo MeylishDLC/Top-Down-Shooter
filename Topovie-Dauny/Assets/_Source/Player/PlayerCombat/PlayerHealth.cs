@@ -66,6 +66,7 @@ namespace Player.PlayerCombat
             _knockBack.GetKnockedBack(damageSource);
             
             RecoverFromDamageAsync(_deathCancellationToken).Forget();
+            CheckIfDead();
         }
         public void Heal(int healAmount)
         {
@@ -81,6 +82,7 @@ namespace Player.PlayerCombat
                 }
                 OnHeal?.Invoke(healAmount);
             }
+            CheckIfDead();
         }
 
         public void SetCanTakeDamage(bool canTakeDamage)
