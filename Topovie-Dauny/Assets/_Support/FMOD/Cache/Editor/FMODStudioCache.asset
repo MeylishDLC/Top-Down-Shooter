@@ -81,6 +81,33 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 0
+--- !u!114 &-8329681908537929530
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/UI/Buttons
+  m_EditorClassIdentifier: 
+  Path: event:/SFX/UI/Buttons
+  Guid:
+    Data1: 1242774328
+    Data2: 1135331688
+    Data3: 1357905599
+    Data4: -1328077940
+  Banks:
+  - {fileID: 3210779146886205598}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
 --- !u!114 &-6366681157243713885
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -96,7 +123,7 @@ MonoBehaviour:
   Path: FMODProject/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 638691112502384339
+  lastModified: 638700413333455469
   FileSizes:
   - Name: Desktop
     Value: 1340
@@ -119,6 +146,33 @@ MonoBehaviour:
     Data2: 1268474220
     Data3: -2120609624
     Data4: -423902781
+  Banks:
+  - {fileID: 3210779146886205598}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
+--- !u!114 &-5454752374664285691
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/Enemies/BugBlowUp
+  m_EditorClassIdentifier: 
+  Path: event:/SFX/Enemies/BugBlowUp
+  Guid:
+    Data1: -875741346
+    Data2: 1318337412
+    Data3: -9820739
+    Data4: 1112626476
   Banks:
   - {fileID: 3210779146886205598}
   IsStream: 0
@@ -332,10 +386,10 @@ MonoBehaviour:
   Path: FMODProject/Build/Desktop/Music.bank
   Name: Music
   StudioPath: bank:/Music
-  lastModified: 638690850346379293
+  lastModified: 638700413336083022
   FileSizes:
   - Name: Desktop
-    Value: 1962976
+    Value: 1990464
   Exists: 1
 --- !u!114 &-1816647176805912851
 MonoBehaviour:
@@ -352,10 +406,10 @@ MonoBehaviour:
   Path: FMODProject/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638691112502394440
+  lastModified: 638700413333465475
   FileSizes:
   - Name: Desktop
-    Value: 2294
+    Value: 2490
   Exists: 1
 --- !u!114 &-1316820983204886502
 MonoBehaviour:
@@ -486,12 +540,16 @@ MonoBehaviour:
   - {fileID: -3442178439822453599}
   - {fileID: -807883880819635103}
   - {fileID: 7875577303547480472}
+  - {fileID: 9022517500322389459}
+  - {fileID: 5561614275175879660}
+  - {fileID: -8329681908537929530}
+  - {fileID: -5454752374664285691}
   EditorParameters: []
   MasterBanks:
   - {fileID: -6366681157243713885}
   StringsBanks:
   - {fileID: -1816647176805912851}
-  cacheTime: 638691152751667587
+  cacheTime: 638700413338014031
   cacheVersion: 131616
 --- !u!114 &165189585111624022
 MonoBehaviour:
@@ -751,10 +809,10 @@ MonoBehaviour:
   Path: FMODProject/Build/Desktop/SFX.bank
   Name: SFX
   StudioPath: bank:/SFX
-  lastModified: 638691152751667587
+  lastModified: 638700413338014031
   FileSizes:
   - Name: Desktop
-    Value: 685568
+    Value: 726368
   Exists: 1
 --- !u!114 &3387091442255413876
 MonoBehaviour:
@@ -801,6 +859,33 @@ MonoBehaviour:
     Data2: 1118884817
     Data3: 1392058507
     Data4: 199424864
+  Banks:
+  - {fileID: 3210779146886205598}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
+--- !u!114 &5561614275175879660
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/UI/ToNextLevelPanel
+  m_EditorClassIdentifier: 
+  Path: event:/SFX/UI/ToNextLevelPanel
+  Guid:
+    Data1: 720983349
+    Data2: 1251252055
+    Data3: -1252468827
+    Data4: -707491224
   Banks:
   - {fileID: 3210779146886205598}
   IsStream: 0
@@ -938,6 +1023,33 @@ MonoBehaviour:
     Data4: 1853634578
   Banks:
   - {fileID: 3210779146886205598}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
+--- !u!114 &9022517500322389459
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/Weapon/RPGBlowUp
+  m_EditorClassIdentifier: 
+  Path: event:/SFX/Weapon/RPGBlowUp
+  Guid:
+    Data1: -934606363
+    Data2: 1171352742
+    Data3: -619449204
+    Data4: 1627941747
+  Banks:
+  - {fileID: -2274775018662892179}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1

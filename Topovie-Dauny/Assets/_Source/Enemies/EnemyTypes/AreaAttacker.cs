@@ -146,7 +146,10 @@ namespace Enemies.EnemyTypes
             impulseSource.GenerateImpulse(impulseStrength);
             _audioManager.PlayOneShot(attackSound, gameObject.transform.position, 
                 _playerHealth.transform.position, soundDistance);
+            
             Instantiate(impactParticlesPrefab, transform);
+            _audioManager.PlayOneShot(_audioManager.FMODEvents.BugBlowUpSound, gameObject.transform.position,
+                _playerHealth.transform.position, soundDistance);
         }
 
         private async UniTask ShowEndAttackAsync(CancellationToken token)

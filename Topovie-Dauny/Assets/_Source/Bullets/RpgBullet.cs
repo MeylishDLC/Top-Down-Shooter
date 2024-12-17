@@ -5,7 +5,9 @@ using _Support.Demigiant.DOTween.Modules;
 using Cinemachine;
 using Cysharp.Threading.Tasks;
 using Enemies;
+using SoundSystem;
 using UnityEngine;
+using Zenject;
 
 namespace Bullets
 {
@@ -18,9 +20,16 @@ namespace Bullets
         [SerializeField] private CinemachineImpulseSource impulseSource;
         [SerializeField] private float impulseStrength;
 
+        private AudioManager _audioManager;
         private SpriteRenderer _spriteRenderer;
         private Collider2D _col;
         private bool _isBlowingUp;
+        
+        [Inject]
+        public void Construct(AudioManager audioManager)
+        {
+            _audioManager = audioManager;
+        }
         private void Awake()
         {
             _col = GetComponent<Collider2D>();
@@ -83,7 +92,7 @@ namespace Bullets
                     }
                 }
             }
-            
+            _audioManager.PlayOneShot(_audioManager.FMODEvents.RpgBlowUpSound);
             blowupAnimator.SetTrigger(Attack);
             impulseSource.GenerateImpulse(impulseStrength);
             

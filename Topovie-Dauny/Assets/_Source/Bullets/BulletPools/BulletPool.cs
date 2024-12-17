@@ -2,13 +2,18 @@
 using Core.PoolingSystem;
 using Core.PoolingSystem.Configs;
 using UnityEngine;
+using Zenject;
 
 namespace Bullets.BulletPools
 {
     public class BulletPool: GenericPool<Bullet>
     {
-        public BulletPool(PoolConfig poolConfig, Transform parentTransform) : base(poolConfig, parentTransform) { }
-
+        protected readonly SceneContext ProjectContext;
+        public BulletPool(PoolConfig poolConfig, Transform parentTransform)
+            : base(poolConfig, parentTransform)
+        {
+            ProjectContext = Object.FindFirstObjectByType<SceneContext>();
+        }
         public override bool TryGetFromPool(out Bullet instance)
         {
             if (Pool.TryDequeue(out instance))
@@ -37,7 +42,7 @@ namespace Bullets.BulletPools
         }
         protected override Bullet InstantiateNewObject()
         {
-            var bulletInstance = Object.Instantiate(ObjectPrefab, ParentTransform);
+            var bulletInstance = ProjectContext.Container.InstantiatePrefabForComponent<Bullet>(ObjectPrefab, ParentTransform);
             bulletInstance.gameObject.SetActive(false);
             bulletInstance.OnObjectDisabled += ReturnToPool;
             AllObjects.Add(bulletInstance);
