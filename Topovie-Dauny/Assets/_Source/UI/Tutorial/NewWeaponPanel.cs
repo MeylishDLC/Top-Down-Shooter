@@ -18,7 +18,6 @@ namespace UI.Tutorial
         [SerializeField] private Image panelImage;
         [SerializeField] private float fadeDuration = 0.5f;
         [SerializeField] private float stayDuration = 0.5f;
-        [SerializeField] private float delayBeforeAppear = 1f;
         [Range(2, 4)]
         [SerializeField] private int newWeaponNumber;
 

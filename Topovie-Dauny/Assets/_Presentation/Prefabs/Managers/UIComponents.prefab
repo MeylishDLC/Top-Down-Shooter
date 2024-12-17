@@ -82,13 +82,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ad81b8e1b9340389e8a7cd39d9c9140, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stateText: {fileID: 0}
-  chillStateText: "\u0412\u0420\u0415\u041C\u042F \u041E\u0422\u0414\u042B\u0425\u0410"
-  chillStateTextColor: {r: 0, g: 0, b: 0, a: 1}
-  attackStateText: "\u0410\u0422\u0410\u041A\u0410"
-  attackStateTextColor: {r: 0.277, g: 0.055123, b: 0.055123, a: 1}
-  portalChargedStateText: "\u041F\u041E\u0420\u0422\u0410\u041B \u0410\u041A\u0422\u0418\u0412\u0418\u0420\u041E\u0412\u0410\u041D!"
-  portalChargedTextColor: {r: 0.17642315, g: 0.46226418, b: 0.17225882, a: 1}
+  attackPanel: {fileID: 0}
+  portalOpenedPanel: {fileID: 0}
+  animationDuration: 0.5
+  slideInValue: 520
+  slideOutValue: 600
 --- !u!114 &5141776223088164638
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -102,8 +100,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timeRemainingSlider: {fileID: 0}
-  sliderMoveYOnDisappear: 1
-  sliderMoveYOnAppear: -60
+  sliderMoveYOnDisappear: 600
+  sliderMoveYOnAppear: 455
   sliderDisappearDuration: 0.5
 --- !u!114 &5454541357032840345
 MonoBehaviour:

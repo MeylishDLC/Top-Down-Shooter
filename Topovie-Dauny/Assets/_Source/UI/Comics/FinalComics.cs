@@ -17,7 +17,7 @@ namespace UI.Comics
         [SerializeField] private Image[] pages;
         [SerializeField] private Button button;
         [SerializeField] private Image background;
-        [SerializeField] private float delayBeforeComicsStart = 2f;
+        [SerializeField] private float delayBeforeComicsStart = 1f;
         [SerializeField] private float backgroundFadeInDuration = 0.25f;
         [SerializeField] private float comicsFadeInDuration = 0.25f;
         [SerializeField] private float pageFadeDuration = 0.25f;
@@ -61,6 +61,7 @@ namespace UI.Comics
         }
         private async UniTask FadeInAsync(CancellationToken token)
         {
+            await UniTask.Delay(TimeSpan.FromSeconds(delayBeforeComicsStart), cancellationToken: token);
             await background.DOFade(1f,backgroundFadeInDuration).ToUniTask(cancellationToken: token);
             pages[_currentPage].gameObject.SetActive(true);
 

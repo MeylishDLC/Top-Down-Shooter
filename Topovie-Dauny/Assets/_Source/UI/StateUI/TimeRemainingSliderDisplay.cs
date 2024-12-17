@@ -31,7 +31,7 @@ namespace UI.StateUI
         }
         private void Start()
         {
-            timeRemainingSlider.transform.DOMoveY(sliderMoveYOnDisappear, 0f);
+            timeRemainingSlider.transform.DOLocalMoveY(sliderMoveYOnDisappear, 0f);
             timeRemainingSlider.value = 1f;
             timeRemainingSlider.gameObject.SetActive(false);
         }
