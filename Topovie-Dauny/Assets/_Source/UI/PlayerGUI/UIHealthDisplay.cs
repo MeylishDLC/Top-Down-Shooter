@@ -76,7 +76,7 @@ namespace UI.PlayerGUI
             var tmpText = Instantiate(healTextPrefab, spawnPosition, Quaternion.identity, gameCanvas.transform)
                 .GetComponent<TMP_Text>();
 
-            tmpText.text = $"-{heal.ToString(CultureInfo.InvariantCulture)}";
+            tmpText.text = $"+{heal.ToString(CultureInfo.InvariantCulture)}";
         }
 
         private void UpdateSliderValue()
