@@ -123,7 +123,7 @@ MonoBehaviour:
   Path: FMODProject/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 638700413333455469
+  lastModified: 638700668027311923
   FileSizes:
   - Name: Desktop
     Value: 1340
@@ -371,6 +371,33 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 0
+--- !u!114 &-2624103957693696322
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/MUSIC/LVL2Music
+  m_EditorClassIdentifier: 
+  Path: event:/MUSIC/LVL2Music
+  Guid:
+    Data1: -647002489
+    Data2: 1174805770
+    Data3: -810632063
+    Data4: -1640845243
+  Banks:
+  - {fileID: -2274775018662892179}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 180062
 --- !u!114 &-2274775018662892179
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -386,11 +413,38 @@ MonoBehaviour:
   Path: FMODProject/Build/Desktop/Music.bank
   Name: Music
   StudioPath: bank:/Music
-  lastModified: 638700413336083022
+  lastModified: 638700638530709236
   FileSizes:
   - Name: Desktop
-    Value: 1990464
+    Value: 17235392
   Exists: 1
+--- !u!114 &-1901256037968100819
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/MUSIC/DeathMusic
+  m_EditorClassIdentifier: 
+  Path: event:/MUSIC/DeathMusic
+  Guid:
+    Data1: 1735978610
+    Data2: 1168153603
+    Data3: 35434632
+    Data4: -1937929746
+  Banks:
+  - {fileID: -2274775018662892179}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
 --- !u!114 &-1816647176805912851
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -406,11 +460,38 @@ MonoBehaviour:
   Path: FMODProject/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638700413333465475
+  lastModified: 638700668027361938
   FileSizes:
   - Name: Desktop
-    Value: 2490
+    Value: 2900
   Exists: 1
+--- !u!114 &-1777177538227127457
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/MUSIC/EndingMusic
+  m_EditorClassIdentifier: 
+  Path: event:/MUSIC/EndingMusic
+  Guid:
+    Data1: -860118524
+    Data2: 1088624638
+    Data3: 1182787511
+    Data4: -434653056
+  Banks:
+  - {fileID: -2274775018662892179}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 138031
 --- !u!114 &-1316820983204886502
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -492,6 +573,33 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 0
+--- !u!114 &-58447676900276101
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/MUSIC/TutorMusic
+  m_EditorClassIdentifier: 
+  Path: event:/MUSIC/TutorMusic
+  Guid:
+    Data1: 783398394
+    Data2: 1336563599
+    Data3: 1044496542
+    Data4: 1847590918
+  Banks:
+  - {fileID: -2274775018662892179}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 180062
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -544,12 +652,21 @@ MonoBehaviour:
   - {fileID: 5561614275175879660}
   - {fileID: -8329681908537929530}
   - {fileID: -5454752374664285691}
+  - {fileID: -1777177538227127457}
+  - {fileID: 3775433509480317631}
+  - {fileID: -1901256037968100819}
+  - {fileID: -2624103957693696322}
+  - {fileID: 3754577011850675749}
+  - {fileID: 3982032931051700660}
+  - {fileID: 7273055369385257624}
+  - {fileID: -58447676900276101}
+  - {fileID: 8268383250699230841}
   EditorParameters: []
   MasterBanks:
   - {fileID: -6366681157243713885}
   StringsBanks:
   - {fileID: -1816647176805912851}
-  cacheTime: 638700413338014031
+  cacheTime: 638700668030057079
   cacheVersion: 131616
 --- !u!114 &165189585111624022
 MonoBehaviour:
@@ -809,10 +926,10 @@ MonoBehaviour:
   Path: FMODProject/Build/Desktop/SFX.bank
   Name: SFX
   StudioPath: bank:/SFX
-  lastModified: 638700413338014031
+  lastModified: 638700668030057079
   FileSizes:
   - Name: Desktop
-    Value: 726368
+    Value: 730528
   Exists: 1
 --- !u!114 &3387091442255413876
 MonoBehaviour:
@@ -841,6 +958,87 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 0
+--- !u!114 &3754577011850675749
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/MUSIC/LVL1Music
+  m_EditorClassIdentifier: 
+  Path: event:/MUSIC/LVL1Music
+  Guid:
+    Data1: 2071287734
+    Data2: 1283824482
+    Data3: 1794123437
+    Data4: -2124635038
+  Banks:
+  - {fileID: -2274775018662892179}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 180062
+--- !u!114 &3775433509480317631
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/MUSIC/BossLVLMusic
+  m_EditorClassIdentifier: 
+  Path: event:/MUSIC/BossLVLMusic
+  Guid:
+    Data1: 238069517
+    Data2: 1204072397
+    Data3: -1038207068
+    Data4: -807781525
+  Banks:
+  - {fileID: -2274775018662892179}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 180062
+--- !u!114 &3982032931051700660
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/MUSIC/BossFightMusic
+  m_EditorClassIdentifier: 
+  Path: event:/MUSIC/BossFightMusic
+  Guid:
+    Data1: 381331904
+    Data2: 1263649846
+    Data3: 788648100
+    Data4: 469345980
+  Banks:
+  - {fileID: -2274775018662892179}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 180062
 --- !u!114 &5557941516986077180
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -922,6 +1120,33 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 0
+--- !u!114 &7273055369385257624
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/MUSIC/LVL3Music
+  m_EditorClassIdentifier: 
+  Path: event:/MUSIC/LVL3Music
+  Guid:
+    Data1: -124676372
+    Data2: 1124786597
+    Data3: -1906096763
+    Data4: 1082641027
+  Banks:
+  - {fileID: -2274775018662892179}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 180062
 --- !u!114 &7545971346797453203
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -994,6 +1219,33 @@ MonoBehaviour:
     Data2: 1291789113
     Data3: 770877871
     Data4: 1028959158
+  Banks:
+  - {fileID: 3210779146886205598}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
+--- !u!114 &8268383250699230841
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/Player/Hit
+  m_EditorClassIdentifier: 
+  Path: event:/SFX/Player/Hit
+  Guid:
+    Data1: -234956231
+    Data2: 1192065502
+    Data3: 1133561500
+    Data4: -1085585626
   Banks:
   - {fileID: 3210779146886205598}
   IsStream: 0

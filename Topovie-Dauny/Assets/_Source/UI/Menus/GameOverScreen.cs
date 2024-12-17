@@ -6,8 +6,10 @@ using _Support.Demigiant.DOTween.Modules;
 using Core.InputSystem;
 using Core.SceneManagement;
 using Cysharp.Threading.Tasks;
+using FMOD.Studio;
 using Player.PlayerCombat;
 using Player.PlayerControl;
+using SoundSystem;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -28,13 +30,16 @@ namespace UI.Menus
         private PlayerHealth _playerHealth;
         private SceneLoader _sceneLoader;
         private InputListener _inputListener;
+        private AudioManager _audioManager;
         
         [Inject]
-        public void Construct(PlayerMovement playerMovement, SceneLoader sceneLoader, InputListener inputListener)
+        public void Construct(PlayerMovement playerMovement, SceneLoader sceneLoader, InputListener inputListener,
+            AudioManager audioManager)
         {
             _playerHealth = playerMovement.gameObject.GetComponent<PlayerHealth>();
             _sceneLoader = sceneLoader;
             _inputListener = inputListener;
+            _audioManager = audioManager;
         }
         private void Awake()
         {
@@ -52,6 +57,7 @@ namespace UI.Menus
         }
         private async UniTask ShowGameOverScreenAsync(CancellationToken token)
         {
+            _audioManager.ChangeMusic(_audioManager.FMODEvents.DeathMusic, STOP_MODE.ALLOWFADEOUT);
             OnGameOver?.Invoke();
             
             DisableInput();

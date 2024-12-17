@@ -1,10 +1,14 @@
 using System;
 using System.Linq;
 using System.Threading;
+using Cinemachine;
 using Core.LevelSettings;
 using Cysharp.Threading.Tasks;
+using DG.Tweening;
 using DialogueSystem;
 using Enemies.Boss.Phases;
+using FMOD.Studio;
+using SoundSystem;
 using UI.Menus;
 using UnityEngine;
 using Zenject;
@@ -26,15 +30,22 @@ namespace Enemies.Boss
         [SerializeField] private Sprite vulnerableSprite;
         [SerializeField] private float hurtDuration;
         
+        [Header("Cam Settings")]
+        [SerializeField] private CinemachineVirtualCamera virtualCamera;
+        [SerializeField] private float newZoomValue = 1.6f;
+        [SerializeField] private float camZoomDuration;
+        
         private int _currentPhaseIndex;
         private CancellationToken _destroyCancellationToken;
         private StatesChanger _statesChanger;
         private DialogueManager _dialogueManager;
         private BossLeoVisual _bossLeoVisual;
+        private AudioManager _audioManager;
         
         [Inject]
-        public void Construct(StatesChanger statesChanger, DialogueManager dialogueManager)
+        public void Construct(StatesChanger statesChanger, DialogueManager dialogueManager, AudioManager audioManager)
         {
+            _audioManager = audioManager;
             _statesChanger = statesChanger;
             _dialogueManager = dialogueManager;
         }
@@ -57,14 +68,20 @@ namespace Enemies.Boss
         private void StartFight()
         {
             bossFightTrigger.OnBossFightStarted -= StartFight;
+            ChangeCamZoom(_destroyCancellationToken).Forget();
+            _audioManager.ChangeMusic(_audioManager.FMODEvents.BossFightMusic, STOP_MODE.ALLOWFADEOUT);
             _statesChanger.ChangeState(GameStates.Fight);
             StartPhase();
         }
-
+        private UniTask ChangeCamZoom(CancellationToken token)
+        {
+            return DOTween.To(() => virtualCamera.m_Lens.OrthographicSize,
+                x => virtualCamera.m_Lens.OrthographicSize = x, newZoomValue, 0.3f)
+                .ToUniTask(cancellationToken: token);
+        }
         private void EndPhase()
         {
             phaseDialoguePair.Keys.ElementAt(_currentPhaseIndex).FinishPhase();
-            
             PlayDialogue();
         }
         private void StartPhase()
@@ -77,7 +94,6 @@ namespace Enemies.Boss
         {
             if (_currentPhaseIndex >= phaseDialoguePair.Count)
             {
-                Debug.Log("Phases passed");
                 _statesChanger.ChangeState(GameStates.PortalCharged);
                 _bossLeoVisual.SetLeoHurt();
                 OnBossDefeated?.Invoke();

@@ -11,6 +11,8 @@ namespace SoundSystem
         [field: SerializeField] public EventReference MenuMusic {get; private set;}
         [field: SerializeField] public List<EventReference> LevelsMusic {get; private set;}
         [field: SerializeField] public EventReference BossFightMusic { get; private set; }
+        [field: SerializeField] public EventReference EndingMusic { get; private set; }
+        [field: SerializeField] public EventReference DeathMusic { get; private set; }
         
         [field: Header("\n----SFX----")]
         [field: SerializeField] public EventReference ReloadSound { get; private set; }

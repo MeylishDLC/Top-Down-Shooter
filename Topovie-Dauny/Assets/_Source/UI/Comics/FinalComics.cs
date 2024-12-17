@@ -3,8 +3,11 @@ using System.Collections.Generic;
 using System.Threading;
 using _Support.Demigiant.DOTween.Modules;
 using Core.InputSystem;
+using Core.SceneManagement;
 using Cysharp.Threading.Tasks;
 using Enemies.Boss;
+using FMOD.Studio;
+using SoundSystem;
 using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
@@ -26,9 +29,14 @@ namespace UI.Comics
         private int _currentPage;
         private CancellationToken _destroyCancellationToken;
         private InputListener _inputListener;
+        private AudioManager _audioManager;
+        private SceneLoader _sceneLoader;
+        
         [Inject]
-        public void Construct(InputListener inputListener)
+        public void Construct(InputListener inputListener, AudioManager audioManager, SceneLoader sceneLoader)
         {
+            _sceneLoader = sceneLoader;
+            _audioManager = audioManager;
             _inputListener = inputListener;
         }
         private void OnValidate()
@@ -54,9 +62,10 @@ namespace UI.Comics
             }
             button.onClick.AddListener(GoToNextPage);
         }
-        public void ShowComics()
+        private void ShowComics()
         {
             _inputListener.SetInput(false);
+            _audioManager.ChangeMusic(_audioManager.FMODEvents.EndingMusic, STOP_MODE.ALLOWFADEOUT);
             FadeInAsync(_destroyCancellationToken).Forget();
         }
         private async UniTask FadeInAsync(CancellationToken token)
@@ -83,7 +92,7 @@ namespace UI.Comics
             await pages[_currentPage].DOFade(0f, pageFadeDuration).ToUniTask(cancellationToken: token);
             pages[_currentPage].gameObject.SetActive(false);
             _currentPage++;
-            if (_currentPage == pages.Length)
+            if (_currentPage >= pages.Length)
             {
                 await EndComics(token);
                 return;
@@ -96,10 +105,9 @@ namespace UI.Comics
 
         private async UniTask EndComics(CancellationToken token)
         {
-            //todo ask gaydesigners what to do here
             await UniTask.Delay(1000, cancellationToken: token);
-            Application.Quit();
-            Debug.Log("END OF GAME");
+            //todo fadeout
+            _sceneLoader.LoadSceneAsync(0).Forget();
         }
         private UniTask FadeOutAll(float duration, CancellationToken token)
         {
