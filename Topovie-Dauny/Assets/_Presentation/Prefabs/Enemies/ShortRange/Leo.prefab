@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5262b00d5dc942d4b08e51eaf51c2abe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <Attack>k__BackingField: 8
+  <Attack>k__BackingField: 7
 --- !u!60 &8849407527258478061
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -348,7 +348,7 @@ MonoBehaviour:
   radius: 6.06
   height: 0.01
   canMove: 1
-  maxSpeed: 3
+  maxSpeed: 2.7
   gravity: {x: NaN, y: NaN, z: NaN}
   groundMask:
     serializedVersion: 2

@@ -61,20 +61,18 @@ namespace UI.Tutorial
             {
                 return;
             }
-            portalTrigger.enabled = false;
-            shopTrigger.enabled = false;
+            portalTrigger.gameObject.SetActive(false);
+            shopTrigger.gameObject.SetActive(false);
             
             _inputListener.SetInput(false, true);
+            
             _dialogueManager.EnterDialogueMode(dialogueOnTutorialStart);
             _dialogueManager.OnDialogueEnded += StartTutorial;
         }
         private void StartTutorial()
         {
-            _inputListener.SetInput(true);
+            _inputListener.SetWalking(true);
             _dialogueManager.OnDialogueEnded -= StartTutorial;
-            _inputListener.SetFiringAbility(false);
-            _inputListener.SetUseAbility(false);
-            _inputListener.SetInteract(false);
             ReadWalkInput(CancellationToken.None).ContinueWith(() => ReadShootInput(CancellationToken.None)).Forget();
         }
         private async UniTask ReadWalkInput(CancellationToken token)
@@ -129,14 +127,15 @@ namespace UI.Tutorial
             await UniTask.Delay(TimeSpan.FromSeconds(abilityIndicatorDisappearTime), cancellationToken: token);
             abilitiesIndicator.gameObject.SetActive(false);
             
-            //todo enter dialogue mode
             EndTutorial();
         }
         private void EndTutorial()
         {
-            portalTrigger.enabled = true;
-            shopTrigger.enabled = true;
+            shopTrigger.gameObject.SetActive(true);
+            portalTrigger.gameObject.SetActive(true);
+
             _inputListener.SetInteract(true);
+            _inputListener.SetInput(true);
             _dialogueManager.EnterDialogueMode(dialogueOnTutorialEnd);
         }
     }

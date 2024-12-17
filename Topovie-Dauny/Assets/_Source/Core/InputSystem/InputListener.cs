@@ -31,18 +31,18 @@ namespace Core.InputSystem
         }
         private void OnEnable()
         {
-            SetupMoveAction();
+            SetupPauseAction();
+            SetupMoveActions();
             SetupFireAction();
-            SetupRollAction();
             SetupSwitchWeaponButtons();
             SetupAbilityActions();
             SetupInteractAction();
-            SetupPauseAction();
         }
         private void OnDisable()
         {
             DisablePauseAction();
-            DisableMovementActions();
+            DisableMoveActions();
+            DisableFireAction();
             DisableWeaponSwitchActions();
             DisableUseAbilityActions();
             DisableInteractAction();
@@ -67,13 +67,15 @@ namespace Core.InputSystem
                 {
                     EnableUseAbilityActions();
                     EnableMovementActions();
+                    EnableShootAction();
                     EnableWeaponSwitchActions();
                     EnableUseAbilityActions();
                 }
                 else
                 {
                     DisableUseAbilityActions();
-                    DisableMovementActions();
+                    DisableMoveActions();
+                    DisableFireAction();
                     DisableWeaponSwitchActions();
                     DisableUseAbilityActions();
                 }
@@ -101,6 +103,17 @@ namespace Core.InputSystem
                 _interactAction.Disable();
             }
         }
+        public void SetPauseInput(bool enable)
+        {
+            if (enable)
+            {
+                EnablePauseAction();
+            }
+            else
+            {
+                DisablePauseAction();
+            }
+        }
         public void SetFiringAbility(bool enable)
         {
             if (enable)
@@ -123,6 +136,17 @@ namespace Core.InputSystem
             else
             {
                 DisableUseAbilityActions();
+            }
+        }
+        public void SetWalking(bool enable)
+        {
+            if (enable)
+            {
+                EnableMovementActions();
+            }
+            else
+            {
+                DisableMoveActions();
             }
         }
         private void OnPauseButtonPressed(InputAction.CallbackContext context)
@@ -189,10 +213,14 @@ namespace Core.InputSystem
             _pauseAction.started += OnPauseButtonPressed;
             _pauseAction.Enable();
         }
-        private void SetupMoveAction()
+        private void SetupMoveActions()
         {
             _moveAction = _inputActions.Player.Move;
             _moveAction.Enable();
+            
+            _rollAction = _inputActions.Player.Roll;
+            _rollAction.started += OnRollButtonPressed;
+            _rollAction.Enable();
         }
         private void SetupInteractAction()
         {
@@ -207,12 +235,6 @@ namespace Core.InputSystem
             _fireAction.started += OnFireButtonPressed;
             _fireAction.canceled += OnFireButtonReleased;
             _fireAction.Enable();
-        }
-        private void SetupRollAction()
-        {
-            _rollAction = _inputActions.Player.Roll;
-            _rollAction.started += OnRollButtonPressed;
-            _rollAction.Enable();
         }
         private void SetupAbilityActions()
         {
@@ -290,10 +312,13 @@ namespace Core.InputSystem
         {
             _pauseAction.Disable();
         }
-        private void DisableMovementActions()
+        private void DisableFireAction()
+        {
+            _fireAction.Disable();
+        }
+        private void DisableMoveActions()
         {
             _moveAction.Disable();
-            _fireAction.Disable();
             _rollAction.Disable();
         }
         private void DisableWeaponSwitchActions()
@@ -319,10 +344,12 @@ namespace Core.InputSystem
         private void EnableMovementActions()
         {
             _moveAction.Enable();
-            _fireAction.Enable();
             _rollAction.Enable();
         }
-
+        private void EnableShootAction()
+        {
+            _fireAction.Enable();
+        }
         private void EnablePauseAction()
         {
             _pauseAction.Enable();
