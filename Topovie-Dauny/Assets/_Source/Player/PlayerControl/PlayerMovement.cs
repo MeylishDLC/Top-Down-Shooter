@@ -49,7 +49,7 @@ namespace Player.PlayerControl
         }
         private void Update()
         {
-            if (_dialogueManager.DialogueIsPlaying)
+            if (_dialogueManager.DialogueIsPlaying || _shop.IsShopOpen())
             {
                 DisableMovement();
             }

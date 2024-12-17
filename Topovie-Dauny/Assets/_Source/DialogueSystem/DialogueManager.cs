@@ -279,11 +279,13 @@ namespace DialogueSystem
         {
             _inputListener.SetFiringAbility(false);
             _inputListener.SetUseAbility(false);
+            _inputListener.SetPauseInput(false);
         }
         private void EnableInput()
         {
             _inputListener.SetFiringAbility(true);
             _inputListener.SetUseAbility(true);
+            _inputListener.SetPauseInput(true);
         }
         private void SubscribeChoices()
         {

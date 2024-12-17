@@ -71,6 +71,7 @@ namespace UI.Tutorial
         }
         private void StartTutorial()
         {
+            _inputListener.SetInput(false, true);
             _inputListener.SetWalking(true);
             _dialogueManager.OnDialogueEnded -= StartTutorial;
             ReadWalkInput(CancellationToken.None).ContinueWith(() => ReadShootInput(CancellationToken.None)).Forget();
@@ -93,7 +94,10 @@ namespace UI.Tutorial
         }
         private async UniTask ReadShootInput(CancellationToken token)
         {
+            _inputListener.SetInput(false, true);
+            _inputListener.SetWalking(true);
             _inputListener.SetFiringAbility(true);
+            
             await UniTask.Delay(TimeSpan.FromSeconds(timeBeforeAttackIndicatorAppear), cancellationToken: token);
             attackIndicator.gameObject.SetActive(true);
             _inputListener.OnFirePressed += GetFirePressed;
@@ -114,7 +118,11 @@ namespace UI.Tutorial
             await UniTask.Delay(TimeSpan.FromSeconds(timeBeforeAbilitiesIndicatorAppear), cancellationToken: token);
             abilitiesIndicator.gameObject.SetActive(true);
             
+            _inputListener.SetInput(false, true);
+            _inputListener.SetWalking(true);
+            _inputListener.SetFiringAbility(true);
             _inputListener.SetUseAbility(true);
+            
             _inputListener.OnUseAbilityPressed += OnAbilityUsed;
         }
         private void OnAbilityUsed(int _)
