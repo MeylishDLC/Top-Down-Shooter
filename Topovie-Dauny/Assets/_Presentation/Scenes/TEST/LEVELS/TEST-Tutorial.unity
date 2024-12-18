@@ -170,6 +170,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1703633648575761711, guid: 1e9c9824dd7028044b0eb888110131c9, type: 3}
+      propertyPath: sharedProfile
+      value: 
+      objectReference: {fileID: 11400000, guid: 01546e7c9a9d6fb4e8481684f7f46a2d, type: 2}
     - target: {fileID: 4213392102588387242, guid: 1e9c9824dd7028044b0eb888110131c9, type: 3}
       propertyPath: m_LocalPosition.x
       value: -1.1921598
@@ -1686,7 +1690,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1349808371
-  m_SortingLayer: 12
+  m_SortingLayer: 13
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 344236fdda0af384194e54e60de42e97, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -1863,7 +1867,6 @@ MonoBehaviour:
   dialogueOnTutorialEnd: {fileID: 4900000, guid: 7676d25420d271441b05511ee7906731, type: 3}
   shopTrigger: {fileID: 1601157977}
   portalTrigger: {fileID: 104703908}
-  rangeDetector: {fileID: 104703909}
   timeBeforeWasdIndicatorAppear: 1
   wasdIndicatorDisappearTime: 2
   timeBeforeAttackIndicatorAppear: 2
@@ -2039,7 +2042,7 @@ MeshRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1349808371
-  m_SortingLayer: 12
+  m_SortingLayer: 13
   m_SortingOrder: 2
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1001 &620779489402787803

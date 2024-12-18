@@ -27,8 +27,8 @@ Transform:
   m_GameObject: {fileID: 340313436627440673}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.4455526, y: 1.4455526, z: 1.4455526}
+  m_LocalPosition: {x: 0.12, y: 0, z: 0}
+  m_LocalScale: {x: 1.28, y: 1.28, z: 1.28}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 4898602326709540537}
@@ -72,9 +72,9 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1002419675
-  m_SortingLayer: 11
+  m_SortingLayer: 12
   m_SortingOrder: 11
-  m_Sprite: {fileID: 1084011175, guid: 0dc8010c220023647ae9f903de04621e, type: 3}
+  m_Sprite: {fileID: 1119170390, guid: 6f4374147d8beca4db62745e433a541c, type: 3}
   m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -136,8 +136,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.47900572, y: 0.14927304, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.12, y: 0.12, z: 0.12}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 8148123085792220553}
   - {fileID: 4872134103838102231}
@@ -182,10 +182,10 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1002419675
-  m_SortingLayer: 11
+  m_SortingLayer: 12
   m_SortingOrder: 10
-  m_Sprite: {fileID: 1586255889, guid: e64c46dc2c161ee40a365f15c9313d49, type: 3}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Sprite: {fileID: -2019991525, guid: 6f4374147d8beca4db62745e433a541c, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -254,8 +254,8 @@ CapsuleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.019120375, y: -0.0037177233}
-  m_Size: {x: 0.19175982, y: 0.13546172}
+  m_Offset: {x: 0.24375175, y: 0.002466486}
+  m_Size: {x: 1.5451032, y: 0.9474594}
   m_Direction: 1
 --- !u!114 &9218351794169732260
 MonoBehaviour:
