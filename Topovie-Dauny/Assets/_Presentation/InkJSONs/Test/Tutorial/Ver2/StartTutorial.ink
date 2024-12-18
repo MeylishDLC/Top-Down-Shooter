@@ -5,8 +5,10 @@
 Сейчас я быстренько обучу тебя как играть, дорогуша
 Должно быть ты тут впервые?
 + [Да]
+    Агась! #speaker:Рина #sprite:rina_neutral #layout:right
 + [Нет]
-    В любом случае, повторение - мать учения. #speaker:Лео #sprite:leo_huh #layout:left
+    Ну, вообще-то нет! #speaker:Рина #sprite:rina_mysterious #layout:right
+    В любом случае, повторение - мать учения. #speaker:Лео #sprite:leo_wondering #layout:left
     Минутка туторила ещё никому не причинила вреда, не так ли?
 - Тогда давай приступим #speaker:Лео #sprite:leo_happy #layout:left
 -> END

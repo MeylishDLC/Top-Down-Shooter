@@ -2022,7 +2022,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2394764665968957934, guid: 023ea7a88c06de94e83b8e1253671c8c, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 26.608
+      value: 38
       objectReference: {fileID: 0}
     - target: {fileID: 3188889859763864659, guid: 023ea7a88c06de94e83b8e1253671c8c, type: 3}
       propertyPath: m_fontColor.b
@@ -2046,7 +2046,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3403996743167915539, guid: 023ea7a88c06de94e83b8e1253671c8c, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3497355941599562046, guid: 023ea7a88c06de94e83b8e1253671c8c, type: 3}
       propertyPath: m_Pivot.x
@@ -2086,7 +2086,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3497355941599562046, guid: 023ea7a88c06de94e83b8e1253671c8c, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 26.608
+      value: 38
       objectReference: {fileID: 0}
     - target: {fileID: 4868455896491938288, guid: 023ea7a88c06de94e83b8e1253671c8c, type: 3}
       propertyPath: m_Type
@@ -2103,7 +2103,7 @@ PrefabInstance:
     - target: {fileID: 5870050398003118153, guid: 023ea7a88c06de94e83b8e1253671c8c, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 67e666e68eef6be4b8dba613bd43ef07, type: 3}
+      objectReference: {fileID: 21300000, guid: 3058d4eb4a56a4549831fd50da2c92cc, type: 3}
     - target: {fileID: 5870050398003118153, guid: 023ea7a88c06de94e83b8e1253671c8c, type: 3}
       propertyPath: m_Color.b
       value: 1
@@ -2245,7 +2245,8 @@ PrefabInstance:
       value: -5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 5782883747109636794, guid: 023ea7a88c06de94e83b8e1253671c8c, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 023ea7a88c06de94e83b8e1253671c8c, type: 3}
