@@ -802,7 +802,8 @@ PlayerSettings:
     tvOS: DOTWEEN;ASTAR_GRID_NO_CUSTOM_CONNECTIONS;ASTAR_NO_PENALTY;ProfileAstar
   additionalCompilerArguments: {}
   platformArchitecture: {}
-  scriptingBackend: {}
+  scriptingBackend:
+    Standalone: 0
   il2cppCompilerConfiguration: {}
   il2cppCodeGeneration: {}
   managedStrippingLevel:
