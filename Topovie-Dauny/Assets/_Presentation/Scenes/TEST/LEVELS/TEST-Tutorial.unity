@@ -1611,8 +1611,8 @@ MonoBehaviour:
       error: 0
     <GunRotation>k__BackingField: {fileID: 620779489402787810}
     <GunUIImage>k__BackingField: {fileID: 5110674191528860455}
-    <GunKeyEnabled>k__BackingField: {fileID: 21300000, guid: bf52fa34ec1e2994d8bbe1838dfbaa53, type: 3}
-    <GunKeyDisabled>k__BackingField: {fileID: 21300000, guid: 4d0dd3e80f751ca49a26bd36f41f919c, type: 3}
+    <GunKeyEnabled>k__BackingField: {fileID: 21300000, guid: 67e2e44f28a5ef04c8fa65695525fe21, type: 3}
+    <GunKeyDisabled>k__BackingField: {fileID: 21300000, guid: ebc73e9afd674574fa9114ebdf94da22, type: 3}
   customCursor: {fileID: 704427450}
   baseDialogueDisplay: {fileID: 7961203719235848609}
   mainCamera: {fileID: 4081401207632641913}
@@ -2534,6 +2534,10 @@ PrefabInstance:
     - target: {fileID: 2221232130911802252, guid: c6a250a527255e6469bb66117addd5ee, type: 3}
       propertyPath: maxFrameTime
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 2221232130911802252, guid: c6a250a527255e6469bb66117addd5ee, type: 3}
+      propertyPath: showNavGraphs
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2221232130911802252, guid: c6a250a527255e6469bb66117addd5ee, type: 3}
       propertyPath: logPathResults

@@ -1,5 +1,5 @@
 -> main
 
 === main ===
-Блять я тебе жопу надеру. #speaker:Лео #sprite:leo_angry #layout:left
+ААААА!!! #speaker:Лео #sprite:leo_boss #layout:left
 -> END
