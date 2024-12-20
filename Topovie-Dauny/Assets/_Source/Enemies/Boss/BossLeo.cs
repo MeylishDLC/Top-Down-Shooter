@@ -69,6 +69,7 @@ namespace Enemies.Boss
         {
             bossFightTrigger.OnBossFightStarted -= StartFight;
             ChangeCamZoom(_destroyCancellationToken).Forget();
+            _audioManager.PlayOneShot(_audioManager.FMODEvents.LeoTransformationSound);
             _audioManager.ChangeMusic(_audioManager.FMODEvents.BossFightMusic, STOP_MODE.ALLOWFADEOUT);
             _statesChanger.ChangeState(GameStates.Fight);
             StartPhase();
