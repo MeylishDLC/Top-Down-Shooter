@@ -88,7 +88,7 @@ namespace Bullets
                 {
                     if (hitCollider.gameObject.TryGetComponent(out IEnemyHealth enemyHealth))
                     {
-                        enemyHealth.TakeDamage(damageAmount);
+                        enemyHealth?.TakeDamage(damageAmount);
                     }
                 }
             }

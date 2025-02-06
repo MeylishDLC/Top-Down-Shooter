@@ -31,6 +31,7 @@ namespace Installers
         [SerializeField] private HealingOrbsSpawnerConfig healingOrbsSpawnerConfig;
         
         private DialogueManager _dialogueManager;
+        private ProjectContext _projectContext;
         private PoolInitializer _poolInitializer;
         public override void InstallBindings()
         {
@@ -59,8 +60,8 @@ namespace Installers
         }
         private void BindProjectContext()
         {
-            var context = FindFirstObjectByType<ProjectContext>();
-            Container.Bind<ProjectContext>().FromInstance(context).AsSingle();
+            _projectContext = FindFirstObjectByType<ProjectContext>();
+            Container.Bind<ProjectContext>().FromInstance(_projectContext).AsSingle();
         }
         private void BindDialogueManager()
         {
@@ -111,7 +112,7 @@ namespace Installers
         }
         private void BindOrbsSpawner()
         {
-            var spawner = new HealOrbsSpawner(healingOrbsSpawnerConfig);
+            var spawner = new HealOrbsSpawner(healingOrbsSpawnerConfig, _projectContext);
             Container.Bind<HealOrbsSpawner>().FromInstance(spawner).AsSingle();
         }
     }

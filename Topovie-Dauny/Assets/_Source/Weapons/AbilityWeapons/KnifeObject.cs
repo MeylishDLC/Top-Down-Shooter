@@ -26,7 +26,7 @@ namespace Weapons.AbilityWeapons
             if (other.gameObject.layer == LayerMask.NameToLayer("Enemy"))
             {
                 var enemyHealth = other.gameObject.GetComponentInParent<IEnemyHealth>();
-                enemyHealth.TakeDamage(damageAmount);
+                enemyHealth?.TakeDamage(damageAmount);
                 Destroy(gameObject);
             }
         }

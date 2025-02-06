@@ -9,11 +9,11 @@ namespace Interactable.HealingStuff
 {
     public class HealOrbsSpawner
     {
-        private readonly SceneContext _sceneContext;
+        private readonly ProjectContext _projectContext;
         private readonly int _dropPercentChance;
         private readonly GameObject _orbPrefab;
         
-        public HealOrbsSpawner(HealingOrbsSpawnerConfig config)
+        public HealOrbsSpawner(HealingOrbsSpawnerConfig config, ProjectContext projectContext)
         {
             if (!config.OrbPrefab)
             {
@@ -21,7 +21,7 @@ namespace Interactable.HealingStuff
             }
             _orbPrefab = config.OrbPrefab;
            
-            _sceneContext = Object.FindFirstObjectByType<SceneContext>();
+            _projectContext = projectContext;
             _dropPercentChance = config.SpawnChancePercent;
 
             EnemyMovement.OnEnemyDisabled += SpawnOrb;
@@ -41,7 +41,7 @@ namespace Interactable.HealingStuff
             {
                 return;
             }
-            _sceneContext.Container.InstantiatePrefabForComponent<HealOrb>
+            _projectContext.Container.InstantiatePrefabForComponent<HealOrb>
                 (_orbPrefab, spawnPosition, Quaternion.identity, null);
             Debug.Log("Spawned orb");
         }

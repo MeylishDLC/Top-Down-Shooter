@@ -38,17 +38,34 @@ namespace Weapons.AbilityWeapons
         private void BlowUp()
         {
             projectile.Calculations.OnDestinationReached -= BlowUp;
+            Debug.LogError("Blow up started");
+
             BlowUpAsync(CancellationToken.None).Forget();
         }
         private async UniTask BlowUpAsync(CancellationToken token)
         {
             await UniTask.Delay(timeBeforeBlowMilliseconds, cancellationToken: token);
-            DealDamageInRange();
-            await gameObject.transform.DOScale(scaleIncreaseWhenBlowup, 0f);
-            animator.SetTrigger(Blowup);
-            _audioManager.PlayOneShot(_audioManager.FMODEvents.BombSound);
+            Debug.LogError("Deal bomb dmg started");
+            try
+            {
+                DealDamageInRange();
+            }
+            catch (Exception e)
+            {
+                Debug.LogException(e);
+            }
+            await DisplayBlowUp(token);
             await UniTask.Delay(TimeSpan.FromSeconds(blowupDuration), cancellationToken: token);
+            Debug.LogError("Disappear");
             gameObject.SetActive(false);
+        }
+        private UniTask DisplayBlowUp(CancellationToken token)
+        {
+            Debug.LogError("Display blow up");
+
+            return gameObject.transform.DOScale(scaleIncreaseWhenBlowup, 0f).ToUniTask(cancellationToken: token)
+                .ContinueWith(() => animator.SetTrigger(Blowup))
+                .ContinueWith(() => _audioManager.PlayOneShot(_audioManager.FMODEvents.BombSound));
         }
         private void DealDamageInRange()
         {
@@ -56,12 +73,13 @@ namespace Weapons.AbilityWeapons
 
             foreach (var col in hitColliders)
             {
-                if (col.gameObject.layer == LayerMask.NameToLayer("Enemy") &&
-                    col.gameObject.transform.parent.TryGetComponent<IEnemyHealth>(out var enemyHealth))
+                if (col.gameObject.layer == LayerMask.NameToLayer("Enemy"))
                 {
-                    enemyHealth.TakeDamage(damage);
+                    var enemyHealth = col.gameObject.GetComponentInParent<IEnemyHealth>();
+                    enemyHealth?.TakeDamage(damage);
                 }
             }
+            Debug.LogError("Dealt damage");
         }
         private void OnDrawGizmosSelected()
         {

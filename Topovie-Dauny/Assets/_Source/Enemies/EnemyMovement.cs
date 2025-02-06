@@ -107,8 +107,8 @@ namespace Enemies
         }
         private void ShowEnemyDeath()
         {
+            //OnEnemyDisabled?.Invoke(gameObject.transform.position);
             ShowEnemyDeathAsync(_deathCancellationToken).Forget();
-            OnEnemyDisabled?.Invoke(gameObject.transform.position);
         }
         private void ChangeColorOnDamageTaken()
         {

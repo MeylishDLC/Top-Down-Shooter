@@ -14,7 +14,7 @@ namespace Interactable.HealingStuff
         [Inject]
         public void Construct(PlayerMovement playerMovement)
         {
-            _playerHealth = playerMovement.gameObject.GetComponent<PlayerHealth>();
+            _playerHealth = playerMovement.GetComponent<PlayerHealth>();
         }
         private void Start()
         {
