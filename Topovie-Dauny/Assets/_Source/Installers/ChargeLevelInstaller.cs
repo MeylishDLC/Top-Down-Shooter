@@ -31,8 +31,8 @@ namespace Installers
         [SerializeField] private HealingOrbsSpawnerConfig healingOrbsSpawnerConfig;
         
         private DialogueManager _dialogueManager;
-        private ProjectContext _projectContext;
         private PoolInitializer _poolInitializer;
+        private HealOrbsSpawner _healOrbsSpawner;
         public override void InstallBindings()
         {
             BindPoolInitializer();
@@ -53,6 +53,7 @@ namespace Installers
         private void OnDestroy()
         {
             _dialogueManager.CleanUp();
+            _healOrbsSpawner.CleanUp();
         }
         private void BindInputListener()
         {
@@ -60,8 +61,8 @@ namespace Installers
         }
         private void BindProjectContext()
         {
-            _projectContext = FindFirstObjectByType<ProjectContext>();
-            Container.Bind<ProjectContext>().FromInstance(_projectContext).AsSingle();
+            var projectContext = FindFirstObjectByType<ProjectContext>();
+            Container.Bind<ProjectContext>().FromInstance(projectContext).AsSingle();
         }
         private void BindDialogueManager()
         {
@@ -112,8 +113,8 @@ namespace Installers
         }
         private void BindOrbsSpawner()
         {
-            var spawner = new HealOrbsSpawner(healingOrbsSpawnerConfig, _projectContext);
-            Container.Bind<HealOrbsSpawner>().FromInstance(spawner).AsSingle();
+            _healOrbsSpawner = new HealOrbsSpawner(healingOrbsSpawnerConfig, playerMovement);
+            Container.Bind<HealOrbsSpawner>().FromInstance(_healOrbsSpawner).AsSingle();
         }
     }
 }

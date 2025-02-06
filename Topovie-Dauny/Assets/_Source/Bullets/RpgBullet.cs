@@ -77,21 +77,20 @@ namespace Bullets
         }
         private async UniTask ExplodeAsync(CancellationToken token)
         {
-            var colliders = new Collider2D[100];
-            Physics2D.OverlapCircleNonAlloc(transform.position, blowupRange, colliders);
-            
-            var filteredColliders = colliders.Where(c => c != null).ToArray();
-            
-            foreach (var hitCollider in filteredColliders)
+            var hitColliders = Physics2D.OverlapCircleAll(transform.position, blowupRange);
+            var filteredColliders = hitColliders.Where(c => c != null).ToArray();
+
+            foreach (var col in filteredColliders)
             {
-                if (hitCollider.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+                if (col.gameObject.layer == LayerMask.NameToLayer("Enemy"))
                 {
-                    if (hitCollider.gameObject.TryGetComponent(out IEnemyHealth enemyHealth))
+                    if (col.gameObject.transform.parent.TryGetComponent<IEnemyHealth>(out var enemyHealth))
                     {
-                        enemyHealth?.TakeDamage(damageAmount);
+                        enemyHealth.TakeDamage(damageAmount);
                     }
                 }
             }
+            
             _audioManager.PlayOneShot(_audioManager.FMODEvents.RpgBlowUpSound);
             blowupAnimator.SetTrigger(Attack);
             impulseSource.GenerateImpulse(impulseStrength);

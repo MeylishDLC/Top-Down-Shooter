@@ -119,16 +119,13 @@ namespace Core.LevelSettings
              _chargingPauseCts?.Cancel();
              _chargingPauseCts?.Dispose();
              _chargingPauseCts = new CancellationTokenSource();
-             
              _levelChargeSound.StopChargeSound();
-             Debug.Log("Charge Paused");
          }
          private void ResumeChargingPortal()
          {
              ChargePortal(_timeRemaining, _chargingPauseCts.Token).Forget();
              StartTimeTracking(_timeRemaining, 
                  portalCharges[_currentChargeIndex].TimeToActivatePencil,_chargingPauseCts.Token).Forget();
-             Debug.Log("Charge Resumed");
          }
          private async UniTask StartTimeTracking(float remainedDuration, float initialDuration, CancellationToken token)
          {

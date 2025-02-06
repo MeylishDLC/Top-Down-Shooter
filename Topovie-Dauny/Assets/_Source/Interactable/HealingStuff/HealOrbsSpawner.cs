@@ -1,5 +1,7 @@
 ﻿using System;
 using Enemies;
+using Player.PlayerCombat;
+using Player.PlayerControl;
 using UnityEngine;
 using Zenject;
 using Object = UnityEngine.Object;
@@ -8,12 +10,12 @@ using Random = UnityEngine.Random;
 namespace Interactable.HealingStuff
 {
     public class HealOrbsSpawner
-    {
-        private readonly ProjectContext _projectContext;
+    { 
+        private readonly PlayerHealth _playerHealth;
         private readonly int _dropPercentChance;
-        private readonly GameObject _orbPrefab;
+        private readonly HealOrb _orbPrefab;
         
-        public HealOrbsSpawner(HealingOrbsSpawnerConfig config, ProjectContext projectContext)
+        public HealOrbsSpawner(HealingOrbsSpawnerConfig config, PlayerMovement playerMovement)
         {
             if (!config.OrbPrefab)
             {
@@ -21,7 +23,7 @@ namespace Interactable.HealingStuff
             }
             _orbPrefab = config.OrbPrefab;
            
-            _projectContext = projectContext;
+            _playerHealth = playerMovement.GetComponent<PlayerHealth>();
             _dropPercentChance = config.SpawnChancePercent;
 
             EnemyMovement.OnEnemyDisabled += SpawnOrb;
@@ -41,8 +43,8 @@ namespace Interactable.HealingStuff
             {
                 return;
             }
-            _projectContext.Container.InstantiatePrefabForComponent<HealOrb>
-                (_orbPrefab, spawnPosition, Quaternion.identity, null);
+            var orb = Object.Instantiate(_orbPrefab, spawnPosition, Quaternion.identity);
+            orb.Construct(_playerHealth);
             Debug.Log("Spawned orb");
         }
         

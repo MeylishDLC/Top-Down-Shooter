@@ -11,14 +11,9 @@ namespace Interactable.HealingStuff
         [field: SerializeField] public int HealAmount { get; private set; } = 10;
         private PlayerHealth _playerHealth;
         
-        [Inject]
-        public void Construct(PlayerMovement playerMovement)
+        public void Construct(PlayerHealth playerHealth)
         {
-            _playerHealth = playerMovement.GetComponent<PlayerHealth>();
-        }
-        private void Start()
-        {
-            PlayAppearAnimation();
+            _playerHealth = playerHealth;
         }
         private void OnTriggerEnter2D(Collider2D other)
         {
@@ -32,10 +27,6 @@ namespace Interactable.HealingStuff
         {
             //todo fade???
             Destroy(gameObject);
-        }
-        private void PlayAppearAnimation()
-        {
-            //todo play spawn animation
         }
     }
 }

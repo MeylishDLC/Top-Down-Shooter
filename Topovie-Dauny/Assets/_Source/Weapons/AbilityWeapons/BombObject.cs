@@ -46,23 +46,17 @@ namespace Weapons.AbilityWeapons
         {
             await UniTask.Delay(timeBeforeBlowMilliseconds, cancellationToken: token);
             Debug.LogError("Deal bomb dmg started");
-            try
-            {
-                DealDamageInRange();
-            }
-            catch (Exception e)
-            {
-                Debug.LogException(e);
-            }
+            
+            DealDamageInRange();
             await DisplayBlowUp(token);
             await UniTask.Delay(TimeSpan.FromSeconds(blowupDuration), cancellationToken: token);
+            
             Debug.LogError("Disappear");
             gameObject.SetActive(false);
         }
         private UniTask DisplayBlowUp(CancellationToken token)
         {
             Debug.LogError("Display blow up");
-
             return gameObject.transform.DOScale(scaleIncreaseWhenBlowup, 0f).ToUniTask(cancellationToken: token)
                 .ContinueWith(() => animator.SetTrigger(Blowup))
                 .ContinueWith(() => _audioManager.PlayOneShot(_audioManager.FMODEvents.BombSound));
@@ -70,13 +64,16 @@ namespace Weapons.AbilityWeapons
         private void DealDamageInRange()
         {
             var hitColliders = Physics2D.OverlapCircleAll(transform.position, blowupRange);
-
-            foreach (var col in hitColliders)
+            var filteredColliders = hitColliders.Where(c => c != null).ToArray();
+            
+            foreach (var col in filteredColliders)
             {
                 if (col.gameObject.layer == LayerMask.NameToLayer("Enemy"))
                 {
-                    var enemyHealth = col.gameObject.GetComponentInParent<IEnemyHealth>();
-                    enemyHealth?.TakeDamage(damage);
+                    if (col.gameObject.transform.parent.TryGetComponent<IEnemyHealth>(out var enemyHealth))
+                    {
+                        enemyHealth.TakeDamage(damage);
+                    }
                 }
             }
             Debug.LogError("Dealt damage");

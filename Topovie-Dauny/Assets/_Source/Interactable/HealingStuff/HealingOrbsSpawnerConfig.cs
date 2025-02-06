@@ -7,6 +7,6 @@ namespace Interactable.HealingStuff
     {
         [field: Range(0,100)]
         [field: SerializeField] public int SpawnChancePercent { get; private set; }
-        [field: SerializeField] public GameObject OrbPrefab { get; private set; }
+        [field: SerializeField] public HealOrb OrbPrefab { get; private set; }
     }
 }
