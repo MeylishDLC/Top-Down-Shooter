@@ -4,7 +4,7 @@ using _Support.Demigiant.DOTween.Modules;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
-namespace InteractableNPC
+namespace Interactable.NPCstuff
 {
     public class NpcVisual
     {

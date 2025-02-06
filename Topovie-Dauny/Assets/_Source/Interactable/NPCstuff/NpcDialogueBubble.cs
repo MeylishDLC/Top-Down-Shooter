@@ -6,7 +6,7 @@ using Cysharp.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 
-namespace InteractableNPC
+namespace Interactable.NPCstuff
 {
     public class NpcDialogueBubble: MonoBehaviour
     {

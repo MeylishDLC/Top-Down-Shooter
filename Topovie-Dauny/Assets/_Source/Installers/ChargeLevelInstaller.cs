@@ -4,6 +4,7 @@ using Core.PoolingSystem;
 using Core.PoolingSystem.Configs;
 using DialogueSystem;
 using DialogueSystem.LevelDialogue;
+using Interactable.HealingStuff;
 using Player.PlayerCombat;
 using Player.PlayerControl;
 using SoundSystem;
@@ -27,7 +28,8 @@ namespace Installers
         [SerializeField] private Camera mainCamera;
         [SerializeField] private LevelDialogueConfig levelDialogueConfig;
         [SerializeField] private PoolInitializerConfig poolInitializerConfig;
-
+        [SerializeField] private HealingOrbsSpawnerConfig healingOrbsSpawnerConfig;
+        
         private DialogueManager _dialogueManager;
         private PoolInitializer _poolInitializer;
         public override void InstallBindings()
@@ -37,7 +39,7 @@ namespace Installers
             BindInputListener();
             BindDialogueManager();
             BindProjectContext();
-            BindPlayer();
+            BindPlayerMovement();
             BindSpawner();
             BindStatesChanger();
             BindLevelChargesHandler();
@@ -45,6 +47,7 @@ namespace Installers
             BindPlayerWeaponsSetter();
             BindCustomCursor();
             BindLevelDialogues();
+            BindOrbsSpawner();
         }
         private void OnDestroy()
         {
@@ -64,7 +67,7 @@ namespace Installers
             _dialogueManager = new DialogueManager(inputListener, baseDialogueDisplay, Container.Resolve<AudioManager>());
             Container.Bind<DialogueManager>().FromInstance(_dialogueManager).AsSingle();
         }
-        private void BindPlayer()
+        private void BindPlayerMovement()
         {
             Container.Bind<PlayerMovement>().FromInstance(playerMovement).AsSingle();
         }
@@ -105,6 +108,11 @@ namespace Installers
         {
             _poolInitializer = new PoolInitializer(poolInitializerConfig);
             Container.Bind<PoolInitializer>().FromInstance(_poolInitializer).AsSingle();
+        }
+        private void BindOrbsSpawner()
+        {
+            var spawner = new HealOrbsSpawner(healingOrbsSpawnerConfig);
+            Container.Bind<HealOrbsSpawner>().FromInstance(spawner).AsSingle();
         }
     }
 }

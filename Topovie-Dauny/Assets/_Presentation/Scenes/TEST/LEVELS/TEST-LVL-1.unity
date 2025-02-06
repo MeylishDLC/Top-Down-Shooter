@@ -2525,6 +2525,7 @@ MonoBehaviour:
   mainCamera: {fileID: 369398954}
   levelDialogueConfig: {fileID: 11400000, guid: 6c6e5bff7c67e8842afbff30a19416d3, type: 2}
   poolInitializerConfig: {fileID: 11400000, guid: 6ada42aa105b1e7479acc01941118ba6, type: 2}
+  healingOrbsSpawnerConfig: {fileID: 11400000, guid: d75158f2c0b778c459c49bd6f81a5bfa, type: 2}
 --- !u!1001 &1559257303
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4175,7 +4176,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3548530274418749256, guid: e0ed0d935843ac54d9b21f07401a0fbe, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -106.400024
+      value: -106.3999
       objectReference: {fileID: 0}
     - target: {fileID: 3668824664310652873, guid: e0ed0d935843ac54d9b21f07401a0fbe, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -4300,6 +4301,14 @@ PrefabInstance:
     - target: {fileID: 6290042731717877641, guid: e0ed0d935843ac54d9b21f07401a0fbe, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6389981263583764367, guid: e0ed0d935843ac54d9b21f07401a0fbe, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -114.41406
+      objectReference: {fileID: 0}
+    - target: {fileID: 6389981263583764367, guid: e0ed0d935843ac54d9b21f07401a0fbe, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -38.208252
       objectReference: {fileID: 0}
     - target: {fileID: 6475559279492214514, guid: e0ed0d935843ac54d9b21f07401a0fbe, type: 3}
       propertyPath: m_AnchorMax.y

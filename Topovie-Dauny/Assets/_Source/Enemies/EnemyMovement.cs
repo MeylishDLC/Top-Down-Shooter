@@ -15,6 +15,7 @@ namespace Enemies
 {
     public class EnemyMovement: MonoBehaviour
     {
+        public static event Action<Vector3> OnEnemyDisabled;
         [SerializeField] private EnemyHealth enemyHealth;
         
         [Header("Sound")]
@@ -107,6 +108,7 @@ namespace Enemies
         private void ShowEnemyDeath()
         {
             ShowEnemyDeathAsync(_deathCancellationToken).Forget();
+            OnEnemyDisabled?.Invoke(gameObject.transform.position);
         }
         private void ChangeColorOnDamageTaken()
         {
@@ -121,10 +123,8 @@ namespace Enemies
         private async UniTask ShowEnemyDeathAsync(CancellationToken token)
         {
             _aiPath.canMove = false;
-            //await gameObject.transform.DOScaleX(0f, deathAnimationDuration).ToUniTask(cancellationToken: token);
             await _enemyRenderer.DOFade(0f, deathAnimationDuration).ToUniTask(cancellationToken: token);
             gameObject.SetActive(false);
-            //await gameObject.transform.DOScaleX(_initScale, 0f);
             await _enemyRenderer.DOFade(1f, 0).ToUniTask(cancellationToken: token);
         }
         private void SubscribeOnEvents()

@@ -5,7 +5,7 @@ using Cysharp.Threading.Tasks;
 using UnityEngine;
 using Zenject;
 
-namespace InteractableNPC
+namespace Interactable.NPCstuff
 {
     public class Npc: MonoBehaviour
     {
