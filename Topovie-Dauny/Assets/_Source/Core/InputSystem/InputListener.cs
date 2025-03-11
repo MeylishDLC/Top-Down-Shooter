@@ -55,7 +55,7 @@ namespace Core.InputSystem
             ExposeUseAbilityActions();
             ExposeInteractAction();
         }
-        public Vector2 GetMovementValue()
+        public virtual Vector2 GetMovementValue()
         {
             return _moveAction.ReadValue<Vector2>();
         }
