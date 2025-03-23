@@ -432,8 +432,8 @@ CapsuleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.07053182, y: -0.027484858}
-  m_Size: {x: 2.3936145, y: 1.7472097}
+  m_Offset: {x: -0.006444008, y: 0.024861528}
+  m_Size: {x: 2.5475857, y: 1.8519139}
   m_Direction: 1
 --- !u!1 &162743281
 GameObject:
@@ -1573,11 +1573,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3733312300555172303, guid: 11c6617fe4209fd489cbb1f9cd2be06d, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -5.076
+      value: -4.802
       objectReference: {fileID: 0}
     - target: {fileID: 3733312300555172303, guid: 11c6617fe4209fd489cbb1f9cd2be06d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 4.502
+      value: 4.577
       objectReference: {fileID: 0}
     - target: {fileID: 3733312300555172303, guid: 11c6617fe4209fd489cbb1f9cd2be06d, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1639,11 +1639,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6764375841969246901, guid: 11c6617fe4209fd489cbb1f9cd2be06d, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.48
+      value: 1.3
       objectReference: {fileID: 0}
     - target: {fileID: 6764375841969246901, guid: 11c6617fe4209fd489cbb1f9cd2be06d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.08
+      value: 2.99
       objectReference: {fileID: 0}
     - target: {fileID: 8964205272760126725, guid: 11c6617fe4209fd489cbb1f9cd2be06d, type: 3}
       propertyPath: m_Size.x
@@ -1756,7 +1756,7 @@ Transform:
   m_GameObject: {fileID: 757111698}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.318, z: 0}
+  m_LocalPosition: {x: 0.003, y: 0.325, z: 0}
   m_LocalScale: {x: 0.18, y: 0.18, z: 0.18}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -1909,11 +1909,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3733312300555172303, guid: 11c6617fe4209fd489cbb1f9cd2be06d, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -3.94
+      value: -3.912
       objectReference: {fileID: 0}
     - target: {fileID: 3733312300555172303, guid: 11c6617fe4209fd489cbb1f9cd2be06d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 4.502
+      value: 4.587
       objectReference: {fileID: 0}
     - target: {fileID: 3733312300555172303, guid: 11c6617fe4209fd489cbb1f9cd2be06d, type: 3}
       propertyPath: m_LocalPosition.z
@@ -2189,7 +2189,7 @@ Transform:
   m_GameObject: {fileID: 950253032}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.318, z: 0}
+  m_LocalPosition: {x: 0.072, y: 0.328, z: 0}
   m_LocalScale: {x: 0.18, y: 0.18, z: 0.18}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -2895,7 +2895,7 @@ Transform:
   m_GameObject: {fileID: 1700621645}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.48, y: 4.05, z: 3.7923865}
+  m_LocalPosition: {x: -2.48, y: 3.93, z: 3.7923865}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2938,8 +2938,8 @@ CapsuleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.029730905, y: 0.0059468937}
-  m_Size: {x: 2.4310446, y: 1.7413015}
+  m_Offset: {x: 0.029730918, y: 0.08449567}
+  m_Size: {x: 2.431045, y: 1.8984059}
   m_Direction: 1
 --- !u!114 &1847543163 stripped
 MonoBehaviour:
@@ -3912,6 +3912,22 @@ PrefabInstance:
     - target: {fileID: 2464558719750720626, guid: 87d1c3539aa115843a0fff29c270a53e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3486242948626918227, guid: 87d1c3539aa115843a0fff29c270a53e, type: 3}
+      propertyPath: m_Size.x
+      value: 1.50612
+      objectReference: {fileID: 0}
+    - target: {fileID: 3486242948626918227, guid: 87d1c3539aa115843a0fff29c270a53e, type: 3}
+      propertyPath: m_Size.y
+      value: 0.42833775
+      objectReference: {fileID: 0}
+    - target: {fileID: 3486242948626918227, guid: 87d1c3539aa115843a0fff29c270a53e, type: 3}
+      propertyPath: m_Offset.x
+      value: -0.0026369095
+      objectReference: {fileID: 0}
+    - target: {fileID: 3486242948626918227, guid: 87d1c3539aa115843a0fff29c270a53e, type: 3}
+      propertyPath: m_Offset.y
+      value: -0.026367575
       objectReference: {fileID: 0}
     - target: {fileID: 7974349407187727462, guid: 87d1c3539aa115843a0fff29c270a53e, type: 3}
       propertyPath: m_Name
