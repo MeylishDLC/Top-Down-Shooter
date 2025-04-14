@@ -32,7 +32,7 @@ namespace Installers
         }
         private void BindLevelSave()
         {
-            Container.Bind<LevelSave>().AsSingle();
+            Container.Bind<LevelSave>().AsSingle().WithArguments(_analyticsManager);
         }
         private void BindSceneLoader()
         {

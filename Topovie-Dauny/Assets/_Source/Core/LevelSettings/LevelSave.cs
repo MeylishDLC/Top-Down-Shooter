@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Analytics;
+using UnityEngine;
 
 namespace Core.LevelSettings
 {
@@ -6,8 +7,11 @@ namespace Core.LevelSettings
     {
         public int LevelsPassed { get; private set; }
 
-        public LevelSave()
+        private AnalyticsManager _analyticsManager;
+        public LevelSave(AnalyticsManager analyticsManager)
         {
+            _analyticsManager = analyticsManager;
+            
             if (PlayerPrefs.HasKey("LevelsPassed"))
             {
                 LevelsPassed = PlayerPrefs.GetInt("LevelsPassed");
@@ -23,6 +27,8 @@ namespace Core.LevelSettings
         {
             PlayerPrefs.SetInt("LevelsPassed", passedLevelNumber + 1);
             Debug.Log($"Levels passed : {GetLevelsPassed()}");
+            
+            _analyticsManager.OnLevelComplete(passedLevelNumber);
         }
         public int GetLevelsPassed()
         {
