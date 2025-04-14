@@ -45,7 +45,8 @@ namespace Analytics
         }
         public void OnAbilityEquipped(Ability equippedAbility)
         {
-            
+            GameAnalytics.NewProgressionEvent(GAProgressionStatus.Complete, "Ability equipped_" + equippedAbility.name);
+            Debug.Log("Ability equipped sent to analytics " + equippedAbility.name);
         }
         public void OnEndingReached()
         {

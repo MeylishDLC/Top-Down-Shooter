@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Analytics;
 using Player.PlayerAbilities;
 using SoundSystem;
 using UnityEngine;
@@ -21,11 +22,15 @@ namespace UI.UIShop
         private readonly Dictionary<Button, Ability> _equipmentCellAbilities = new();
         private readonly List<Image> _equipmentCellImages = new();
         private Ability _newAbilityToEquip;
+        
         private AudioManager _audioManager;
+        private AnalyticsManager _analyticsManager;
+        
         [Inject]
-        public void Construct(AudioManager audioManager)
+        public void Construct(AudioManager audioManager, AnalyticsManager analyticsManager)
         {
             _audioManager = audioManager;
+            _analyticsManager = analyticsManager;
         }
         private void Awake()
         {
@@ -60,6 +65,11 @@ namespace UI.UIShop
                 SetNewAbilityInCell(cellIndex, _newAbilityToEquip);
             }
             OnAbilityChanged?.Invoke(cellIndex, _newAbilityToEquip);
+            SendAbilityEquippedEventToAnalytics(_newAbilityToEquip);
+        }
+        private void SendAbilityEquippedEventToAnalytics(Ability ability)
+        {
+            _analyticsManager.OnAbilityEquipped(ability);
         }
         private void SetNewAbilityInCell(int cellIndex, Ability abilityToEquip)
         {
