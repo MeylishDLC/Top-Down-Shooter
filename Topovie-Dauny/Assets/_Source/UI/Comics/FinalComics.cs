@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading;
 using _Support.Demigiant.DOTween.Modules;
+using Analytics;
 using Core.InputSystem;
 using Core.SceneManagement;
 using Cysharp.Threading.Tasks;
@@ -31,13 +32,16 @@ namespace UI.Comics
         private InputListener _inputListener;
         private AudioManager _audioManager;
         private SceneLoader _sceneLoader;
+        private AnalyticsManager _analyticsManager;
         
         [Inject]
-        public void Construct(InputListener inputListener, AudioManager audioManager, SceneLoader sceneLoader)
+        public void Construct(InputListener inputListener, AudioManager audioManager, SceneLoader sceneLoader, 
+            AnalyticsManager analyticsManager)
         {
             _sceneLoader = sceneLoader;
             _audioManager = audioManager;
             _inputListener = inputListener;
+            _analyticsManager = analyticsManager;
         }
         private void OnValidate()
         {
@@ -49,6 +53,12 @@ namespace UI.Comics
         private void Awake()
         {
             bossLeo.OnBossDefeated += ShowComics;
+            bossLeo.OnBossDefeated += SavePlayerReachedEnd;
+        }
+        private void OnDestroy()
+        {
+            bossLeo.OnBossDefeated -= ShowComics;
+            bossLeo.OnBossDefeated -= SavePlayerReachedEnd;
         }
         private void Start()
         {
@@ -61,6 +71,10 @@ namespace UI.Comics
                 page.gameObject.SetActive(false);
             }
             button.onClick.AddListener(GoToNextPage);
+        }
+        private void SavePlayerReachedEnd()
+        {
+            _analyticsManager.OnEndingReached();
         }
         private void ShowComics()
         {

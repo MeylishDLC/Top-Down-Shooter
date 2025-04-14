@@ -9,12 +9,15 @@ namespace Analytics
     {
         private int _generalDeathsCount;
         private int _deathsOnBossCount;
+        private int _playerReachedEnding;
         private const string GeneralDeathsKey = "GeneralDeathsCount";
         private const string DeathsOnBossKey = "DeathsOnBossCount";
+        private const string ReachedEndingKey = "ReachedEnding";
         private void Awake()
         {
             _generalDeathsCount = InitializeDataFromPlayerPrefs(GeneralDeathsKey);
             _deathsOnBossCount = InitializeDataFromPlayerPrefs(DeathsOnBossKey);
+            _playerReachedEnding = InitializeDataFromPlayerPrefs(ReachedEndingKey);
             
             GameAnalytics.Initialize();
         }
@@ -27,7 +30,7 @@ namespace Analytics
         public void OnDeath()
         {
             _generalDeathsCount++;
-            SaveProgress(GeneralDeathsKey, _generalDeathsCount);
+            SaveProgressToPlayerPrefs(GeneralDeathsKey, _generalDeathsCount);
             GameAnalytics.NewProgressionEvent(GAProgressionStatus.Complete, "General deaths_" + _generalDeathsCount);
             Debug.Log("General deaths count sent to analytics");
         }
@@ -36,7 +39,7 @@ namespace Analytics
             OnDeath();
             
             _deathsOnBossCount++;
-            SaveProgress(DeathsOnBossKey, _deathsOnBossCount);
+            SaveProgressToPlayerPrefs(DeathsOnBossKey, _deathsOnBossCount);
             GameAnalytics.NewProgressionEvent(GAProgressionStatus.Complete, "Deaths on boss_" + _deathsOnBossCount);
             Debug.Log("Deaths on boss count sent to analytics");
         }
@@ -44,10 +47,15 @@ namespace Analytics
         {
             
         }
-
         public void OnEndingReached()
         {
-            
+            if (_playerReachedEnding == 1)
+            {
+                return;
+            }
+            SaveProgressToPlayerPrefs(ReachedEndingKey, 1);
+            GameAnalytics.NewProgressionEvent(GAProgressionStatus.Complete, "Player reached ending");
+            Debug.Log("Player reached ending sent to analytics");
         }
         private int InitializeDataFromPlayerPrefs(string key)
         {
@@ -57,7 +65,7 @@ namespace Analytics
             }
             return 0;
         }
-        private void SaveProgress(string key, int newValue)
+        private void SaveProgressToPlayerPrefs(string key, int newValue)
         {
             PlayerPrefs.SetInt(key, newValue);
         }
