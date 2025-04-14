@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using _Support.Demigiant.DOTween.Modules;
+using Analytics;
 using Core.InputSystem;
 using Core.SceneManagement;
 using Cysharp.Threading.Tasks;
@@ -31,25 +32,38 @@ namespace UI.Menus
         private SceneLoader _sceneLoader;
         private InputListener _inputListener;
         private AudioManager _audioManager;
+        private AnalyticsManager _analyticsManager;
         
         [Inject]
         public void Construct(PlayerMovement playerMovement, SceneLoader sceneLoader, InputListener inputListener,
-            AudioManager audioManager)
+            AudioManager audioManager, AnalyticsManager analyticsManager)
         {
             _playerHealth = playerMovement.gameObject.GetComponent<PlayerHealth>();
             _sceneLoader = sceneLoader;
             _inputListener = inputListener;
             _audioManager = audioManager;
+            _analyticsManager = analyticsManager;
         }
         private void Awake()
         {
             _playerHealth.OnDeath += ShowGameOverScreen;
+            _playerHealth.OnDeath += SaveDeathData;
             restartButton.onClick.AddListener(RestartLevel);
             gameOverScreen.gameObject.SetActive(false);
         }
         private void OnDestroy()
         {
             _playerHealth.OnDeath -= ShowGameOverScreen;
+            _playerHealth.OnDeath -= SaveDeathData;
+        }
+        private void SaveDeathData()
+        {
+            _analyticsManager.OnDeath();
+            var currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+            if (currentSceneIndex == SceneManager.sceneCountInBuildSettings - 1)
+            {
+                _analyticsManager.OnDeathOnBoss();
+            }
         }
         private void ShowGameOverScreen()
         {

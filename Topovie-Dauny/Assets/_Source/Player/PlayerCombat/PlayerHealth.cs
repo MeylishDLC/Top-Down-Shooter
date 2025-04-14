@@ -1,5 +1,6 @@
 using System;
 using System.Threading;
+using Analytics;
 using Cysharp.Threading.Tasks;
 using Enemies.Combat;
 using SoundSystem;
