@@ -1,3 +1,4 @@
+using Analytics;
 using Core.LevelSettings;
 using SoundSystem;
 using UnityEngine;
@@ -13,10 +14,13 @@ namespace Installers
         [SerializeField] private SceneLoader sceneLoaderPrefab;
         [SerializeField] private Canvas canvasPrefab;
         [SerializeField] private AudioManager audioManagerPrefab;
+        [SerializeField] private AnalyticsManager analyticsManagerPrefab;
         
         private AudioManager _audioManager;
+        private AnalyticsManager _analyticsManager;
         public override void InstallBindings()
         {
+            BindAnalyticsManager();
             BindAudioManager();
             BindLevelSave();
             BindSceneLoader();
@@ -38,6 +42,12 @@ namespace Installers
             
             loader.Construct(screen.GetComponent<RectTransform>(), screen.GetComponentInChildren<Slider>(), _audioManager);
             Container.Bind<SceneLoader>().FromInstance(loader).AsSingle();
+        }
+
+        private void BindAnalyticsManager()
+        {
+            _analyticsManager = Container.InstantiatePrefabForComponent<AnalyticsManager>(analyticsManagerPrefab);
+            Container.Bind<AnalyticsManager>().FromInstance(_analyticsManager).AsSingle();
         }
     }
 }
