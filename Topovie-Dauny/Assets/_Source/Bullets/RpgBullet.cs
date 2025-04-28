@@ -24,6 +24,7 @@ namespace Bullets
         private SpriteRenderer _spriteRenderer;
         private Collider2D _col;
         private bool _isBlowingUp;
+        private CancellationToken _ctOnDestroy;
         
         [Inject]
         public void Construct(AudioManager audioManager)
@@ -32,6 +33,7 @@ namespace Bullets
         }
         private void Awake()
         {
+            _ctOnDestroy = this.GetCancellationTokenOnDestroy();
             _col = GetComponent<Collider2D>();
             _spriteRenderer = GetComponent<SpriteRenderer>();
         }
@@ -73,7 +75,7 @@ namespace Bullets
             _isBlowingUp = true;
             _col.enabled = false;
             _spriteRenderer.DOFade(0f, 0f);
-            ExplodeAsync(CancellationToken.None).Forget();
+            ExplodeAsync(_ctOnDestroy).Forget();
         }
         private async UniTask ExplodeAsync(CancellationToken token)
         {
@@ -94,6 +96,7 @@ namespace Bullets
             _audioManager.PlayOneShot(_audioManager.FMODEvents.RpgBlowUpSound);
             blowupAnimator.SetTrigger(Attack);
             impulseSource.GenerateImpulse(impulseStrength);
+            Debug.Log("Impulse generated");
             
             await UniTask.Delay(TimeSpan.FromSeconds(blowupDuration), cancellationToken: token);
             _isBlowingUp = false;
