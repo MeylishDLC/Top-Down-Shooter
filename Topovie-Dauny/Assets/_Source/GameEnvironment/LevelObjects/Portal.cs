@@ -22,6 +22,7 @@ namespace GameEnvironment.LevelObjects
         private InputListener _inputListener;
         private LevelSave _levelSave;
         private bool _isInRange;
+        private const int ScenesCount = 7;
         
         [Inject]
         public void Construct(StatesChanger statesChanger, SceneLoader sceneLoader, 
@@ -104,7 +105,7 @@ namespace GameEnvironment.LevelObjects
             confirmationScreen.gameObject.SetActive(false);
             var nextSceneIndex = SceneManager.GetActiveScene().buildIndex + 1;
 
-            if (SceneManager.sceneCountInBuildSettings <= nextSceneIndex)
+            if (nextSceneIndex >= ScenesCount)
             {
                 _sceneLoader.LoadSceneAsync(0).Forget();
             }

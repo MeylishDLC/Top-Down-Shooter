@@ -85,10 +85,14 @@ namespace Core.Bootstrappers
         private void ShowScene()
         {
             var levelNumber = SceneManager.GetActiveScene().buildIndex - 2;
-            var music = _audioManager.FMODEvents.LevelsMusic[levelNumber];
-            _inputListener.SetInput(true);
+
+            if (levelNumber < _audioManager.FMODEvents.LevelsMusic.Count)
+            {
+                var music = _audioManager.FMODEvents.LevelsMusic[levelNumber];
+                _audioManager.ChangeMusic(music, STOP_MODE.ALLOWFADEOUT);
+            }
             
-            _audioManager.ChangeMusic(music, STOP_MODE.ALLOWFADEOUT);
+            _inputListener.SetInput(true);
             _sceneLoader.SetLoadingScreenActive(false);
 
             _levelDialogues?.PlayStartDialogue();
