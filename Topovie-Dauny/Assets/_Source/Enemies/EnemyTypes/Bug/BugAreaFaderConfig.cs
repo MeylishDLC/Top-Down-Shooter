@@ -3,7 +3,7 @@
 namespace Enemies.EnemyTypes.Bug
 {
     [CreateAssetMenu(fileName = "Bug Area Fader Config", menuName = "Combat/Enemies/Bug Area Fader Config")]
-    public class AreaFaderConfig: ScriptableObject
+    public class BugAreaFaderConfig: ScriptableObject
     {
         [field:Header("Colors")]
         [field: SerializeField] public Color BaseColor {get; private set;}

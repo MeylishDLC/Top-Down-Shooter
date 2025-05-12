@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: TutorialChargeOutline
-  m_Shader: {fileID: 4800000, guid: fa3a3d54fc7822a409dca2076512d224, type: 3}
+  m_Name: TutorialChargeOutlineFill
+  m_Shader: {fileID: 4800000, guid: 5270147c781277c43a21a02e71197c84, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -43,7 +43,6 @@ Material:
     m_Floats:
     - _EnableExternalAlpha: 0
     - _GlowIntensity: 5
-    - _OutlineFill: 1
     - _OutlineThickness: 0.0023
     m_Colors:
     - _Color: {r: 0.5849056, g: 0.40005332, b: 0.40005332, a: 0}

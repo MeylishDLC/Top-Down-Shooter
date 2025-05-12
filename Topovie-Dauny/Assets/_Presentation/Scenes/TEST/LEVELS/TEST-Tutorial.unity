@@ -1970,7 +1970,7 @@ MonoBehaviour:
   levelDialogueConfig: {fileID: 11400000, guid: 8cf759aa29c0eb64d938bef452cd135c, type: 2}
   poolInitializerConfig: {fileID: 11400000, guid: a28ab32df95841844b6b655aa58497d5, type: 2}
   healingOrbsSpawnerConfig: {fileID: 11400000, guid: d75158f2c0b778c459c49bd6f81a5bfa, type: 2}
-  areaFaderConfig: {fileID: 11400000, guid: d38c04e19052b814caa035faf5bf5521, type: 2}
+  bugAreaFaderConfig: {fileID: 11400000, guid: d38c04e19052b814caa035faf5bf5521, type: 2}
 --- !u!1 &1498050138
 GameObject:
   m_ObjectHideFlags: 0
@@ -2241,13 +2241,15 @@ GameObject:
   m_Component:
   - component: {fileID: 1920764370}
   - component: {fileID: 1920764369}
+  - component: {fileID: 1920764371}
+  - component: {fileID: 1920764372}
   m_Layer: 0
   m_Name: ZoneOutlineTutor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!212 &1920764369
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2286,8 +2288,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 1349808371
-  m_SortingLayer: 12
+  m_SortingLayerID: -773785611
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 7ab52b8f1c96430448df0b2000c3202d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -2309,12 +2311,60 @@ Transform:
   m_GameObject: {fileID: 1920764368}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.303, y: 0.7915, z: 0}
-  m_LocalScale: {x: 0.10729311, y: 0.08945768, z: 0.036567}
+  m_LocalPosition: {x: -0.2945, y: 0.7915, z: 0}
+  m_LocalScale: {x: 0.10956853, y: 0.08945768, z: 0.036567}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!70 &1920764371
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1920764368}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.118773535, y: 0.041746974}
+  m_Size: {x: 27.887587, y: 26.607254}
+  m_Direction: 1
+--- !u!114 &1920764372
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1920764368}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e0a2d4bbaa44832a44d3bc69f18262e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fillDuration: 1.5
 --- !u!1 &1920987627
 GameObject:
   m_ObjectHideFlags: 0
@@ -2473,6 +2523,7 @@ MonoBehaviour:
   - rid: 7552618223407202309
   - rid: 7552618223407202310
   - rid: 7552618223407202311
+  - rid: 7552618223407202312
   references:
     version: 2
     RefIds:
@@ -2514,6 +2565,19 @@ MonoBehaviour:
         timeAfterDialogueEnd: 0.3
         cameraSwitchBackTime: 3
         timeAfterShopClosed: 0.2
+    - rid: 7552618223407202312
+      type: {class: ChargerZoneTutorial, ns: Tutorial.Scenarios, asm: Assembly-CSharp}
+      data:
+        chargerZone: {fileID: 1920764372}
+        mainCamera: {fileID: 1274300229}
+        chargerZoneCamera: {fileID: 1563225216}
+        showChargerZoneDialogue: {fileID: 4900000, guid: 90191651ed1fcc24cbef9530a32ccdac, type: 3}
+        explainChargerZoneDialogue: {fileID: 4900000, guid: 644db76a690c034468ab6e2ee9b43377, type: 3}
+        timeBeforeCameraSwitch: 2
+        timeBeforeShowZoneDialogue: 1
+        timeAfterDialogue: 1
+        timeBeforeExplainZoneDialogue: 2.5
+        timeBeforeChargerZoneDisable: 1
 --- !u!1001 &620779489402787803
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -13,6 +13,7 @@ using SoundSystem;
 using UI.Core;
 using UI.PlayerGUI;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Zenject;
 
 namespace Installers
@@ -29,8 +30,8 @@ namespace Installers
         [SerializeField] private Camera mainCamera;
         [SerializeField] private LevelDialogueConfig levelDialogueConfig;
         [SerializeField] private PoolInitializerConfig poolInitializerConfig;
-        [SerializeField] private HealingOrbsSpawnerConfig healingOrbsSpawnerConfig;
-        [SerializeField] private AreaFaderConfig areaFaderConfig;
+        [SerializeField] private HealingOrbsSpawnerConfig healingOrbsSpawnerConfig; 
+        [SerializeField] private BugAreaFaderConfig bugAreaFaderConfig;
         
         private DialogueManager _dialogueManager;
         private PoolInitializer _poolInitializer;
@@ -122,7 +123,7 @@ namespace Installers
 
         private void BindAreaFader()
         {
-            Container.Bind<AreaFader>().AsSingle().WithArguments(areaFaderConfig);
+            Container.Bind<BugAreaFader>().AsSingle().WithArguments(bugAreaFaderConfig);
         }
     }
 }

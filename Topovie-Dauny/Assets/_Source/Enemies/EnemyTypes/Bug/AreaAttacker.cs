@@ -8,6 +8,7 @@ using Pathfinding;
 using Player.PlayerCombat;
 using SoundSystem;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Zenject;
 
 namespace Enemies.EnemyTypes.Bug
@@ -20,7 +21,6 @@ namespace Enemies.EnemyTypes.Bug
         
         [Header("Material Settings")]
         [SerializeField] private SpriteRenderer rangeSprite;
-        [SerializeField] private AreaFaderConfig areaFaderConfig;
         
         [Header("Attack Settings")]
         [SerializeField] private float impulseStrength;
@@ -38,17 +38,17 @@ namespace Enemies.EnemyTypes.Bug
         private CancellationTokenSource _cancelAttackCts = new();
         private CancellationToken _destroyCancellationToken;
         
-        private AreaFader _areaFader;
+        private BugAreaFader _bugAreaFader;
         private AudioManager _audioManager;
         private PlayerHealth _playerHealth;
         private bool _isPlayerInRange;
         private bool _isWarning;
 
         [Inject]
-        public void Construct(AudioManager audioManager, AreaFader areaFader)
+        public void Construct(AudioManager audioManager, BugAreaFader bugAreaFader)
         {
             _audioManager = audioManager;
-            _areaFader = areaFader;
+            _bugAreaFader = bugAreaFader;
         }
         private void OnEnable()
         {
@@ -60,8 +60,8 @@ namespace Enemies.EnemyTypes.Bug
             _destroyCancellationToken = this.GetCancellationTokenOnDestroy();
             _playerHealth = enemyHealth.PlayerMovement.GetComponent<PlayerHealth>();
             
-            _areaFader.SetupFader(rangeSprite);
-            _areaFader.FadeAreaAsync(FadeType.FadeOut, _destroyCancellationToken).Forget(); 
+            _bugAreaFader.SetupFader(rangeSprite);
+            _bugAreaFader.FadeAreaAsync(FadeType.FadeOut, _destroyCancellationToken).Forget(); 
         }
         private void OnDestroy()
         {
@@ -86,7 +86,7 @@ namespace Enemies.EnemyTypes.Bug
                 {
                     _isWarning = false;
                     CancelRecreateCts();
-                    _areaFader.FadeAreaAsync(FadeType.FadeOut, _destroyCancellationToken).Forget();
+                    _bugAreaFader.FadeAreaAsync(FadeType.FadeOut, _destroyCancellationToken).Forget();
                 }
             }
         }
@@ -117,7 +117,7 @@ namespace Enemies.EnemyTypes.Bug
             {
                 //area appear (fade in)
                 _isWarning = true;
-                await _areaFader.FadeAreaAsync(FadeType.FadeIn, token);
+                await _bugAreaFader.FadeAreaAsync(FadeType.FadeIn, token);
                 await UniTask.Delay(TimeSpan.FromSeconds(warningDuration), cancellationToken: token);
                 _isWarning = false;
                 await AttackAsync(_destroyCancellationToken);
@@ -145,7 +145,7 @@ namespace Enemies.EnemyTypes.Bug
         private async UniTask ShowStartAttackAsync(CancellationToken token)
         {
             //color area into attack col
-            await _areaFader.ChangeAreaColorAsync(ColorChangeType.ChangeToAttackColor, token);
+            await _bugAreaFader.ChangeAreaColorAsync(ColorChangeType.ChangeToAttackColor, token);
             impulseSource.GenerateImpulse(impulseStrength);
             _audioManager.PlayOneShot(attackSound, gameObject.transform.position, 
                 _playerHealth.transform.position, soundDistance);
@@ -157,8 +157,8 @@ namespace Enemies.EnemyTypes.Bug
 
         private async UniTask ShowEndAttackAsync(CancellationToken token)
         {
-            await _areaFader.ChangeAreaColorAsync(ColorChangeType.ChangeToBaseColor, token);
-            await _areaFader.FadeAreaAsync(FadeType.FadeOut, token);
+            await _bugAreaFader.ChangeAreaColorAsync(ColorChangeType.ChangeToBaseColor, token);
+            await _bugAreaFader.FadeAreaAsync(FadeType.FadeOut, token);
         }
         private void CancelRecreateCts()
         {

@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace Enemies.EnemyTypes.Bug
 {
-    public class AreaFader
+    public class BugAreaFader
     {
         private static readonly int MainColorProperty = Shader.PropertyToID("_Color");
         private static readonly int OutlineColorProperty = Shader.PropertyToID("_OutlineColor");
@@ -23,7 +23,7 @@ namespace Enemies.EnemyTypes.Bug
         
         private Material _material;
         
-        public AreaFader(AreaFaderConfig config)
+        public BugAreaFader(BugAreaFaderConfig config)
         {
             _baseColor = config.BaseColor;
             _attackColor = config.AttackColor;
@@ -40,7 +40,7 @@ namespace Enemies.EnemyTypes.Bug
 
         public async UniTask FadeAreaAsync(FadeType fadeType, CancellationToken token)
         {
-            if (_material == null)
+            if (!_material)
             {
                 throw new Exception("Material is null. Initialize it through SetupFader");
             }
