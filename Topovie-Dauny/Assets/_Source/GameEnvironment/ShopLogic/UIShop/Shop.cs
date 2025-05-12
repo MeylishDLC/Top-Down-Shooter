@@ -16,6 +16,7 @@ namespace GameEnvironment.ShopLogic.UIShop
 {
     public class Shop: MonoBehaviour
     {
+        public event Action OnShopClosed; 
         [field:SerializeField] public GameObject EquipScreen { get; private set; } 
         [field:SerializeField] public InfoPanel InfoPanel { get; private set; }
         [SerializeField] private GameObject shopUI;
@@ -52,7 +53,6 @@ namespace GameEnvironment.ShopLogic.UIShop
             playerCellsInShop.OnAbilityChanged += ChangeDialogue;
             _shopDialogue = new ShopDialogue(vetDialogueText, typeSpeedMilliseconds, dialogueAudioSO, _audioManager);
         }
-        //todo fix shooting in shop after dialogue
         private void OnDestroy()
         {
             playerCellsInShop.OnAbilityChanged -= ChangeDialogue;
@@ -103,6 +103,8 @@ namespace GameEnvironment.ShopLogic.UIShop
             shopUI.SetActive(false);
             playerGUI.SetActive(true);
             _isClosing = false;
+            
+            OnShopClosed?.Invoke();
         }
         private void DisableInput()
         {
@@ -120,7 +122,7 @@ namespace GameEnvironment.ShopLogic.UIShop
             {
                 _stopTypingCts?.Cancel();
                 _stopTypingCts?.Dispose();
-                _stopTypingCts = new();
+                _stopTypingCts = new CancellationTokenSource();
                 _isTyping = false;
             }
             ChangeDialogueAsync(ability, _stopTypingCts.Token).Forget();

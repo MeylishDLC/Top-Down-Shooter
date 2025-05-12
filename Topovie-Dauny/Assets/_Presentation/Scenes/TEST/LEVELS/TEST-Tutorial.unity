@@ -2503,13 +2503,17 @@ MonoBehaviour:
     - rid: 7552618223407202311
       type: {class: ShopScenario, ns: Tutorial.Scenarios, asm: Assembly-CSharp}
       data:
-        dialogueOnShowShop: {fileID: 4900000, guid: 77ceb198ce1fe6c4a8b96c70d4b81980, type: 3}
+        dialogueOnShowShop: {fileID: 4900000, guid: b072670bdea3d284c8f9240514b93a07, type: 3}
+        dialogueOnCloseShop: {fileID: 4900000, guid: 338b60497c1450a4bae60e30297a99df, type: 3}
         mainCamera: {fileID: 1274300229}
         shopCamera: {fileID: 1920987629}
+        shopTrigger: {fileID: 1601157977}
+        shop: {fileID: 2071173030}
         timeBeforeCameraSwitch: 2
         timeBeforeDialogueAppear: 2
         timeAfterDialogueEnd: 0.3
         cameraSwitchBackTime: 3
+        timeAfterShopClosed: 0.2
 --- !u!1001 &620779489402787803
 PrefabInstance:
   m_ObjectHideFlags: 0
