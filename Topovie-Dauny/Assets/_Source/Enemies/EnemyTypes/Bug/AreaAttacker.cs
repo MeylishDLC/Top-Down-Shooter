@@ -10,7 +10,7 @@ using SoundSystem;
 using UnityEngine;
 using Zenject;
 
-namespace Enemies.EnemyTypes
+namespace Enemies.EnemyTypes.Bug
 {
     public class AreaAttacker: MonoBehaviour
     {
@@ -18,37 +18,37 @@ namespace Enemies.EnemyTypes
         [SerializeField] private EnemyHealth enemyHealth;
         [SerializeField] private ParticleSystem impactParticlesPrefab;
         
+        [Header("Material Settings")]
+        [SerializeField] private SpriteRenderer rangeSprite;
+        [SerializeField] private AreaFaderConfig areaFaderConfig;
+        
         [Header("Attack Settings")]
         [SerializeField] private float impulseStrength;
         [SerializeField] private CinemachineImpulseSource impulseSource;
         [SerializeField] private int attackDamage;
         [SerializeField] private float attackDuration;
-        [SerializeField] private Color attackColor = Color.red;
-        [SerializeField] private float colorTransitionDuration;
+        
+        [Header("Warn Settings")]
+        [SerializeField] private float warningDuration;
         
         [Header("Sound")]
         [SerializeField] private EventReference attackSound;
         [SerializeField] private float soundDistance = 2f;
-        
-        [Header("Warn Settings")]
-        [SerializeField] private float warningDuration;
-        [SerializeField] private SpriteRenderer rangeSprite;
-        [SerializeField] private float rangeTransparencyOnWarn;
-        [SerializeField] private float fadeDuration;
 
         private CancellationTokenSource _cancelAttackCts = new();
         private CancellationToken _destroyCancellationToken;
-
+        
+        private AreaFader _areaFader;
         private AudioManager _audioManager;
-        private Color _initRangeColor;
         private PlayerHealth _playerHealth;
         private bool _isPlayerInRange;
         private bool _isWarning;
 
         [Inject]
-        public void Construct(AudioManager audioManager)
+        public void Construct(AudioManager audioManager, AreaFader areaFader)
         {
             _audioManager = audioManager;
+            _areaFader = areaFader;
         }
         private void OnEnable()
         {
@@ -59,8 +59,9 @@ namespace Enemies.EnemyTypes
         {
             _destroyCancellationToken = this.GetCancellationTokenOnDestroy();
             _playerHealth = enemyHealth.PlayerMovement.GetComponent<PlayerHealth>();
-            _initRangeColor = rangeSprite.color;
-            rangeSprite.DOFade(0f, 0f);
+            
+            _areaFader.SetupFader(rangeSprite);
+            _areaFader.FadeAreaAsync(FadeType.FadeOut, _destroyCancellationToken).Forget(); 
         }
         private void OnDestroy()
         {
@@ -72,6 +73,7 @@ namespace Enemies.EnemyTypes
         {
             if (_isPlayerInRange)
             {
+                //area fade in if not already warning
                 if (!_isWarning)
                 {
                     WarnAsync(_cancelAttackCts.Token).Forget();
@@ -79,11 +81,12 @@ namespace Enemies.EnemyTypes
             }
             else
             {
+                //area fade out 
                 if (_isWarning && aiPath.enabled)
                 {
                     _isWarning = false;
                     CancelRecreateCts();
-                    FadeArea(0f, fadeDuration, _destroyCancellationToken);
+                    _areaFader.FadeAreaAsync(FadeType.FadeOut, _destroyCancellationToken).Forget();
                 }
             }
         }
@@ -112,8 +115,9 @@ namespace Enemies.EnemyTypes
         {
             try
             {
+                //area appear (fade in)
                 _isWarning = true;
-                await FadeArea(rangeTransparencyOnWarn, fadeDuration, token);
+                await _areaFader.FadeAreaAsync(FadeType.FadeIn, token);
                 await UniTask.Delay(TimeSpan.FromSeconds(warningDuration), cancellationToken: token);
                 _isWarning = false;
                 await AttackAsync(_destroyCancellationToken);
@@ -123,10 +127,8 @@ namespace Enemies.EnemyTypes
                 //
             }
         }
-        private UniTask FadeArea(float value, float duration, CancellationToken token)
-        {
-            return rangeSprite.DOFade(value, duration).ToUniTask(cancellationToken: token);
-        }
+        
+        
         private async UniTask AttackAsync(CancellationToken token)
         {
             aiPath.canMove = false;
@@ -142,7 +144,8 @@ namespace Enemies.EnemyTypes
 
         private async UniTask ShowStartAttackAsync(CancellationToken token)
         {
-            await rangeSprite.DOColor(attackColor, colorTransitionDuration).ToUniTask(cancellationToken: token);
+            //color area into attack col
+            await _areaFader.ChangeAreaColorAsync(ColorChangeType.ChangeToAttackColor, token);
             impulseSource.GenerateImpulse(impulseStrength);
             _audioManager.PlayOneShot(attackSound, gameObject.transform.position, 
                 _playerHealth.transform.position, soundDistance);
@@ -154,8 +157,8 @@ namespace Enemies.EnemyTypes
 
         private async UniTask ShowEndAttackAsync(CancellationToken token)
         {
-            await rangeSprite.DOColor(_initRangeColor, colorTransitionDuration).ToUniTask(cancellationToken: token);
-            await FadeArea(0f, fadeDuration, token);
+            await _areaFader.ChangeAreaColorAsync(ColorChangeType.ChangeToBaseColor, token);
+            await _areaFader.FadeAreaAsync(FadeType.FadeOut, token);
         }
         private void CancelRecreateCts()
         {

@@ -4,6 +4,7 @@ using Core.PoolingSystem;
 using Core.PoolingSystem.Configs;
 using DialogueSystem;
 using DialogueSystem.LevelDialogue;
+using Enemies.EnemyTypes.Bug;
 using Interactable.HealingStuff;
 using Player.PlayerCombat;
 using Player.PlayerControl;
@@ -29,6 +30,7 @@ namespace Installers
         [SerializeField] private LevelDialogueConfig levelDialogueConfig;
         [SerializeField] private PoolInitializerConfig poolInitializerConfig;
         [SerializeField] private HealingOrbsSpawnerConfig healingOrbsSpawnerConfig;
+        [SerializeField] private AreaFaderConfig areaFaderConfig;
         
         private DialogueManager _dialogueManager;
         private PoolInitializer _poolInitializer;
@@ -49,6 +51,7 @@ namespace Installers
             BindCustomCursor();
             BindLevelDialogues();
             BindOrbsSpawner();
+            BindAreaFader();
         }
         private void OnDestroy()
         {
@@ -115,6 +118,11 @@ namespace Installers
         {
             _healOrbsSpawner = new HealOrbsSpawner(healingOrbsSpawnerConfig, playerMovement);
             Container.Bind<HealOrbsSpawner>().FromInstance(_healOrbsSpawner).AsSingle();
+        }
+
+        private void BindAreaFader()
+        {
+            Container.Bind<AreaFader>().AsSingle().WithArguments(areaFaderConfig);
         }
     }
 }
