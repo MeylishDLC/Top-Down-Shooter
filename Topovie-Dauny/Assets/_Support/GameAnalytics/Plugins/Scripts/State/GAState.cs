@@ -1,23 +1,20 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using System;
 using System.Collections.Generic;
-using GameAnalyticsSDK.Events;
-using GameAnalyticsSDK.Setup;
-using GameAnalyticsSDK.Wrapper;
-using System;
+using _Support.GameAnalytics.Plugins.Scripts.Setup;
+using UnityEngine;
 
-namespace GameAnalyticsSDK.State
+namespace _Support.GameAnalytics.Plugins.Scripts.State
 {
 	
 	internal static class GAState
 	{
 
-		private static GameAnalyticsSDK.Setup.Settings _settings;
+		private static Settings _settings;
 
 		public static void Init ()
 		{
 			try {
-				_settings = (GameAnalyticsSDK.Setup.Settings)Resources.Load ("GameAnalytics/Settings", typeof(GameAnalyticsSDK.Setup.Settings));
+				_settings = (Settings)Resources.Load ("GameAnalytics/Settings", typeof(Settings));
 			} catch (Exception ex) {
 				Debug.Log ("Could not get Settings during event validation \n" + ex.ToString ());
 			}

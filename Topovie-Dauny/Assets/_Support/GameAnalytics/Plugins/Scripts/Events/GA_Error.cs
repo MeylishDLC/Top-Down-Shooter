@@ -2,13 +2,10 @@
 /// This class handles quality (QA) events, such as crashes, fps, etc.
 /// </summary>
 
-using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
-using System;
-using GameAnalyticsSDK.Wrapper;
+using _Support.GameAnalytics.Plugins.Scripts.Wrapper;
 
-namespace GameAnalyticsSDK.Events
+namespace _Support.GameAnalytics.Plugins.Scripts.Events
 {
 	public static class GA_Error
 	{

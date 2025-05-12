@@ -9,7 +9,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
 
-namespace UI.Tutorial
+namespace Tutorial
 {
     public class NewWeaponPanel: MonoBehaviour
     {

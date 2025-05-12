@@ -1,10 +1,7 @@
-﻿using System;
-using UnityEngine;
-using System.Collections.Generic;
-using GameAnalyticsSDK.Utilities;
-
-public class GAAdMobIntegration
+﻿namespace _Support.GameAnalytics.Plugins.Scripts.ILRD.AdMob
 {
+    public class GAAdMobIntegration
+    {
 #if gameanalytics_admob_enabled && !(UNITY_EDITOR)
 
     [Serializable]
@@ -93,4 +90,5 @@ public class GAAdMobIntegration
         };
     }
 #endif
+    }
 }

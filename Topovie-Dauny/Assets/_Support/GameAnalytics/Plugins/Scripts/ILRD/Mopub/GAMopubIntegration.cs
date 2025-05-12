@@ -1,14 +1,15 @@
 ﻿using System;
-using UnityEngine;
 
-public class GAMopubIntegration
+namespace _Support.GameAnalytics.Plugins.Scripts.ILRD.Mopub
 {
+    public class GAMopubIntegration
+    {
 #if gameanalytics_mopub_enabled && !(UNITY_EDITOR)
     private static bool _subscribed = false;
 #endif
 
-    public static void ListenForImpressions(Action<string> callback)
-    {
+        public static void ListenForImpressions(Action<string> callback)
+        {
 #if gameanalytics_mopub_enabled && !(UNITY_EDITOR)
         if (_subscribed)
         {
@@ -19,5 +20,6 @@ public class GAMopubIntegration
         MoPubManager.OnImpressionTrackedEventBg += (arg1, arg2) => callback(arg2.JsonRepresentation);
         _subscribed = true;
 #endif
+        }
     }
 }

@@ -2,12 +2,10 @@
 /// This class handles error and exception messages, and makes sure they are added to the Quality category
 /// </summary>
 
-using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
-using System.Text;
+using UnityEngine;
 
-namespace GameAnalyticsSDK.Events
+namespace _Support.GameAnalytics.Plugins.Scripts.Events
 {
     public static class GA_Debug
     {

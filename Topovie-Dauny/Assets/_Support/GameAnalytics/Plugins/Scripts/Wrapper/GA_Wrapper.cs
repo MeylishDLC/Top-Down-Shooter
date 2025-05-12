@@ -1,10 +1,11 @@
-using UnityEngine;
 using System.Collections;
-using GameAnalyticsSDK.Validators;
 using System.Collections.Generic;
-using GameAnalyticsSDK.Utilities;
+using _Support.GameAnalytics.Plugins.Scripts.Events;
+using _Support.GameAnalytics.Plugins.Scripts.State;
+using _Support.GameAnalytics.Plugins.Scripts.Utilities;
+using UnityEngine;
 
-namespace GameAnalyticsSDK.Wrapper
+namespace _Support.GameAnalytics.Plugins.Scripts.Wrapper
 {
     public partial class GA_Wrapper
     {
@@ -427,7 +428,7 @@ namespace GameAnalyticsSDK.Wrapper
 
         public static void StartSession ()
         {
-            if (GameAnalyticsSDK.State.GAState.IsManualSessionHandlingEnabled()) {
+            if (GAState.IsManualSessionHandlingEnabled()) {
                 gameAnalyticsStartSession ();
             } else {
                 Debug.Log ("Manual session handling is not enabled. \nPlease check the \"Use manual session handling\" option in the \"Advanced\" section of the Settings object.");
@@ -436,7 +437,7 @@ namespace GameAnalyticsSDK.Wrapper
 
         public static void EndSession ()
         {
-            if (GameAnalyticsSDK.State.GAState.IsManualSessionHandlingEnabled()) {
+            if (GAState.IsManualSessionHandlingEnabled()) {
                 gameAnalyticsEndSession ();
             } else {
                 Debug.Log ("Manual session handling is not enabled. \nPlease check the \"Use manual session handling\" option in the \"Advanced\" section of the Settings object.");

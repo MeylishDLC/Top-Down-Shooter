@@ -1,6 +1,6 @@
 ﻿using System.Threading;
 using Cysharp.Threading.Tasks;
-using UI.Tutorial;
+using Tutorial;
 using UnityEngine;
 
 namespace Core.Bootstrappers

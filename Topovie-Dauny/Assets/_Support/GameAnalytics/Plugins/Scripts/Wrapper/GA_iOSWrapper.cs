@@ -1,8 +1,4 @@
-﻿using UnityEngine;
-using System.Collections;
-using System.Runtime.InteropServices;
-
-namespace GameAnalyticsSDK.Wrapper
+﻿namespace _Support.GameAnalytics.Plugins.Scripts.Wrapper
 {
     public partial class GA_Wrapper
     {

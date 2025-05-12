@@ -3,10 +3,10 @@
 /// until data has been sent.
 /// </summary>
 
-using UnityEngine;
 using System.Collections;
+using UnityEngine;
 
-namespace GameAnalyticsSDK.Events
+namespace _Support.GameAnalytics.Plugins.Scripts.Events
 {
     public class GA_SpecialEvents : MonoBehaviour
     {

@@ -2,7 +2,8 @@ using UnityEngine;
 using System.Collections;
 using UnityEditor;
 using System.Collections.Generic;
-using GameAnalyticsSDK.Setup;
+using _Support.GameAnalytics.Plugins.Scripts;
+using _Support.GameAnalytics.Plugins.Scripts.Setup;
 
 namespace GameAnalyticsSDK.Editor
 {
@@ -26,7 +27,7 @@ namespace GameAnalyticsSDK.Editor
 			
 			EditorGUILayout.Space();
 			
-			GUILayout.Label("Currently installed version: " + GameAnalyticsSDK.Setup.Settings.VERSION);
+			GUILayout.Label("Currently installed version: " + Settings.VERSION);
 			GUILayout.Label("Latest version: " + GameAnalytics.SettingsGA.NewVersion);
 			
 			EditorGUILayout.Space();

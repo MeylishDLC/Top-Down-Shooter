@@ -8,7 +8,8 @@ using System.Collections.Generic;
 using System.Reflection.Emit;
 using System.Reflection;
 using System;
-using GameAnalyticsSDK.Setup;
+using _Support.GameAnalytics.Plugins.Scripts;
+using _Support.GameAnalytics.Plugins.Scripts.Setup;
 
 namespace GameAnalyticsSDK.Editor
 {
@@ -48,15 +49,15 @@ namespace GameAnalyticsSDK.Editor
 	        }
 		}
 		
-		private MessageType ConvertMessageType(GameAnalyticsSDK.Setup.Settings.MessageTypes msgType)
+		private MessageType ConvertMessageType(Settings.MessageTypes msgType)
 		{
 			switch (msgType)
 			{
-				case GameAnalyticsSDK.Setup.Settings.MessageTypes.Error:
+				case Settings.MessageTypes.Error:
 					return MessageType.Error;
-				case GameAnalyticsSDK.Setup.Settings.MessageTypes.Info:
+				case Settings.MessageTypes.Info:
 					return MessageType.Info;
-				case GameAnalyticsSDK.Setup.Settings.MessageTypes.Warning:
+				case Settings.MessageTypes.Warning:
 					return MessageType.Warning;
 				default:
 					return MessageType.None;

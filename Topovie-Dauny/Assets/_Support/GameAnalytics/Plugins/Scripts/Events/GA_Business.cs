@@ -2,12 +2,10 @@
 /// This class handles business events, such as ingame purchases.
 /// </summary>
 
-using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
-using GameAnalyticsSDK.Wrapper;
+using _Support.GameAnalytics.Plugins.Scripts.Wrapper;
 
-namespace GameAnalyticsSDK.Events
+namespace _Support.GameAnalytics.Plugins.Scripts.Events
 {
 	public static class GA_Business
 	{

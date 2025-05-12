@@ -1,8 +1,9 @@
 ﻿using System;
-using UnityEngine;
 
-public class GAFyberIntegration
+namespace _Support.GameAnalytics.Plugins.Scripts.ILRD.Fyber
 {
+    public class GAFyberIntegration
+    {
 #if gameanalytics_fyber_enabled && !(UNITY_EDITOR)
     private static bool _subscribed = false;
     private class GAInterstitialListener : Fyber.InterstitialListener
@@ -83,8 +84,8 @@ public class GAFyberIntegration
     }
 #endif
 
-    public static void ListenForImpressions(Action<string> callback)
-    {
+        public static void ListenForImpressions(Action<string> callback)
+        {
 #if gameanalytics_fyber_enabled && !(UNITY_EDITOR)
         if (_subscribed)
         {
@@ -97,5 +98,6 @@ public class GAFyberIntegration
         Fyber.Rewarded.SetRewardedListener(new GARewardedListener(callback));
         _subscribed = true;
 #endif
+        }
     }
 }

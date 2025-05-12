@@ -1,13 +1,7 @@
-using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
+using UnityEngine;
 
-#if UNITY_EDITOR
-using UnityEditor;
-#endif
-
-namespace GameAnalyticsSDK.Setup
+namespace _Support.GameAnalytics.Plugins.Scripts.Setup
 {
     /// <summary>
     /// The Settings object contains an array of options which allows you to customize your use of GameAnalytics. Most importantly you will need to fill in your Game Key and Secret Key on the Settings object to use the service.
@@ -125,7 +119,7 @@ namespace GameAnalyticsSDK.Setup
         public bool IntroScreen = true;
 
         [System.NonSerialized]
-        public List<GameAnalyticsSDK.Setup.Organization> Organizations;
+        public List<Organization> Organizations;
 
         public bool InfoLogEditor = true;
         public bool InfoLogBuild = true;
@@ -459,16 +453,16 @@ namespace GameAnalyticsSDK.Setup
     {
         public string Name { get; private set; }
         public string ID { get; private set; }
-        public List<GameAnalyticsSDK.Setup.Studio> Studios { get; private set; }
+        public List<Studio> Studios { get; private set; }
 
         public Organization(string name, string id)
         {
             Name = name;
             ID = id;
-            Studios = new List<GameAnalyticsSDK.Setup.Studio>();
+            Studios = new List<Studio>();
         }
 
-        public static string[] GetOrganizationNames(List<GameAnalyticsSDK.Setup.Organization> organizations, bool addFirstEmpty = true)
+        public static string[] GetOrganizationNames(List<Organization> organizations, bool addFirstEmpty = true)
         {
             if (organizations == null)
             {
@@ -515,9 +509,9 @@ namespace GameAnalyticsSDK.Setup
         public string OrganizationID { get; private set; }
 
         //[SerializeField]
-        public List<GameAnalyticsSDK.Setup.Game> Games { get; private set; }
+        public List<Game> Games { get; private set; }
 
-        public Studio(string name, string id, string orgId, List<GameAnalyticsSDK.Setup.Game> games)
+        public Studio(string name, string id, string orgId, List<Game> games)
         {
             Name = name;
             ID = id;
@@ -525,7 +519,7 @@ namespace GameAnalyticsSDK.Setup
             Games = games;
         }
 
-        public static string[] GetStudioNames(List<GameAnalyticsSDK.Setup.Studio> studios, bool addFirstEmpty = true)
+        public static string[] GetStudioNames(List<Studio> studios, bool addFirstEmpty = true)
         {
             if(studios == null)
             {
@@ -559,7 +553,7 @@ namespace GameAnalyticsSDK.Setup
             }
         }
 
-        public static string[] GetGameNames(int index, List<GameAnalyticsSDK.Setup.Studio> studios)
+        public static string[] GetGameNames(int index, List<Studio> studios)
         {
             if(studios == null || studios[index].Games == null)
             {

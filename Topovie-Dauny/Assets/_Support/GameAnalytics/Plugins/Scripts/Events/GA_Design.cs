@@ -1,11 +1,9 @@
 // This class handles game design events, such as kills, deaths, high scores, etc.
 
-using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
-using GameAnalyticsSDK.Wrapper;
+using _Support.GameAnalytics.Plugins.Scripts.Wrapper;
 
-namespace GameAnalyticsSDK.Events
+namespace _Support.GameAnalytics.Plugins.Scripts.Events
 {
 	public static class GA_Design
 	{

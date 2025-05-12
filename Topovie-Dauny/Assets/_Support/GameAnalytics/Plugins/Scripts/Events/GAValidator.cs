@@ -1,11 +1,8 @@
-﻿using System;
+﻿using System.Text.RegularExpressions;
+using _Support.GameAnalytics.Plugins.Scripts.State;
 using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
-using System.Text.RegularExpressions;
-using GameAnalyticsSDK.State;
 
-namespace GameAnalyticsSDK.Validators
+namespace _Support.GameAnalytics.Plugins.Scripts.Events
 {
 	internal static class GAValidator
 	{
