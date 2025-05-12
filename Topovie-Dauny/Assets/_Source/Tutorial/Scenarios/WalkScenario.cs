@@ -2,6 +2,7 @@
 using System.Threading;
 using Core.InputSystem;
 using Cysharp.Threading.Tasks;
+using Tutorial.Scenarios.ScenariosTypes;
 using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
@@ -33,7 +34,7 @@ namespace Tutorial.Scenarios
             {
                 throw new Exception("Scenario hasn't been setup. Set it up through SetupScenario.");
             }
-            ReadWalkInput(_cancellationToken.Token).ContinueWith
+            StartReadingWalkInputAsync(_cancellationToken.Token).ContinueWith
                 (() => OnEndScenario?.Invoke()).Forget();
         }
 
@@ -42,7 +43,7 @@ namespace Tutorial.Scenarios
             _cancellationToken?.Cancel();
             _cancellationToken?.Dispose();
         }
-        private async UniTask ReadWalkInput(CancellationToken token)
+        private async UniTask StartReadingWalkInputAsync(CancellationToken token)
         {
             await UniTask.Delay(TimeSpan.FromSeconds(timeBeforeWasdIndicatorAppear), cancellationToken: token);
             wasdIndicator.gameObject.SetActive(true);
@@ -53,9 +54,16 @@ namespace Tutorial.Scenarios
         }
         private async UniTask ReadWalkInputAsync(CancellationToken token)
         {
-            while (_inputListener.GetMovementValue() == Vector2.zero)
+            try
             {
-                await UniTask.Yield(PlayerLoopTiming.Update);
+                while (_inputListener.GetMovementValue() == Vector2.zero)
+                {
+                    await UniTask.Yield(PlayerLoopTiming.Update);
+                }
+            }
+            catch (OperationCanceledException)
+            {
+                //
             }
         }
     }

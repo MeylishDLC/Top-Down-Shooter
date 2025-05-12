@@ -1,4 +1,5 @@
 ﻿using Tutorial;
+using Tutorial.Scenarios.ScenariosTypes;
 
 namespace Editor
 {

@@ -1,4 +1,6 @@
-﻿namespace Tutorial.Scenarios
+﻿using Tutorial.Scenarios.ScenariosTypes;
+
+namespace Tutorial.Scenarios
 {
     [System.Serializable]
     public class TutorialScenarioWrapper

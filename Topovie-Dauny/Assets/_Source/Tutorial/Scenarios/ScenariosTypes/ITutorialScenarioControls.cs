@@ -1,6 +1,6 @@
 ﻿using Core.InputSystem;
 
-namespace Tutorial
+namespace Tutorial.Scenarios.ScenariosTypes
 {
     public interface ITutorialScenarioControls: ITutorialScenario
     {

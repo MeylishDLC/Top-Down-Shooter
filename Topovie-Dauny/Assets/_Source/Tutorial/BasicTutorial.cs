@@ -7,6 +7,7 @@ using Core.Utilities;
 using Cysharp.Threading.Tasks;
 using DialogueSystem;
 using GameEnvironment;
+using Tutorial.Scenarios.ScenariosTypes;
 using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
@@ -47,7 +48,7 @@ namespace Tutorial
         {
             if (_sceneLoader.CurrentSceneIndex == _sceneLoader.LastSceneIndex)
             {
-                return;
+                //return;
             }
             portalTrigger.gameObject.SetActive(false);
             shopTrigger.gameObject.SetActive(false);
@@ -78,10 +79,15 @@ namespace Tutorial
                 {
                     scenarioControls.SetupScenario(_inputListener);
                 }
+                else if (scenario is ITutorialScenarioWithDialogue scenarioWithDialogue)
+                {
+                    scenarioWithDialogue.SetupScenario(_inputListener, _dialogueManager);
+                }
                 scenario.PerformScenario();
                 await EventAwaiter.AwaitEvent(
                     h => scenario.OnEndScenario += h,
                     h => scenario.OnEndScenario -= h);
+                scenario.CleanUp();
             }
         }
         

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Tutorial
+namespace Tutorial.Scenarios.ScenariosTypes
 {
     public interface ITutorialScenario
     {

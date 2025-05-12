@@ -2,6 +2,7 @@
 using System.Threading;
 using Core.InputSystem;
 using Cysharp.Threading.Tasks;
+using Tutorial.Scenarios.ScenariosTypes;
 using UnityEngine;
 using UnityEngine.UI;
 
