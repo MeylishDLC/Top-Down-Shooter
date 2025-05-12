@@ -7,6 +7,7 @@ using Core.Utilities;
 using Cysharp.Threading.Tasks;
 using DialogueSystem;
 using GameEnvironment;
+using GameEnvironment.ShopLogic;
 using Tutorial.Scenarios.ScenariosTypes;
 using UnityEngine;
 using UnityEngine.UI;

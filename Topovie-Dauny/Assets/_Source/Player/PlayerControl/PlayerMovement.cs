@@ -2,8 +2,8 @@ using System.Threading;
 using Core.InputSystem;
 using Cysharp.Threading.Tasks;
 using DialogueSystem;
+using GameEnvironment.ShopLogic.UIShop;
 using Player.PlayerCombat;
-using UI.UIShop;
 using UnityEngine;
 using Zenject;
 

@@ -1,32 +1,33 @@
 ﻿using Core.InputSystem;
 using Core.LevelSettings;
 using DialogueSystem;
-using UI.UIShop;
+using GameEnvironment.ShopLogic.UIShop;
 using UnityEngine;
 using Zenject;
 
-namespace GameEnvironment
+namespace GameEnvironment.ShopLogic
 {
     public class ShopTrigger: MonoBehaviour
     {
         [SerializeField] private SpriteRenderer visualQue;
 
+        protected bool PlayerInRange;
+        protected Shop Shop;
+        protected DialogueManager DialogueManager;
+        
         private bool _isHoldingButton;
         private float _holdStartTime;
-        private bool _playerInRange;
 
         private StatesChanger _statesChanger;
         private InputListener _inputListener;
-        private Shop _shop;
-        private DialogueManager _dialogueManager;
         
         [Inject]
         public void Construct(StatesChanger statesChanger, InputListener inputListener, Shop shop, 
             DialogueManager dialogueManager)
         {
             _statesChanger = statesChanger;
-            _dialogueManager = dialogueManager;
-            _shop = shop;
+            DialogueManager = dialogueManager;
+            Shop = shop;
             _inputListener = inputListener;
         }
         private void Awake()
@@ -44,19 +45,19 @@ namespace GameEnvironment
         }
         private void ShowShop()
         {
-            if (_dialogueManager.DialogueIsPlaying)
+            if (DialogueManager.DialogueIsPlaying)
             {
                 return;
             }
             
-            if (_playerInRange)
+            if (PlayerInRange)
             {
-                _shop.OpenShop();
+                Shop.OpenShop();
             }
         }
         private void Update()
         {
-            visualQue.gameObject.SetActive(_playerInRange);
+            visualQue.gameObject.SetActive(PlayerInRange);
         }
         private void EnableOnChangeState(GameStates gameState)
         {
@@ -73,7 +74,7 @@ namespace GameEnvironment
         {
             if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
             {
-                _playerInRange = true;
+                PlayerInRange = true;
             }
         }
 
@@ -81,7 +82,7 @@ namespace GameEnvironment
         {
             if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
             {
-                _playerInRange = false;
+                PlayerInRange = false;
             }
         }
     }

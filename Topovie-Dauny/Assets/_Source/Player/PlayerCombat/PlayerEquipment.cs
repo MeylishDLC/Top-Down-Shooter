@@ -3,7 +3,6 @@ using DialogueSystem;
 using Player.PlayerAbilities;
 using Player.PlayerControl;
 using UI.PlayerGUI;
-using UI.UIShop;
 using UnityEngine;
 using Zenject;
 

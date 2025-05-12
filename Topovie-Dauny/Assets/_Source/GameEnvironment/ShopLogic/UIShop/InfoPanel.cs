@@ -2,7 +2,7 @@
 using TMPro;
 using UnityEngine;
 
-namespace UI.UIShop
+namespace GameEnvironment.ShopLogic.UIShop
 {
     public class InfoPanel: MonoBehaviour
     {

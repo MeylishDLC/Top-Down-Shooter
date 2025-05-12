@@ -6,6 +6,7 @@ using Core.Data;
 using Cysharp.Threading.Tasks;
 using Enemies;
 using GameEnvironment;
+using GameEnvironment.ShopLogic;
 using SoundSystem;
 using UI.Menus;
 using UnityEngine;

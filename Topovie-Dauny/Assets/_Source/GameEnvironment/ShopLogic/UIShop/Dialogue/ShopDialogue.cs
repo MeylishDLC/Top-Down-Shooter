@@ -6,7 +6,7 @@ using SoundSystem.DialogueSoundSO;
 using TMPro;
 using Random = UnityEngine.Random;
 
-namespace UI.UIShop.Dialogue
+namespace GameEnvironment.ShopLogic.UIShop.Dialogue
 {
     public class ShopDialogue
     {

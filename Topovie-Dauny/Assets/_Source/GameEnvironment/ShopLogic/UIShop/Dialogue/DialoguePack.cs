@@ -2,7 +2,7 @@
 using Player.PlayerAbilities;
 using UnityEngine;
 
-namespace UI.UIShop.Dialogue
+namespace GameEnvironment.ShopLogic.UIShop.Dialogue
 {
     [System.Serializable]
     public class DialoguePack

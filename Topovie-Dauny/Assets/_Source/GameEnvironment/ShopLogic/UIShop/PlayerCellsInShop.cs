@@ -8,7 +8,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
 
-namespace UI.UIShop
+namespace GameEnvironment.ShopLogic.UIShop
 {
     public class PlayerCellsInShop: MonoBehaviour
     {

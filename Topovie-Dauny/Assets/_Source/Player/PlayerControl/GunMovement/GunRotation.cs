@@ -1,6 +1,6 @@
 ﻿using System;
 using DialogueSystem;
-using UI.UIShop;
+using GameEnvironment.ShopLogic.UIShop;
 using UnityEngine;
 using Zenject;
 

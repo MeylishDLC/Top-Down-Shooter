@@ -5,13 +5,13 @@ using Core.PoolingSystem.Configs;
 using DialogueSystem;
 using DialogueSystem.LevelDialogue;
 using Enemies.EnemyTypes.Bug;
+using GameEnvironment.ShopLogic.UIShop;
 using Interactable.HealingStuff;
 using Player.PlayerCombat;
 using Player.PlayerControl;
 using SoundSystem;
 using UI.Core;
 using UI.PlayerGUI;
-using UI.UIShop;
 using UnityEngine;
 using Zenject;
 

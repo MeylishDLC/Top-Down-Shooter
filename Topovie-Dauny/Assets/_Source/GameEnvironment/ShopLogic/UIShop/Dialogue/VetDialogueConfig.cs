@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace UI.UIShop.Dialogue
+namespace GameEnvironment.ShopLogic.UIShop.Dialogue
 {
     [CreateAssetMenu (fileName = "Vet Dialogue Config", menuName = "Core/Level Dialogue/Vet Dialogue Config")]
     public class VetDialogueConfig: ScriptableObject

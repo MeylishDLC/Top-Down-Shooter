@@ -4,6 +4,8 @@ using Cinemachine;
 using Core.InputSystem;
 using Cysharp.Threading.Tasks;
 using DialogueSystem;
+using GameEnvironment;
+using GameEnvironment.ShopLogic;
 using Tutorial.Scenarios.ScenariosTypes;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -16,9 +18,12 @@ namespace Tutorial.Scenarios
     {
         public event Action OnEndScenario;
         
+        [SerializeField] private ShopTrigger shopTrigger;
         [SerializeField] private TextAsset dialogueOnShowShop;
         [SerializeField] private CinemachineVirtualCamera mainCamera;
         [SerializeField] private CinemachineVirtualCamera shopCamera;
+        
+        [Header("Timings Settings")]
         [SerializeField] private float timeBeforeCameraSwitch = 2;
         [SerializeField] private float timeBeforeDialogueAppear = 1f;
         [SerializeField] private float timeAfterDialogueEnd = 0.3f;

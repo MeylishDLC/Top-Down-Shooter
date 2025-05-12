@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using Zenject;
 
-namespace UI.UIShop
+namespace GameEnvironment.ShopLogic.UIShop
 {
     public class ShopCell: MonoBehaviour,IPointerEnterHandler, IPointerExitHandler
     {

@@ -1,19 +1,18 @@
 ﻿using System;
-using System.Linq;
 using System.Threading;
 using Core.InputSystem;
 using Core.LevelSettings;
 using Cysharp.Threading.Tasks;
+using GameEnvironment.ShopLogic.UIShop.Dialogue;
 using Player.PlayerAbilities;
 using SoundSystem;
 using SoundSystem.DialogueSoundSO;
 using TMPro;
-using UI.UIShop.Dialogue;
 using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
 
-namespace UI.UIShop
+namespace GameEnvironment.ShopLogic.UIShop
 {
     public class Shop: MonoBehaviour
     {
@@ -34,7 +33,6 @@ namespace UI.UIShop
         [SerializeField] private PlayerCellsInShop playerCellsInShop;
 
         private AudioManager _audioManager;
-        private StatesChanger _statesChanger;
         private InputListener _inputListener;
         private ShopDialogue _shopDialogue;
         private bool _isTyping;
@@ -45,7 +43,6 @@ namespace UI.UIShop
         public void Construct(InputListener inputListener, StatesChanger statesChanger, AudioManager audioManager)
         {
             _audioManager = audioManager;
-            _statesChanger = statesChanger;
             _inputListener = inputListener;
         }
         private void Start()
@@ -96,12 +93,12 @@ namespace UI.UIShop
 
         private async UniTask CloseShopAsync(CancellationToken token)
         {
-            EnableInput();
             _isTyping = true;
             var currentDialoguePack = GetCurrentDialoguePack();
             await _shopDialogue.TypeDialogueAsync(currentDialoguePack.Goodbye, token);
             _isTyping = false;
             await UniTask.Delay(delayBeforeShopClosingMillisecons, cancellationToken: token);
+            EnableInput();
             
             shopUI.SetActive(false);
             playerGUI.SetActive(true);
