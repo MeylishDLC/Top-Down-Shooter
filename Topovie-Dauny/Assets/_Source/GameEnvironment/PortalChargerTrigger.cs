@@ -79,6 +79,7 @@ namespace GameEnvironment
                 return;
             }
             
+            chargerZone.ForceFadeIn();
             chargerZone.BeginCharge();
             StartHoldingChargeButtonAsync(_ctOnDestroy).Forget();
         }

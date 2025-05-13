@@ -59,6 +59,11 @@ namespace GameEnvironment
         {
             _material.SetFloat(OutlineFillProperty, 1f); 
         }
+        public void ForceFadeIn()
+        {
+            var startColor = _material.GetColor(OutlineColorProperty);
+            _material.SetColor(OutlineColorProperty, new Color(startColor.r, startColor.g, startColor.b, 1f));
+        }
         private void KillTween()
         {
             if (_currentTween != null && _currentTween.IsActive())
