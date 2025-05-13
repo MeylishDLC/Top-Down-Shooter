@@ -24,6 +24,7 @@ namespace Tutorial
         [Header("Interactable Components")]
         [SerializeField] private ShopTrigger shopTrigger;
         [SerializeField] private PortalChargerTrigger portalTrigger;
+        [SerializeField] private ChargerZone chargeZone;
         
         [Header("Tutorial Scenarios")]
         [SerializeReference]
@@ -53,6 +54,7 @@ namespace Tutorial
             }
             portalTrigger.gameObject.SetActive(false);
             shopTrigger.gameObject.SetActive(false);
+            chargeZone.gameObject.SetActive(false);
             
             _inputListener.SetInput(false, true);
             
@@ -96,6 +98,7 @@ namespace Tutorial
         {
             shopTrigger.gameObject.SetActive(true);
             portalTrigger.gameObject.SetActive(true);
+            chargeZone.gameObject.SetActive(true);
 
             _inputListener.SetInteract(true);
             _inputListener.SetInput(true);

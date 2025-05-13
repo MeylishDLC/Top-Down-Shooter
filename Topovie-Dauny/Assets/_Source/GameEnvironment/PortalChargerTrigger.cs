@@ -12,6 +12,7 @@ namespace GameEnvironment
     {
         public event Action<int> OnChargePortalPressed;
 
+        [SerializeField] private ChargerZone chargerZone;
         [SerializeField] private int chargeIndex;
         [SerializeField] private SpriteRenderer visualQue;
         [SerializeField] private float holdChargePortalButtonDuration;
@@ -21,6 +22,7 @@ namespace GameEnvironment
         private bool _playerInRange;
         private InputListener _inputListener;
         private StatesChanger _statesChanger;
+        private CancellationToken _ctOnDestroy;
         
         [Inject]
         public void Construct(StatesChanger statesChanger, InputListener inputListener)
@@ -28,18 +30,15 @@ namespace GameEnvironment
             _inputListener = inputListener;
             _statesChanger = statesChanger;
             
-            _statesChanger.OnStateChanged += EnableOnChangeStatesChanger;
-            _inputListener.OnInteractPressed += StartHoldingChargeButton;
-            _inputListener.OnInteractReleased += ReleaseChargeButton;
+            SubscribeOnEvents();
         }
         private void OnDestroy()
         {
-            _statesChanger.OnStateChanged -= EnableOnChangeStatesChanger;
-            _inputListener.OnInteractPressed -= StartHoldingChargeButton;
-            _inputListener.OnInteractReleased -= ReleaseChargeButton;
+            UnsubscribeOnEvents();
         }
         private void Start()
         {
+            _ctOnDestroy = this.GetCancellationTokenOnDestroy();
             visualQue.gameObject.SetActive(false);
             EnableOnChangeStatesChanger(GameStates.Chill);
         }
@@ -80,7 +79,8 @@ namespace GameEnvironment
                 return;
             }
             
-            StartHoldingChargeButtonAsync(CancellationToken.None).Forget();
+            chargerZone.BeginCharge();
+            StartHoldingChargeButtonAsync(_ctOnDestroy).Forget();
         }
         private async UniTask StartHoldingChargeButtonAsync(CancellationToken token)
         {
@@ -97,12 +97,12 @@ namespace GameEnvironment
                 if (Time.time - _holdStartTime >= holdChargePortalButtonDuration)
                 {
                     OnChargePortalPressed?.Invoke(chargeIndex);
-                    _statesChanger.OnStateChanged -= EnableOnChangeStatesChanger;
-                    Debug.Log("F held");
+                    UnsubscribeOnEvents();
+                    
+                    chargerZone.ForceFill();
                     
                     visualQue.gameObject.SetActive(false);
                     _isHoldingButton = false;
-                    
                     enabled = false;
                 }
                 await UniTask.Yield(PlayerLoopTiming.Update);
@@ -110,6 +110,7 @@ namespace GameEnvironment
         }
         private void ReleaseChargeButton()
         {
+            chargerZone.CancelCharge();
             _isHoldingButton = false;
         }
         private void EnableOnChangeStatesChanger(GameStates state)
@@ -123,6 +124,17 @@ namespace GameEnvironment
                 enabled = false;
             }
         }
-        
+        private void SubscribeOnEvents()
+        {
+            _statesChanger.OnStateChanged += EnableOnChangeStatesChanger;
+            _inputListener.OnInteractPressed += StartHoldingChargeButton;
+            _inputListener.OnInteractReleased += ReleaseChargeButton;
+        }
+        private void UnsubscribeOnEvents()
+        {
+            _statesChanger.OnStateChanged -= EnableOnChangeStatesChanger;
+            _inputListener.OnInteractPressed -= StartHoldingChargeButton;
+            _inputListener.OnInteractReleased -= ReleaseChargeButton;
+        }
     }
 }

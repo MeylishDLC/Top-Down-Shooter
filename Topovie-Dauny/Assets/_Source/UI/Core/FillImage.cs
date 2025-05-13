@@ -4,18 +4,18 @@ namespace UI.Core
 {
     public class FillImage : MonoBehaviour
     {
-        public float FillAmount{ get; set; }
+        public float FillAmount{ get; private set; }
         
-        private SpriteRenderer spriteRenderer;
+        private SpriteRenderer _spriteRenderer;
 
-        void Start()
+        private void Start()
         {
-            spriteRenderer = GetComponent<SpriteRenderer>();
+            _spriteRenderer = GetComponent<SpriteRenderer>();
         }
 
-        void Update()
+        private void Update()
         {
-            var sprite = spriteRenderer.sprite;
+            var sprite = _spriteRenderer.sprite;
             
             if (!sprite.texture.isReadable)
             {
@@ -28,7 +28,7 @@ namespace UI.Core
             var textureHeight = sprite.texture.height;
 
             var texture = new Texture2D(textureWidth, textureHeight);
-            var pixels = spriteRenderer.sprite.texture.GetPixels();
+            var pixels = _spriteRenderer.sprite.texture.GetPixels();
 
             for (var y = 0; y < textureHeight; y++)
             {
@@ -49,7 +49,7 @@ namespace UI.Core
 
             var newSprite = Sprite.Create(texture, new Rect(0, 0, textureWidth, textureHeight),
                 new Vector2(0.5f, 0.5f));
-            spriteRenderer.sprite = newSprite;
+            _spriteRenderer.sprite = newSprite;
         }
     }
 }

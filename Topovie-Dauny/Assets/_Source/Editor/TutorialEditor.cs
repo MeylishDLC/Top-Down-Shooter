@@ -57,6 +57,7 @@ namespace Editor
             EditorGUILayout.PropertyField(serializedObject.FindProperty("dialogueOnTutorialEnd"));
             EditorGUILayout.PropertyField(serializedObject.FindProperty("shopTrigger"));
             EditorGUILayout.PropertyField(serializedObject.FindProperty("portalTrigger"));
+            EditorGUILayout.PropertyField(serializedObject.FindProperty("chargeZone"));
 
             serializedObject.ApplyModifiedProperties();
         }

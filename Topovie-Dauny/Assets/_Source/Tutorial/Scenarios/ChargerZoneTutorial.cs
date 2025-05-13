@@ -7,6 +7,7 @@ using DialogueSystem;
 using Tutorial.Scenarios.ScenariosTypes;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
+using Object = UnityEngine.Object;
 
 namespace Tutorial.Scenarios
 {
@@ -111,6 +112,7 @@ namespace Tutorial.Scenarios
             await UniTask.Delay(TimeSpan.FromSeconds(timeBeforeChargerZoneDisable), cancellationToken: token);
             await chargerZone.Fill(0f);
             chargerZone.gameObject.SetActive(false);
+            Object.Destroy(chargerZoneCamera.gameObject);
             await UniTask.Delay(TimeSpan.FromSeconds(timeAfterChargerZoneDisable), cancellationToken: token);
             OnEndScenario?.Invoke();
         }
