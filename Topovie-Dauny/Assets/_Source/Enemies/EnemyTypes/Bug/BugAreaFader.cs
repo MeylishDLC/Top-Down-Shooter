@@ -35,7 +35,8 @@ namespace Enemies.EnemyTypes.Bug
 
         public void SetupFader(SpriteRenderer renderer)
         {
-            _material = renderer.material;
+            _material = UnityEngine.Object.Instantiate(renderer.sharedMaterial);
+            renderer.material = _material;
         }
 
         public async UniTask FadeAreaAsync(FadeType fadeType, CancellationToken token)

@@ -123,7 +123,10 @@ namespace Installers
 
         private void BindAreaFader()
         {
-            Container.Bind<BugAreaFader>().AsSingle().WithArguments(bugAreaFaderConfig);
+            Container.BindInstance(bugAreaFaderConfig).AsSingle();
+            Container.Bind<BugAreaFader>().AsTransient();
+            Container.BindFactory<BugAreaFaderConfig, BugAreaFader, BugAreaFaderFactory>()
+                .FromMethod((ctx, config) => new BugAreaFader(config));
         }
     }
 }

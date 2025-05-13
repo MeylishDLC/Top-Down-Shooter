@@ -45,10 +45,10 @@ namespace Enemies.EnemyTypes.Bug
         private bool _isWarning;
 
         [Inject]
-        public void Construct(AudioManager audioManager, BugAreaFader bugAreaFader)
+        public void Construct(AudioManager audioManager, BugAreaFaderFactory faderFactory, BugAreaFaderConfig config)
         {
             _audioManager = audioManager;
-            _bugAreaFader = bugAreaFader;
+            _bugAreaFader = faderFactory.Create(config);
         }
         private void OnEnable()
         {
