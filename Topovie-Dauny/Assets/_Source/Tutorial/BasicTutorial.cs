@@ -50,7 +50,7 @@ namespace Tutorial
         {
             if (_sceneLoader.CurrentSceneIndex == _sceneLoader.LastSceneIndex)
             {
-                //return;
+                return;
             }
             portalTrigger.gameObject.SetActive(false);
             shopTrigger.gameObject.SetActive(false);
