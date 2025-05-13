@@ -95,6 +95,7 @@ namespace Tutorial.Scenarios
         private void ShowFinalDialogue()
         {
             shop.OnShopClosed -= ShowFinalDialogue;
+            shopTrigger.gameObject.SetActive(false);
             ShowFinalDialogueAsync(_cancellationToken.Token).Forget();
         }
         private async UniTask ShowFinalDialogueAsync(CancellationToken token)

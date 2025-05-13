@@ -7,10 +7,13 @@ namespace GameEnvironment
 {
     public class RangeDetector: MonoBehaviour
     {
+        public event Action OnRangeDestroyed;
         public event Action OnPlayerEnterRange;
         public event Action OnPlayerExitRange;
 
         private StatesChanger _statesChanger;
+
+        private bool _canDetect;
         
         [Inject]
         public void Construct(StatesChanger statesChanger)
@@ -25,20 +28,25 @@ namespace GameEnvironment
         private void OnDestroy()
         {
             _statesChanger.OnStateChanged -= EnableOnChangeState;
+            OnRangeDestroyed?.Invoke();
         }
         private void EnableOnChangeState(GameStates gameState)
         {
             if (gameState == GameStates.Fight)
             {
-                enabled = true;
+                _canDetect = true;
             }
             else
             {
-                enabled = false;
+                _canDetect = false;
             }
         }
         private void OnTriggerEnter2D(Collider2D other)
         {
+            if (!_canDetect)
+            {
+                return;
+            }
             if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
             {
                 OnPlayerEnterRange?.Invoke();
@@ -46,6 +54,10 @@ namespace GameEnvironment
         }
         private void OnTriggerExit2D(Collider2D other)
         {
+            if (!_canDetect)
+            {
+                return;
+            }
             if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
             {
                 OnPlayerExitRange?.Invoke();

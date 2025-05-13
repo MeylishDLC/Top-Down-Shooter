@@ -191,6 +191,7 @@ namespace Core.LevelSettings
          {
              rangeDetector.OnPlayerEnterRange -= ResumeChargingPortal;
              rangeDetector.OnPlayerExitRange -= PauseChargingPortal;
+             Destroy(rangeDetector.gameObject);
          }
          private void SubscribeOnStartCharging()
          {

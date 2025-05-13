@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using Core.LevelSettings;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
@@ -10,9 +11,12 @@ namespace GameEnvironment
     public class ChargerZone: MonoBehaviour
     {
         private static readonly int OutlineFillProperty = Shader.PropertyToID("_OutlineFill");
+        private static readonly int OutlineColorProperty = Shader.PropertyToID("_OutlineColor");
+        
         [SerializeField] private float fillDuration = 1.5f;
         [SerializeField] private float fadeDuration = 0.5f;
-
+        [SerializeField] private RangeDetector rangeDetector;
+        
         private Material _material;
         private Tween _currentTween;
         
@@ -20,6 +24,16 @@ namespace GameEnvironment
         {
             _material = GetComponent<SpriteRenderer>().material;
             _material.SetFloat(OutlineFillProperty, 0);
+
+            rangeDetector.OnPlayerEnterRange += FadeInPlayerEnterRange;
+            rangeDetector.OnPlayerExitRange += FadeOutOnPlayerExitRange;
+            rangeDetector.OnRangeDestroyed += FadeOutOnPlayerExitRange;
+        }
+        private void OnDestroy()
+        {
+            rangeDetector.OnPlayerEnterRange -= FadeInPlayerEnterRange;
+            rangeDetector.OnPlayerExitRange -= FadeOutOnPlayerExitRange;
+            rangeDetector.OnRangeDestroyed -= FadeOutOnPlayerExitRange;
         }
         public void BeginCharge()
         {
@@ -51,6 +65,20 @@ namespace GameEnvironment
             {
                 _currentTween.Kill();
             }
+        }
+        private void FadeInPlayerEnterRange()
+        {
+            KillTween(); 
+            var startColor = _material.GetColor(OutlineColorProperty);
+            _currentTween = _material.DOColor(new Color(startColor.r, startColor.g, startColor.b, 1f),
+                OutlineColorProperty, fadeDuration).SetEase(Ease.OutQuad);
+        }
+        private void FadeOutOnPlayerExitRange()
+        {
+            KillTween();
+            var startColor = _material.GetColor(OutlineColorProperty);
+            _currentTween = _material.DOColor(new Color(startColor.r, startColor.g, startColor.b, 0f),
+                OutlineColorProperty, fadeDuration).SetEase(Ease.OutQuad);
         }
     }
 }
