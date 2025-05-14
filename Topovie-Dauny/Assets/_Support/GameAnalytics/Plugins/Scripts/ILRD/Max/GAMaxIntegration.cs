@@ -1,9 +1,10 @@
 ﻿using System;
+using UnityEngine;
+using System.Collections.Generic;
+using GameAnalyticsSDK.Utilities;
 
-namespace _Support.GameAnalytics.Plugins.Scripts.ILRD.Max
+public class GAMaxIntegration
 {
-    public class GAMaxIntegration
-    {
 #if gameanalytics_max_enabled && !(UNITY_EDITOR)
     private static bool _subscribed = false;
 
@@ -34,8 +35,8 @@ namespace _Support.GameAnalytics.Plugins.Scripts.ILRD.Max
     }
 #endif
 
-        public static void ListenForImpressions(Action<string> callback)
-        {
+    public static void ListenForImpressions(Action<string> callback)
+    {
 #if gameanalytics_max_enabled && !(UNITY_EDITOR)
         if (_subscribed)
         {
@@ -50,6 +51,5 @@ namespace _Support.GameAnalytics.Plugins.Scripts.ILRD.Max
         MaxSdkCallbacks.AppOpen.OnAdRevenuePaidEvent += (adUnitId, adInfo) => runCallback("APPOPEN", adInfo, callback);
         _subscribed = true;
 #endif
-        }
     }
 }

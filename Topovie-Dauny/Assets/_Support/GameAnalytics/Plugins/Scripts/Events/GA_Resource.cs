@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
-using _Support.GameAnalytics.Plugins.Scripts.Wrapper;
+﻿using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
+using GameAnalyticsSDK.Wrapper;
 
-namespace _Support.GameAnalytics.Plugins.Scripts.Events
+namespace GameAnalyticsSDK.Events
 {
 	public static class GA_Resource
 	{

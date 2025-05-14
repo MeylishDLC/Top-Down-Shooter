@@ -1,8 +1,11 @@
-﻿using System.Collections.Generic;
-using _Support.GameAnalytics.Plugins.Scripts.Utilities;
-using _Support.GameAnalytics.Plugins.Scripts.Wrapper;
+﻿using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
+using GameAnalyticsSDK.Utilities;
+using GameAnalyticsSDK.Wrapper;
+using GameAnalyticsSDK.Validators;
 
-namespace _Support.GameAnalytics.Plugins.Scripts.Events
+namespace GameAnalyticsSDK.Events
 {
 	public static class GA_Setup
 	{
@@ -10,7 +13,7 @@ namespace _Support.GameAnalytics.Plugins.Scripts.Events
 
 		public static void SetAvailableCustomDimensions01 (List<string> customDimensions)
 		{
-            if (GAValidator.ValidateCustomDimensions(customDimensions.ToArray()))
+            if (GameAnalyticsSDK.Validators.GAValidator.ValidateCustomDimensions(customDimensions.ToArray()))
             {
                 string json = GA_MiniJSON.Serialize(customDimensions);
                 GA_Wrapper.SetAvailableCustomDimensions01(json);
@@ -19,7 +22,7 @@ namespace _Support.GameAnalytics.Plugins.Scripts.Events
 
 		public static void SetAvailableCustomDimensions02 (List<string> customDimensions)
 		{
-			if (GAValidator.ValidateCustomDimensions (customDimensions.ToArray ())) {
+			if (GameAnalyticsSDK.Validators.GAValidator.ValidateCustomDimensions (customDimensions.ToArray ())) {
 				string json = GA_MiniJSON.Serialize(customDimensions);
 				GA_Wrapper.SetAvailableCustomDimensions02 (json);
 			}
@@ -27,7 +30,7 @@ namespace _Support.GameAnalytics.Plugins.Scripts.Events
 
 		public static void SetAvailableCustomDimensions03 (List<string> customDimensions)
 		{
-			if (GAValidator.ValidateCustomDimensions (customDimensions.ToArray ())) {
+			if (GameAnalyticsSDK.Validators.GAValidator.ValidateCustomDimensions (customDimensions.ToArray ())) {
 				string json = GA_MiniJSON.Serialize(customDimensions);
 				GA_Wrapper.SetAvailableCustomDimensions03 (json);
 			}
@@ -35,7 +38,7 @@ namespace _Support.GameAnalytics.Plugins.Scripts.Events
 
 		public static void SetAvailableResourceCurrencies (List<string> resourceCurrencies)
 		{
-			if (GAValidator.ValidateResourceCurrencies (resourceCurrencies.ToArray ())) {
+			if (GameAnalyticsSDK.Validators.GAValidator.ValidateResourceCurrencies (resourceCurrencies.ToArray ())) {
 				string json = GA_MiniJSON.Serialize(resourceCurrencies);
 				GA_Wrapper.SetAvailableResourceCurrencies (json);
 			}
@@ -43,7 +46,7 @@ namespace _Support.GameAnalytics.Plugins.Scripts.Events
 
 		public static void SetAvailableResourceItemTypes (List<string> resourceItemTypes)
 		{
-			if (GAValidator.ValidateResourceItemTypes (resourceItemTypes.ToArray ())) {
+			if (GameAnalyticsSDK.Validators.GAValidator.ValidateResourceItemTypes (resourceItemTypes.ToArray ())) {
 				string json = GA_MiniJSON.Serialize(resourceItemTypes);
 				GA_Wrapper.SetAvailableResourceItemTypes (json);
 			}

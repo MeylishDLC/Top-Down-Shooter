@@ -9,17 +9,16 @@ using System.Collections.Generic;
 using System.Reflection.Emit;
 using System.Reflection;
 using System;
+using GameAnalyticsSDK.Utilities;
+using GameAnalyticsSDK.Setup;
 using System.Text.RegularExpressions;
-using _Support.GameAnalytics.Plugins.Scripts;
-using _Support.GameAnalytics.Plugins.Scripts.Setup;
-using _Support.GameAnalytics.Plugins.Scripts.Utilities;
 #if UNITY_2017_1_OR_NEWER
 using UnityEngine.Networking;
 #endif
 
 namespace GameAnalyticsSDK.Editor
 {
-    [CustomEditor(typeof(Settings))]
+    [CustomEditor(typeof(GameAnalyticsSDK.Setup.Settings))]
     public class GA_SettingsInspector : UnityEditor.Editor
     {
         public const bool IsCustomPackage = true;
@@ -128,7 +127,7 @@ namespace GameAnalyticsSDK.Editor
 
         void OnEnable()
         {
-            Settings ga = target as Settings;
+            GameAnalyticsSDK.Setup.Settings ga = target as GameAnalyticsSDK.Setup.Settings;
 
             if (ga.UpdateIcon == null)
             {
@@ -228,7 +227,7 @@ namespace GameAnalyticsSDK.Editor
 
         public override void OnInspectorGUI()
         {
-            Settings ga = target as Settings;
+            GameAnalyticsSDK.Setup.Settings ga = target as GameAnalyticsSDK.Setup.Settings;
 
             EditorGUI.indentLevel = 1;
             EditorGUILayout.Space();
@@ -260,7 +259,7 @@ namespace GameAnalyticsSDK.Editor
 
             GUILayout.BeginHorizontal();
 
-            GUILayout.Label("Unity SDK v." + Settings.VERSION);
+            GUILayout.Label("Unity SDK v." + GameAnalyticsSDK.Setup.Settings.VERSION);
 
             GUILayout.EndHorizontal();
             GUILayout.EndVertical();
@@ -275,7 +274,7 @@ namespace GameAnalyticsSDK.Editor
 
             EditorGUILayout.Space();
 
-            string updateStatus = GA_UpdateWindow.UpdateStatus(Settings.VERSION);
+            string updateStatus = GA_UpdateWindow.UpdateStatus(GameAnalyticsSDK.Setup.Settings.VERSION);
 
             if (!updateStatus.Equals(string.Empty))
             {
@@ -440,7 +439,7 @@ namespace GameAnalyticsSDK.Editor
                     {
                         ga.IntroScreen = false;
                         ga.SignUpOpen = false;
-                        ga.CurrentInspectorState = Settings.InspectorStates.Account;
+                        ga.CurrentInspectorState = GameAnalyticsSDK.Setup.Settings.InspectorStates.Account;
 
                         ga.Organizations = null;
                         SetLoginStatus("Contacting Server..", ga);
@@ -466,7 +465,7 @@ namespace GameAnalyticsSDK.Editor
                     if (GUILayout.Button("I want to fill in my game keys manually", EditorStyles.label, GUILayout.Width(207)))
                     {
                         ga.IntroScreen = false;
-                        ga.CurrentInspectorState = Settings.InspectorStates.Basic;
+                        ga.CurrentInspectorState = GameAnalyticsSDK.Setup.Settings.InspectorStates.Basic;
                     }
                     EditorGUIUtility.AddCursorRect(GUILayoutUtility.GetLastRect(), MouseCursor.Link);
                     GUILayout.FlexibleSpace();
@@ -491,32 +490,32 @@ namespace GameAnalyticsSDK.Editor
                 GUIStyle inactiveTabStyleLeft = new GUIStyle(EditorStyles.miniButtonLeft);
                 GUIStyle inactiveTabStyleRight = new GUIStyle(EditorStyles.miniButtonRight);
 
-                GUIStyle basicTabStyle = ga.CurrentInspectorState == Settings.InspectorStates.Basic ? activeTabStyleLeft : inactiveTabStyleLeft;
+                GUIStyle basicTabStyle = ga.CurrentInspectorState == GameAnalyticsSDK.Setup.Settings.InspectorStates.Basic ? activeTabStyleLeft : inactiveTabStyleLeft;
 
                 if (ga.Organizations == null)
                 {
-                    if (GUILayout.Button(_account, ga.CurrentInspectorState == Settings.InspectorStates.Account ? activeTabStyleLeft : inactiveTabStyleLeft))
+                    if (GUILayout.Button(_account, ga.CurrentInspectorState == GameAnalyticsSDK.Setup.Settings.InspectorStates.Account ? activeTabStyleLeft : inactiveTabStyleLeft))
                     {
-                        ga.CurrentInspectorState = Settings.InspectorStates.Account;
+                        ga.CurrentInspectorState = GameAnalyticsSDK.Setup.Settings.InspectorStates.Account;
                     }
 
-                    basicTabStyle = ga.CurrentInspectorState == Settings.InspectorStates.Basic ? activeTabStyle : inactiveTabStyle;
+                    basicTabStyle = ga.CurrentInspectorState == GameAnalyticsSDK.Setup.Settings.InspectorStates.Basic ? activeTabStyle : inactiveTabStyle;
                 }
 
                 if (GUILayout.Button(_setup, basicTabStyle))
                 {
-                    ga.CurrentInspectorState = Settings.InspectorStates.Basic;
+                    ga.CurrentInspectorState = GameAnalyticsSDK.Setup.Settings.InspectorStates.Basic;
                 }
 
-                if (GUILayout.Button(_advanced, ga.CurrentInspectorState == Settings.InspectorStates.Pref ? activeTabStyleRight : inactiveTabStyleRight))
+                if (GUILayout.Button(_advanced, ga.CurrentInspectorState == GameAnalyticsSDK.Setup.Settings.InspectorStates.Pref ? activeTabStyleRight : inactiveTabStyleRight))
                 {
-                    ga.CurrentInspectorState = Settings.InspectorStates.Pref;
+                    ga.CurrentInspectorState = GameAnalyticsSDK.Setup.Settings.InspectorStates.Pref;
                 }
 
                 GUILayout.EndHorizontal();
 
                 #region Settings.InspectorStates.Account
-                if (ga.CurrentInspectorState == Settings.InspectorStates.Account)
+                if (ga.CurrentInspectorState == GameAnalyticsSDK.Setup.Settings.InspectorStates.Account)
                 {
                     EditorGUILayout.Space();
 
@@ -604,7 +603,7 @@ namespace GameAnalyticsSDK.Editor
                         GUILayout.FlexibleSpace();
                         if (GUILayout.Button("I want to fill in my game keys manually", EditorStyles.label, GUILayout.Width(207)))
                         {
-                            ga.CurrentInspectorState = Settings.InspectorStates.Basic;
+                            ga.CurrentInspectorState = GameAnalyticsSDK.Setup.Settings.InspectorStates.Basic;
                         }
                         EditorGUIUtility.AddCursorRect(GUILayoutUtility.GetLastRect(), MouseCursor.Link);
                         GUILayout.FlexibleSpace();
@@ -613,7 +612,7 @@ namespace GameAnalyticsSDK.Editor
                 }
                 #endregion // Settings.InspectorStates.Account
                 #region Settings.InspectorStates.Basic
-                else if (ga.CurrentInspectorState == Settings.InspectorStates.Basic)
+                else if (ga.CurrentInspectorState == GameAnalyticsSDK.Setup.Settings.InspectorStates.Basic)
                 {
                     EditorGUILayout.Space();
                     EditorGUILayout.Space();
@@ -1316,7 +1315,7 @@ namespace GameAnalyticsSDK.Editor
                 }
                 #endregion // Settings.InspectorStates.Basic
                 #region Settings.InspectorStates.Pref
-                else if (ga.CurrentInspectorState == Settings.InspectorStates.Pref)
+                else if (ga.CurrentInspectorState == GameAnalyticsSDK.Setup.Settings.InspectorStates.Pref)
                 {
                     EditorGUILayout.Space();
                     EditorGUILayout.Space();
@@ -1634,22 +1633,22 @@ namespace GameAnalyticsSDK.Editor
             }
         }
 
-        private MessageType ConvertMessageType(Settings.MessageTypes msgType)
+        private MessageType ConvertMessageType(GameAnalyticsSDK.Setup.Settings.MessageTypes msgType)
         {
             switch (msgType)
             {
-                case Settings.MessageTypes.Error:
+                case GameAnalyticsSDK.Setup.Settings.MessageTypes.Error:
                     return MessageType.Error;
-                case Settings.MessageTypes.Info:
+                case GameAnalyticsSDK.Setup.Settings.MessageTypes.Info:
                     return MessageType.Info;
-                case Settings.MessageTypes.Warning:
+                case GameAnalyticsSDK.Setup.Settings.MessageTypes.Warning:
                     return MessageType.Warning;
                 default:
                     return MessageType.None;
             }
         }
 
-        private static void LoginUser(Settings ga)
+        private static void LoginUser(GameAnalyticsSDK.Setup.Settings ga)
         {
             Hashtable jsonTable = new Hashtable();
             jsonTable["email"] = ga.EmailGA;
@@ -1675,7 +1674,7 @@ namespace GameAnalyticsSDK.Editor
         }
 
 
-        private static IEnumerator LoginUserFrontend(UnityWebRequest www, Settings ga)
+        private static IEnumerator LoginUserFrontend(UnityWebRequest www, GameAnalyticsSDK.Setup.Settings ga)
         {
 
             yield return www.SendWebRequest();
@@ -1750,7 +1749,7 @@ namespace GameAnalyticsSDK.Editor
             }
         }
 
-        private static void GetUserData(Settings ga)
+        private static void GetUserData(GameAnalyticsSDK.Setup.Settings ga)
         {
             UnityWebRequest www = UnityWebRequest.Get(_gaUrl + "user");
             Dictionary<string, string> headers = GA_EditorUtilities.WWWHeadersWithAuthorization(ga.TokenGA);
@@ -1763,7 +1762,7 @@ namespace GameAnalyticsSDK.Editor
         }
 
 
-        private static IEnumerator GetUserDataFrontend(UnityWebRequest www, Settings ga)
+        private static IEnumerator GetUserDataFrontend(UnityWebRequest www, GameAnalyticsSDK.Setup.Settings ga)
         {
             yield return www.SendWebRequest();
 
@@ -1812,12 +1811,12 @@ namespace GameAnalyticsSDK.Editor
                         IDictionary<string, object> orgs = results["organizations"] as IDictionary<string, object>;
                         IList<object> studioList = results["studios"] as IList<object>;
 
-                        Dictionary<string, Organization> organizationMap = new Dictionary<string, Organization>();
-                        List<Organization> returnOrganizations = new List<Organization>();
+                        Dictionary<string, GameAnalyticsSDK.Setup.Organization> organizationMap = new Dictionary<string, GameAnalyticsSDK.Setup.Organization>();
+                        List<GameAnalyticsSDK.Setup.Organization> returnOrganizations = new List<GameAnalyticsSDK.Setup.Organization>();
                         foreach(KeyValuePair<string, object> pair in orgs)
                         {
                             IDictionary<string, object> organization = pair.Value as IDictionary<string, object>;
-                            Organization o = new Organization(organization["name"].ToString(), organization["id"].ToString());
+                            GameAnalyticsSDK.Setup.Organization o = new GameAnalyticsSDK.Setup.Organization(organization["name"].ToString(), organization["id"].ToString());
                             returnOrganizations.Add(o);
                             organizationMap.Add(o.ID, o);
                         }
@@ -1828,7 +1827,7 @@ namespace GameAnalyticsSDK.Editor
 
                             if ((!studio.ContainsKey("demo") || !((bool)studio["demo"])) && (!studio.ContainsKey("archived") || !((bool)studio["archived"])))
                             {
-                                List<Game> returnGames = new List<Game>();
+                                List<GameAnalyticsSDK.Setup.Game> returnGames = new List<GameAnalyticsSDK.Setup.Game>();
 
                                 List<object> gamesList = (List<object>)studio["games"];
                                 for (int g = 0; g < gamesList.Count; g++)
@@ -1837,11 +1836,11 @@ namespace GameAnalyticsSDK.Editor
 
                                     if ((!game.ContainsKey("archived") || !((bool)game["archived"])) && (!game.ContainsKey("disabled") || !((bool)game["disabled"])))
                                     {
-                                        returnGames.Add(new Game(game["name"].ToString(), int.Parse(game["id"].ToString()), game["key"].ToString(), game["secret"].ToString()));
+                                        returnGames.Add(new GameAnalyticsSDK.Setup.Game(game["name"].ToString(), int.Parse(game["id"].ToString()), game["key"].ToString(), game["secret"].ToString()));
                                     }
                                 }
 
-                                Studio st = new Studio(studio["name"].ToString(), studio["id"].ToString(), studio["org_id"].ToString(), returnGames);
+                                GameAnalyticsSDK.Setup.Studio st = new GameAnalyticsSDK.Setup.Studio(studio["name"].ToString(), studio["id"].ToString(), studio["org_id"].ToString(), returnGames);
                                 organizationMap[st.OrganizationID].Studios.Add(st);
                             }
                         }
@@ -1868,7 +1867,7 @@ namespace GameAnalyticsSDK.Editor
                             SetLoginStatus("Received data. Add a platform..", ga);
                         }
 
-                        ga.CurrentInspectorState = Settings.InspectorStates.Basic;
+                        ga.CurrentInspectorState = GameAnalyticsSDK.Setup.Settings.InspectorStates.Basic;
                     }
                 }
 #if UNITY_5_4_OR_NEWER
@@ -1891,7 +1890,7 @@ namespace GameAnalyticsSDK.Editor
             }
         }
 
-        private static void SelectOrganization(int index, Settings ga, int platform)
+        private static void SelectOrganization(int index, GameAnalyticsSDK.Setup.Settings ga, int platform)
         {
             ga.SelectedOrganization[platform] = index;
             if (ga.Organizations[index - 1].Studios.Count == 1)
@@ -1904,7 +1903,7 @@ namespace GameAnalyticsSDK.Editor
             }
         }
 
-        private static void SelectStudio(int index, Settings ga, int platform)
+        private static void SelectStudio(int index, GameAnalyticsSDK.Setup.Settings ga, int platform)
         {
             ga.SelectedStudio[platform] = index;
             if (ga.Organizations[ga.SelectedOrganization[platform] - 1].Studios[index - 1].Games.Count == 1)
@@ -1921,7 +1920,7 @@ namespace GameAnalyticsSDK.Editor
             }
         }
 
-        private static void SelectGame(int index, Settings ga, int platform)
+        private static void SelectGame(int index, GameAnalyticsSDK.Setup.Settings ga, int platform)
         {
             ga.SelectedGame[platform] = index;
 
@@ -1956,7 +1955,7 @@ namespace GameAnalyticsSDK.Editor
             }
         }
 
-        private static void SetLoginStatus(string status, Settings ga)
+        private static void SetLoginStatus(string status, GameAnalyticsSDK.Setup.Settings ga)
         {
             ga.LoginStatus = status;
             EditorUtility.SetDirty(ga);
@@ -1964,12 +1963,12 @@ namespace GameAnalyticsSDK.Editor
 
         public static void CheckForUpdates()
         {
-            if (Settings.CheckingForUpdates)
+            if (GameAnalyticsSDK.Setup.Settings.CheckingForUpdates)
             {
                 return;
             }
 
-            Settings.CheckingForUpdates = true;
+            GameAnalyticsSDK.Setup.Settings.CheckingForUpdates = true;
 
             UnityWebRequest www = UnityWebRequest.Get("https://s3.amazonaws.com/public.gameanalytics.com/sdk_status/current.json");
             GA_ContinuationManager.StartCoroutine(CheckForUpdatesCoroutine(www), () => www.isDone);
@@ -2016,7 +2015,7 @@ namespace GameAnalyticsSDK.Editor
                         {
                             string newVersion = (returnParam["unity"] as IDictionary<string, object>)["version"].ToString();
 
-                            if (IsNewVersion(newVersion, Settings.VERSION))
+                            if (IsNewVersion(newVersion, GameAnalyticsSDK.Setup.Settings.VERSION))
                             {
                                 GetChangeLogsAndShowUpdateWindow(newVersion);
                             }
@@ -2026,7 +2025,7 @@ namespace GameAnalyticsSDK.Editor
             }
             catch
             {
-                Settings.CheckingForUpdates = false;
+                GameAnalyticsSDK.Setup.Settings.CheckingForUpdates = false;
             }
         }
 
@@ -2073,7 +2072,7 @@ namespace GameAnalyticsSDK.Editor
                         IDictionary<string, object> unityHash = unity[i] as IDictionary<string, object>;
                         IList<object> changes = (unityHash["changes"] as IList<object>);
 
-                        if (unityHash["version"].ToString() == Settings.VERSION)
+                        if (unityHash["version"].ToString() == GameAnalyticsSDK.Setup.Settings.VERSION)
                         {
                             break;
                         }
@@ -2113,12 +2112,12 @@ namespace GameAnalyticsSDK.Editor
                         OpenUpdateWindow();
                     }
 
-                    Settings.CheckingForUpdates = false;
+                    GameAnalyticsSDK.Setup.Settings.CheckingForUpdates = false;
                 }
             }
             catch
             {
-                Settings.CheckingForUpdates = false;
+                GameAnalyticsSDK.Setup.Settings.CheckingForUpdates = false;
             }
         }
 

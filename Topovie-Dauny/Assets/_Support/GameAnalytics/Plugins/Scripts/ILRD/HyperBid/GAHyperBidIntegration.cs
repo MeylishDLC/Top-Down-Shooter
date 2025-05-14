@@ -1,16 +1,14 @@
 ﻿using System;
 using UnityEngine;
 
-namespace _Support.GameAnalytics.Plugins.Scripts.ILRD.HyperBid
+public class GAHyperBidIntegration : MonoBehaviour
 {
-    public class GAHyperBidIntegration : MonoBehaviour
-    {
 #if gameanalytics_hyperbid_enabled && !(UNITY_EDITOR)
     private static bool _subscribed = false;
 #endif
 
-        public static void ListenForImpressions(Action<string> callback)
-        {
+    public static void ListenForImpressions(Action<string> callback)
+    {
 #if gameanalytics_hyperbid_enabled && !(UNITY_EDITOR)
         if (_subscribed)
         {
@@ -24,6 +22,5 @@ namespace _Support.GameAnalytics.Plugins.Scripts.ILRD.HyperBid
         HyperBid.Api.HBNativeAd.Instance.events.onAdImpressEvent += (sender, args) => callback(args.callbackInfo.getOriginJSONString());
         _subscribed = true;
 #endif
-        }
     }
 }

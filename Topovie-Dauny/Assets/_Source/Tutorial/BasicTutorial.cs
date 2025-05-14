@@ -25,6 +25,7 @@ namespace Tutorial
         [SerializeField] private ShopTrigger shopTrigger;
         [SerializeField] private PortalChargerTrigger portalTrigger;
         [SerializeField] private ChargerZone chargeZone;
+        [SerializeField] private TutorialChargerZone tutorialChargeZone;
         
         [Header("Tutorial Scenarios")]
         [SerializeReference]
@@ -50,6 +51,8 @@ namespace Tutorial
         {
             if (_sceneLoader.CurrentSceneIndex == _sceneLoader.LastSceneIndex)
             {
+                chargeZone.gameObject.SetActive(true);
+                tutorialChargeZone.gameObject.SetActive(false);
                 return;
             }
             portalTrigger.gameObject.SetActive(false);

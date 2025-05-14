@@ -2,7 +2,6 @@ using UnityEngine;
 using UnityEditor;
 using System.IO;
 using System.Text.RegularExpressions;
-using _Support.GameAnalytics.Plugins.Scripts;
 
 namespace GameAnalyticsSDK.Editor
 {

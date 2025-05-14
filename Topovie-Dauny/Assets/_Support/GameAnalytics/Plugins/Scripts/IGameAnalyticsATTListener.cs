@@ -1,6 +1,6 @@
 
 
-namespace _Support.GameAnalytics.Plugins.Scripts
+namespace GameAnalyticsSDK
 {
     public interface IGameAnalyticsATTListener
     {

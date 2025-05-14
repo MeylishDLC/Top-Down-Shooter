@@ -1,5 +1,5 @@
 using System;
-using _Support.GameAnalytics.Plugins.Scripts;
+using GameAnalyticsSDK;
 using Player.PlayerAbilities;
 using UnityEngine;
 

@@ -1,9 +1,8 @@
 ﻿using System;
+using UnityEngine;
 
-namespace _Support.GameAnalytics.Plugins.Scripts.ILRD.TopOn
+public class GATopOnIntegration
 {
-    public class GATopOnIntegration
-    {
 #if gameanalytics_topon_enabled && !(UNITY_EDITOR)
     private static bool _subscribed = false;
     private class GAInterstitialListener : AnyThinkAds.Api.ATInterstitialAdListener
@@ -123,8 +122,8 @@ namespace _Support.GameAnalytics.Plugins.Scripts.ILRD.TopOn
     }
 #endif
 
-        public static void ListenForImpressions(Action<string> callback)
-        {
+    public static void ListenForImpressions(Action<string> callback)
+    {
 #if gameanalytics_topon_enabled && !(UNITY_EDITOR)
         if (_subscribed)
         {
@@ -138,6 +137,5 @@ namespace _Support.GameAnalytics.Plugins.Scripts.ILRD.TopOn
         AnyThinkAds.Api.ATNativeAd.Instance.setListener(new GANativeListener(callback));
         _subscribed = true;
 #endif
-        }
     }
 }

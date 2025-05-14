@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 using UnityEditor;
 using System.Collections.Generic;
-using _Support.GameAnalytics.Plugins.Scripts;
+using GameAnalyticsSDK.Setup;
 using UnityEngine.Networking;
 
 namespace GameAnalyticsSDK.Editor

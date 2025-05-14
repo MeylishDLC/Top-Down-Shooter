@@ -1,18 +1,23 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
-using _Support.GameAnalytics.Plugins.Scripts.Events;
-using _Support.GameAnalytics.Plugins.Scripts.Setup;
-using _Support.GameAnalytics.Plugins.Scripts.State;
-using _Support.GameAnalytics.Plugins.Scripts.Wrapper;
-using UnityEditor;
 using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
+using System;
+using GameAnalyticsSDK.Events;
+using GameAnalyticsSDK.Setup;
+using GameAnalyticsSDK.Wrapper;
+using GameAnalyticsSDK.State;
+using System.Runtime.InteropServices;
+
+#if UNITY_EDITOR
+using UnityEditor;
+using System.IO;
+#endif
 
 #if UNITY_IOS || UNITY_TVOS
 using GameAnalyticsSDK.iOS;
 #endif
 
-namespace _Support.GameAnalytics.Plugins.Scripts
+namespace GameAnalyticsSDK
 {
     [RequireComponent(typeof(GA_SpecialEvents))]
     [ExecuteInEditMode]
@@ -20,9 +25,9 @@ namespace _Support.GameAnalytics.Plugins.Scripts
     {
         #region public values
 
-        private static Settings _settings;
+        private static GameAnalyticsSDK.Setup.Settings _settings;
 
-        public static Settings SettingsGA
+        public static GameAnalyticsSDK.Setup.Settings SettingsGA
         {
             get
             {
@@ -124,8 +129,8 @@ namespace _Support.GameAnalytics.Plugins.Scripts
         {
             try
             {
-                _settings = (Settings)Resources.Load("GameAnalytics/Settings", typeof(Settings));
-                GAState.Init();
+                _settings = (GameAnalyticsSDK.Setup.Settings)Resources.Load("GameAnalytics/Settings", typeof(GameAnalyticsSDK.Setup.Settings));
+                GameAnalyticsSDK.State.GAState.Init();
 
 #if UNITY_EDITOR
                 if(_settings == null)
@@ -149,7 +154,7 @@ namespace _Support.GameAnalytics.Plugins.Scripts
                         AssetDatabase.Refresh();
                     }
 
-                    var asset = ScriptableObject.CreateInstance<Settings>();
+                    var asset = ScriptableObject.CreateInstance<GameAnalyticsSDK.Setup.Settings>();
                     AssetDatabase.CreateAsset(asset, path);
                     AssetDatabase.Refresh();
 
@@ -185,7 +190,7 @@ namespace _Support.GameAnalytics.Plugins.Scripts
 
             int platformIndex = GetPlatformIndex();
 
-            GA_Wrapper.SetUnitySdkVersion("unity " + Settings.VERSION);
+            GA_Wrapper.SetUnitySdkVersion("unity " + GameAnalyticsSDK.Setup.Settings.VERSION);
             GA_Wrapper.SetUnityEngineVersion("unity " + GetUnityVersion());
 
             if(platformIndex >= 0)

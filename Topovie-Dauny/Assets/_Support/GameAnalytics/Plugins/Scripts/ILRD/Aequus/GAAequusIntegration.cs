@@ -1,9 +1,10 @@
 ﻿using System;
+using UnityEngine;
+using System.Collections.Generic;
+using GameAnalyticsSDK.Utilities;
 
-namespace _Support.GameAnalytics.Plugins.Scripts.ILRD.Aequus
+public class GAAequusIntegration
 {
-    public class GAAequusIntegration
-    {
 #if gameanalytics_aequus_enabled && !(UNITY_EDITOR)
     private static bool _subscribed = false;
 
@@ -27,8 +28,8 @@ namespace _Support.GameAnalytics.Plugins.Scripts.ILRD.Aequus
     }
 #endif
 
-        public static void ListenForImpressions(Action<string, string> callback)
-        {
+    public static void ListenForImpressions(Action<string, string> callback)
+    {
 #if gameanalytics_aequus_enabled && !(UNITY_EDITOR)
         if (_subscribed)
         {
@@ -39,6 +40,5 @@ namespace _Support.GameAnalytics.Plugins.Scripts.ILRD.Aequus
         Mobi.Aequus.Sdk.Aequus.SetILRDListener(new GAAequusListener(callback));
         _subscribed = true;
 #endif
-        }
     }
 }

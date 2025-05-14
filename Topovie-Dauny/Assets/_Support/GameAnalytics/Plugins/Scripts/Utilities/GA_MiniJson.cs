@@ -1,13 +1,12 @@
 // using UnityEngine;
-
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
 using System.IO;
 using System.Text;
+using System.Globalization;
 
-namespace _Support.GameAnalytics.Plugins.Scripts.Utilities
+namespace GameAnalyticsSDK.Utilities
 {
 	/* Based on the JSON parser from 
 	 * http://techblog.procurios.nl/k/618/news/view/14605/14863/How-do-I-write-my-own-parser-for-JSON.html

@@ -1,6 +1,9 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using System.Runtime.InteropServices;
 
-namespace _Support.GameAnalytics.Plugins.Scripts.ILRD
+namespace GameAnalyticsSDK
 {
     public class GameAnalyticsILRD
     {
