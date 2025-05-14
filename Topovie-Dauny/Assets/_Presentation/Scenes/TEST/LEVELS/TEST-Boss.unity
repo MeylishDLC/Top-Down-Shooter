@@ -1463,6 +1463,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 504555564865825945, guid: 79028eface50ed546868951a9acd3747, type: 3}
   m_PrefabInstance: {fileID: 187232714}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &187232716 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3905909031242766267, guid: 79028eface50ed546868951a9acd3747, type: 3}
+  m_PrefabInstance: {fileID: 187232714}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dae080ab16aa4a3c8b14d09a32ced7d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &227197548
 GameObject:
   m_ObjectHideFlags: 0
@@ -7120,6 +7131,7 @@ MonoBehaviour:
   baseDialogueDisplay: {fileID: 7961203719235848609}
   mainCamera: {fileID: 4081401207632641913}
   poolInitializerConfig: {fileID: 11400000, guid: d13883bcb4fa546458daabdccef1bcef, type: 2}
+  pauseMenu: {fileID: 187232716}
 --- !u!4 &1551346473 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3111393882236902457, guid: 27a379e7833d91d4885323382b448d34, type: 3}

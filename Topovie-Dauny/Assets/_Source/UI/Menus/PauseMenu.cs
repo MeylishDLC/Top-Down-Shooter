@@ -26,6 +26,8 @@ namespace UI.Menus
         private CustomCursor _customCursor;
         private SceneLoader _sceneLoader;
         private InputListener _inputListener;
+        
+        private bool _canPause = true;
         private bool _optionsMenuActive;
 
         [Inject]
@@ -49,8 +51,13 @@ namespace UI.Menus
         {
             _inputListener.OnPausePressed -= HandlePausePressed;
         }
+        public void SetCanPause(bool canPause) => _canPause = canPause;
         private void HandlePausePressed()
         {
+            if (!_canPause)
+            {
+                return;
+            }
             if (IsPaused)
             {
                 if (_optionsMenuActive)

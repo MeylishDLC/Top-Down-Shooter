@@ -11,6 +11,7 @@ using Player.PlayerCombat;
 using Player.PlayerControl;
 using SoundSystem;
 using UI.Core;
+using UI.Menus;
 using UI.PlayerGUI;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -32,6 +33,7 @@ namespace Installers
         [SerializeField] private PoolInitializerConfig poolInitializerConfig;
         [SerializeField] private HealingOrbsSpawnerConfig healingOrbsSpawnerConfig; 
         [SerializeField] private BugAreaFaderConfig bugAreaFaderConfig;
+        [SerializeField] private PauseMenu pauseMenu;
         
         private DialogueManager _dialogueManager;
         private PoolInitializer _poolInitializer;
@@ -47,9 +49,12 @@ namespace Installers
             BindSpawner();
             BindStatesChanger();
             BindLevelChargesHandler();
-            BindShop();
-            BindPlayerWeaponsSetter();
+            
             BindCustomCursor();
+            BindPauseMenu();
+            BindShop();
+            
+            BindPlayerWeaponsSetter();
             BindLevelDialogues();
             BindOrbsSpawner();
             BindAreaFader();
@@ -127,6 +132,10 @@ namespace Installers
             Container.Bind<BugAreaFader>().AsTransient();
             Container.BindFactory<BugAreaFaderConfig, BugAreaFader, BugAreaFaderFactory>()
                 .FromMethod((ctx, config) => new BugAreaFader(config));
+        }
+        private void BindPauseMenu()
+        {
+            Container.Bind<PauseMenu>().FromInstance(pauseMenu).AsSingle();
         }
     }
 }

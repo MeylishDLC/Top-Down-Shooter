@@ -8,6 +8,7 @@ using Player.PlayerCombat;
 using Player.PlayerControl;
 using SoundSystem;
 using UI.Core;
+using UI.Menus;
 using UnityEngine;
 using Zenject;
 
@@ -23,6 +24,7 @@ namespace Installers
         [SerializeField] private DialogueDisplay baseDialogueDisplay;
         [SerializeField] private Camera mainCamera;
         [SerializeField] private PoolInitializerConfig poolInitializerConfig;
+        [SerializeField] private PauseMenu pauseMenu;
         
         private PoolInitializer _poolInitializer;
         private DialogueManager _dialogueManager;
@@ -30,13 +32,17 @@ namespace Installers
         {
             BindMainCamera();
             BindInputListener();
+            
             BindDialogueManager();
             BindProjectContext();
             BindPlayer();
             BindStatesChanger();
-            BindShop();
-            BindPlayerWeaponsSetter();
+            
             BindCustomCursor();
+            BindPauseMenu();
+            BindShop();
+            
+            BindPlayerWeaponsSetter();
             BindPoolInitializer();
         }
         private void OnDestroy()
@@ -85,6 +91,10 @@ namespace Installers
         {
             _poolInitializer = new PoolInitializer(poolInitializerConfig);
             Container.Bind<PoolInitializer>().FromInstance(_poolInitializer).AsSingle();
+        }
+        private void BindPauseMenu()
+        {
+            Container.Bind<PauseMenu>().FromInstance(pauseMenu).AsSingle();
         }
     }
 }

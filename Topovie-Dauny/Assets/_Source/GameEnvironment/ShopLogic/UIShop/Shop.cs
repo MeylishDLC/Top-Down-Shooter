@@ -8,6 +8,7 @@ using Player.PlayerAbilities;
 using SoundSystem;
 using SoundSystem.DialogueSoundSO;
 using TMPro;
+using UI.Menus;
 using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
@@ -34,6 +35,7 @@ namespace GameEnvironment.ShopLogic.UIShop
         [SerializeField] private PlayerCellsInShop playerCellsInShop;
 
         private AudioManager _audioManager;
+        private PauseMenu _pauseMenu;
         private InputListener _inputListener;
         private ShopDialogue _shopDialogue;
         private bool _isTyping;
@@ -41,27 +43,34 @@ namespace GameEnvironment.ShopLogic.UIShop
         private CancellationTokenSource _stopTypingCts = new();
 
         [Inject]
-        public void Construct(InputListener inputListener, StatesChanger statesChanger, AudioManager audioManager)
+        public void Construct(InputListener inputListener, StatesChanger statesChanger,
+            AudioManager audioManager, PauseMenu pauseMenu)
         {
             _audioManager = audioManager;
             _inputListener = inputListener;
+            _pauseMenu = pauseMenu;
         }
         private void Start()
         {
             shopUI.SetActive(false);
             closeButton.onClick.AddListener(CloseShop);
+            
             playerCellsInShop.OnAbilityChanged += ChangeDialogue;
+            _inputListener.OnPausePressed += CloseShop;
+            
             _shopDialogue = new ShopDialogue(vetDialogueText, typeSpeedMilliseconds, dialogueAudioSO, _audioManager);
         }
         private void OnDestroy()
         {
             playerCellsInShop.OnAbilityChanged -= ChangeDialogue;
+            _inputListener.OnPausePressed -= CloseShop;
             _stopTypingCts?.Dispose();
         }
         public void OpenShop()
         {
             if (!IsShopOpen())
             {
+                _pauseMenu.SetCanPause(false);
                 _audioManager.PlayOneShot(_audioManager.FMODEvents.ShopEnterSound);
                 OpenShopAsync(_stopTypingCts.Token).Forget();
             }
@@ -93,18 +102,27 @@ namespace GameEnvironment.ShopLogic.UIShop
 
         private async UniTask CloseShopAsync(CancellationToken token)
         {
-            _isTyping = true;
-            var currentDialoguePack = GetCurrentDialoguePack();
-            await _shopDialogue.TypeDialogueAsync(currentDialoguePack.Goodbye, token);
-            _isTyping = false;
-            await UniTask.Delay(delayBeforeShopClosingMillisecons, cancellationToken: token);
-            EnableInput();
+            try
+            {
+                _isTyping = true;
+                var currentDialoguePack = GetCurrentDialoguePack();
+                await _shopDialogue.TypeDialogueAsync(currentDialoguePack.Goodbye, token);
+                _isTyping = false;
+                await UniTask.Delay(delayBeforeShopClosingMillisecons, cancellationToken: token);
+                EnableInput();
             
-            shopUI.SetActive(false);
-            playerGUI.SetActive(true);
-            _isClosing = false;
+                shopUI.SetActive(false);
+                playerGUI.SetActive(true);
+                _pauseMenu.SetCanPause(true);
             
-            OnShopClosed?.Invoke();
+                _isClosing = false;
+                OnShopClosed?.Invoke();
+            }
+            catch (OperationCanceledException)
+            {
+                _pauseMenu.SetCanPause(true);
+            }
+            
         }
         private void DisableInput()
         {

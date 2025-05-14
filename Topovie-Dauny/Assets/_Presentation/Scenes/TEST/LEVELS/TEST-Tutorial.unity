@@ -774,6 +774,17 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 6268379499708807505, guid: 79028eface50ed546868951a9acd3747, type: 3}
   m_PrefabInstance: {fileID: 187232714}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &187232717 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3905909031242766267, guid: 79028eface50ed546868951a9acd3747, type: 3}
+  m_PrefabInstance: {fileID: 187232714}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 187232716}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dae080ab16aa4a3c8b14d09a32ced7d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &360441813
 GameObject:
   m_ObjectHideFlags: 0
@@ -1916,6 +1927,7 @@ MonoBehaviour:
   poolInitializerConfig: {fileID: 11400000, guid: a28ab32df95841844b6b655aa58497d5, type: 2}
   healingOrbsSpawnerConfig: {fileID: 11400000, guid: d75158f2c0b778c459c49bd6f81a5bfa, type: 2}
   bugAreaFaderConfig: {fileID: 11400000, guid: d38c04e19052b814caa035faf5bf5521, type: 2}
+  pauseMenu: {fileID: 187232717}
 --- !u!1 &1498050138
 GameObject:
   m_ObjectHideFlags: 0
