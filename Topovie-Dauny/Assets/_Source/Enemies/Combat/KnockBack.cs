@@ -11,11 +11,12 @@ namespace Enemies.Combat
         public event Action OnKnockBackEnded;
         public bool GettingKnockedBack {get; private set;}
 
-        private readonly int _knockbackTime;
+        private readonly float _knockbackTime;
         private readonly float _knockbackThrust;
+        
         private readonly Rigidbody2D _rb;
         private readonly CancellationToken _destroyCancellationToken;
-        public KnockBack(MonoBehaviour objectToKnockback,Rigidbody2D rb, int knockbackTime, float knockbackThrust)
+        public KnockBack(MonoBehaviour objectToKnockback,Rigidbody2D rb, float knockbackTime, float knockbackThrust)
         {
             _rb = rb;
             _knockbackTime = knockbackTime;
@@ -34,7 +35,7 @@ namespace Enemies.Combat
         }
         private async UniTask KnockAsync(CancellationToken token)
         {
-            await UniTask.Delay(_knockbackTime, cancellationToken: token);
+            await UniTask.Delay(TimeSpan.FromSeconds(_knockbackTime), cancellationToken: token);
             _rb.velocity = Vector2.zero;
             
             OnKnockBackEnded?.Invoke();

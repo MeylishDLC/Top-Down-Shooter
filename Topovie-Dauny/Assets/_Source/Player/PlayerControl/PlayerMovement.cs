@@ -1,3 +1,4 @@
+using System;
 using System.Threading;
 using Core.InputSystem;
 using Cysharp.Threading.Tasks;
@@ -14,12 +15,12 @@ namespace Player.PlayerControl
     {
         private static readonly int isWalking = Animator.StringToHash("isWalking");
         private static readonly int isRolling = Animator.StringToHash("isRolling");
-        [field: SerializeField] public float MovementSpeed { get; private set; } = 1.5f;
+        public float MovementSpeed { get; private set; }
 
         [SerializeField] private Animator[] sides;
-        [SerializeField] private float dodgeSpeed = 15f;
-        [SerializeField] private int dodgeTimeMilliseconds = 500;
         [SerializeField] private PlayerHealth playerHealth;
+
+        private PlayerConfig _playerConfig;
         
         private Vector2 _direction;
         private bool _dodgeRoll;
@@ -32,14 +33,17 @@ namespace Player.PlayerControl
         private DialogueManager _dialogueManager;
         
         [Inject]
-        public void Construct(InputListener inputListener, DialogueManager dialogueManager, Shop shop)
+        public void Construct(InputListener inputListener, DialogueManager dialogueManager, Shop shop, PlayerConfig playerConfig)
         {
+            _playerConfig = playerConfig;
             _inputListener = inputListener;
             _dialogueManager = dialogueManager;
             _shop = shop;
         }
         private void Awake()
         {
+            MovementSpeed = _playerConfig.MovementSpeed;
+            
             _rb = gameObject.GetComponent<Rigidbody2D>();
             _inputListener.OnRollPressed += HandleRolling;
         }
@@ -63,7 +67,7 @@ namespace Player.PlayerControl
             {
                 if (_dodgeRoll)
                 {
-                    _rb.AddForce(_direction * dodgeSpeed);
+                    _rb.AddForce(_direction * _playerConfig.DodgeSpeed);
                 }
                 HandleMovement();
             }
@@ -126,7 +130,7 @@ namespace Player.PlayerControl
         private async UniTask RollAsync(CancellationToken token)
         {
             _dodgeRoll = true;
-            await UniTask.Delay(dodgeTimeMilliseconds, cancellationToken: token);
+            await UniTask.Delay(TimeSpan.FromSeconds(_playerConfig.DodgeTime), cancellationToken: token);
             _dodgeRoll = false;
         }
         private void DisableMovement()

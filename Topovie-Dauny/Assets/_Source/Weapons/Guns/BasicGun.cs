@@ -44,6 +44,7 @@ namespace Weapons.Guns
         }
         public override void Initialize(BulletPool bulletPool)
         {
+            //todo bind instead of create
             _playerKickback = new PlayerKickback(kickbackDistance, kickbackDuration,transform, kickbackTransform);
             CurrentBulletsAmount = BulletsAmount;
             _bulletPool = bulletPool;

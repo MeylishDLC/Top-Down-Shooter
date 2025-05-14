@@ -14,6 +14,8 @@ using UI.Core;
 using UI.Menus;
 using UI.PlayerGUI;
 using UnityEngine;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
 using UnityEngine.Serialization;
 using Zenject;
 
@@ -23,7 +25,6 @@ namespace Installers
     {
         [SerializeField] private InputListener inputListener;
         [SerializeField] private LevelChargesHandler levelChargesHandler;
-        [SerializeField] private PlayerMovement playerMovement;
         [SerializeField] private Shop shop;
         [SerializeField] private WeaponsSetterConfig weaponsSetterConfig;
         [SerializeField] private CustomCursor customCursor;
@@ -35,6 +36,12 @@ namespace Installers
         [SerializeField] private BugAreaFaderConfig bugAreaFaderConfig;
         [SerializeField] private PauseMenu pauseMenu;
         
+        [Header("Player Components")]
+        [SerializeField] private PlayerMovement playerMovement;
+        [SerializeField] private PlayerConfig playerConfig;
+        [SerializeField] private Material playerDamagedMaterial;
+        [SerializeField] private Volume playerVignetteVolume;
+        
         private DialogueManager _dialogueManager;
         private PoolInitializer _poolInitializer;
         private HealOrbsSpawner _healOrbsSpawner;
@@ -45,7 +52,7 @@ namespace Installers
             BindInputListener();
             BindDialogueManager();
             BindProjectContext();
-            BindPlayerMovement();
+            BindPlayer();
             BindSpawner();
             BindStatesChanger();
             BindLevelChargesHandler();
@@ -63,6 +70,17 @@ namespace Installers
         {
             _dialogueManager.CleanUp();
             _healOrbsSpawner.CleanUp();
+            
+            Container.Resolve<PlayerDamagedDisplay>().CleanUp();
+        }
+        private void BindPlayer()
+        {
+            Container.BindInstance(playerConfig).AsSingle();
+            Container.Bind<PlayerMovement>().FromInstance(playerMovement).AsSingle();
+            Container.Bind<Material>().FromInstance(playerDamagedMaterial).AsSingle();
+            Container.Bind<Volume>().FromInstance(playerVignetteVolume).AsSingle();
+
+            Container.Bind<PlayerDamagedDisplay>().AsSingle().NonLazy();
         }
         private void BindInputListener()
         {
@@ -77,10 +95,6 @@ namespace Installers
         {
             _dialogueManager = new DialogueManager(inputListener, baseDialogueDisplay, Container.Resolve<AudioManager>());
             Container.Bind<DialogueManager>().FromInstance(_dialogueManager).AsSingle();
-        }
-        private void BindPlayerMovement()
-        {
-            Container.Bind<PlayerMovement>().FromInstance(playerMovement).AsSingle();
         }
         private void BindSpawner()
         {
@@ -125,7 +139,6 @@ namespace Installers
             _healOrbsSpawner = new HealOrbsSpawner(healingOrbsSpawnerConfig, playerMovement);
             Container.Bind<HealOrbsSpawner>().FromInstance(_healOrbsSpawner).AsSingle();
         }
-
         private void BindAreaFader()
         {
             Container.BindInstance(bugAreaFaderConfig).AsSingle();

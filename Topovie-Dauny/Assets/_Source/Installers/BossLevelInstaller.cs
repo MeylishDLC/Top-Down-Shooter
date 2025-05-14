@@ -10,6 +10,8 @@ using SoundSystem;
 using UI.Core;
 using UI.Menus;
 using UnityEngine;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
 using Zenject;
 
 namespace Installers
@@ -17,7 +19,6 @@ namespace Installers
     public class BossLevelInstaller: MonoInstaller
     {
         [SerializeField] private InputListener inputListener;
-        [SerializeField] private PlayerMovement playerMovement;
         [SerializeField] private Shop shop;
         [SerializeField] private WeaponsSetterConfig weaponsSetterConfig;
         [SerializeField] private CustomCursor customCursor;
@@ -25,6 +26,12 @@ namespace Installers
         [SerializeField] private Camera mainCamera;
         [SerializeField] private PoolInitializerConfig poolInitializerConfig;
         [SerializeField] private PauseMenu pauseMenu;
+        
+        [Header("Player Components")]
+        [SerializeField] private PlayerMovement playerMovement;
+        [SerializeField] private PlayerConfig playerConfig;
+        [SerializeField] private Material playerDamagedMaterial;
+        [SerializeField] private Volume playerVignetteVolume;
         
         private PoolInitializer _poolInitializer;
         private DialogueManager _dialogueManager;
@@ -49,6 +56,15 @@ namespace Installers
         {
             _dialogueManager.CleanUp();
         }
+        private void BindPlayer()
+        {
+            Container.BindInstance(playerConfig).AsSingle();
+            Container.Bind<PlayerMovement>().FromInstance(playerMovement).AsSingle();
+            Container.Bind<Material>().FromInstance(playerDamagedMaterial).AsSingle();
+            Container.Bind<Volume>().FromInstance(playerVignetteVolume).AsSingle();
+            
+            Container.Bind<PlayerDamagedDisplay>().AsSingle();
+        }
         private void BindInputListener()
         {
             Container.Bind<InputListener>().FromInstance(inputListener).AsSingle();
@@ -62,10 +78,6 @@ namespace Installers
         {
             _dialogueManager = new DialogueManager(inputListener, baseDialogueDisplay, Container.Resolve<AudioManager>());
             Container.Bind<DialogueManager>().FromInstance(_dialogueManager).AsSingle();
-        }
-        private void BindPlayer()
-        {
-            Container.Bind<PlayerMovement>().FromInstance(playerMovement).AsSingle();
         }
         private void BindStatesChanger()
         {

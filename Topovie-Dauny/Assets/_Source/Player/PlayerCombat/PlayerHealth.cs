@@ -9,6 +9,7 @@ using Zenject;
 
 namespace Player.PlayerCombat
 {
+    //todo remove MonoBehaviour?
     public class PlayerHealth : MonoBehaviour
     {
         public event Action<float> OnDamageTaken;
@@ -16,12 +17,9 @@ namespace Player.PlayerCombat
         public event Action OnDeath;
         public float CurrentHealth { get; private set; }
         public bool IsKnockedBack { get; private set; }
-        [field:SerializeField] public float MaxHealth { get; private set; }
+        public float MaxHealth { get; private set; }
         
-        [Header("Knockback Settings")] 
-        [SerializeField] private float knockbackThrust;
-        [SerializeField] private int knockbackTimeMilliseconds;
-        [SerializeField] private int invincibilityTime;
+        private PlayerConfig _playerConfig;
         
         private bool _canTakeDamage = true;
         private SpriteRenderer _spriteRenderer;
@@ -30,21 +28,23 @@ namespace Player.PlayerCombat
         private CancellationToken _deathCancellationToken;
 
         [Inject]
-        public void Construct(AudioManager audioManager)
+        public void Construct(AudioManager audioManager, PlayerConfig config)
         {
             _audioManager = audioManager;
+            _playerConfig = config;
         }
         private void Awake()
         {
             _deathCancellationToken = this.GetCancellationTokenOnDestroy();
+            
+            MaxHealth = _playerConfig.MaxHealth;
+            CurrentHealth = MaxHealth;
+
+            //todo bind instead of create
             _knockBack = new KnockBack
-                (this,GetComponent<Rigidbody2D>(), knockbackTimeMilliseconds, knockbackThrust);
+                (this,GetComponent<Rigidbody2D>(), _playerConfig.KnockbackTime, _playerConfig.KnockbackThrust);
             _knockBack.OnKnockBackStarted += StartKnockback;
             _knockBack.OnKnockBackEnded += EndKnockback;
-        }
-        private void Start()
-        {
-            CurrentHealth = MaxHealth;
         }
         private void OnDestroy()
         {
@@ -102,7 +102,7 @@ namespace Player.PlayerCombat
         }
         private async UniTask RecoverFromDamageAsync(CancellationToken token)
         {
-            await UniTask.Delay(invincibilityTime, cancellationToken: token);
+            await UniTask.Delay(TimeSpan.FromSeconds(_playerConfig.InvincibilityTime), cancellationToken: token);
             _canTakeDamage = true;
         }
         private void StartKnockback() => IsKnockedBack = true;
