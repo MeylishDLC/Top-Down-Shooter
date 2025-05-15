@@ -13,7 +13,7 @@ namespace Weapons.AbilityWeapons
         [SerializeField] private int damage;
         [SerializeField] private float stunDuration;
 
-        private List<AIPath> _enemiesAffected = new();
+        private List<EnemyMovement> _enemiesAffected = new();
         private Collider2D _collider;
         private void Start()
         {
@@ -24,15 +24,15 @@ namespace Weapons.AbilityWeapons
         {
             if (other.gameObject.layer == LayerMask.NameToLayer("Enemy"))
             {
-                if (other.gameObject.transform.parent.TryGetComponent(out AIPath aiPath))
+                if (other.gameObject.transform.parent.TryGetComponent(out EnemyMovement enemyMovement))
                 {
-                    aiPath.canMove = false;
+                    enemyMovement.SetMovement(false);
                     var enemyHealth = other.gameObject.transform.parent.GetComponent<IEnemyHealth>();
                     enemyHealth.TakeDamage(damage);
 
-                    if (!_enemiesAffected.Contains(aiPath))
+                    if (!_enemiesAffected.Contains(enemyMovement))
                     {
-                        _enemiesAffected.Add(aiPath);
+                        _enemiesAffected.Add(enemyMovement);
                     }
                 }
             }
@@ -41,13 +41,13 @@ namespace Weapons.AbilityWeapons
         {
             if (other.gameObject.layer == LayerMask.NameToLayer("Enemy"))
             {
-                if (other.gameObject.transform.parent.TryGetComponent(out AIPath aiPath))
+                if (other.gameObject.transform.parent.TryGetComponent(out EnemyMovement enemyMovement))
                 {
-                    aiPath.canMove = false;
+                    enemyMovement.SetMovement(false);
                     
-                    if (!_enemiesAffected.Contains(aiPath))
+                    if (!_enemiesAffected.Contains(enemyMovement))
                     {
-                        _enemiesAffected.Add(aiPath);
+                        _enemiesAffected.Add(enemyMovement);
                     }
                 }
             }
@@ -61,7 +61,7 @@ namespace Weapons.AbilityWeapons
             {
                 if (enemy != null)
                 {
-                    enemy.canMove = true;
+                    enemy.SetMovement(true);
                 }
             }
             Destroy(gameObject);

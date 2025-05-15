@@ -13,6 +13,7 @@ using Random = UnityEngine.Random;
 
 namespace Enemies
 {
+    [RequireComponent(typeof(Rigidbody2D))]
     public class EnemyMovement: MonoBehaviour
     {
         public static event Action<Vector3> OnEnemyDisabled;
@@ -29,6 +30,8 @@ namespace Enemies
         [SerializeField] private float deathAnimationDuration = 0.5f;
         
         private AIPath _aiPath;
+        private Rigidbody2D _rb;
+        
         private SpriteRenderer _enemyRenderer;
         private CancellationToken _deathCancellationToken;
         private Transform _playerTransform;
@@ -46,7 +49,10 @@ namespace Enemies
         private void Awake()
         {
             _aiPath = GetComponent<AIPath>();
+            _rb = GetComponent<Rigidbody2D>();
             _enemyRenderer = GetComponent<SpriteRenderer>();
+            
+            //todo tf is this shit??? fix or smth
             _enemyRenderer.sortingOrder = Random.Range (0, 100);
             _deathCancellationToken = this.GetCancellationTokenOnDestroy();
             
@@ -86,6 +92,11 @@ namespace Enemies
             _playerTransform = playerTransform;
             var destinationSetter = GetComponent<AIDestinationSetter>();
             destinationSetter.target = _playerTransform;
+        }
+        public void SetMovement(bool canMove)
+        {
+            _aiPath.canMove = canMove;
+            _rb.bodyType = canMove ? RigidbodyType2D.Dynamic : RigidbodyType2D.Static;
         }
         private void HandleFlipping()
         {
