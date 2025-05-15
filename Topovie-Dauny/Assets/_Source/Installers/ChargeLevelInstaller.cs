@@ -12,11 +12,8 @@ using Player.PlayerControl;
 using SoundSystem;
 using UI.Core;
 using UI.Menus;
-using UI.PlayerGUI;
 using UnityEngine;
 using UnityEngine.Rendering;
-using UnityEngine.Rendering.Universal;
-using UnityEngine.Serialization;
 using Zenject;
 
 namespace Installers

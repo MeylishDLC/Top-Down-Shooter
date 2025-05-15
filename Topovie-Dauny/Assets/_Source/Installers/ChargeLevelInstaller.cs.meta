@@ -3,7 +3,22 @@ guid: 7f2fd2c88a5866143a85455d76106b92
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - inputListener: {instanceID: 0}
+  - levelChargesHandler: {instanceID: 0}
+  - shop: {instanceID: 0}
+  - customCursor: {instanceID: 0}
+  - baseDialogueDisplay: {instanceID: 0}
+  - mainCamera: {instanceID: 0}
+  - levelDialogueConfig: {instanceID: 0}
+  - poolInitializerConfig: {instanceID: 0}
+  - healingOrbsSpawnerConfig: {instanceID: 0}
+  - bugAreaFaderConfig: {instanceID: 0}
+  - pauseMenu: {instanceID: 0}
+  - playerMovement: {instanceID: 0}
+  - playerConfig: {instanceID: 0}
+  - playerDamagedMaterial: {fileID: 2100000, guid: 050256afd6bba5647b6e2e5092236e55, type: 2}
+  - playerVignetteVolume: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
