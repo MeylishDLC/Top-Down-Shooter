@@ -13,10 +13,8 @@ namespace Bullets
 {
     public class RpgBullet: Bullet
     {
-        private static readonly int Attack = Animator.StringToHash("attack");
         [SerializeField] private float blowupRange;
         [SerializeField] private float blowupDuration;
-        [SerializeField] private Animator blowupAnimator;
         [SerializeField] private CinemachineImpulseSource impulseSource;
         [SerializeField] private float impulseStrength;
 
@@ -39,8 +37,10 @@ namespace Bullets
         }
         protected override void OnEnable()
         {
+            //shooting bullet
             base.OnEnable();
             _col.enabled = true;
+            _spriteRenderer.DOFade(1f, 0f).ToUniTask(cancellationToken: _ctOnDestroy).Forget();
         }
         protected override void OnTriggerEnter2D(Collider2D other)
         {
@@ -74,10 +74,21 @@ namespace Bullets
         {
             _isBlowingUp = true;
             _col.enabled = false;
-            _spriteRenderer.DOFade(0f, 0f);
+            _spriteRenderer.DOFade(0f, 0f).ToUniTask(cancellationToken: _ctOnDestroy).Forget();
             ExplodeAsync(_ctOnDestroy).Forget();
         }
         private async UniTask ExplodeAsync(CancellationToken token)
+        {
+            AttackEnemiesInRange();
+            
+            _audioManager.PlayOneShot(_audioManager.FMODEvents.RpgBlowUpSound);
+            impulseSource.GenerateImpulse(impulseStrength);
+            
+            await UniTask.Delay(TimeSpan.FromSeconds(blowupDuration), cancellationToken: token);
+            _isBlowingUp = false;
+            gameObject.SetActive(false);
+        }
+        private void AttackEnemiesInRange()
         {
             var hitColliders = Physics2D.OverlapCircleAll(transform.position, blowupRange);
             var filteredColliders = hitColliders.Where(c => c != null).ToArray();
@@ -92,16 +103,6 @@ namespace Bullets
                     }
                 }
             }
-            
-            _audioManager.PlayOneShot(_audioManager.FMODEvents.RpgBlowUpSound);
-            blowupAnimator.SetTrigger(Attack);
-            impulseSource.GenerateImpulse(impulseStrength);
-            Debug.Log("Impulse generated");
-            
-            await UniTask.Delay(TimeSpan.FromSeconds(blowupDuration), cancellationToken: token);
-            _isBlowingUp = false;
-            gameObject.SetActive(false);
-            await _spriteRenderer.DOFade(1f, 0f);
         }
         private void OnDrawGizmosSelected()
         {
