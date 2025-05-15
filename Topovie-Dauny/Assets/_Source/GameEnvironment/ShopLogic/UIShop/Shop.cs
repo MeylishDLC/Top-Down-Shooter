@@ -84,6 +84,11 @@ namespace GameEnvironment.ShopLogic.UIShop
             if (IsShopOpen() && !_isClosing)
             {
                 _isClosing = true;
+                if (_isTyping)
+                {
+                    ForceStopPlayingDialogue();
+                }
+                
                 CloseShopAsync(_stopTypingCts.Token).Forget();
             }
         }
@@ -122,7 +127,6 @@ namespace GameEnvironment.ShopLogic.UIShop
             {
                 _pauseMenu.SetCanPause(true);
             }
-            
         }
         private void DisableInput()
         {
@@ -138,22 +142,33 @@ namespace GameEnvironment.ShopLogic.UIShop
         {
             if (_isTyping)
             {
-                _stopTypingCts?.Cancel();
-                _stopTypingCts?.Dispose();
-                _stopTypingCts = new CancellationTokenSource();
-                _isTyping = false;
+                ForceStopPlayingDialogue();
             }
+            
             ChangeDialogueAsync(ability, _stopTypingCts.Token).Forget();
         }
         private async UniTask ChangeDialogueAsync(Ability ability, CancellationToken token)
         {
-            vetDialogueText.text = "";
-            _isTyping = true;
-            await UniTask.Delay(delayBeforeDialogueChangeMilliseconds, cancellationToken: token);
-            await _shopDialogue.TypeDialogueAsync(GetDialogueForAbility(ability), token);
+            try
+            {
+                vetDialogueText.text = "";
+                _isTyping = true;
+                await UniTask.Delay(delayBeforeDialogueChangeMilliseconds, cancellationToken: token);
+                await _shopDialogue.TypeDialogueAsync(GetDialogueForAbility(ability), token);
+                _isTyping = false;
+            }
+            catch (OperationCanceledException)
+            {
+                //
+            }
+        }
+        private void ForceStopPlayingDialogue()
+        {
+            _stopTypingCts?.Cancel();
+            _stopTypingCts?.Dispose();
+            _stopTypingCts = new CancellationTokenSource();
             _isTyping = false;
         }
-
         private string GetDialogueForAbility(Ability ability)
         {
             var abilityDialogues = GetCurrentDialoguePack().AbilityDialoguePairs;
@@ -174,8 +189,8 @@ namespace GameEnvironment.ShopLogic.UIShop
                 Debug.LogWarning("Level Charges Handler is not initialized. Charges passed is always zero.");
                 return dialogueConfig.ChargesDialoguePacks[0];
             }
+            
             var dialogueIndex = levelChargesHandler.ChargesPassed;
-
             if (dialogueIndex >= dialogueConfig.ChargesDialoguePacks.Length)
             {
                 dialogueIndex = dialogueConfig.ChargesDialoguePacks.Length - 1;
