@@ -74,8 +74,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99b519601f9043b5b6a5c2c72ad7a980, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  loadingScreenPrefab: {fileID: 7081658928106566331, guid: e760fded995db3c4cb8ce1148f2ff583, type: 3}
   sceneLoaderPrefab: {fileID: 7273206986010074633, guid: 7ae31886e8fbebe468e0c87921dc912d, type: 3}
-  canvasPrefab: {fileID: 1517197834384404623, guid: 789c496065cc25b46b39bc5912f37c78, type: 3}
   audioManagerPrefab: {fileID: 5936848702341749467, guid: f92c3e1abe868e44084a69741102fd7f, type: 3}
   analyticsManagerPrefab: {fileID: 7986369307872892325, guid: 751d1395b9f9c2c489cbaeda0196a610, type: 3}
+  loadingTipsConfig: {fileID: 11400000, guid: 2d429718bfb21154ab425580907ad0bf, type: 2}
+  canvasPrefab: {fileID: 1517197834384404623, guid: 789c496065cc25b46b39bc5912f37c78, type: 3}
+  loadingScreenPrefab: {fileID: 7081658928106566331, guid: e760fded995db3c4cb8ce1148f2ff583, type: 3}

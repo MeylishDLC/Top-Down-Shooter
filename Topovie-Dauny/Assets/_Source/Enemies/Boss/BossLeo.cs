@@ -7,6 +7,7 @@ using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using DialogueSystem;
 using Enemies.Boss.Phases;
+using Enemies.Boss.Visual;
 using FMOD.Studio;
 using SoundSystem;
 using UI.Menus;

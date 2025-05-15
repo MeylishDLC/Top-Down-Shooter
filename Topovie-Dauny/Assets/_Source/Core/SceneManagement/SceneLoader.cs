@@ -2,9 +2,12 @@
 using Cysharp.Threading.Tasks;
 using FMOD.Studio;
 using SoundSystem;
+using TMPro;
+using UI.Core.Loading;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using Zenject;
 
 namespace Core.SceneManagement
 {
@@ -12,14 +15,23 @@ namespace Core.SceneManagement
     {
         public int LastSceneIndex {get; private set;}
         public int CurrentSceneIndex {get; private set;}
+        
         private RectTransform _loadingScreen;
         private Slider _loadingSlider;
+        private TMP_Text _tipText;
+        
         private AudioManager _audioManager;
-        public void Construct(RectTransform loadingScreen, Slider loadingSlider, AudioManager audioManager)
+        private LoadingTips _loadingTips;
+        
+        [Inject]
+        public void Construct(LoadingScreenComponents components, AudioManager audioManager, LoadingTips loadingTips)
         {
-            _loadingScreen = loadingScreen;
-            _loadingSlider = loadingSlider;
+            _loadingScreen = components.LoadingScreen;
+            _loadingSlider = components.LoadingSlider;
+            _tipText = components.TipText;
+            
             _audioManager = audioManager;
+            _loadingTips = loadingTips;
         }
         public async UniTask LoadSceneAsync(int index, bool disableScreenOnLoad = true)
         {
@@ -27,7 +39,9 @@ namespace Core.SceneManagement
             CurrentSceneIndex = index;
             _loadingSlider.value = 0;
             _loadingScreen.gameObject.SetActive(true);
+            
             _audioManager.StopPlayingMusic(STOP_MODE.IMMEDIATE);
+            ShowTip();
             
             var asyncOperation = SceneManager.LoadSceneAsync(index);
             if (asyncOperation is null)
@@ -55,6 +69,10 @@ namespace Core.SceneManagement
         public void SetLoadingScreenActive(bool active)
         {
             _loadingScreen.gameObject.SetActive(active);
+        }
+        private void ShowTip()
+        {
+            _loadingTips.DisplayRandomTip(_tipText);
         }
     }
 }
