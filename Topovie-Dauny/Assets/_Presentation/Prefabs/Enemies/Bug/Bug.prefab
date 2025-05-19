@@ -297,7 +297,7 @@ MonoBehaviour:
   radius: 6.06
   height: 0.01
   canMove: 1
-  maxSpeed: 0.7
+  maxSpeed: 0.6
   gravity: {x: NaN, y: NaN, z: NaN}
   groundMask:
     serializedVersion: 2
@@ -606,12 +606,12 @@ MonoBehaviour:
   aiPath: {fileID: 6751169919808548566}
   enemyHealth: {fileID: 8671391910095024701}
   impactParticlesPrefab: {fileID: 8460667080445658518, guid: a3e2c3406e02f2c4ba86cfb1604277bd, type: 3}
+  rangeSprite: {fileID: 5715538386203914321}
   impulseStrength: 1
   impulseSource: {fileID: 744383346139463485}
   attackDamage: 30
   attackDuration: 0.5
-  attackColor: {r: 1, g: 0, b: 0, a: 0.39215687}
-  colorTransitionDuration: 0.1
+  warningDuration: 1
   attackSound:
     Guid:
       Data1: -584408669
@@ -620,7 +620,3 @@ MonoBehaviour:
       Data4: 199424864
     Path: event:/SFX/Enemies/BugAttack
   soundDistance: 5
-  warningDuration: 1
-  rangeSprite: {fileID: 5715538386203914321}
-  rangeTransparencyOnWarn: 0.1
-  fadeDuration: 0.1
