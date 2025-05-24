@@ -110,8 +110,8 @@ Transform:
   m_GameObject: {fileID: 203093975547309078}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.037, y: -0.068, z: 0}
-  m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
+  m_LocalPosition: {x: 0.008, y: -0.068, z: 0}
+  m_LocalScale: {x: 0.4, y: 0.4, z: 0.4}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 7609261480083674614}
@@ -157,7 +157,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 100
-  m_Sprite: {fileID: 21300000, guid: ac46c856263d26946bad1b916fd92076, type: 3}
+  m_Sprite: {fileID: 21300000, guid: b32ed300f54e2ec47b742cba9d803830, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -267,7 +267,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7609261480083674614}
   - component: {fileID: 3271842523607830984}
-  - component: {fileID: 1506261103484472167}
+  - component: {fileID: 2008489448788573217}
   m_Layer: 12
   m_Name: Portal
   m_TagString: Untagged
@@ -307,10 +307,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   confirmationScreen: {fileID: 0}
   portalLight: {fileID: 367543640257121767}
-  rangeTrigger: {fileID: 1506261103484472167}
+  rangeTrigger: {fileID: 2008489448788573217}
   textBubble: {fileID: 1167799392786287892}
---- !u!58 &1506261103484472167
-CircleCollider2D:
+--- !u!70 &2008489448788573217
+CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -341,6 +341,6 @@ CircleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.01571477, y: 0.007857158}
-  serializedVersion: 2
-  m_Radius: 1.0631086
+  m_Offset: {x: 0.024146073, y: -0.08316706}
+  m_Size: {x: 1.6707083, y: 1.1234167}
+  m_Direction: 1
