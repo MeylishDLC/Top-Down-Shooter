@@ -21,6 +21,10 @@ namespace Player.PlayerCombat
         [field:Header("Player Damaged Displaying")]
         [field:SerializeField] public float VignetteDisplayDuration { get; private set; } = 1.0f;
         [field:SerializeField] public float DamagedLightDisplayDuration { get; private set; } = 0.3f;
+        
+        [field:Header("Player Death")]
+        [field:SerializeField] public float PlayerDeathAnimationDuration { get; private set; } = 0.6f;
+
 
     }
 }

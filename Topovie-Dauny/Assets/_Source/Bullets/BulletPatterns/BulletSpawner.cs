@@ -58,7 +58,7 @@ namespace Bullets.BulletPatterns
 
         private void Fire()
         {
-            if (!fireSound.IsNull)
+            if (!fireSound.IsNull && _playerTransform)
             {
                 AudioManager.PlayOneShot(fireSound, transform.position, _playerTransform.position, soundDistance);
             }

@@ -28,7 +28,7 @@ namespace UI.Menus
         [SerializeField] private Button restartButton;
         [SerializeField] private float fadeInTime;
         
-        private PlayerHealth _playerHealth;
+        private PlayerMovement _playerMovement;
         private SceneLoader _sceneLoader;
         private InputListener _inputListener;
         private AudioManager _audioManager;
@@ -38,7 +38,7 @@ namespace UI.Menus
         public void Construct(PlayerMovement playerMovement, SceneLoader sceneLoader, InputListener inputListener,
             AudioManager audioManager, AnalyticsManager analyticsManager)
         {
-            _playerHealth = playerMovement.gameObject.GetComponent<PlayerHealth>();
+            _playerMovement = playerMovement;
             _sceneLoader = sceneLoader;
             _inputListener = inputListener;
             _audioManager = audioManager;
@@ -46,15 +46,15 @@ namespace UI.Menus
         }
         private void Awake()
         {
-            _playerHealth.OnDeath += ShowGameOverScreen;
-            _playerHealth.OnDeath += SaveDeathData;
+            _playerMovement.OnPlayerDeathEnd += ShowGameOverScreen;
+            _playerMovement.OnPlayerDeathEnd += SaveDeathData;
             restartButton.onClick.AddListener(RestartLevel);
             gameOverScreen.gameObject.SetActive(false);
         }
         private void OnDestroy()
         {
-            _playerHealth.OnDeath -= ShowGameOverScreen;
-            _playerHealth.OnDeath -= SaveDeathData;
+            _playerMovement.OnPlayerDeathEnd -= ShowGameOverScreen;
+            _playerMovement.OnPlayerDeathEnd -= SaveDeathData;
         }
         private void SaveDeathData()
         {
@@ -79,7 +79,7 @@ namespace UI.Menus
             await FadeDeathScreen(0f, 0f, token);
             await FadeDeathScreen(1f, fadeInTime, token);
             OnScreenFaded?.Invoke();
-            Destroy(_playerHealth.gameObject);
+            Destroy(_playerMovement.gameObject);
         }
         private void RestartLevel()
         {
