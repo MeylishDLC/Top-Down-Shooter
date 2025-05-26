@@ -9,16 +9,14 @@ namespace Interactable.NPCstuff
 {
     public class Npc: MonoBehaviour
     {
-        [SerializeField] private float npcFadeInDuration;
-        [SerializeField] private float npcFadeOutDuration;
         [SerializeField] private float npcStayAfterDialogueDuration;
         [SerializeField] private NpcDialogueBubble npcDialogueBubble;
         [SerializeField] private SpriteRenderer visualQue;
         
-        private SpriteRenderer _npcRenderer;
         private CancellationToken _destroyCancellationToken;
         private bool _wasTalkedTo;
         private bool _isPlayerInRange;
+        private bool _isAvailableForInteraction = true;
         
         private StatesChanger _statesChanger;
         private InputListener _inputListener;
@@ -33,23 +31,26 @@ namespace Interactable.NPCstuff
         private void Awake()
         {
             _statesChanger.OnStateChanged += SetVisibleOnStateChange;
+            _statesChanger.OnStateChanged += SetCanInteractOnChangeState;
             _destroyCancellationToken = this.GetCancellationTokenOnDestroy();
-            _npcRenderer = GetComponent<SpriteRenderer>();
-            _npcVisual = new NpcVisual(_npcRenderer, npcDialogueBubble, npcFadeInDuration, npcFadeOutDuration, npcStayAfterDialogueDuration);
+            _npcVisual = new NpcVisual(npcDialogueBubble, npcStayAfterDialogueDuration);
             SetVisualQue(false);
             
-            _npcVisual.OnDisappearCompletely += DestroyOnInteractEnd;
             _inputListener.OnInteractPressed += OnInteract;
         }
         private void OnDestroy()
         {
             _statesChanger.OnStateChanged -= SetVisibleOnStateChange;
+            _statesChanger.OnStateChanged -= SetCanInteractOnChangeState;
             _inputListener.OnInteractPressed -= OnInteract;
-            _npcVisual.OnDisappearCompletely -= DestroyOnInteractEnd;
             _npcVisual.CleanUp();
         }
         private void OnTriggerEnter2D(Collider2D other)
         {
+            if (!_isAvailableForInteraction)
+            {
+                return;
+            }
             if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
             {
                 _isPlayerInRange = true;
@@ -61,6 +62,10 @@ namespace Interactable.NPCstuff
         }
         private void OnTriggerExit2D(Collider2D other)
         {
+            if (!_isAvailableForInteraction)
+            {
+                return;
+            }
             if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
             {
                 _isPlayerInRange = false;
@@ -78,6 +83,11 @@ namespace Interactable.NPCstuff
             _wasTalkedTo = true;
             npcDialogueBubble.DisplayDialogueAsync(_destroyCancellationToken).Forget();
         }
+        private void SetVisualQue(bool enable)
+        {
+            visualQue.gameObject.SetActive(enable);
+        }
+
         private void SetVisibleOnStateChange(GameStates state)
         {
             if (_wasTalkedTo)
@@ -87,17 +97,28 @@ namespace Interactable.NPCstuff
             
             if (state != GameStates.Fight)
             {
-                _npcVisual.Appear(_destroyCancellationToken).Forget();
             }
             else
             {
-                _npcVisual.Disappear(_destroyCancellationToken).Forget();
+                
             }
         }
-        private void SetVisualQue(bool enable)
+        private void SetCanInteractOnChangeState(GameStates state)
         {
-            visualQue.gameObject.SetActive(enable);
+            if (_wasTalkedTo)
+            {
+                return;
+            }
+            
+            if (state != GameStates.Fight)
+            {
+                _isAvailableForInteraction = true;
+            }
+            else
+            {
+                _isAvailableForInteraction = false;
+                SetVisualQue(false);
+            }
         }
-        private void DestroyOnInteractEnd() => Destroy(gameObject);
     }
 }

@@ -8,49 +8,28 @@ namespace Interactable.NPCstuff
 {
     public class NpcVisual
     {
-        public event Action OnDisappearCompletely;
-        
-        private readonly float _npcFadeInDuration;
-        private readonly float _npcFadeOutDuration;
-        private readonly float _npcStayAfterDialogueDuration;
+        private readonly float _bubbleStayAfterDialogueDuration;
         private readonly NpcDialogueBubble _npcDialogueBubble;
-        private readonly SpriteRenderer _npcRenderer;
         
-        public NpcVisual(SpriteRenderer npcRenderer, NpcDialogueBubble npcDialogueBubble, 
-            float fadeIn, float fadeOut, float stayDur)
+        public NpcVisual(NpcDialogueBubble npcDialogueBubble, float stayDur)
         {
-            _npcRenderer = npcRenderer;
             _npcDialogueBubble = npcDialogueBubble;
-            _npcFadeInDuration = fadeIn;
-            _npcFadeOutDuration = fadeOut;
-            _npcStayAfterDialogueDuration = stayDur;
+            _bubbleStayAfterDialogueDuration = stayDur;
 
-            _npcDialogueBubble.OnDialogueFinished += DisappearCompletely;
+            _npcDialogueBubble.OnDialogueFinished += HideBubble;
         }
         public void CleanUp()
         {
-            _npcDialogueBubble.OnDialogueFinished -= DisappearCompletely;
+            _npcDialogueBubble.OnDialogueFinished -= HideBubble;
         }
-        public UniTask Disappear(CancellationToken token)
+        private void HideBubble()
         {
-            return _npcRenderer.DOFade(0f, _npcFadeOutDuration).ToUniTask(cancellationToken: token)
-                .ContinueWith(() => _npcRenderer.gameObject.SetActive(false));
+            HideBubbleAsync(CancellationToken.None).Forget();
         }
-        public UniTask Appear(CancellationToken token)
+        private async UniTask HideBubbleAsync(CancellationToken token)
         {
-            _npcRenderer.gameObject.SetActive(true);
-            return _npcRenderer.DOFade(1f, _npcFadeInDuration).ToUniTask(cancellationToken: token);
-        }
-        private void DisappearCompletely()
-        {
-            DisappearCompletelyAsync(CancellationToken.None).Forget();
-        }
-        private async UniTask DisappearCompletelyAsync(CancellationToken token)
-        {
-            await UniTask.Delay(TimeSpan.FromSeconds(_npcStayAfterDialogueDuration), cancellationToken: token);
+            await UniTask.Delay(TimeSpan.FromSeconds(_bubbleStayAfterDialogueDuration), cancellationToken: token);
             await _npcDialogueBubble.Disappear(token);
-            await _npcRenderer.DOFade(0f, _npcFadeOutDuration).ToUniTask(cancellationToken: token);
-            OnDisappearCompletely?.Invoke();
         }
     }
 }
