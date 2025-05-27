@@ -420,7 +420,7 @@ GameObject:
   - component: {fileID: 112396712}
   - component: {fileID: 112396713}
   - component: {fileID: 112396714}
-  m_Layer: 13
+  m_Layer: 6
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2168,6 +2168,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 39377059}
     m_Modifications:
+    - target: {fileID: 541494355225213466, guid: 11c6617fe4209fd489cbb1f9cd2be06d, type: 3}
+      propertyPath: m_text
+      value: "\u041A\u0430\u043A\u0430\u044F \u0445\u043E\u0440\u043E\u0448\u0430\u044F
+        \u0443 \u043D\u0438\u0445 \u0442\u0440\u0430\u0432\u043A\u0430..\u0433\u0430\u0437\u043E\u043D
+        \u043F\u043E\u0441\u0442\u0440\u0438\u0436\u0435\u043D \u0447\u0442\u043E
+        \u043D\u0430\u0434\u043E!"
+      objectReference: {fileID: 0}
+    - target: {fileID: 662587453606006957, guid: 11c6617fe4209fd489cbb1f9cd2be06d, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0.06
+      objectReference: {fileID: 0}
     - target: {fileID: 2051484233170781605, guid: 11c6617fe4209fd489cbb1f9cd2be06d, type: 3}
       propertyPath: m_LocalPosition.x
       value: -2.66
@@ -2238,9 +2249,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6312261517619840915, guid: 11c6617fe4209fd489cbb1f9cd2be06d, type: 3}
       propertyPath: dialogueText
-      value: "\u0410 \u043A\u0430\u043A \u0447\u0430\u0441\u0442\u043E \u0432\u044B
-        \u0441\u0442\u0440\u0438\u0436\u0435\u0442\u0435 \u0442\u0440\u0430\u0432\u0443
-        \u0432\u043E \u0434\u0432\u043E\u0440\u0435?"
+      value: "\u041A\u0430\u043A\u0430\u044F \u0445\u043E\u0440\u043E\u0448\u0430\u044F
+        \u0443 \u043D\u0438\u0445 \u0442\u0440\u0430\u0432\u043A\u0430..\u0433\u0430\u0437\u043E\u043D
+        \u043F\u043E\u0441\u0442\u0440\u0438\u0436\u0435\u043D \u0447\u0442\u043E
+        \u043D\u0430\u0434\u043E!"
       objectReference: {fileID: 0}
     - target: {fileID: 6764375841969246901, guid: 11c6617fe4209fd489cbb1f9cd2be06d, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2412,7 +2424,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4385499998495514500, guid: 11c6617fe4209fd489cbb1f9cd2be06d, type: 3}
       propertyPath: m_Name
-      value: NPC
+      value: Book
       objectReference: {fileID: 0}
     - target: {fileID: 6312261517619840915, guid: 11c6617fe4209fd489cbb1f9cd2be06d, type: 3}
       propertyPath: dialogueText
@@ -2456,6 +2468,10 @@ PrefabInstance:
     - target: {fileID: 8964205272760126725, guid: 11c6617fe4209fd489cbb1f9cd2be06d, type: 3}
       propertyPath: m_SpriteTilingProperty.oldSize.y
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9034381288392945160, guid: 11c6617fe4209fd489cbb1f9cd2be06d, type: 3}
+      propertyPath: npcStayAfterDialogueDuration
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
@@ -2690,6 +2706,25 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 39377059}
     m_Modifications:
+    - target: {fileID: 541494355225213466, guid: 11c6617fe4209fd489cbb1f9cd2be06d, type: 3}
+      propertyPath: m_text
+      value: "\u0423 \u043D\u0438\u0445 \u0442\u0443\u0442 \u0432\u043E\u043E\u0431\u0449\u0435
+        \u0434\u043E\u0432\u043E\u043B\u044C\u043D\u043E \u0443\u044E\u0442\u043D\u043E,
+        \u0435\u0441\u043B\u0438 \u0431\u044B \u043D\u0435 \u0441\u0442\u0440\u0430\u043D\u043D\u044B\u0439
+        \u0441\u043E\u0441\u0435\u0434."
+      objectReference: {fileID: 0}
+    - target: {fileID: 541494355225213466, guid: 11c6617fe4209fd489cbb1f9cd2be06d, type: 3}
+      propertyPath: m_fontSize
+      value: 2.65
+      objectReference: {fileID: 0}
+    - target: {fileID: 541494355225213466, guid: 11c6617fe4209fd489cbb1f9cd2be06d, type: 3}
+      propertyPath: m_margin.z
+      value: -0.037570298
+      objectReference: {fileID: 0}
+    - target: {fileID: 541494355225213466, guid: 11c6617fe4209fd489cbb1f9cd2be06d, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 2.65
+      objectReference: {fileID: 0}
     - target: {fileID: 2051484233170781605, guid: 11c6617fe4209fd489cbb1f9cd2be06d, type: 3}
       propertyPath: m_LocalPosition.x
       value: -6.79
@@ -2760,9 +2795,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6312261517619840915, guid: 11c6617fe4209fd489cbb1f9cd2be06d, type: 3}
       propertyPath: dialogueText
-      value: "\u042F \u0437\u043D\u0430\u044E, \u0447\u0442\u043E \u0432\u044B \u0435\u0435
-        \u0435\u0434\u0438\u0442\u0435, \u043D\u043E \u0441\u0432\u043E\u044E \u043D\u0435
-        \u043E\u0442\u0434\u0430\u043C, \u043F\u0440\u043E\u0441\u0442\u0438\u0442\u0435."
+      value: "\u0423 \u043D\u0438\u0445 \u0442\u0443\u0442 \u0432\u043E\u043E\u0431\u0449\u0435
+        \u0434\u043E\u0432\u043E\u043B\u044C\u043D\u043E \u0443\u044E\u0442\u043D\u043E,
+        \u0435\u0441\u043B\u0438 \u0431\u044B \u043D\u0435 \u0441\u0442\u0440\u0430\u043D\u043D\u044B\u0439
+        \u0441\u043E\u0441\u0435\u0434."
       objectReference: {fileID: 0}
     - target: {fileID: 6764375841969246901, guid: 11c6617fe4209fd489cbb1f9cd2be06d, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3413,7 +3449,7 @@ GameObject:
   - component: {fileID: 1394832466}
   - component: {fileID: 1394832467}
   - component: {fileID: 1394832468}
-  m_Layer: 13
+  m_Layer: 6
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3981,7 +4017,7 @@ GameObject:
   - component: {fileID: 1622390238}
   - component: {fileID: 1622390239}
   - component: {fileID: 1622390240}
-  m_Layer: 13
+  m_Layer: 6
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
