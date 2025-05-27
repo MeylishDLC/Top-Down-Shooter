@@ -53,6 +53,7 @@ namespace Editor
             
             serializedObject.Update();
 
+            EditorGUILayout.PropertyField(serializedObject.FindProperty("beginningComics"));
             EditorGUILayout.PropertyField(serializedObject.FindProperty("dialogueOnTutorialStart"));
             EditorGUILayout.PropertyField(serializedObject.FindProperty("dialogueOnTutorialEnd"));
             EditorGUILayout.PropertyField(serializedObject.FindProperty("shopTrigger"));

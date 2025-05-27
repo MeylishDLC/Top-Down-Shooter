@@ -9,6 +9,7 @@ using DialogueSystem;
 using GameEnvironment;
 using GameEnvironment.ShopLogic;
 using Tutorial.Scenarios.ScenariosTypes;
+using UI.Comics;
 using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
@@ -17,6 +18,8 @@ namespace Tutorial
 {
     public class BasicTutorial: MonoBehaviour
     { 
+        [SerializeField] private BeginningComics beginningComics;
+        
         [Header("Dialogues")] 
         [SerializeField] private TextAsset dialogueOnTutorialStart;
         [SerializeField] private TextAsset dialogueOnTutorialEnd;
@@ -53,8 +56,17 @@ namespace Tutorial
             {
                 chargeZone.gameObject.SetActive(true);
                 tutorialChargeZone.gameObject.SetActive(false);
+                beginningComics.gameObject.SetActive(false);
                 return;
             }
+            beginningComics.ShowComics();
+            beginningComics.OnComicEnd += PrepareForTutorial;
+        }
+        private void PrepareForTutorial()
+        {
+            beginningComics.OnComicEnd -= PrepareForTutorial;
+            beginningComics.gameObject.SetActive(false);
+
             portalTrigger.gameObject.SetActive(false);
             shopTrigger.gameObject.SetActive(false);
             chargeZone.gameObject.SetActive(false);
