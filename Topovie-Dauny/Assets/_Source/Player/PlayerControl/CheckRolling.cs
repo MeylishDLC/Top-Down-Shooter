@@ -14,6 +14,5 @@ namespace Player.PlayerControl
             IsRolling = false;
             transform.Rotate(0, 0, 0);
         }
-
     }
 }

@@ -100,6 +100,7 @@ namespace Player.PlayerControl
 
             if (_horizontal > 0 || _horizontal < 0 || _vertical < 0 || _vertical > 0)
             {
+                _canRoll = true;
                 foreach (var side in sides)
                 {
                     if (side.gameObject.activeSelf)
@@ -110,6 +111,7 @@ namespace Player.PlayerControl
             }
             else
             {
+                _canRoll = false;
                 foreach (var side in sides)
                 {
                     if (side.gameObject.activeSelf)
