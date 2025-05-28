@@ -24,3 +24,16 @@
 // <color=\color code> word </color>
 // everything in <>
 //11501F
+
+#speaker:Лео #sprite:leo_neutral #layout:left
+#speaker:Лео #sprite:leo_happy #layout:left
+#speaker:Лео #sprite:leo_wondering #layout:left
+#speaker:Лео #sprite:leo_angry #layout:left
+#speaker:Лео #sprite:leo_sad #layout:left
+
+#speaker:Рина #sprite:rina_neutral #layout:right
+#speaker:Рина #sprite:rina_mysterious #layout:right
+#speaker:Рина #sprite:rina_sad #layout:right
+#speaker:Рина #sprite:rina_happy #layout:right
+#speaker:Рина #sprite:rina_serious #layout:right
+#speaker:Рина #sprite:rina_angry #layout:right
