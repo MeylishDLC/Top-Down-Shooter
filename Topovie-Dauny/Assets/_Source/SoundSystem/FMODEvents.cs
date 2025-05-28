@@ -37,6 +37,7 @@ namespace SoundSystem
         [field: SerializeField] public EventReference ChargingSound { get; private set; }
         [field: SerializeField] public EventReference AttackStartedSound { get; private set; }
         [field: SerializeField] public EventReference PortalEnabledSound { get; private set; }
+        [field: SerializeField] public EventReference OrbCollectedSound { get; private set; }
         
         [field: Header("Boss Sounds")]
         [field: SerializeField] public EventReference LeoTransformationSound { get; private set; }

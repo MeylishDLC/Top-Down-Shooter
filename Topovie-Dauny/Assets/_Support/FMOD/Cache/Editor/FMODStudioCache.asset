@@ -123,7 +123,7 @@ MonoBehaviour:
   Path: FMODProject/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 638814482942874175
+  lastModified: 638840407403830091
   FileSizes:
   - Name: Desktop
     Value: 1340
@@ -413,7 +413,7 @@ MonoBehaviour:
   Path: FMODProject/Build/Desktop/Music.bank
   Name: Music
   StudioPath: bank:/Music
-  lastModified: 638826506637537725
+  lastModified: 638840407449865549
   FileSizes:
   - Name: Desktop
     Value: 23622944
@@ -460,10 +460,10 @@ MonoBehaviour:
   Path: FMODProject/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638814482942884175
+  lastModified: 638840407403850095
   FileSizes:
   - Name: Desktop
-    Value: 2940
+    Value: 2984
   Exists: 1
 --- !u!114 &-1777177538227127457
 MonoBehaviour:
@@ -492,6 +492,33 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 138031
+--- !u!114 &-1652022653806464888
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/Environment/OrbCollected
+  m_EditorClassIdentifier: 
+  Path: event:/SFX/Environment/OrbCollected
+  Guid:
+    Data1: 1521541092
+    Data2: 1311269771
+    Data3: -763376465
+    Data4: 1182685878
+  Banks:
+  - {fileID: 3210779146886205598}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
 --- !u!114 &-1316820983204886502
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -662,12 +689,13 @@ MonoBehaviour:
   - {fileID: -58447676900276101}
   - {fileID: 8268383250699230841}
   - {fileID: 1413628894604981931}
+  - {fileID: -1652022653806464888}
   EditorParameters: []
   MasterBanks:
   - {fileID: -6366681157243713885}
   StringsBanks:
   - {fileID: -1816647176805912851}
-  cacheTime: 638826506637537725
+  cacheTime: 638840420055471660
   cacheVersion: 131616
 --- !u!114 &165189585111624022
 MonoBehaviour:
@@ -954,10 +982,10 @@ MonoBehaviour:
   Path: FMODProject/Build/Desktop/SFX.bank
   Name: SFX
   StudioPath: bank:/SFX
-  lastModified: 638814483041835956
+  lastModified: 638840420055471660
   FileSizes:
   - Name: Desktop
-    Value: 676864
+    Value: 691136
   Exists: 1
 --- !u!114 &3387091442255413876
 MonoBehaviour:

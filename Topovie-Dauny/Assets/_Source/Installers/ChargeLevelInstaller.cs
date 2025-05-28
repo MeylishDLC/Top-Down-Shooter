@@ -41,7 +41,6 @@ namespace Installers
         
         private DialogueManager _dialogueManager;
         private PoolInitializer _poolInitializer;
-        private HealOrbsSpawner _healOrbsSpawner;
         public override void InstallBindings()
         {
             BindPoolInitializer();
@@ -66,8 +65,8 @@ namespace Installers
         private void OnDestroy()
         {
             _dialogueManager.CleanUp();
-            _healOrbsSpawner.CleanUp();
             
+            Container.Resolve<HealOrbsSpawner>().CleanUp();
             Container.Resolve<PlayerDamagedDisplay>().CleanUp();
         }
         private void BindPlayer()
@@ -133,8 +132,8 @@ namespace Installers
         }
         private void BindOrbsSpawner()
         {
-            _healOrbsSpawner = new HealOrbsSpawner(healingOrbsSpawnerConfig, playerMovement);
-            Container.Bind<HealOrbsSpawner>().FromInstance(_healOrbsSpawner).AsSingle();
+            Container.BindInstance(healingOrbsSpawnerConfig).AsSingle();
+            Container.Bind<HealOrbsSpawner>().AsSingle().NonLazy();
         }
         private void BindAreaFader()
         {
