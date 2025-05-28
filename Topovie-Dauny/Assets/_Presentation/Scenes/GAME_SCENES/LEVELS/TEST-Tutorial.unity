@@ -3329,7 +3329,7 @@ Transform:
   m_GameObject: {fileID: 1563225214}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.28, y: 0.79, z: -11.578655}
+  m_LocalPosition: {x: 0.04, y: 0.54, z: -11.578655}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3730,7 +3730,7 @@ Transform:
   m_GameObject: {fileID: 1920987627}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.22, y: 3.58, z: -11.578655}
+  m_LocalPosition: {x: 0.05, y: 3.12, z: -11.578655}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3869,8 +3869,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   beginningComics: {fileID: 175527071}
-  dialogueOnTutorialStart: {fileID: 4900000, guid: e70fc166d8b88ea408c131d697869bf5, type: 3}
-  dialogueOnTutorialEnd: {fileID: 4900000, guid: 7676d25420d271441b05511ee7906731, type: 3}
+  dialogueOnTutorialStart: {fileID: 4900000, guid: a5cf377e70c0a8742b7602b44eccf512, type: 3}
+  dialogueOnTutorialEnd: {fileID: 4900000, guid: 5bf88b9bfacde1444ad941ab5fefc68d, type: 3}
   shopTrigger: {fileID: 1601157977}
   portalTrigger: {fileID: 104703908}
   chargeZone: {fileID: 2065139154}
@@ -3912,8 +3912,8 @@ MonoBehaviour:
     - rid: 7552618223407202311
       type: {class: ShopScenario, ns: Tutorial.Scenarios, asm: Assembly-CSharp}
       data:
-        dialogueOnShowShop: {fileID: 4900000, guid: b072670bdea3d284c8f9240514b93a07, type: 3}
-        dialogueOnCloseShop: {fileID: 4900000, guid: 338b60497c1450a4bae60e30297a99df, type: 3}
+        dialogueOnShowShop: {fileID: 4900000, guid: e1a0384a65485e64196440768ce320f4, type: 3}
+        dialogueOnCloseShop: {fileID: 4900000, guid: fb9279d75e5c4b343bbb20fcd7ec3cf7, type: 3}
         mainCamera: {fileID: 1274300229}
         shopCamera: {fileID: 1920987629}
         shopTrigger: {fileID: 1601157977}
@@ -3929,8 +3929,8 @@ MonoBehaviour:
         chargerZone: {fileID: 1920764372}
         mainCamera: {fileID: 1274300229}
         chargerZoneCamera: {fileID: 1563225216}
-        showChargerZoneDialogue: {fileID: 4900000, guid: 90191651ed1fcc24cbef9530a32ccdac, type: 3}
-        explainChargerZoneDialogue: {fileID: 4900000, guid: 644db76a690c034468ab6e2ee9b43377, type: 3}
+        showChargerZoneDialogue: {fileID: 4900000, guid: 77421fc76ce582f4388cf42d054aa440, type: 3}
+        explainChargerZoneDialogue: {fileID: 4900000, guid: c30898bdb059c504aa71c8cd316ccab2, type: 3}
         timeBeforeCameraSwitch: 2
         timeBeforeShowZoneDialogue: 1
         timeAfterDialogue: 1
