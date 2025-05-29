@@ -9,7 +9,7 @@ using UnityEngine;
 using Zenject;
 using Random = UnityEngine.Random;
 
-namespace Enemies.EnemyTypes
+namespace Enemies.EnemyTypes.Movements
 {
     [RequireComponent(typeof(Rigidbody2D))]
     public class EnemyMovement: MonoBehaviour
@@ -67,6 +67,7 @@ namespace Enemies.EnemyTypes
         {
             Timer = Random.Range(0f, soundFrequency);
             AIPath.canMove = true;
+            SetMovement(true);
         }
         protected virtual void Update()
         {
@@ -153,6 +154,7 @@ namespace Enemies.EnemyTypes
         private async UniTask DisappearAsync(CancellationToken token)
         {
             IsDying = true;
+            SetMovement(false);
             await UniTask.Delay(TimeSpan.FromSeconds(deathDuration), cancellationToken: token);
             gameObject.SetActive(false);
             OnEnemyDisappeared?.Invoke(gameObject.transform.position);

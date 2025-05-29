@@ -1,6 +1,7 @@
 ﻿using System;
 using Enemies;
 using Enemies.EnemyTypes;
+using Enemies.EnemyTypes.Movements;
 using Player.PlayerCombat;
 using Player.PlayerControl;
 using SoundSystem;

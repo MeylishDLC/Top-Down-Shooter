@@ -4,6 +4,7 @@ using System.Threading;
 using Cysharp.Threading.Tasks;
 using Enemies;
 using Enemies.EnemyTypes;
+using Enemies.EnemyTypes.Movements;
 using Pathfinding;
 using UnityEngine;
 

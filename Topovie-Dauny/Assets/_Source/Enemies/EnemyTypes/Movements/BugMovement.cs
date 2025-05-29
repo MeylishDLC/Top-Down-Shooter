@@ -1,31 +1,24 @@
 ﻿using System;
 using System.Threading;
 using Cysharp.Threading.Tasks;
-using DG.Tweening;
-using FMODUnity;
-using Pathfinding;
-using SoundSystem;
+using Enemies.EnemyTypes.Bug;
 using UnityEngine;
-using Zenject;
-using Random = UnityEngine.Random;
 
-namespace Enemies.EnemyTypes
+namespace Enemies.EnemyTypes.Movements
 {
-    [RequireComponent(typeof(Rigidbody2D))]
-    public class ShooterMovement: EnemyMovement
-    { 
-        private Shooter _shooter;
+    public class BugMovement: EnemyMovement
+    {
+        [SerializeField] private AreaAttacker areaAttacker;
+
         private void Awake()
         {
-            _shooter = GetComponent<Shooter>();
-            _shooter.OnShootTriggered += DoAttack;
+            areaAttacker.OnWarnStarted += DoAttack;
         }
         protected override void OnDestroy()
         {
             base.OnDestroy();
-            _shooter.OnShootTriggered -= DoAttack;
+            areaAttacker.OnWarnStarted -= DoAttack;
         }
-
         protected override void Update()
         {
             if (IsDying)
@@ -35,7 +28,7 @@ namespace Enemies.EnemyTypes
             
             if (AIPath.canMove)
             {
-               HandleFlipping();
+                HandleFlipping();
             }
             if (moveSound.IsNull)
             {
@@ -60,17 +53,8 @@ namespace Enemies.EnemyTypes
             await UniTask.Delay(TimeSpan.FromSeconds(startAttackDuration), cancellationToken: token);
             
             OnAttack?.Invoke();
-            _shooter.Shoot();
 
             await UniTask.Delay(TimeSpan.FromSeconds(remainingAttackDuration), cancellationToken: token);
         }
-        
-#if UNITY_EDITOR
-        private void OnDrawGizmosSelected()
-        {
-            Gizmos.color = Color.red;
-            Gizmos.DrawWireSphere(transform.position, attackRange);
-        }
-#endif
     }
 }

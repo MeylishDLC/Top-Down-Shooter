@@ -15,6 +15,8 @@ namespace Enemies.EnemyTypes.Bug
 {
     public class AreaAttacker: MonoBehaviour
     {
+        public event Action OnWarnStarted;
+        
         [SerializeField] private AIPath aiPath;
         [SerializeField] private EnemyHealth enemyHealth;
         [SerializeField] private ParticleSystem impactParticlesPrefab;
@@ -43,6 +45,7 @@ namespace Enemies.EnemyTypes.Bug
         private PlayerHealth _playerHealth;
         private bool _isPlayerInRange;
         private bool _isWarning;
+        private bool _canDetect = true;
 
         [Inject]
         public void Construct(AudioManager audioManager, BugAreaFaderFactory faderFactory, BugAreaFaderConfig config)
@@ -54,6 +57,7 @@ namespace Enemies.EnemyTypes.Bug
         {
             _isWarning = false;
             _isPlayerInRange = false;
+            _canDetect = true;
         }
         private void Start()
         {
@@ -61,16 +65,22 @@ namespace Enemies.EnemyTypes.Bug
             _playerHealth = enemyHealth.PlayerMovement.GetComponent<PlayerHealth>();
             
             _bugAreaFader.SetupFader(rangeSprite);
-            _bugAreaFader.FadeAreaAsync(FadeType.FadeOut, _destroyCancellationToken).Forget(); 
+            _bugAreaFader.FadeAreaAsync(FadeType.FadeOut, _destroyCancellationToken).Forget();
+            enemyHealth.OnEnemyDied += DisableDetectArea;
         }
         private void OnDestroy()
         {
             _cancelAttackCts?.Cancel();
             _cancelAttackCts?.Dispose();
+            enemyHealth.OnEnemyDied += DisableDetectArea;
         }
 
         private void Update()
         {
+            if (!_canDetect)
+            {
+                return;
+            }
             if (_isPlayerInRange)
             {
                 //area fade in if not already warning
@@ -115,7 +125,7 @@ namespace Enemies.EnemyTypes.Bug
         {
             try
             {
-                //area appear (fade in)
+                OnWarnStarted?.Invoke();
                 _isWarning = true;
                 await _bugAreaFader.FadeAreaAsync(FadeType.FadeIn, token);
                 await UniTask.Delay(TimeSpan.FromSeconds(warningDuration), cancellationToken: token);
@@ -127,7 +137,6 @@ namespace Enemies.EnemyTypes.Bug
                 //
             }
         }
-        
         
         private async UniTask AttackAsync(CancellationToken token)
         {
@@ -165,6 +174,10 @@ namespace Enemies.EnemyTypes.Bug
             _cancelAttackCts?.Cancel();
             _cancelAttackCts?.Dispose();
             _cancelAttackCts = new CancellationTokenSource();
+        }
+        private void DisableDetectArea()
+        {
+            _canDetect = false;
         }
     }
 }

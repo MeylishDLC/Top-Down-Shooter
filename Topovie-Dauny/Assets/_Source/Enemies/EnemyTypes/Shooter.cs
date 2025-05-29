@@ -17,12 +17,23 @@ namespace Enemies.EnemyTypes
         [SerializeField] private ProjectileConfig projectileConfig;
         
         private float _shootTimer;
+        private bool _canShoot = true;
         private Transform _target;
         private ProjectilePool _projectilePool;
+        private EnemyHealth _enemyHealth;
         private void Start()
         {
-            var health = GetComponent<EnemyHealth>();
-            _target = health.PlayerMovement.transform;
+            _enemyHealth = GetComponent<EnemyHealth>();
+            _target = _enemyHealth.PlayerMovement.transform;
+            _enemyHealth.OnEnemyDied += DisableShooting;
+        }
+        private void OnEnable()
+        {
+            _canShoot = true;
+        }
+        private void OnDestroy()
+        {
+            _enemyHealth.OnEnemyDied -= DisableShooting;
         }
         public void InjectPool(ProjectilePool pool)
         {
@@ -30,6 +41,10 @@ namespace Enemies.EnemyTypes
         }
         private void Update()
         {
+            if (!_canShoot)
+            {
+                return;
+            }
             _shootTimer -= Time.deltaTime;
             if (_shootTimer <= 0)
             {
@@ -45,6 +60,10 @@ namespace Enemies.EnemyTypes
                 projectile.transform.position = shootingPoint.position;
                 projectile.Initialize(_target, projectileConfig);
             }
+        }
+        private void DisableShooting()
+        {
+            _canShoot = false;
         }
     }
 }
