@@ -30,11 +30,11 @@ namespace Interactable.HealingStuff
             _playerHealth = playerMovement.GetComponent<PlayerHealth>();
             _dropPercentChance = config.SpawnChancePercent;
 
-            EnemyMovement.OnEnemyDisabled += SpawnOrb;
+            EnemyMovement.OnEnemyDisappeared += SpawnOrb;
         }
         public void CleanUp()
         {
-            EnemyMovement.OnEnemyDisabled -= SpawnOrb;
+            EnemyMovement.OnEnemyDisappeared -= SpawnOrb;
         }
         private bool CanSpawn()
         {

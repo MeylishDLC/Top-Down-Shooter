@@ -223,8 +223,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.20125978, y: -0.3822444}
-  m_Size: {x: 1.7523167, y: 0.9159972}
+  m_Offset: {x: -0.09170378, y: -0.31305045}
+  m_Size: {x: 2.0867774, y: 1.0544056}
   m_Direction: 1
 --- !u!50 &7945991334105029681
 Rigidbody2D:
@@ -357,7 +357,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c65c7eacc9d43a3885c0f295081d4b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyHealth: {fileID: 8671391910095024701}
   moveSound:
     Guid:
       Data1: 0
@@ -367,9 +366,10 @@ MonoBehaviour:
     Path: 
   soundFrequency: 0
   soundDistance: 2
-  colorOnDamageTaken: {r: 0.9725491, g: 0.38823533, b: 0.38823533, a: 1}
-  colorStayDuration: 0.1
-  deathAnimationDuration: 0.25
+  attackRange: 0.54
+  startAttackDuration: 0
+  remainingAttackDuration: 0
+  deathDuration: 0
 --- !u!114 &8671391910095024701
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -614,7 +614,7 @@ CapsuleCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0.11290856, y: -0.46232837}

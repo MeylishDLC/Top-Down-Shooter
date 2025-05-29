@@ -16,65 +16,69 @@ namespace Enemies
     [RequireComponent(typeof(Rigidbody2D))]
     public class EnemyMovement: MonoBehaviour
     {
-        public static event Action<Vector3> OnEnemyDisabled;
-        [SerializeField] private EnemyHealth enemyHealth;
+        public static event Action<Vector3> OnEnemyDisappeared;
+        public event Action OnAttack; 
+        public event Action OnAttackStarted; 
         
         [Header("Sound")]
         [SerializeField] private EventReference moveSound;
         [SerializeField] private float soundFrequency;
         [SerializeField] private float soundDistance = 2f;
+
+        [Header("Attack")] 
+        [SerializeField] private float attackRange = 1.5f;
+        [SerializeField] private float startAttackDuration = 1.5f;
+        [SerializeField] private float remainingAttackDuration = 1.5f;
+        [SerializeField] private float deathDuration = 1.5f;
         
-        [Header("Visual")]
-        [SerializeField] private Color colorOnDamageTaken;
-        [SerializeField] private float colorStayDuration = 0.1f;
-        [SerializeField] private float deathAnimationDuration = 0.5f;
-        
+        private EnemyHealth _enemyHealth;
         private AIPath _aiPath;
         private Rigidbody2D _rb;
-        
-        private SpriteRenderer _enemyRenderer;
-        private CancellationToken _deathCancellationToken;
         private Transform _playerTransform;
         
         private AudioManager _audioManager;
+        private CancellationToken _ctOnDestroy;
         private float _timer;
         private float _initScale;
+        
         private bool _isFacingRight;
+        private bool _isAttacking;
+        private bool _isDying;
 
         [Inject]
         public void Construct(AudioManager audioManager)
         {
             _audioManager = audioManager;
-        }
-        private void Awake()
-        {
             _aiPath = GetComponent<AIPath>();
             _rb = GetComponent<Rigidbody2D>();
-            _enemyRenderer = GetComponent<SpriteRenderer>();
-            
-            //todo tf is this shit??? fix or smth
-            _enemyRenderer.sortingOrder = Random.Range (0, 100);
-            _deathCancellationToken = this.GetCancellationTokenOnDestroy();
+            _enemyHealth = GetComponent<EnemyHealth>();
             
             _initScale = transform.localScale.x;
-            SubscribeOnEvents();
+            _ctOnDestroy = this.GetCancellationTokenOnDestroy();
+
+            _enemyHealth.OnEnemyDied += Disappear;
+        }
+        private void OnDestroy()
+        {
+            _enemyHealth.OnEnemyDied -= Disappear;
         }
         private void OnEnable()
         {
             _timer = Random.Range(0f, soundFrequency);
             _aiPath.canMove = true;
         }
-        private void OnDestroy()
-        {
-            UnsubscribeOnEvents();
-        }
         private void Update()
         {
+            if (_isDying)
+            {
+                return;
+            }
+            
             if (_aiPath.canMove)
             {
                HandleFlipping();
             }
-            
+            AttackPlayerInRange();
             if (moveSound.IsNull)
             {
                 return;
@@ -86,6 +90,30 @@ namespace Enemies
                     _playerTransform.position, soundDistance);
                 _timer = 0;
             }
+        }
+        private void AttackPlayerInRange()
+        {
+            if (_isAttacking || !_playerTransform)
+            {
+                return;
+            }
+
+            var distanceToPlayer = Vector2.Distance(transform.position, _playerTransform.position);
+            if (distanceToPlayer <= attackRange)
+            {
+                DoAttackAsync(_ctOnDestroy).Forget();
+            }
+        }
+        private async UniTask DoAttackAsync(CancellationToken token)
+        {
+            OnAttackStarted?.Invoke();
+            _isAttacking = true;
+            await UniTask.Delay(TimeSpan.FromSeconds(startAttackDuration), cancellationToken: token);
+            
+            OnAttack?.Invoke();
+
+            await UniTask.Delay(TimeSpan.FromSeconds(remainingAttackDuration), cancellationToken: token);
+            _isAttacking = false;
         }
         public void SetDestination(Transform playerTransform)
         {
@@ -116,37 +144,25 @@ namespace Enemies
             var newScaleX = _isFacingRight ? -_initScale : _initScale;
             transform.DOScaleX(newScaleX, 0f);
         }
-        private void ShowEnemyDeath()
+        private void Disappear()
         {
-            ShowEnemyDeathAsync(_deathCancellationToken).Forget();
-            OnEnemyDisabled?.Invoke(gameObject.transform.position);
+            DisappearAsync(_ctOnDestroy).Forget();
         }
-        private void ChangeColorOnDamageTaken()
+        private async UniTask DisappearAsync(CancellationToken token)
         {
-            ChangeColorOnDamageTakenAsync(_deathCancellationToken).Forget();
-        }
-        private async UniTask ChangeColorOnDamageTakenAsync(CancellationToken token)
-        {
-            _enemyRenderer.color = colorOnDamageTaken;
-            await UniTask.Delay(TimeSpan.FromSeconds(colorStayDuration), cancellationToken: token);
-            _enemyRenderer.color = Color.white;
-        }
-        private async UniTask ShowEnemyDeathAsync(CancellationToken token)
-        {
-            _aiPath.canMove = false;
-            await _enemyRenderer.DOFade(0f, deathAnimationDuration).ToUniTask(cancellationToken: token);
+            _isDying = true;
+            await UniTask.Delay(TimeSpan.FromSeconds(deathDuration), cancellationToken: token);
             gameObject.SetActive(false);
-            await _enemyRenderer.DOFade(1f, 0).ToUniTask(cancellationToken: token);
+            OnEnemyDisappeared?.Invoke(gameObject.transform.position);
+            _isDying = false;
         }
-        private void SubscribeOnEvents()
+        
+#if UNITY_EDITOR
+        private void OnDrawGizmosSelected()
         {
-            enemyHealth.OnDamageTaken += ChangeColorOnDamageTaken;
-            enemyHealth.OnEnemyDied += ShowEnemyDeath;
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(transform.position, attackRange);
         }
-        private void UnsubscribeOnEvents()
-        {
-            enemyHealth.OnDamageTaken -= ChangeColorOnDamageTaken;
-            enemyHealth.OnEnemyDied -= ShowEnemyDeath;
-        }
+#endif
     }
 }

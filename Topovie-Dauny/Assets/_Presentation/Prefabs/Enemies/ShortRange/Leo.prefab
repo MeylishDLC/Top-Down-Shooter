@@ -408,7 +408,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c65c7eacc9d43a3885c0f295081d4b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyHealth: {fileID: 3686213671687945947}
   moveSound:
     Guid:
       Data1: 61639807
@@ -418,9 +417,10 @@ MonoBehaviour:
     Path: event:/SFX/Enemies/Leo
   soundFrequency: 2.5
   soundDistance: 5
-  colorOnDamageTaken: {r: 0.9725491, g: 0.38823533, b: 0.38823533, a: 1}
-  colorStayDuration: 0.1
-  deathAnimationDuration: 0.25
+  attackRange: 1.5
+  startAttackDuration: 0
+  remainingAttackDuration: 0
+  deathDuration: 0
 --- !u!114 &3686213671687945947
 MonoBehaviour:
   m_ObjectHideFlags: 0
