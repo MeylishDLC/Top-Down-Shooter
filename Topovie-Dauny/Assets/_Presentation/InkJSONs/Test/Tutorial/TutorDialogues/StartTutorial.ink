@@ -37,3 +37,6 @@
 #speaker:Рина #sprite:rina_happy #layout:right
 #speaker:Рина #sprite:rina_serious #layout:right
 #speaker:Рина #sprite:rina_angry #layout:right
+
+
+
