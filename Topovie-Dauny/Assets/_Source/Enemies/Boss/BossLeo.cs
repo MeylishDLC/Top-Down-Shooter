@@ -26,9 +26,7 @@ namespace Enemies.Boss
         [SerializeField] private BossHealth bossHealth;
         
         [Header("Visual")]
-        [SerializeField] private SpriteRenderer headRenderer;
-        [SerializeField] private Sprite attackSprite;
-        [SerializeField] private Sprite vulnerableSprite;
+        [SerializeField] private Animator leoAnimator;
         [SerializeField] private float hurtDuration;
         
         [Header("Cam Settings")]
@@ -52,8 +50,8 @@ namespace Enemies.Boss
         }
         private void Start()
         {
-            _bossLeoVisual = new BossLeoVisual(headRenderer, attackSprite, vulnerableSprite, hurtDuration, _destroyCancellationToken);
-            bossHealth.OnDamageTaken += _bossLeoVisual.ShowLeoHurt;
+            _bossLeoVisual = new BossLeoVisual(leoAnimator, hurtDuration, _destroyCancellationToken);
+            bossHealth.OnDamageTaken += _bossLeoVisual.PlayHurtAnimation;
             
             _destroyCancellationToken = this.GetCancellationTokenOnDestroy();
             bossHealth.OnPhaseFinished += EndPhase;
@@ -63,7 +61,7 @@ namespace Enemies.Boss
         private void OnDestroy()
         {
             bossHealth.OnPhaseFinished -= EndPhase;
-            bossHealth.OnDamageTaken -= _bossLeoVisual.ShowLeoHurt;
+            bossHealth.OnDamageTaken -= _bossLeoVisual.PlayHurtAnimation;
             gameOverScreen.OnScreenFaded -= DestroyOnGameOver;
         }
         private void StartFight()
@@ -97,7 +95,7 @@ namespace Enemies.Boss
             if (_currentPhaseIndex >= phaseDialoguePair.Count)
             {
                 _statesChanger.ChangeState(GameStates.PortalCharged);
-                _bossLeoVisual.SetLeoHurt();
+                //_bossLeoVisual.SetLeoHurt();
                 OnBossDefeated?.Invoke();
                 return;
             }

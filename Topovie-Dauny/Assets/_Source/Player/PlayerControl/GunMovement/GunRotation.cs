@@ -1,6 +1,7 @@
 ﻿using System;
 using DialogueSystem;
 using GameEnvironment.ShopLogic.UIShop;
+using Player.PlayerCombat;
 using UnityEngine;
 using Zenject;
 
@@ -9,7 +10,7 @@ namespace Player.PlayerControl.GunMovement
     public class GunRotation : MonoBehaviour
     {
         public SpriteRenderer CurrentGun { get; set; }
-
+        
         [SerializeField] private GameObject front;
         [SerializeField] private GameObject left;
         [SerializeField] private GameObject right;
@@ -17,16 +18,34 @@ namespace Player.PlayerControl.GunMovement
 
         private Shop _shop;
         private DialogueManager _dialogueManager;
-
+        private PlayerHealth _playerHealth;
+        
+        private bool _canRotate = true;
+        
         [Inject]
-        public void Construct(DialogueManager dialogueManager, Shop shop)
+        public void Construct(DialogueManager dialogueManager, Shop shop, PlayerMovement playerMovement)
         {
             _dialogueManager = dialogueManager;
+            _playerHealth = playerMovement.GetComponent<PlayerHealth>();
             _shop = shop;
+        }
+
+        private void Awake()
+        {
+            _playerHealth.OnDeath += DisableRotate;
+        }
+
+        private void OnDestroy()
+        {
+            _playerHealth.OnDeath -= DisableRotate;
         }
 
         private void FixedUpdate()
         {
+            if (!_canRotate)
+            {
+                return;
+            }
             if (_shop.IsShopOpen() || _dialogueManager.DialogueIsPlaying)
             {
                 return;
@@ -126,6 +145,10 @@ namespace Player.PlayerControl.GunMovement
             obj.transform.localScale = scale;
         }
 
+        private void DisableRotate()
+        {
+            _canRotate = false;
+        }
         private enum Sides
         {
             Front,

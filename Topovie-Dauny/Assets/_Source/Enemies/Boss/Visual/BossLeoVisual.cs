@@ -7,36 +7,34 @@ namespace Enemies.Boss.Visual
 {
     public class BossLeoVisual
     {
-        private readonly SpriteRenderer _spriteRenderer;
-        private readonly Sprite _attackSprite;
-        private readonly Sprite _vulnerableSprite;
+        private static readonly int IsHit = Animator.StringToHash("isHit");
+        private readonly Animator _animator;
         private readonly float _hurtDuration;
-        private CancellationToken _ct;
-        public BossLeoVisual(SpriteRenderer spriteRenderer, Sprite attackSprite, Sprite vulnerableSprite, float hurtDuration,
+        private readonly CancellationToken _ct;
+        
+        private bool _isAnimationPlaying;
+        public BossLeoVisual(Animator animator, float hurtDuration,
             CancellationToken ct)
         {
-            _spriteRenderer = spriteRenderer;
-            _attackSprite = attackSprite;
-            _vulnerableSprite = vulnerableSprite;
+            _animator = animator;
             _hurtDuration = hurtDuration;
-            _spriteRenderer.sprite = _attackSprite;
             _ct = ct;
         }
-
-        public void ShowLeoHurt()
+        public void PlayHurtAnimation()
         {
-            ShowLeoHurtAsync(_ct).Forget();
+            if (_isAnimationPlaying)
+            {
+                return;
+            }
+            PlayHurtAnimationAsync(_ct).Forget();
         }
-
-        public void SetLeoHurt()
+        private async UniTask PlayHurtAnimationAsync(CancellationToken token)
         {
-            _spriteRenderer.sprite = _vulnerableSprite;
-        }
-        private async UniTask ShowLeoHurtAsync(CancellationToken token)
-        {
-            _spriteRenderer.sprite = _vulnerableSprite;
+            _isAnimationPlaying = true;
+            _animator.SetTrigger(IsHit);
+            
             await UniTask.Delay(TimeSpan.FromSeconds(_hurtDuration), cancellationToken: token);
-            _spriteRenderer.sprite = _attackSprite;
+            _isAnimationPlaying = false;
         }
     }
 }
