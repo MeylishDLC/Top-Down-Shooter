@@ -120,7 +120,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyHealth: {fileID: 4717691597737457436}
-  enemyMovement: {fileID: 269334757122339233}
+  enemyMovement: {fileID: 406664757525414805}
   colorOnDamageTaken: {r: 1, g: 0, b: 0, a: 1}
   colorStayDuration: 0.1
 --- !u!1 &4864280238637272457
@@ -218,9 +218,9 @@ GameObject:
   - component: {fileID: 2482403260505108173}
   - component: {fileID: 2460412579002837827}
   - component: {fileID: 6066935771954610813}
-  - component: {fileID: 269334757122339233}
   - component: {fileID: 4717691597737457436}
   - component: {fileID: 478919944582719845}
+  - component: {fileID: 406664757525414805}
   m_Layer: 15
   m_Name: MuzhikShooter
   m_TagString: Untagged
@@ -244,6 +244,7 @@ Transform:
   - {fileID: 9026986227438807593}
   - {fileID: 924380968568100378}
   - {fileID: 901957850472734134}
+  - {fileID: 7946214863031730028}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!70 &5070432791477617006
@@ -400,31 +401,6 @@ MonoBehaviour:
   version: 1073741824
   target: {fileID: 0}
   useRotation: 0
---- !u!114 &269334757122339233
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7292485630082978289}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2c65c7eacc9d43a3885c0f295081d4b0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  moveSound:
-    Guid:
-      Data1: -502999720
-      Data2: 1173792372
-      Data3: 1201964722
-      Data4: -1440030995
-    Path: event:/SFX/Enemies/MenShooting
-  soundFrequency: 2.5
-  soundDistance: 5
-  attackRange: 0.55
-  startAttackDuration: 0
-  remainingAttackDuration: 0
-  deathDuration: 0
 --- !u!114 &4717691597737457436
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -437,7 +413,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6f14e666d8a48a88fb19fab3b624f8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyMovement: {fileID: 269334757122339233}
+  enemyMovement: {fileID: 406664757525414805}
   maxHealth: 15
 --- !u!114 &478919944582719845
 MonoBehaviour:
@@ -451,9 +427,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 130ceff1877d4e1bad4df74612db67b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shootingPoint: {fileID: 7946214863031730028}
   minShootRate: 1
   maxShootRate: 2
   projectileConfig: {fileID: 11400000, guid: 4609a5013e3ab514c8b44087aa18baa0, type: 2}
+--- !u!114 &406664757525414805
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7292485630082978289}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c33588f33e2e4ad6aaa39181658f8795, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSound:
+    Guid:
+      Data1: -502999720
+      Data2: 1173792372
+      Data3: 1201964722
+      Data4: -1440030995
+    Path: event:/SFX/Enemies/MenShooting
+  soundFrequency: 2.5
+  soundDistance: 5
+  attackRange: 0.55
+  startAttackDuration: 0.5
+  remainingAttackDuration: 0.5
+  deathDuration: 0.9
 --- !u!1 &8147804419320651098
 GameObject:
   m_ObjectHideFlags: 0
@@ -521,3 +523,34 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0.02}
   m_Size: {x: 1.97, y: 3.23}
   m_Direction: 0
+--- !u!1 &8464872968666009923
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7946214863031730028}
+  m_Layer: 15
+  m_Name: ShootingPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 8418204508859773708, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7946214863031730028
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8464872968666009923}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.44, y: 0.76, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7920992520623383771}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

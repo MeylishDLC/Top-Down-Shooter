@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using Cysharp.Threading.Tasks;
+using Enemies.EnemyTypes;
 using UnityEngine;
 using Random = UnityEngine.Random;
 

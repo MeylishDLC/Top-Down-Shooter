@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Threading;
-using _Support.Demigiant.DOTween.Modules;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
-using Enemies.Combat;
 using FMODUnity;
 using Pathfinding;
 using SoundSystem;
@@ -11,70 +9,73 @@ using UnityEngine;
 using Zenject;
 using Random = UnityEngine.Random;
 
-namespace Enemies
+namespace Enemies.EnemyTypes
 {
     [RequireComponent(typeof(Rigidbody2D))]
     public class EnemyMovement: MonoBehaviour
     {
         public static event Action<Vector3> OnEnemyDisappeared;
-        public event Action OnAttack; 
-        public event Action OnAttackStarted; 
+        public Action OnAttack; 
+        public Action OnAttackStarted; 
         
         [Header("Sound")]
-        [SerializeField] private EventReference moveSound;
-        [SerializeField] private float soundFrequency;
-        [SerializeField] private float soundDistance = 2f;
+        [SerializeField]
+        protected EventReference moveSound;
+        [SerializeField] protected float soundFrequency;
+        [SerializeField] protected float soundDistance = 2f;
 
         [Header("Attack")] 
-        [SerializeField] private float attackRange = 1.5f;
-        [SerializeField] private float startAttackDuration = 1.5f;
-        [SerializeField] private float remainingAttackDuration = 1.5f;
+        [SerializeField]
+        protected float attackRange = 1.5f;
+        [SerializeField] protected float startAttackDuration = 1.5f;
+        [SerializeField] protected float remainingAttackDuration = 1.5f;
         [SerializeField] private float deathDuration = 1.5f;
         
+        protected float Timer;
+
+        protected AIPath AIPath;
+        protected Transform PlayerTransform;
+        protected AudioManager AudioManager;
+        protected CancellationToken CtOnDestroy;
+        
         private EnemyHealth _enemyHealth;
-        private AIPath _aiPath;
         private Rigidbody2D _rb;
-        private Transform _playerTransform;
         
-        private AudioManager _audioManager;
-        private CancellationToken _ctOnDestroy;
-        private float _timer;
         private float _initScale;
-        
         private bool _isFacingRight;
         private bool _isAttacking;
-        private bool _isDying;
+        protected bool IsDying;
 
         [Inject]
         public void Construct(AudioManager audioManager)
         {
-            _audioManager = audioManager;
-            _aiPath = GetComponent<AIPath>();
+            AudioManager = audioManager;
+            AIPath = GetComponent<AIPath>();
             _rb = GetComponent<Rigidbody2D>();
             _enemyHealth = GetComponent<EnemyHealth>();
             
             _initScale = transform.localScale.x;
-            _ctOnDestroy = this.GetCancellationTokenOnDestroy();
+            CtOnDestroy = this.GetCancellationTokenOnDestroy();
 
             _enemyHealth.OnEnemyDied += Disappear;
         }
-        private void OnDestroy()
+        protected virtual void OnDestroy()
         {
             _enemyHealth.OnEnemyDied -= Disappear;
         }
         private void OnEnable()
         {
-            _timer = Random.Range(0f, soundFrequency);
-            _aiPath.canMove = true;
+            Timer = Random.Range(0f, soundFrequency);
+            AIPath.canMove = true;
         }
-        private void Update()
+        protected virtual void Update()
         {
-            if (_isDying)
+            if (IsDying)
             {
                 return;
             }
             
-            if (_aiPath.canMove)
+            if (AIPath.canMove)
             {
                HandleFlipping();
             }
@@ -83,25 +84,25 @@ namespace Enemies
             {
                 return;
             }
-            _timer += Time.deltaTime;
-            if (_timer >= soundFrequency)
+            Timer += Time.deltaTime;
+            if (Timer >= soundFrequency)
             {
-                _audioManager.PlayOneShot(moveSound, gameObject.transform.position, 
-                    _playerTransform.position, soundDistance);
-                _timer = 0;
+                AudioManager.PlayOneShot(moveSound, gameObject.transform.position, 
+                    PlayerTransform.position, soundDistance);
+                Timer = 0;
             }
         }
         private void AttackPlayerInRange()
         {
-            if (_isAttacking || !_playerTransform)
+            if (_isAttacking || !PlayerTransform)
             {
                 return;
             }
 
-            var distanceToPlayer = Vector2.Distance(transform.position, _playerTransform.position);
+            var distanceToPlayer = Vector2.Distance(transform.position, PlayerTransform.position);
             if (distanceToPlayer <= attackRange)
             {
-                DoAttackAsync(_ctOnDestroy).Forget();
+                DoAttackAsync(CtOnDestroy).Forget();
             }
         }
         private async UniTask DoAttackAsync(CancellationToken token)
@@ -117,18 +118,19 @@ namespace Enemies
         }
         public void SetDestination(Transform playerTransform)
         {
-            _playerTransform = playerTransform;
+            PlayerTransform = playerTransform;
             var destinationSetter = GetComponent<AIDestinationSetter>();
-            destinationSetter.target = _playerTransform;
+            destinationSetter.target = PlayerTransform;
         }
         public void SetMovement(bool canMove)
         {
-            _aiPath.canMove = canMove;
+            AIPath.canMove = canMove;
             _rb.bodyType = canMove ? RigidbodyType2D.Dynamic : RigidbodyType2D.Static;
         }
-        private void HandleFlipping()
+
+        protected void HandleFlipping()
         {
-            var directionToTarget = _playerTransform.position.x - transform.position.x;
+            var directionToTarget = PlayerTransform.position.x - transform.position.x;
             if (directionToTarget > 0 && !_isFacingRight)
             {
                 Flip(); 
@@ -146,15 +148,15 @@ namespace Enemies
         }
         private void Disappear()
         {
-            DisappearAsync(_ctOnDestroy).Forget();
+            DisappearAsync(CtOnDestroy).Forget();
         }
         private async UniTask DisappearAsync(CancellationToken token)
         {
-            _isDying = true;
+            IsDying = true;
             await UniTask.Delay(TimeSpan.FromSeconds(deathDuration), cancellationToken: token);
             gameObject.SetActive(false);
             OnEnemyDisappeared?.Invoke(gameObject.transform.position);
-            _isDying = false;
+            IsDying = false;
         }
         
 #if UNITY_EDITOR

@@ -1,4 +1,5 @@
-﻿using Player.PlayerCombat;
+﻿using Enemies.EnemyTypes;
+using Player.PlayerCombat;
 using UnityEngine;
 
 namespace Enemies.Combat

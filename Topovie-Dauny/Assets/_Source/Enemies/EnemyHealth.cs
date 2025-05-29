@@ -1,6 +1,7 @@
 ﻿using System;
 using Core.PoolingSystem;
 using Enemies.Combat;
+using Enemies.EnemyTypes;
 using Player.PlayerControl;
 using UnityEngine;
 using Zenject;
