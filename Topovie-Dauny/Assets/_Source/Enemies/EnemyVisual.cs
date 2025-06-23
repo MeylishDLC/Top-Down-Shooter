@@ -33,6 +33,10 @@ namespace Enemies
             _spriteRenderer.sortingOrder = Random.Range (0, 100);
             SubscribeOnEvents();
         }
+        private void OnEnable()
+        {
+            _spriteRenderer.DOFade(1f, 0f);
+        }
         private void OnDestroy()
         {
             UnsubscribeOnEvents();
