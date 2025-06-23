@@ -58,8 +58,11 @@ namespace Player.PlayerCombat
                 return;
             }
             _canTakeDamage = false;
+            
             CurrentHealth -= damageAmount;
             OnDamageTaken?.Invoke(damageAmount);
+            
+            _audioManager.PlayOneShot(_audioManager.FMODEvents.PlayerHitSound);
             
             RecoverFromDamageAsync(_deathCancellationToken).Forget();
             CheckIfDead();
@@ -71,8 +74,10 @@ namespace Player.PlayerCombat
                 return;
             }
             _canTakeDamage = false;
+            
             CurrentHealth -= damageAmount;
             OnDamageTaken?.Invoke(damageAmount);
+            
             _audioManager.PlayOneShot(_audioManager.FMODEvents.PlayerHitSound);
             _knockBack.GetKnockedBack(damageSource);
             
@@ -112,6 +117,7 @@ namespace Player.PlayerCombat
             if (CurrentHealth <= 0)
             {
                 OnDeath?.Invoke();
+                SetCanTakeDamage(false);
             }
         }
     }

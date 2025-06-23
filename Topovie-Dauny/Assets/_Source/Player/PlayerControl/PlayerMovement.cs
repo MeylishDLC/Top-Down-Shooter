@@ -5,6 +5,7 @@ using Cysharp.Threading.Tasks;
 using DialogueSystem;
 using GameEnvironment.ShopLogic.UIShop;
 using Player.PlayerCombat;
+using Player.PlayerControl.GunMovement;
 using UnityEngine;
 using Zenject;
 
@@ -14,69 +15,78 @@ namespace Player.PlayerControl
     public class PlayerMovement : MonoBehaviour
     {
         public event Action OnPlayerDeathEnd;
-        
-        private static readonly int isWalking = Animator.StringToHash("isWalking");
-        private static readonly int isRolling = Animator.StringToHash("isRolling");
-        private static readonly int isDead = Animator.StringToHash("isDead");
         public float MovementSpeed { get; private set; }
 
         [SerializeField] private Animator[] sides;
         [SerializeField] private PlayerHealth playerHealth;
+        [SerializeField] private GunRotation gunRotation;
 
-        private PlayerConfig _playerConfig;
+        private float _dodgeSpeed;
+        private float _dodgeTime;
+        private bool _dodgeRoll;
         
         private Vector2 _direction;
-        private bool _dodgeRoll;
-        private bool _canRoll = true;
         private float _horizontal;
         private float _vertical;
+
+        private bool _isDying;
+        private float _playerDeathDuration;
+        
+        private CancellationToken _ctOnDestroy;
+        private PlayerView _playerView;
 
         private Rigidbody2D _rb;
         private Shop _shop;
         private InputListener _inputListener;
         private DialogueManager _dialogueManager;
-
-        private CancellationToken _ctOnDestroy;
         
         [Inject]
         public void Construct(InputListener inputListener, DialogueManager dialogueManager, Shop shop, PlayerConfig playerConfig)
         {
-            _playerConfig = playerConfig;
+            MovementSpeed = playerConfig.MovementSpeed;
+            _dodgeSpeed = playerConfig.DodgeSpeed;
+            _dodgeTime = playerConfig.DodgeTime;
+            _playerDeathDuration = playerConfig.PlayerDeathAnimationDuration;
+            
             _inputListener = inputListener;
             _dialogueManager = dialogueManager;
             _shop = shop;
         }
         private void Awake()
         {
-            MovementSpeed = _playerConfig.MovementSpeed;
+            //TODO MOVE TO INSTALLER
+            _playerView = new PlayerView(sides);
+            
             _ctOnDestroy = this.GetCancellationTokenOnDestroy();
             
             _rb = gameObject.GetComponent<Rigidbody2D>();
             _inputListener.OnRollPressed += HandleRolling;
-            playerHealth.OnDeath += PlayDeathAnimation;
+            playerHealth.OnDeath += Die;
+            
+            _isDying = false;
         }
         private void OnDestroy()
         {
             _inputListener.OnRollPressed -= HandleRolling;
-            playerHealth.OnDeath -= PlayDeathAnimation;
+            playerHealth.OnDeath -= Die;
         }
         private void Update()
         {
-            if (_dialogueManager.DialogueIsPlaying || _shop.IsShopOpen())
+            if (_dialogueManager.DialogueIsPlaying || _shop.IsShopOpen() || _isDying)
             {
-                DisableMovement();
+                ForceDisableMovement();
             }
             else
             {
-                EnableMovement();
+                ForceEnableMovement();
             }
             
             if (!_dialogueManager.DialogueIsPlaying && !playerHealth.IsKnockedBack &&
-                !_shop.IsShopOpen())
+                !_shop.IsShopOpen() && !_isDying)
             {
                 if (_dodgeRoll)
                 {
-                    _rb.AddForce(_direction * _playerConfig.DodgeSpeed);
+                    _rb.AddForce(_direction * _dodgeSpeed);
                 }
                 HandleMovement();
             }
@@ -100,76 +110,83 @@ namespace Player.PlayerControl
 
             if (_horizontal > 0 || _horizontal < 0 || _vertical < 0 || _vertical > 0)
             {
-                _canRoll = true;
-                foreach (var side in sides)
-                {
-                    if (side.gameObject.activeSelf)
-                    {
-                        side.SetBool(isWalking, true);
-                    }
-                }
+                _playerView.HandleWalkingAnimation(true);
             }
             else
             {
-                _canRoll = false;
-                foreach (var side in sides)
-                {
-                    if (side.gameObject.activeSelf)
-                    {
-                        side.SetBool(isWalking, false);
-                    }
-                }
+                _playerView.HandleWalkingAnimation(false);
             }
 
             _direction = new Vector2(_horizontal, _vertical);
         }
         private void HandleRolling()
         {
-            if (!_canRoll)
+            if (!CanRoll())
             {
                 return;
             }
-            if (!CheckRolling.IsRolling)
-            {
-                foreach (var side in sides)
-                {
-                    if (side.gameObject.activeSelf)
-                    {
-                        side.SetTrigger(isRolling);
-                    }
+            
+            _playerView.PlayRollAnimation();
+            RollAsync(_ctOnDestroy).Forget();
+        }
 
-                    RollAsync(_ctOnDestroy).Forget();
-                }
+        private bool CanRoll()
+        {
+            if (CheckRolling.IsRolling)
+            {
+                return false;
             }
+            if (_rb.bodyType == RigidbodyType2D.Static)
+            {
+                return false;
+            }
+            if (_horizontal == 0 && _vertical == 0)
+            {
+                return false;
+            }
+            return true;
         }
         private async UniTask RollAsync(CancellationToken token)
         {
             _dodgeRoll = true;
-            await UniTask.Delay(TimeSpan.FromSeconds(_playerConfig.DodgeTime), cancellationToken: token);
+            await UniTask.Delay(TimeSpan.FromSeconds(_dodgeTime), cancellationToken: token);
             _dodgeRoll = false;
         }
-        private void DisableMovement()
+        private void ForceDisableMovement()
         {
             _rb.bodyType = RigidbodyType2D.Static;
-            _canRoll = false;
         }
-        private void EnableMovement()
+        private void ForceEnableMovement()
         {
             _rb.bodyType = RigidbodyType2D.Dynamic;
-            _canRoll = true;
         }
-        private void PlayDeathAnimation()
+        private void Die()
         {
-            DisableMovement();
-            playerHealth.OnDeath -= PlayDeathAnimation;
-            foreach (var side in sides)
+            DieAsync(_ctOnDestroy).Forget();
+        }
+        private async UniTask DieAsync(CancellationToken token)
+        {
+            playerHealth.OnDeath -= Die;
+            
+            _isDying = true;
+            ForceDisableMovement();
+            _inputListener.SetInput(false, true);
+            
+            //TODO DISABLE GUN MOVEMENT
+            
+            _playerView.PlayDeathAnimation();
+            try
             {
-                if (side.gameObject.activeSelf)
-                {
-                    side.SetTrigger(isDead);
-                }
-                UniTask.Delay(TimeSpan.FromSeconds(_playerConfig.PlayerDeathAnimationDuration), 
-                    cancellationToken: _ctOnDestroy).ContinueWith(() => OnPlayerDeathEnd?.Invoke()).Forget();
+                await UniTask.Delay(TimeSpan.FromSeconds(_playerDeathDuration),
+                    cancellationToken: _ctOnDestroy);
+            }
+            catch (OperationCanceledException)
+            {
+                //
+            }
+            finally
+            {
+                OnPlayerDeathEnd?.Invoke();
             }
         }
     }

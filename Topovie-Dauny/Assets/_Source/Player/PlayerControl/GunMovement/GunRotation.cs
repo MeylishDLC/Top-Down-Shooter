@@ -20,33 +20,17 @@ namespace Player.PlayerControl.GunMovement
         private DialogueManager _dialogueManager;
         private PlayerHealth _playerHealth;
         
-        private bool _canRotate = true;
-        
         [Inject]
         public void Construct(DialogueManager dialogueManager, Shop shop, PlayerMovement playerMovement)
         {
             _dialogueManager = dialogueManager;
-            _playerHealth = playerMovement.GetComponent<PlayerHealth>();
             _shop = shop;
-        }
-
-        private void Awake()
-        {
-            _playerHealth.OnDeath += DisableRotate;
-        }
-
-        private void OnDestroy()
-        {
-            _playerHealth.OnDeath -= DisableRotate;
+            _playerHealth = playerMovement.GetComponent<PlayerHealth>();
         }
 
         private void FixedUpdate()
         {
-            if (!_canRotate)
-            {
-                return;
-            }
-            if (_shop.IsShopOpen() || _dialogueManager.DialogueIsPlaying)
+            if (!CanRotate())
             {
                 return;
             }
@@ -144,10 +128,17 @@ namespace Player.PlayerControl.GunMovement
             scale.y = flipY ? -Mathf.Abs(scale.y) : Mathf.Abs(scale.y);
             obj.transform.localScale = scale;
         }
-
-        private void DisableRotate()
+        private bool CanRotate()
         {
-            _canRotate = false;
+            if (_shop.IsShopOpen() || _dialogueManager.DialogueIsPlaying)
+            {
+                return false;
+            }
+            if (_playerHealth.CurrentHealth <= 0)
+            {
+                return false;
+            }
+            return true;
         }
         private enum Sides
         {

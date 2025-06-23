@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading;
+using _Support.Demigiant.DOTween.Modules;
 using Cysharp.Threading.Tasks;
 using Enemies.EnemyTypes;
 using Enemies.EnemyTypes.Movements;
@@ -16,6 +17,7 @@ namespace Enemies
         [Header("Visual")]
         [SerializeField] private Color colorOnDamageTaken = Color.red;
         [SerializeField] private float colorStayDuration = 0.1f;
+        [SerializeField] private float deathAnimationDuration = 1.5f;
         
         private static readonly int AttackProperty = Animator.StringToHash("onAttack");
         private static readonly int OnDeath = Animator.StringToHash("onDeath");
@@ -41,7 +43,7 @@ namespace Enemies
         }
         private void TriggerDeathAnimation()
         {
-            _animator.SetTrigger(OnDeath);
+            FadeOnDeath(_ctOnDeath).Forget();
         }
         private void ChangeColorOnDamageTaken()
         {
@@ -52,6 +54,12 @@ namespace Enemies
             _spriteRenderer.color = colorOnDamageTaken;
             await UniTask.Delay(TimeSpan.FromSeconds(colorStayDuration), cancellationToken: token);
             _spriteRenderer.color = Color.white;
+        }
+
+        private async UniTask FadeOnDeath(CancellationToken token)
+        {
+            _animator.SetTrigger(OnDeath);
+            await _spriteRenderer.DOFade(0f, deathAnimationDuration).ToUniTask(cancellationToken: token);
         }
         private void SubscribeOnEvents()
         {

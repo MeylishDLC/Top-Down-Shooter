@@ -8,18 +8,16 @@ namespace Player.PlayerControl.GunMovement
     {
         private Vector3 _targetPosition;
         private Vector3 _initialPosition;
-        private float _kickbackStartTime;
-        private float _kickbackDistance;
-        private float _kickbackDuration;
+        private readonly float _kickbackDistance;
+        private readonly float _kickbackDuration;
 
-        private Transform _kickbackTransform;
-        private Transform _weaponTransform;
+        private readonly Transform _kickbackTransform;
+        private readonly Transform _weaponTransform;
         
         public PlayerKickback(float kickbackDistance, float kickbackDuration, Transform weaponTransform, Transform kickbackTransform)
         {
             _weaponTransform = weaponTransform;
             _kickbackTransform = kickbackTransform;
-            
             
             _kickbackDistance = kickbackDistance;
             _kickbackDuration = kickbackDuration;
@@ -31,7 +29,6 @@ namespace Player.PlayerControl.GunMovement
 
             _initialPosition = _kickbackTransform.position;
             _targetPosition = _initialPosition + kickbackDirection * _kickbackDistance;
-            _kickbackStartTime = Time.time;
 
             await HandleKickbackAsync(token);
         }

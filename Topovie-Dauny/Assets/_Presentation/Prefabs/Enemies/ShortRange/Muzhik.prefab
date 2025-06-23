@@ -301,7 +301,7 @@ MonoBehaviour:
   attackRange: 0.5
   startAttackDuration: 0.6
   remainingAttackDuration: 0.4
-  deathDuration: 0.5
+  deathDuration: 0.6
 --- !u!114 &3686213671687945947
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -439,6 +439,7 @@ MonoBehaviour:
   enemyMovement: {fileID: 4234370524342323861}
   colorOnDamageTaken: {r: 1, g: 0, b: 0, a: 1}
   colorStayDuration: 0.1
+  deathAnimationDuration: 0.6
 --- !u!1 &8879187081392620469
 GameObject:
   m_ObjectHideFlags: 0

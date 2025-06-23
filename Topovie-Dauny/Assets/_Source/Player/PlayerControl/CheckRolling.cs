@@ -12,7 +12,6 @@ namespace Player.PlayerControl
         public void RollEnd()
         {
             IsRolling = false;
-            transform.Rotate(0, 0, 0);
         }
     }
 }

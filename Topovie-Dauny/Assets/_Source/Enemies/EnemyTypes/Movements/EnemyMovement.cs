@@ -160,6 +160,17 @@ namespace Enemies.EnemyTypes.Movements
             OnEnemyDisappeared?.Invoke(gameObject.transform.position);
             IsDying = false;
         }
+
+        private async UniTask FadeAndDisappearAsync(CancellationToken token)
+        {
+            IsDying = true;
+            SetMovement(false);
+             
+            await UniTask.Delay(TimeSpan.FromSeconds(deathDuration), cancellationToken: token);
+            gameObject.SetActive(false);
+            OnEnemyDisappeared?.Invoke(gameObject.transform.position);
+            IsDying = false;
+        }
         
 #if UNITY_EDITOR
         private void OnDrawGizmosSelected()
