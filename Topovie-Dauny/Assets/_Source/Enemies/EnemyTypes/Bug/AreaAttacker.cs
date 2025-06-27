@@ -45,6 +45,7 @@ namespace Enemies.EnemyTypes.Bug
         private PlayerHealth _playerHealth;
         private bool _isPlayerInRange;
         private bool _isWarning;
+        
         private bool _canDetect = true;
 
         [Inject]
@@ -66,6 +67,8 @@ namespace Enemies.EnemyTypes.Bug
             
             _bugAreaFader.SetupFader(rangeSprite);
             _bugAreaFader.FadeAreaAsync(FadeType.FadeOut, _destroyCancellationToken).Forget();
+            
+            //TODO disable detect area when DEATH ANIMATION JUST STARTED AND FORCE FADE OUT
             enemyHealth.OnEnemyDied += DisableDetectArea;
         }
         private void OnDestroy()
@@ -94,9 +97,7 @@ namespace Enemies.EnemyTypes.Bug
                 //area fade out 
                 if (_isWarning && aiPath.enabled)
                 {
-                    _isWarning = false;
-                    CancelRecreateCts();
-                    _bugAreaFader.FadeAreaAsync(FadeType.FadeOut, _destroyCancellationToken).Forget();
+                    ForceFadeOutArea();
                 }
             }
         }
@@ -178,6 +179,14 @@ namespace Enemies.EnemyTypes.Bug
         private void DisableDetectArea()
         {
             _canDetect = false;
+            ForceFadeOutArea();
+        }
+
+        private void ForceFadeOutArea()
+        {
+            _isWarning = false;
+            CancelRecreateCts();
+            _bugAreaFader.FadeAreaAsync(FadeType.FadeOut, _destroyCancellationToken).Forget();
         }
     }
 }

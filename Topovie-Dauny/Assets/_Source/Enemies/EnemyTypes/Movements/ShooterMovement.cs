@@ -38,15 +38,15 @@ namespace Enemies.EnemyTypes
             {
                HandleFlipping();
             }
-            if (moveSound.IsNull)
+            if (config.MoveSound.IsNull)
             {
                 return;
             }
             Timer += Time.deltaTime;
-            if (Timer >= soundFrequency)
+            if (Timer >= config.SoundFrequency)
             {
-                AudioManager.PlayOneShot(moveSound, gameObject.transform.position, 
-                    PlayerTransform.position, soundDistance);
+                AudioManager.PlayOneShot(config.MoveSound, gameObject.transform.position, 
+                    PlayerTransform.position, config.SoundDistance);
                 Timer = 0;
             }
         }
@@ -58,12 +58,12 @@ namespace Enemies.EnemyTypes
         private async UniTask DoAttackAsync(CancellationToken token)
         {
             OnAttackStarted?.Invoke();
-            await UniTask.Delay(TimeSpan.FromSeconds(startAttackDuration), cancellationToken: token);
+            await UniTask.Delay(TimeSpan.FromSeconds(config.StartAttackDuration), cancellationToken: token);
             
             OnAttack?.Invoke();
             _shooter.Shoot();
 
-            await UniTask.Delay(TimeSpan.FromSeconds(remainingAttackDuration), cancellationToken: token);
+            await UniTask.Delay(TimeSpan.FromSeconds(config.RemainingAttackDuration), cancellationToken: token);
         }
     }
 }

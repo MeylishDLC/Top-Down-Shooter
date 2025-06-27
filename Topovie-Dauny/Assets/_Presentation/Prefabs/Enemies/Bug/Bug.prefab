@@ -100,9 +100,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyHealth: {fileID: 8671391910095024701}
   enemyMovement: {fileID: 4608705967067717933}
+  config: {fileID: 11400000, guid: c0f3931fb30235d479a246bffd65eadf, type: 2}
   colorOnDamageTaken: {r: 1, g: 0, b: 0, a: 1}
   colorStayDuration: 0.1
-  deathAnimationDuration: 1
 --- !u!95 &388271473678085748
 Animator:
   serializedVersion: 5
@@ -412,19 +412,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 359d7de982874fe5bd9275d1d6e65e87, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSound:
-    Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
-  soundFrequency: 0
-  soundDistance: 2
-  attackRange: 0.54
-  startAttackDuration: 1.2
-  remainingAttackDuration: 0.4
-  deathDuration: 1
+  config: {fileID: 11400000, guid: c0f3931fb30235d479a246bffd65eadf, type: 2}
   areaAttacker: {fileID: 6403694004298815286}
 --- !u!1 &5168763921749464230
 GameObject:

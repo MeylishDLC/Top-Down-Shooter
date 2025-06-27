@@ -289,19 +289,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c65c7eacc9d43a3885c0f295081d4b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSound:
-    Guid:
-      Data1: -709617095
-      Data2: 1128456914
-      Data3: -335382601
-      Data4: -1498732797
-    Path: event:/SFX/Enemies/Men
-  soundFrequency: 2.5
-  soundDistance: 5
-  attackRange: 0.5
-  startAttackDuration: 0.6
-  remainingAttackDuration: 0.4
-  deathDuration: 0.6
+  config: {fileID: 11400000, guid: 3fd1c5b3a69ba9c42af4c7662f802e24, type: 2}
 --- !u!114 &3686213671687945947
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -437,9 +425,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyHealth: {fileID: 3686213671687945947}
   enemyMovement: {fileID: 4234370524342323861}
+  config: {fileID: 11400000, guid: 3fd1c5b3a69ba9c42af4c7662f802e24, type: 2}
   colorOnDamageTaken: {r: 1, g: 0, b: 0, a: 1}
   colorStayDuration: 0.1
-  deathAnimationDuration: 0.6
 --- !u!1 &8879187081392620469
 GameObject:
   m_ObjectHideFlags: 0

@@ -39,6 +39,7 @@ namespace Player.PlayerControl.GunMovement
             var rotationZ = Mathf.Atan2(difference.y, difference.x) * Mathf.Rad2Deg;
             transform.rotation = Quaternion.Euler(0f, 0f, rotationZ);
 
+            FlipGunBasedOnAngle(rotationZ);
             if (!CheckRolling.IsRolling)
             {
                 if (transform.eulerAngles.z >= 0 && transform.eulerAngles.z <= 44)
@@ -57,8 +58,6 @@ namespace Player.PlayerControl.GunMovement
                 {
                     SetOneSideActive(Sides.Front);
                 }
-
-                FlipGunBasedOnAngle(rotationZ);
             }
         }
 

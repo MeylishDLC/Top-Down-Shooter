@@ -18,21 +18,9 @@ namespace Enemies.EnemyTypes.Movements
         public Action OnAttack; 
         public Action OnAttackStarted; 
         
-        [Header("Sound")]
-        [SerializeField]
-        protected EventReference moveSound;
-        [SerializeField] protected float soundFrequency;
-        [SerializeField] protected float soundDistance = 2f;
-
-        [Header("Attack")] 
-        [SerializeField]
-        protected float attackRange = 1.5f;
-        [SerializeField] protected float startAttackDuration = 1.5f;
-        [SerializeField] protected float remainingAttackDuration = 1.5f;
-        [SerializeField] private float deathDuration = 1.5f;
+        [SerializeField] protected EnemyConfig config;
         
         protected float Timer;
-
         protected AIPath AIPath;
         protected Transform PlayerTransform;
         protected AudioManager AudioManager;
@@ -65,7 +53,7 @@ namespace Enemies.EnemyTypes.Movements
         }
         private void OnEnable()
         {
-            Timer = Random.Range(0f, soundFrequency);
+            Timer = Random.Range(0f, config.SoundFrequency);
             AIPath.canMove = true;
             SetMovement(true);
         }
@@ -81,15 +69,15 @@ namespace Enemies.EnemyTypes.Movements
                HandleFlipping();
             }
             AttackPlayerInRange();
-            if (moveSound.IsNull)
+            if (config.MoveSound.IsNull)
             {
                 return;
             }
             Timer += Time.deltaTime;
-            if (Timer >= soundFrequency)
+            if (Timer >= config.SoundFrequency)
             {
-                AudioManager.PlayOneShot(moveSound, gameObject.transform.position, 
-                    PlayerTransform.position, soundDistance);
+                AudioManager.PlayOneShot(config.MoveSound, gameObject.transform.position, 
+                    PlayerTransform.position, config.SoundDistance);
                 Timer = 0;
             }
         }
@@ -101,7 +89,7 @@ namespace Enemies.EnemyTypes.Movements
             }
 
             var distanceToPlayer = Vector2.Distance(transform.position, PlayerTransform.position);
-            if (distanceToPlayer <= attackRange)
+            if (distanceToPlayer <= config.AttackRange)
             {
                 DoAttackAsync(CtOnDestroy).Forget();
             }
@@ -110,11 +98,11 @@ namespace Enemies.EnemyTypes.Movements
         {
             OnAttackStarted?.Invoke();
             _isAttacking = true;
-            await UniTask.Delay(TimeSpan.FromSeconds(startAttackDuration), cancellationToken: token);
+            await UniTask.Delay(TimeSpan.FromSeconds(config.StartAttackDuration), cancellationToken: token);
             
             OnAttack?.Invoke();
 
-            await UniTask.Delay(TimeSpan.FromSeconds(remainingAttackDuration), cancellationToken: token);
+            await UniTask.Delay(TimeSpan.FromSeconds(config.RemainingAttackDuration), cancellationToken: token);
             _isAttacking = false;
         }
         public void SetDestination(Transform playerTransform)
@@ -155,18 +143,7 @@ namespace Enemies.EnemyTypes.Movements
         {
             IsDying = true;
             SetMovement(false);
-            await UniTask.Delay(TimeSpan.FromSeconds(deathDuration), cancellationToken: token);
-            gameObject.SetActive(false);
-            OnEnemyDisappeared?.Invoke(gameObject.transform.position);
-            IsDying = false;
-        }
-
-        private async UniTask FadeAndDisappearAsync(CancellationToken token)
-        {
-            IsDying = true;
-            SetMovement(false);
-             
-            await UniTask.Delay(TimeSpan.FromSeconds(deathDuration), cancellationToken: token);
+            await UniTask.Delay(TimeSpan.FromSeconds(config.DeathDuration), cancellationToken: token);
             gameObject.SetActive(false);
             OnEnemyDisappeared?.Invoke(gameObject.transform.position);
             IsDying = false;
@@ -176,7 +153,7 @@ namespace Enemies.EnemyTypes.Movements
         private void OnDrawGizmosSelected()
         {
             Gizmos.color = Color.red;
-            Gizmos.DrawWireSphere(transform.position, attackRange);
+            Gizmos.DrawWireSphere(transform.position, config.AttackRange);
         }
 #endif
     }
