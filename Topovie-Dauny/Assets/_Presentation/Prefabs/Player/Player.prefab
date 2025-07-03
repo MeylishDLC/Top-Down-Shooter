@@ -918,6 +918,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 1982391776060371289}
     m_Modifications:
     - target: {fileID: 767060462898238840, guid: 6b286f64509c2794bb193bb42661a134, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: f32f95d2ea076e94787ccdeca476063b, type: 3}
+    - target: {fileID: 767060462898238840, guid: 6b286f64509c2794bb193bb42661a134, type: 3}
       propertyPath: m_SortingOrder
       value: 1
       objectReference: {fileID: 0}
@@ -1044,6 +1048,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7403783298465974180, guid: 6ca6ad6d61ae202488a30a7d73711732, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: d5cb65ef286b54843a4c5c5b2ee2683f, type: 3}
+    - target: {fileID: 7403783298465974180, guid: 6ca6ad6d61ae202488a30a7d73711732, type: 3}
       propertyPath: m_SortingOrder
       value: 1
       objectReference: {fileID: 0}
@@ -1109,6 +1117,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Pistol
       objectReference: {fileID: 0}
+    - target: {fileID: 2603224462357120372, guid: e58457818697e1448860900b0e6520ca, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6546810114279740755, guid: e58457818697e1448860900b0e6520ca, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: b261eba0b9af48d479d8eec9bf674f3d, type: 3}
     - target: {fileID: 8980288823574828495, guid: e58457818697e1448860900b0e6520ca, type: 3}
       propertyPath: kickbackTransform
       value: 
@@ -1135,6 +1151,10 @@ PrefabInstance:
       propertyPath: kickbackTransform
       value: 
       objectReference: {fileID: 2923432033108539886}
+    - target: {fileID: 2779964726295872582, guid: 35022705ce0178748a0b36fd41458644, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: c766332ae8c021745b62e82a06206be3, type: 3}
     - target: {fileID: 2779964726295872582, guid: 35022705ce0178748a0b36fd41458644, type: 3}
       propertyPath: m_SortingOrder
       value: 1
