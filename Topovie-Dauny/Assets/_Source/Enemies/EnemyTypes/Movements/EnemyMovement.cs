@@ -28,6 +28,7 @@ namespace Enemies.EnemyTypes.Movements
         
         private EnemyHealth _enemyHealth;
         private Rigidbody2D _rb;
+        private Collider2D _col;
         
         private float _initScale;
         private bool _isFacingRight;
@@ -40,6 +41,7 @@ namespace Enemies.EnemyTypes.Movements
             AudioManager = audioManager;
             AIPath = GetComponent<AIPath>();
             _rb = GetComponent<Rigidbody2D>();
+            _col = GetComponent<Collider2D>();
             _enemyHealth = GetComponent<EnemyHealth>();
             
             _initScale = transform.localScale.x;
@@ -141,12 +143,18 @@ namespace Enemies.EnemyTypes.Movements
         }
         private async UniTask DisappearAsync(CancellationToken token)
         {
-            IsDying = true;
-            SetMovement(false);
+            DisableMovementOnDeath();
             await UniTask.Delay(TimeSpan.FromSeconds(config.DeathDuration), cancellationToken: token);
             gameObject.SetActive(false);
             OnEnemyDisappeared?.Invoke(gameObject.transform.position);
             IsDying = false;
+        }
+
+        private void DisableMovementOnDeath()
+        {
+            IsDying = true;
+            SetMovement(false);
+            Destroy(_col);
         }
         
 #if UNITY_EDITOR
