@@ -62,7 +62,7 @@ namespace Installers
             Container.Bind<Material>().FromInstance(playerDamagedMaterial).AsSingle();
             Container.Bind<Volume>().FromInstance(playerVignetteVolume).AsSingle();
             
-            Container.Bind<PlayerDamagedDisplay>().AsSingle();
+            Container.Bind<PlayerDamagedDisplay>().AsSingle().NonLazy();
         }
         private void BindInputListener()
         {
