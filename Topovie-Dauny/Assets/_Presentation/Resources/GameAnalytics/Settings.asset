@@ -30,7 +30,7 @@ MonoBehaviour:
   secretKey:
   - 56f01cf28a77eb2dbdf31d65b6556de1a8abe7ad
   Build:
-  - 0.1
+  - 0.2
   SelectedPlatformOrganization:
   - Meylish
   SelectedPlatformStudio:
@@ -60,8 +60,10 @@ MonoBehaviour:
   - Empty
   CustomDimensions02: []
   CustomDimensions03: []
-  ResourceItemTypes: []
-  ResourceCurrencies: []
+  ResourceItemTypes:
+  - drop
+  ResourceCurrencies:
+  - heal
   LastCreatedGamePlatform: -1
   Platforms: 02000000
   CurrentInspectorState: 1
@@ -95,8 +97,8 @@ MonoBehaviour:
   CustomDimensions01FoldOut: 0
   CustomDimensions02FoldOut: 0
   CustomDimensions03FoldOut: 0
-  ResourceItemTypesFoldOut: 0
-  ResourceCurrenciesFoldOut: 0
+  ResourceItemTypesFoldOut: 1
+  ResourceCurrenciesFoldOut: 1
   EnableMemoryHistogram: 0
   EnableHealthEvent: 0
   EnableFPSHistogram: 0

@@ -1,4 +1,5 @@
 using System;
+using Analytics;
 using Player.PlayerCombat;
 using Player.PlayerControl;
 using SoundSystem;
@@ -12,17 +13,20 @@ namespace Interactable.HealingStuff
         [field: SerializeField] public int HealAmount { get; private set; } = 10;
         private PlayerHealth _playerHealth;
         private AudioManager _audioManager;
+        private AnalyticsManager _analyticsManager;
         
-        public void Construct(PlayerHealth playerHealth, AudioManager audioManager)
+        public void Construct(PlayerHealth playerHealth, AudioManager audioManager, AnalyticsManager analyticsManager)
         {
             _audioManager = audioManager;
             _playerHealth = playerHealth;
+            _analyticsManager = analyticsManager;
         }
         private void OnTriggerEnter2D(Collider2D other)
         {
             if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
             {
                 _playerHealth.Heal(HealAmount);
+                _analyticsManager.OnHealOrbCollected();
                 DestroyOrb();
             }
         }

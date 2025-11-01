@@ -7,7 +7,7 @@ namespace Core.LevelSettings
     {
         public int LevelsPassed { get; private set; }
 
-        private AnalyticsManager _analyticsManager;
+        private readonly AnalyticsManager _analyticsManager;
         public LevelSave(AnalyticsManager analyticsManager)
         {
             _analyticsManager = analyticsManager;

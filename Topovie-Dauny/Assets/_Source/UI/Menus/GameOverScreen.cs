@@ -58,11 +58,13 @@ namespace UI.Menus
         }
         private void SaveDeathData()
         {
-            _analyticsManager.OnDeath();
+            var currentLevelNumber = SceneManager.GetActiveScene().buildIndex - 2;
+
+            _analyticsManager.OnLevelFailed(currentLevelNumber);
             var currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
             if (currentSceneIndex == SceneManager.sceneCountInBuildSettings - 1)
             {
-                _analyticsManager.OnDeathOnBoss();
+                _analyticsManager.OnDeathOnBoss(currentLevelNumber);
             }
         }
         private void ShowGameOverScreen()

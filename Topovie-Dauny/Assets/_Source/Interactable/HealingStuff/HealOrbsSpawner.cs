@@ -1,4 +1,5 @@
 ﻿using System;
+using Analytics;
 using Enemies;
 using Enemies.EnemyTypes;
 using Enemies.EnemyTypes.Movements;
@@ -18,9 +19,11 @@ namespace Interactable.HealingStuff
         private readonly int _dropPercentChance;
         private readonly HealOrb _orbPrefab;
         private readonly AudioManager _audioManager;
+        private readonly AnalyticsManager _analyticsManager;
         
         [Inject]
-        public HealOrbsSpawner(HealingOrbsSpawnerConfig config, PlayerMovement playerMovement, AudioManager audioManager)
+        public HealOrbsSpawner(HealingOrbsSpawnerConfig config, PlayerMovement playerMovement, AudioManager audioManager,
+            AnalyticsManager analyticsManager)
         {
             if (!config.OrbPrefab)
             {
@@ -29,6 +32,7 @@ namespace Interactable.HealingStuff
             _orbPrefab = config.OrbPrefab;
 
             _audioManager = audioManager;
+            _analyticsManager = analyticsManager;
             _playerHealth = playerMovement.GetComponent<PlayerHealth>();
             _dropPercentChance = config.SpawnChancePercent;
 
@@ -50,8 +54,7 @@ namespace Interactable.HealingStuff
                 return;
             }
             var orb = Object.Instantiate(_orbPrefab, spawnPosition, Quaternion.identity);
-            orb.Construct(_playerHealth, _audioManager);
-            Debug.Log("Spawned orb");
+            orb.Construct(_playerHealth, _audioManager, _analyticsManager);
         }
         
     }
